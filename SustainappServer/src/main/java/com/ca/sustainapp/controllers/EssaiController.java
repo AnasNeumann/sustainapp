@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */	
 @RestController
-@RequestMapping(value="/")
 public class EssaiController {
 	
 	/**
@@ -22,9 +21,9 @@ public class EssaiController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(path = "/essai", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/essai", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String index() {
 		System.out.println("i am here");
-        return "Greetings from Spring Boot!";
+        return "{'id':'essai'}";
     }
 }
