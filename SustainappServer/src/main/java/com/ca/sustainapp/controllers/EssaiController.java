@@ -17,13 +17,42 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class EssaiController {
 	
 	/**
-	 * 
+	 * Juste pour essayer le MVC Restfull
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/essai", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String index() {
-		System.out.println("i am here");
-        return "{'id':'essai'}";
+    public String get() {
+        return SustainappConstantes.SUCCES_JSON;
+    }
+	
+	/**
+	 * Juste pour essayer le MVC Restfull
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/essai", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String post() {
+        return SustainappConstantes.SUCCES_JSON;
+    }
+	
+	/**
+	 * Juste pour essayer le MVC Restfull
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/essai", method = RequestMethod.PUT, produces = SustainappConstantes.MIME_JSON)
+    public String put() {
+        return SustainappConstantes.SUCCES_JSON;
+    }
+	
+	/**
+	 * Juste pour essayer le MVC Restfull
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/essai", method = RequestMethod.DELETE, produces = SustainappConstantes.MIME_JSON)
+    public String delete() {
+        return SustainappConstantes.SUCCES_JSON;
     }
 }

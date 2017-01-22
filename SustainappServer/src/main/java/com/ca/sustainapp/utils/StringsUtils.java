@@ -20,14 +20,13 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 /**
  * Classe d'outils pour la gestion des Strings
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @author Bilel Dhaouadi <dhaouadi.bil@gmail.com>
  * @version 1.0
  * @since 17/10/2016
  */
 public class StringsUtils {
 
 	/**
-	 * Constructeur priv�, classe statique
+	 * Constructeur privé, classe statique
 	 */
 	private StringsUtils(){
 		
@@ -46,7 +45,7 @@ public class StringsUtils {
 	}
 	
 	/**
-	 * Retrouver l'id d'une vid�o youtube � partir de l'url
+	 * Retrouver l'id d'une vidéo youtube à partir de l'url
 	 * @param url
 	 * @return
 	 */
@@ -65,7 +64,7 @@ public class StringsUtils {
 
 	
 	/**
-	 * Formater les arguments {0}, {1}, etc d'une cha�ne
+	 * Formater les arguments {0}, {1}, etc d'une chaine
 	 * 
 	 * @param str
 	 * @param args
@@ -81,7 +80,7 @@ public class StringsUtils {
 	}
 
 	/**
-	 * Comparer deux chaines de carract�res potentiellements nulles
+	 * Comparer deux chaines de carractères potentiellements nulles
 	 * 
 	 * @param s1
 	 * @param s2
@@ -101,7 +100,7 @@ public class StringsUtils {
 	}
 
 	/**
-	 * Comparer deux chaines de carract�res potentiellements nulles
+	 * Comparer deux chaines de carractères potentiellements nulles
 	 * 
 	 * @param s1
 	 * @param s2
@@ -143,7 +142,7 @@ public class StringsUtils {
 	}
 
 	/**
-	 * Retrouver le nom d'un getter � partir d'un nom de propri�t�.
+	 * Retrouver le nom d'un getter � partir d'un nom de propriété.
 	 * 
 	 * @param propertyName
 	 * @return String
@@ -154,7 +153,7 @@ public class StringsUtils {
 	}
 
 	/**
-	 * Retrouver le nom d'un setter � partir d'un nom de propri�t�.
+	 * Retrouver le nom d'un setter � partir d'un nom de propriété.
 	 * 
 	 * @param propertyName
 	 * @return String
@@ -273,7 +272,7 @@ public class StringsUtils {
 	}
 
 	/**
-	 * Methode de parsing d'une chaine de caract�re en Long de mani�re s�curis�e
+	 * Methode de parsing d'une chaine de caractère en Long de manière sécurisée
 	 * @param input
 	 * @return
 	 */

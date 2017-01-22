@@ -5,14 +5,13 @@ import java.util.List;
 /**
  * Classe d'outils pour les list et map
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @author Bilel Dhaouadi <dhaouadi.bil@gmail.com>
  * @version 1.0
  * @since 15/10/2016
  */
 public class ListUtils {
 	
 	/**
-	 * Constructeur priv�, classe statique
+	 * Constructeur privé, classe statique
 	 */
 	private ListUtils(){
 		
@@ -30,8 +29,8 @@ public class ListUtils {
 	}
 
 	/**
-	 * Retourner une liste contenant les [totalElements] �l�ments de la liste
-	 * [input] � partir de [startIndex]
+	 * Retourner une liste contenant les [totalElements] éléments de la liste
+	 * [input] à partir de [startIndex]
 	 * 
 	 * @param input
 	 * @param startIndex
@@ -57,7 +56,7 @@ public class ListUtils {
 	}
 	
 	/**
-	 * Methode d'inversion d'une liste chain�e
+	 * Methode d'inversion d'une liste chainée
 	 * @param input
 	 * @return
 	 */

@@ -24,9 +24,8 @@ import static javax.imageio.ImageIO.read;
 import static javax.imageio.ImageIO.write;
 
 /**
- * Classe d'outils pour la gestion des fichiers upload�s
+ * Classe d'outils pour la gestion des fichiers uploadés
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @author Bilel Dhaouadi <dhaouadi.bil@gmail.com>
  * @version 1.0
  * @since 15/10/2016
  */

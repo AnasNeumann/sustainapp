@@ -8,8 +8,8 @@ import java.util.Locale;
 
 /**
  * Classe d'outils pour la gestion des dates
+ * 
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @author Bilel Dhaouadi <dhaouadi.bil@gmail.com>
  * @version 1.0
  * @since 15/10/2016
  */
@@ -22,16 +22,14 @@ public class DateUtils {
 	public static final String FORMAT_AMERICAN = "yyyy-MM-dd";
 
 	/**
-	 * Constructeur priv�, classe statique
+	 * Constructeur privé, classe statique
 	 */
 	private DateUtils() {
 	}
-	
+
 	/**
 	 * Convert dd/MM/yyyy string to calendar
-	 * 
-	 * @param str
-	 *            formated string
+	 * @param str formated string
 	 * @param lenient
 	 * @return Calendar
 	 * @throws ParseException
@@ -42,11 +40,8 @@ public class DateUtils {
 
 	/**
 	 * Convert formated string to calendar
-	 * 
-	 * @param str
-	 *            formated string
-	 * @param format
-	 *            (ex : dd/MM/yyyy)
+	 * @param str formated string
+	 * @param format (ex : dd/MM/yyyy)
 	 * @param lenient
 	 * @return Calendar
 	 * @throws ParseException
@@ -63,9 +58,7 @@ public class DateUtils {
 
 	/**
 	 * Convert dd/MM/yyyy string to calendar
-	 * 
-	 * @param str
-	 *            formated string
+	 * @param str formated string
 	 * @return Calendar
 	 * @throws ParseException
 	 */
@@ -75,11 +68,8 @@ public class DateUtils {
 
 	/**
 	 * Convert string to calendar
-	 * 
-	 * @param str
-	 *            formated string
-	 * @param format
-	 *            (ex : dd/MM/yyyy)
+	 * @param str formated string
+	 * @param format (ex : dd/MM/yyyy)
 	 * @return Calendar
 	 * @throws ParseException
 	 */
@@ -89,11 +79,8 @@ public class DateUtils {
 
 	/**
 	 * Convert string to calendar
-	 * 
-	 * @param str
-	 *            formated string
-	 * @param format
-	 *            (ex : dd/MM/yyyy)
+	 * @param str formated string
+	 * @param format (ex : dd/MM/yyyy)
 	 * @return Calendar (current time if parse failure).
 	 * @throws ParseException
 	 */
@@ -107,11 +94,8 @@ public class DateUtils {
 
 	/**
 	 * Convert Calendar to String
-	 * 
-	 * @param Calendar
-	 *            c
-	 * @param format
-	 *            (ex : dd/MM/yyyy)
+	 * @param Calendar c
+	 * @param format (ex : dd/MM/yyyy)
 	 * @return String
 	 */
 	public static final String calendarToString(Calendar c, String format) {
@@ -125,9 +109,7 @@ public class DateUtils {
 
 	/**
 	 * Convert Calendar to String (dd/MM/yyyy)
-	 * 
-	 * @param Calendar
-	 *            c
+	 * @param Calendar c
 	 * @return String
 	 */
 	public static final String calendarToString(Calendar c) {
@@ -136,12 +118,10 @@ public class DateUtils {
 
 	/**
 	 * Get current date
-	 * 
 	 * @return Calendar
 	 */
 	public static final Calendar getCurrentTime() {
 		return (Calendar) Calendar.getInstance().clone();
 	}
-
 
 }

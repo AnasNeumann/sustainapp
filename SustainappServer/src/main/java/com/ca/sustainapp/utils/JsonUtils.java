@@ -18,19 +18,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Classe d'outils pour la gestion des fichiers Json
+ * 
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @author Bilel Dhaouadi <dhaouadi.bil@gmail.com>
  * @version 1.0
  * @since 15/10/2016
  */
 public class JsonUtils {
-	
+
 	/**
-	 * Constructeur priv�, classe statique
+	 * Constructeur privé, classe statique
 	 */
 	private JsonUtils() {
 	}
-	
 
 	/**
 	 * Convertir une Map en JSON.
@@ -115,7 +114,7 @@ public class JsonUtils {
 	}
 
 	/**
-	 * Convertir une cha�ne Json en map.
+	 * Convertir une chaine Json en map.
 	 * 
 	 * @param json
 	 * @return
@@ -139,8 +138,8 @@ public class JsonUtils {
 	 * @param message
 	 * @return
 	 */
-	public static String formatJsonMessage (String message){
-		return "{\"message\":\""+message+"\"}";
+	public static String formatJsonMessage(String message) {
+		return "{\"message\":\"" + message + "\"}";
 	}
-	
+
 }
