@@ -38,4 +38,5 @@ public class SustainappConstantes {
 	public final static String SUCCES_JSON = "{\"result\":\"success\"}";
 	public final static String BLANK_SEPARATOR = "\\s+";
 	public final static String COMMA_SEPARATOR = "\\,";
+	public final static String NAMESPACE_URI = "http://www.sustainapp.ca";
 }

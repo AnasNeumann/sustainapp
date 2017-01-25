@@ -3,6 +3,8 @@ package com.ca.sustainapp.utils;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.math.NumberUtils.isNumber;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -287,5 +289,28 @@ public class StringsUtils {
         	return Optional.empty();
         }
 		return Optional.of(output);
+	}
+	
+	/**
+	 * Methode de cryptage en md5 des mots de passes
+	 * @param input
+	 * @return
+	 */
+	public static String md5Hash(String input){
+		try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(input.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            return sb.toString();
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {
+           	return null;
+        }
 	}
 }
