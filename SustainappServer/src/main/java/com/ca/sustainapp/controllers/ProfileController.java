@@ -1,5 +1,6 @@
 package com.ca.sustainapp.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +14,7 @@ import com.ca.sustainapp.boot.SustainappConstantes;
  * @since 25/01/2017
  * @version 1.0
  */
+@CrossOrigin
 @RestController
 public class ProfileController {
 	

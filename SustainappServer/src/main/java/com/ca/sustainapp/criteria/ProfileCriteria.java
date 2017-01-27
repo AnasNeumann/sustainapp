@@ -32,8 +32,9 @@ public class ProfileCriteria implements Serializable {
 	 * @param id the id to set
 	 */
 	@QueryParam("id")
-	public void setId(Long id) {
+	public ProfileCriteria setId(Long id) {
 		this.id = id;
+		return this;
 	}
 
 	/**
@@ -47,8 +48,9 @@ public class ProfileCriteria implements Serializable {
 	 * @param lastName the lastName to set
 	 */
 	@QueryParam("lastName")
-	public void setLastName(String lastName) {
+	public ProfileCriteria setLastName(String lastName) {
 		this.lastName = lastName;
+		return this;
 	}
 
 	/**
@@ -62,8 +64,9 @@ public class ProfileCriteria implements Serializable {
 	 * @param firstName the firstName to set
 	 */
 	@QueryParam("firstName")
-	public void setFirstName(String firstName) {
+	public ProfileCriteria setFirstName(String firstName) {
 		this.firstName = firstName;
+		return this;
 	}
 
 	/**
@@ -77,8 +80,9 @@ public class ProfileCriteria implements Serializable {
 	 * @param bornDate the bornDate to set
 	 */
 	@QueryParam("bornDate")
-	public void setBornDate(Calendar bornDate) {
+	public ProfileCriteria setBornDate(Calendar bornDate) {
 		this.bornDate = bornDate;
+		return this;
 	}
 
 	/**
@@ -92,8 +96,9 @@ public class ProfileCriteria implements Serializable {
 	 * @param isAdmin the isAdmin to set
 	 */
 	@QueryParam("isAdmin")
-	public void setIsAdmin(Boolean isAdmin) {
+	public ProfileCriteria setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
+		return this;
 	}
 
 	/**
@@ -107,7 +112,8 @@ public class ProfileCriteria implements Serializable {
 	 * @param timestamps the timestamps to set
 	 */
 	@QueryParam("timestamps")
-	public void setTimestamps(Calendar timestamps) {
+	public ProfileCriteria setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
+		return this;
 	}
 }

@@ -93,8 +93,7 @@ public class ProfileServiceDAO extends GenericServiceDAO{
 		Page<ProfileEntity> page = repository.findAll(spec, paginator);
 		
 		SearchResult<ProfileEntity> result = initSearchResult(startIndex, maxResults);
-		result.setTotalResults(page.getTotalElements());
-		result.setResults(page.getContent());
+		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
 }
