@@ -1,6 +1,7 @@
 package com.ca.sustainapp.utils;
 import java.util.ArrayList;
 import java.util.List;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
  * Classe d'outils pour les list et map
@@ -66,6 +67,44 @@ public class ListUtils {
 			result.add(input.get(i));
 		}
 		return result;
+	}
+	
+	/**
+	 * Methode permettant de retrouver les keywords d'une query
+	 * 
+	 * @param query
+	 * @return keywords
+	 */
+	public static List<String> buildKeyworsFromQuery(String query){
+		List<String> result = new ArrayList<String>();
+		while(isNotEmpty(query) && 1 < query.length()){
+			query = query.substring(1);
+			String pathArg;
+			if(0 < query.indexOf(' ')){
+				pathArg = query.substring(0,query.indexOf(' '));
+			}else{
+				pathArg = query.substring(0);
+			}
+			result.add(pathArg.toLowerCase());
+			query = query.substring(pathArg.length());		
+		}
+		return result;
+	}
+	
+	/**
+	 * Construire une query a partir d'une liste de keywords
+	 * @param keywords
+	 * @return query
+	 */
+	public static String buildQueryfromKeywords(List<String> keywords){
+		String returnValue = "";
+		if(null == keywords){
+			return returnValue;
+		}
+		for(String currentPath : keywords){
+			returnValue+=currentPath+" ";
+		}
+		return returnValue;
 	}
 
 }
