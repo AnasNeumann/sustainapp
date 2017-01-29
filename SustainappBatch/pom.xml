@@ -1,27 +1,111 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>SustainappBatch</groupId>
-  <artifactId>SustainappBatch</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <warSourceDirectory>WebContent</warSourceDirectory>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>SustainappBatch</groupId>
+	<artifactId>SustainappBatch</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<jdbc.postgresql.version>9.1-901.jdbc4</jdbc.postgresql.version>
+		<sql-maven-plugin.version>1.5</sql-maven-plugin.version>
+		<flyway-maven-plugin.version>3.2.1</flyway-maven-plugin.version>
+		<purge.skip>true</purge.skip>
+		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+
+		<!-- conf -->
+		<jre.version>1.8</jre.version>
+		<encoding.default>UTF-8</encoding.default>
+
+		<!-- validation expression language -->
+		<el-validation.version>1.1.0.Final</el-validation.version>
+		<el-validation-api.version>3.0.0</el-validation-api.version>
+		<el-validation-web.version>2.2.4</el-validation-web.version>
+		<el-hibernate-validation.version>5.0.1.Final</el-hibernate-validation.version>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>${sql-maven-plugin.version}</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>${jdbc.postgresql.version}</version>
+					</dependency>
+				</dependencies>
+
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://${ipbd}:5432/${dbname}</url>
+
+					<username>${username}</username>
+					<password>${password}</password>
+					<settingsKey>sensibleKey</settingsKey>
+					<skip>${maven.test.skip}</skip>
+					<encoding>UTF8</encoding>
+					<locale>fr_FR</locale>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>drop-schema</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:postgresql://${ipbd}:5432/${dbname}</url>
+							<onError>continue</onError>
+							<orderFile>descending</orderFile>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${basedir}/src/main/resources/</basedir>
+								<includes>
+									<include>db/init/7_prodit_drop_tables.sql</include>
+								</includes>
+							</fileset>
+							<skip>${purge.skip}</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway-maven-plugin.version}</version>
+				<configuration>
+					<url>jdbc:postgresql://${ipbd}:5432/${dbname}</url>
+					<user>${username}</user>
+					<password>${password}</password>
+					<baselineOnMigrate>true</baselineOnMigrate>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>${jdbc.postgresql.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<source>${jre.version}</source>
+						<target>${jre.version}</target>
+						<encoding>${encoding.default}</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
