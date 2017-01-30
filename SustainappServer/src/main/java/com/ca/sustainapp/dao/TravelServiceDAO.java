@@ -11,11 +11,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.ca.sustainapp.criteria.ProfileCriteria;
-import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.criteria.TravelCriteria;
+import com.ca.sustainapp.entities.TravelEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.repositories.ProfileRepository;
-import com.ca.sustainapp.specification.ProfileSpecification;
+import com.ca.sustainapp.repositories.TravelRepository;
+import com.ca.sustainapp.specification.TravelSpecification;
 
 /**
  * data access object service
@@ -23,21 +23,21 @@ import com.ca.sustainapp.specification.ProfileSpecification;
  * @since 25/01/2107
  * @verion 1.0
  */
-@Service("profileService")
-public class ProfileServiceDAO extends GenericServiceDAO {
+@Service("travelService")
+public class TravelServiceDAO extends GenericServiceDAO {
 	
 	/**
 	 * Le repository
 	 */
 	@Autowired
-	ProfileRepository repository;
+	TravelRepository repository;
 	
 	/**
 	 * Accès un seul entity par son Id
 	 * @param id
 	 * @return
 	 */
-	public ProfileEntity getById(Long id){
+	public TravelEntity getById(Long id){
 		if(null == id){
 			return null;
 		}
@@ -51,7 +51,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 */
 	@Modifying
 	@Transactional
-	public Long createOrUpdate(ProfileEntity entity){
+	public Long createOrUpdate(TravelEntity entity){
 		return repository.saveAndFlush(entity).getId();
 	}
 	
@@ -73,7 +73,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<ProfileEntity> getAll(){
+	public List<TravelEntity> getAll(){
 		return repository.findAll();
 	}
 
@@ -85,13 +85,14 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public SearchResult<ProfileEntity> searchByCriteres(ProfileCriteria criteria, Long startIndex, Long maxResults) {		
-		Specification<ProfileEntity> spec = ProfileSpecification.searchByCriteres(criteria);
+	public SearchResult<TravelEntity> searchByCriteres(TravelCriteria criteria, Long startIndex, Long maxResults) {		
+		Specification<TravelEntity> spec = TravelSpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<ProfileEntity> page = repository.findAll(spec, paginator);
+		Page<TravelEntity> page = repository.findAll(spec, paginator);
 		
-		SearchResult<ProfileEntity> result = initSearchResult(startIndex, maxResults);
+		SearchResult<TravelEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
+
 }

@@ -11,11 +11,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.ca.sustainapp.criteria.ProfileCriteria;
-import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.criteria.CourseCriteria;
+import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.repositories.ProfileRepository;
-import com.ca.sustainapp.specification.ProfileSpecification;
+import com.ca.sustainapp.repositories.CourseRepository;
+import com.ca.sustainapp.specification.CourseSpecification;
 
 /**
  * data access object service
@@ -23,21 +23,21 @@ import com.ca.sustainapp.specification.ProfileSpecification;
  * @since 25/01/2107
  * @verion 1.0
  */
-@Service("profileService")
-public class ProfileServiceDAO extends GenericServiceDAO {
-	
+@Service("courseService")
+public class CourseServiceDAO extends GenericServiceDAO {
+
 	/**
 	 * Le repository
 	 */
 	@Autowired
-	ProfileRepository repository;
+	CourseRepository repository;
 	
 	/**
 	 * Accès un seul entity par son Id
 	 * @param id
 	 * @return
 	 */
-	public ProfileEntity getById(Long id){
+	public CourseEntity getById(Long id){
 		if(null == id){
 			return null;
 		}
@@ -51,7 +51,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 */
 	@Modifying
 	@Transactional
-	public Long createOrUpdate(ProfileEntity entity){
+	public Long createOrUpdate(CourseEntity entity){
 		return repository.saveAndFlush(entity).getId();
 	}
 	
@@ -73,7 +73,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<ProfileEntity> getAll(){
+	public List<CourseEntity> getAll(){
 		return repository.findAll();
 	}
 
@@ -85,12 +85,12 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public SearchResult<ProfileEntity> searchByCriteres(ProfileCriteria criteria, Long startIndex, Long maxResults) {		
-		Specification<ProfileEntity> spec = ProfileSpecification.searchByCriteres(criteria);
+	public SearchResult<CourseEntity> searchByCriteres(CourseCriteria criteria, Long startIndex, Long maxResults) {		
+		Specification<CourseEntity> spec = CourseSpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<ProfileEntity> page = repository.findAll(spec, paginator);
+		Page<CourseEntity> page = repository.findAll(spec, paginator);
 		
-		SearchResult<ProfileEntity> result = initSearchResult(startIndex, maxResults);
+		SearchResult<CourseEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}

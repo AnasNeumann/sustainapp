@@ -11,33 +11,32 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.ca.sustainapp.criteria.ProfileCriteria;
-import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.criteria.AnswerCriteria;
+import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.repositories.ProfileRepository;
-import com.ca.sustainapp.specification.ProfileSpecification;
+import com.ca.sustainapp.repositories.AnswerRepository;
+import com.ca.sustainapp.specification.AnswerSpecification;
 
 /**
  * data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 25/01/2107
+ * @since 30/01/2107
  * @verion 1.0
  */
-@Service("profileService")
-public class ProfileServiceDAO extends GenericServiceDAO {
-	
+@Service("answerService")
+public class AnswerServiceDAO extends GenericServiceDAO{
 	/**
 	 * Le repository
 	 */
 	@Autowired
-	ProfileRepository repository;
+	AnswerRepository repository;
 	
 	/**
 	 * Accès un seul entity par son Id
 	 * @param id
 	 * @return
 	 */
-	public ProfileEntity getById(Long id){
+	public AnswerEntity getById(Long id){
 		if(null == id){
 			return null;
 		}
@@ -51,7 +50,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 */
 	@Modifying
 	@Transactional
-	public Long createOrUpdate(ProfileEntity entity){
+	public Long createOrUpdate(AnswerEntity entity){
 		return repository.saveAndFlush(entity).getId();
 	}
 	
@@ -69,11 +68,13 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	}
 	
 	/**
-	 * get All
+	 * get All 
+	 * @param lastName
+	 * @param firstName
 	 * @return
 	 */
 	@Transactional
-	public List<ProfileEntity> getAll(){
+	public List<AnswerEntity> getAll(){
 		return repository.findAll();
 	}
 
@@ -85,12 +86,12 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public SearchResult<ProfileEntity> searchByCriteres(ProfileCriteria criteria, Long startIndex, Long maxResults) {		
-		Specification<ProfileEntity> spec = ProfileSpecification.searchByCriteres(criteria);
+	public SearchResult<AnswerEntity> searchByCriteres(AnswerCriteria criteria, Long startIndex, Long maxResults) {		
+		Specification<AnswerEntity> spec = AnswerSpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<ProfileEntity> page = repository.findAll(spec, paginator);
+		Page<AnswerEntity> page = repository.findAll(spec, paginator);
 		
-		SearchResult<ProfileEntity> result = initSearchResult(startIndex, maxResults);
+		SearchResult<AnswerEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
