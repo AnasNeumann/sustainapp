@@ -1,16 +1,35 @@
+/**
+ * Fichier contenant tous les controllers sur les vues dans notre projet
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 01/02/2017
+ * @version 1.0
+ */
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope, profilService) {
+	
+	$scope.model = {};
+	
+    $scope.searchFx = function(){
+    	 $scope.loadingSearch = true;
+    	 profilService.search($scope.model.maVar).then(function(response){
+    		  $scope.result = response;
+     		  $scope.loadingSearch = false;
+     	  }); 	
+    };
+})
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('ChatsCtrl', function($scope, Chats, profilService) {
+	var profileService = function(){
+  	  $scope.loadingProfiles = true;
+  	  profilService.allProfiles().then(function(response){
+  		  $scope.profiles = response.data;
+  		  $scope.loadingProfiles = false;
+  	  });
+    };
 
+    
+  profileService();
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);

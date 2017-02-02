@@ -14,6 +14,7 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.ProfileHttpRESTfullResponse;
+import com.ca.sustainapp.utils.JsonUtils;
 
 /**
  * Restfull controller for profiles
@@ -35,8 +36,8 @@ public class ProfileController {
 		String query = request.getParameter("query");
 		if(null == query){
 			return SustainappConstantes.SUCCES_JSON;
-		}else{
-			return query;
+		} else {
+			return JsonUtils.objectTojsonQuietly(query,String.class);
 		}      
     }
 	
