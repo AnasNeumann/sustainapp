@@ -4,7 +4,11 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'ngCordova'])
+
+/**
+ * DEMARAGE DE SUSTAINAPP
+ */
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -17,6 +21,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   });
 })
+
+/**
+ * ROUTING DE SUSTAINAPP
+ */
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('tab', {
@@ -51,15 +59,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
+    
+  .state('tab.photo', {
+	  url: '/photo',
+	  views: {
+	    'tab-photo': {
+	      templateUrl: 'templates/photo.html',
+	      controller: 'PhotosCtrl'
+	    }
+	  }
   });
   $urlRouterProvider.otherwise('/tab/dash');
 });
+
+/**
+ * CONTROLLERS
+ */
+angular.module('sustainapp.controllers', []);
+
+/**
+ * SERVICES
+ */
+angular.module('sustainapp.services', []);

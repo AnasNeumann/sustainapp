@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.sustainappmobile504949" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>SustainappMobile</name>
+  <name>Sustainapp</name>
   <description>
-        An Ionic Framework and Cordova project.
-    </description>
-  <author email="you@example.com" href="http://example.com/">
-      Your Name Here
-    </author>
+      L'application du Cirrelt pour promouvoir le développement durable
+  </description>
+  <author email="anas.neumann.isamm@gmail.com" href="http://www.uprodit.com/">
+      Anas Neumann
+  </author>
   <content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
