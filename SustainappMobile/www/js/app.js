@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'ngCordova'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'ngCordova', 'pascalprecht.translate'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
@@ -25,7 +25,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 /**
  * ROUTING DE SUSTAINAPP
  */
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
     .state('tab', {
     url: '/tab',
@@ -59,8 +59,16 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
         }
       }
     })
-    
-  .state('tab.photo', {
+    .state('tab.account', {
+	  url: '/account',
+	  views: {
+	    'tab-account': {
+	      templateUrl: 'templates/tab-account.html',
+	      controller: 'AccountCtrl'
+	    }
+	  }
+    })
+   .state('tab.photo', {
 	  url: '/photo',
 	  views: {
 	    'tab-photo': {
@@ -70,6 +78,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	  }
   });
   $urlRouterProvider.otherwise('/tab/dash');
+  
+  /**
+   * SYSTEME DE TRADUCTION
+   */
+  $translateProvider.useSanitizeValueStrategy('escape');
+  $translateProvider.useStaticFilesLoader({prefix: 'i18n/', suffix: '.json'});
+  $translateProvider.registerAvailableLanguageKeys(['en','fr'], {'en_US': 'en', 'en_UK': 'en', 'fr_FR': 'fr', 'fr_BE': 'fr'})
+  .determinePreferredLanguage();
+  $translateProvider.use();
 });
 
 /**
