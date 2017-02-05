@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles des menus
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 04/02/2017
+ * @version 1.0
+ */
+ 
+/*
+ *=============================
+ * Menu principal de navigation
+ *=============================
+ */
+ 
+.tabs {
+    padding-top : 8px !important;
+}
