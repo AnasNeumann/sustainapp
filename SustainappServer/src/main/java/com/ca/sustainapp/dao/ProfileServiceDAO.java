@@ -18,13 +18,13 @@ import com.ca.sustainapp.repositories.ProfileRepository;
 import com.ca.sustainapp.specification.ProfileSpecification;
 
 /**
- * data access object service for profiles
+ * data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 25/01/2107
  * @verion 1.0
  */
-@Service("profileServiceDAO")
-public class ProfileServiceDAO extends GenericServiceDAO{
+@Service("profileService")
+public class ProfileServiceDAO extends GenericServiceDAO {
 	
 	/**
 	 * Le repository
@@ -69,9 +69,7 @@ public class ProfileServiceDAO extends GenericServiceDAO{
 	}
 	
 	/**
-	 * get All 
-	 * @param lastName
-	 * @param firstName
+	 * get All
 	 * @return
 	 */
 	@Transactional
@@ -93,8 +91,7 @@ public class ProfileServiceDAO extends GenericServiceDAO{
 		Page<ProfileEntity> page = repository.findAll(spec, paginator);
 		
 		SearchResult<ProfileEntity> result = initSearchResult(startIndex, maxResults);
-		result.setTotalResults(page.getTotalElements());
-		result.setResults(page.getContent());
+		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
 }

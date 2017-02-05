@@ -17,11 +17,10 @@ public class GenericServiceDAO {
 	 * @return SearchResult<T>
 	 */
 	public static <T> SearchResult<T> initSearchResult(Long startIndex, Long maxResults) {
-		SearchResult<T> rtn = new SearchResult<T>();
-		rtn.setTotalResults(0L);
-		rtn.setStartIndex(startIndex);
-		rtn.setMaxResults(maxResults);
-		return rtn;
+		return new SearchResult<T>()
+				.setTotalResults(0L)
+				.setStartIndex(startIndex)
+				.setMaxResults(maxResults);
 	}
 	
 }
