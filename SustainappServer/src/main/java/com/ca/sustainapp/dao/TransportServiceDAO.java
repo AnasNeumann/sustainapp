@@ -1,5 +1,7 @@
 package com.ca.sustainapp.dao;
 
+import static org.apache.commons.codec.binary.Base64.encodeBase64String;
+
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -41,7 +43,8 @@ public class TransportServiceDAO extends GenericServiceDAO {
 		if(null == id){
 			return null;
 		}
-		return repository.findOne(id);
+		TransportEntity entity = repository.findOne(id);
+		return entity.setBase64(encodeBase64String(entity.getIcon()));
 	}
 	
 	/**
@@ -74,7 +77,11 @@ public class TransportServiceDAO extends GenericServiceDAO {
 	 */
 	@Transactional
 	public List<TransportEntity> getAll(){
-		return repository.findAll();
+		List<TransportEntity> listResult = repository.findAll();
+		for(TransportEntity entity : listResult){
+			entity.setBase64(encodeBase64String(entity.getIcon()));
+		}
+		return listResult;
 	}
 
 	/**
@@ -92,6 +99,9 @@ public class TransportServiceDAO extends GenericServiceDAO {
 		
 		SearchResult<TransportEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
+		for(TransportEntity entity : result.getResults()){
+			entity.setBase64(encodeBase64String(entity.getIcon()));
+		}
 		return result;
 	}
 

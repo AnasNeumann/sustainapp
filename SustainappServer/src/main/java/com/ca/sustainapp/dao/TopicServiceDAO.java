@@ -1,5 +1,7 @@
 package com.ca.sustainapp.dao;
 
+import static org.apache.commons.codec.binary.Base64.encodeBase64String;
+
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
-
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.pojo.SearchResult;
@@ -41,7 +42,8 @@ public class TopicServiceDAO extends GenericServiceDAO {
 		if(null == id){
 			return null;
 		}
-		return repository.findOne(id);
+		TopicEntity entity = repository.findOne(id);
+		return entity.setBase64(encodeBase64String(entity.getPicture()));
 	}
 	
 	/**
@@ -74,7 +76,11 @@ public class TopicServiceDAO extends GenericServiceDAO {
 	 */
 	@Transactional
 	public List<TopicEntity> getAll(){
-		return repository.findAll();
+		List<TopicEntity> listResult = repository.findAll();
+		for(TopicEntity entity : listResult){
+			entity.setBase64(encodeBase64String(entity.getPicture()));
+		}
+		return listResult;
 	}
 
 	/**
@@ -92,6 +98,9 @@ public class TopicServiceDAO extends GenericServiceDAO {
 		
 		SearchResult<TopicEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
+		for(TopicEntity entity : result.getResults()){
+			entity.setBase64(encodeBase64String(entity.getPicture()));
+		}
 		return result;
 	}
 

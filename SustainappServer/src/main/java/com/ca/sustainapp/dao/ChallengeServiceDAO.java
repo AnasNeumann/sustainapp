@@ -1,5 +1,7 @@
 package com.ca.sustainapp.dao;
 
+import static org.apache.commons.codec.binary.Base64.encodeBase64String;
+
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -41,7 +43,8 @@ public class ChallengeServiceDAO extends GenericServiceDAO {
 		if(null == id){
 			return null;
 		}
-		return repository.findOne(id);
+		ChallengeEntity entity = repository.findOne(id);
+		return entity.setBase64(encodeBase64String(entity.getIcon()));
 	}
 	
 	/**
@@ -74,7 +77,11 @@ public class ChallengeServiceDAO extends GenericServiceDAO {
 	 */
 	@Transactional
 	public List<ChallengeEntity> getAll(){
-		return repository.findAll();
+		List<ChallengeEntity> listResult = repository.findAll();
+		for(ChallengeEntity entity : listResult){
+			entity.setBase64(encodeBase64String(entity.getIcon()));
+		}
+		return listResult;
 	}
 
 	/**
@@ -92,6 +99,9 @@ public class ChallengeServiceDAO extends GenericServiceDAO {
 		
 		SearchResult<ChallengeEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
+		for(ChallengeEntity entity : result.getResults()){
+			entity.setBase64(encodeBase64String(entity.getIcon()));
+		}
 		return result;
 	}
 }

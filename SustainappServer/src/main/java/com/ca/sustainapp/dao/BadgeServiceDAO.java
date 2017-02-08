@@ -16,6 +16,7 @@ import com.ca.sustainapp.entities.BadgeEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.repositories.BadgeRepository;
 import com.ca.sustainapp.specification.BadgeSpecification;
+import static org.apache.commons.codec.binary.Base64.encodeBase64String;
 
 /**
  * data access object service for Badge
@@ -41,7 +42,8 @@ public class BadgeServiceDAO extends GenericServiceDAO {
 		if(null == id){
 			return null;
 		}
-		return repository.findOne(id);
+		BadgeEntity entity = repository.findOne(id);
+		return entity.setBase64(encodeBase64String(entity.getIcon()));
 	}
 	
 	/**
@@ -74,7 +76,11 @@ public class BadgeServiceDAO extends GenericServiceDAO {
 	 */
 	@Transactional
 	public List<BadgeEntity> getAll(){
-		return repository.findAll();
+		List<BadgeEntity> listResult = repository.findAll();
+		for(BadgeEntity entity : listResult){
+			entity.setBase64(encodeBase64String(entity.getIcon()));
+		}
+		return listResult;
 	}
 
 	/**
@@ -92,6 +98,9 @@ public class BadgeServiceDAO extends GenericServiceDAO {
 		
 		SearchResult<BadgeEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
+		for(BadgeEntity entity : result.getResults()){
+			entity.setBase64(encodeBase64String(entity.getIcon()));
+		}
 		return result;
 	}
 }

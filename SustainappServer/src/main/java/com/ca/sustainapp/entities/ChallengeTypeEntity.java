@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.Transient;
+
 /**
  * CHALLENGE_TYPE table mapping
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
@@ -35,6 +37,9 @@ public class ChallengeTypeEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "ICON")
 	private byte[] icon;
+	
+	@Transient
+	private transient String base64;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -96,6 +101,21 @@ public class ChallengeTypeEntity extends GenericEntity implements Serializable {
 	 */
 	public ChallengeTypeEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
+		return this;
+	}
+	
+	/**
+	 * @return the base64
+	 */
+	public String getBase64() {
+		return base64;
+	}
+
+	/**
+	 * @param base64 the base64 to set
+	 */
+	public ChallengeTypeEntity setBase64(String base64) {
+		this.base64 = base64;
 		return this;
 	}
 
