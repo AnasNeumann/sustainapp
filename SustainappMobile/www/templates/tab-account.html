@@ -1,5 +1,15 @@
 <ion-view view-title="Account">
   <ion-content>
+  <ion-list>
+    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="badge in badges.data" type="item-text-wrap">
+      <img ng-src="data:image/jpeg;base64,{{badge.base64}}">
+      {{badge.name}}
+       <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+    </ion-item>
+  </ion-list>
     <ion-list>
     <ion-toggle  ng-model="settings.enableFriends">
         Enable Friends

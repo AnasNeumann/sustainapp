@@ -5,8 +5,9 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('PhotosCtrl', function($scope, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice) {
+.controller('PhotosCtrl', function($scope, $cordovaCamera, $http, $cordovaFile, $cordovaFileTransfer, $cordovaDevice) {
 
+	$scope.model = {};
 	
 	/**
 	 * Fonction de prise de photo et affichage
@@ -22,29 +23,23 @@ angular.module('sustainapp.controllers')
 	      targetHeight: 300,
 	      saveToPhotoAlbum: false
 	    };
-		
-
-		
 	    $cordovaCamera.getPicture(options).then(function(imageData) {
-
 	        window.FilePath.resolveNativePath(imageData, function(entry) {
 	            window.resolveLocalFileSystemURL(entry, success, fail);
 	            function fail(e) {
 	              console.error('Error: ', e);
 	            }
-	     
 	            function success(fileEntry) {
-	              var namePath = fileEntry.nativeURL.substr(0, fileEntry.nativeURL.lastIndexOf('/') + 1);
-	              // Only copy because of access rights
-	              $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function(success){
+	                var namePath = fileEntry.nativeURL.substr(0, fileEntry.nativeURL.lastIndexOf('/') + 1);
+	                $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function(success){
 	                $scope.image = newFileName;
 	              }, function(error){
 	                $scope.showAlert('Error', error.exception);
 	              });
 	            };
 	          });
-
 	    	$scope.imgURI = "data:image/jpeg;base64," + imageData;
+	    	$scope.model.picData = imageData;
 	    }, function(err) {
 	      console.log(err);
 	    });
@@ -66,9 +61,50 @@ angular.module('sustainapp.controllers')
 	    };
 	    $cordovaCamera.getPicture(options).then(function(imageData) {
 	      $scope.imgURI = "data:image/jpeg;base64," + imageData;
+	      $scope.model.picData = imageData;
+	      $scope.uploadFile();
 	    }, function(err) {
 	      console.log(err);
 	    });
   };
+  
+  /**
+   * Fonction d'envoi vers la base de données
+   *//*
+  $scope.send = function() {
+	  var options = {
+         fileKey: "file",
+         fileName: $scope.model.picData.substr($scope.model.picData.lastIndexOf('/') + 1),
+         chunkedMode: false,
+         mimeType: "image/jpg"
+      };
+	  $cordovaFileTransfer.upload("http://192.168.43.195:8085/profile/upload", $scope.model.picData,  options).then(function(result) {
+		  alert("SUCCESS: " + JSON.stringify(result.response));
+      }, function(err) {
+    	  alert("ERROR: " + JSON.stringify(err));
+      }, function (progress) {
+          // constant progress updates
+      });
+  }*/
+  
+  /**
+   * Autre mode d'envoi post de l'image
+   */
+  $scope.uploadFile = function() {
+	    var fd = new FormData();
+	    fd.append("file", $scope.model.picData);
+	    $http.post("http://192.168.43.195:8085/profile/upload", fd, {
+	        withCredentials: true,
+	        headers: {
+	        	'Content-Type': undefined
+            },
+	        transformRequest: angular.identity
+	    }).success(function(result) {
+			  alert("SUCCESS: " + JSON.stringify(result));
+	      }).error(function(err) {
+	    	  alert("ERROR: " + JSON.stringify(err));
+	    	  alert(fd);
+	      });
+	};
   
 });

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.Transient;
 
 /**
  * TOPIC table mapping
@@ -46,6 +47,9 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "PICTURE")
 	private byte[] picture;
+	
+	@Transient
+	private transient String base64;
 	
 	@Column(name = "LINK")
 	private String link;
@@ -250,6 +254,21 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	 */
 	public TopicEntity setListQuestion(List<QuestionEntity> listQuestion) {
 		this.listQuestion = listQuestion;
+		return this;
+	}
+	
+	/**
+	 * @return the base64
+	 */
+	public String getBase64() {
+		return base64;
+	}
+
+	/**
+	 * @param base64 the base64 to set
+	 */
+	public TopicEntity setBase64(String base64) {
+		this.base64 = base64;
 		return this;
 	}
 }

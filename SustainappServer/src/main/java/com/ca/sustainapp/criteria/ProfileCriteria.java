@@ -20,6 +20,7 @@ public class ProfileCriteria implements Serializable {
 	private Calendar bornDate;
 	private Boolean isAdmin;
 	private Calendar timestamps;
+	private String mail;
 
 	/**
 	 * @return the id
@@ -34,6 +35,22 @@ public class ProfileCriteria implements Serializable {
 	@QueryParam("id")
 	public ProfileCriteria setId(Long id) {
 		this.id = id;
+		return this;
+	}
+	
+	/**
+	 * @return the mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @param mail the mail to set
+	 */
+	@QueryParam("mail")
+	public ProfileCriteria setMail(String mail) {
+		this.mail = mail;
 		return this;
 	}
 

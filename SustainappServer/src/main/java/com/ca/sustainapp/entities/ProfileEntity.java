@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.Transient;
 
 /**
  * PROFILE table mapping
@@ -44,14 +45,26 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 	
+	@Column(name = "MAIL")
+	private String mail;
+	
+	@Column(name = "PASSWORD")
+	private String password;
+	
 	@Column(name = "BORN_DATE")
 	private Calendar bornDate;
 	
 	@Column(name = "AVATAR")
 	private byte[] avatar;
 	
+	@Transient
+	private transient String base64Avatar;
+	
 	@Column(name = "COVER")
 	private byte[] cover;
+	
+	@Transient
+	private transient String base64Cover;
 	
 	@Column(name = "IS_ADMIN")
 	private Boolean isAdmin;
@@ -423,6 +436,66 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	 */
 	public ProfileEntity setListMissionToDo(List<MissionEntity> listMissionToDo) {
 		this.listMissionToDo = listMissionToDo;
+		return this;
+	}
+
+	/**
+	 * @return the mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @param mail the mail to set
+	 */
+	public ProfileEntity setMail(String mail) {
+		this.mail = mail;
+		return this;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public ProfileEntity setPassword(String password) {
+		this.password = password;
+		return this;
+	}
+
+	/**
+	 * @return the base64Avatar
+	 */
+	public String getBase64Avatar() {
+		return base64Avatar;
+	}
+
+	/**
+	 * @param base64Avatar the base64Avatar to set
+	 */
+	public ProfileEntity setBase64Avatar(String base64Avatar) {
+		this.base64Avatar = base64Avatar;
+		return this;
+	}
+
+	/**
+	 * @return the base64Cover
+	 */
+	public String getBase64Cover() {
+		return base64Cover;
+	}
+
+	/**
+	 * @param base64Cover the base64Cover to set
+	 */
+	public ProfileEntity setBase64Cover(String base64Cover) {
+		this.base64Cover = base64Cover;
 		return this;
 	}
 }

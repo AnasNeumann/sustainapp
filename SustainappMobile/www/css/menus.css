@@ -5,30 +5,57 @@
  * @since 04/02/2017
  * @version 1.0
  */
- 
+
 /*
  *=============================
  * HEADER
  *=============================
  */
  
- ion-header-bar{
-  background-color: #3be8b0;
-  background: -webkit-linear-gradient(160deg, #3be8b0, #02ceff); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(160deg, #3be8b0, #02ceff); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(160deg, #3be8b0, #02ceff); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(160deg, #3be8b0, #02ceff); /* Standard syntax */
-  padding : 0px;
+[nav-bar-transition="ios"] [nav-bar="active"] .bar,
+[nav-bar-transition="ios"] [nav-bar="entering"] .bar,
+[nav-bar-transition="android"] [nav-bar="active"] .bar,
+[nav-bar-transition="android"] [nav-bar="entering"] .bar {
+  background-color: #112e34;/*
+  background: -webkit-linear-gradient(20deg, #3be8b0, #02ceff);
+  background: -o-linear-gradient(20deg, #3be8b0, #02ceff);
+  background: -moz-linear-gradient(20deg, #3be8b0, #02ceff);
+  background: linear-gradient(20deg, #3be8b0, #02ceff);
+  */
+  color : white;
 }
- 
+
 /*
  *=============================
  * Main Navigation Menu
  *=============================
  */
- 
+
 .tabs {
     padding-top : 8px !important;
+    background-color: #02ceff !important;
+    color : white;
+    border : none !important;
+}
+
+ion-tabs.tabs-color-active-positive .tab-item
+{
+	color : white;
+}
+
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active,
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.active,
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated,
+ion-tabs.tabs-color-active-positive .tab-item.tab-item-active,
+ion-tabs.tabs-color-active-positive .tab-item.active,
+ion-tabs.tabs-color-active-positive .tab-item.activated {
+	 color : #112e34;
+}
+
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active,
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.active,
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
+  border-bottom : 1px solid #112e34;
 }
 
 /*

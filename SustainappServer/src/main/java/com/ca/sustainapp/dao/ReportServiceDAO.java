@@ -1,5 +1,7 @@
 package com.ca.sustainapp.dao;
 
+import static org.apache.commons.codec.binary.Base64.encodeBase64String;
+
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -41,7 +43,8 @@ public class ReportServiceDAO extends GenericServiceDAO {
 		if(null == id){
 			return null;
 		}
-		return repository.findOne(id);
+		ReportEntity entity = repository.findOne(id);
+		return entity.setBase64(encodeBase64String(entity.getDocument()));
 	}
 	
 	/**
@@ -74,7 +77,11 @@ public class ReportServiceDAO extends GenericServiceDAO {
 	 */
 	@Transactional
 	public List<ReportEntity> getAll(){
-		return repository.findAll();
+		List<ReportEntity> listResult = repository.findAll();
+		for(ReportEntity entity : listResult){
+			entity.setBase64(encodeBase64String(entity.getDocument()));
+		}
+		return listResult;
 	}
 
 	/**
@@ -92,6 +99,9 @@ public class ReportServiceDAO extends GenericServiceDAO {
 		
 		SearchResult<ReportEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
+		for(ReportEntity entity : result.getResults()){
+			entity.setBase64(encodeBase64String(entity.getDocument()));
+		}
 		return result;
 	}
 
