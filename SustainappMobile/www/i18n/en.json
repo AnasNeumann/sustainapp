@@ -1,6 +1,11 @@
 {
-    "menu.status": "Status",
-    "menu.chats": "Chats",
-    "menu.account": "Account",
-    "menu.photo": "Photo"
+    "profile.mail": "email address",
+    "profile.password": "password",
+    "profile.firstName": "first name",
+    "profile.lastName": "last name",
+    
+    "login.login": "Login",
+    "login.signin": "Sign in !",
+    "login.alreadyHave": "You already have an account ? Click here",
+    "login.stillNot": "You don't have an account ? Please click here'"
 }

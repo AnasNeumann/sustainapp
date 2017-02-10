@@ -16,13 +16,17 @@
 [nav-bar-transition="ios"] [nav-bar="entering"] .bar,
 [nav-bar-transition="android"] [nav-bar="active"] .bar,
 [nav-bar-transition="android"] [nav-bar="entering"] .bar {
-  background-color: #112e34;/*
+  background-color: #28a754;/*
   background: -webkit-linear-gradient(20deg, #3be8b0, #02ceff);
   background: -o-linear-gradient(20deg, #3be8b0, #02ceff);
   background: -moz-linear-gradient(20deg, #3be8b0, #02ceff);
   background: linear-gradient(20deg, #3be8b0, #02ceff);
   */
   color : white;
+}
+
+.ion-navicon{
+	color : white;
 }
 
 /*
@@ -33,14 +37,14 @@
 
 .tabs {
     padding-top : 8px !important;
-    background-color: #02ceff !important;
+    background-color: #2dbe60 !important;
     color : white;
     border : none !important;
 }
 
 ion-tabs.tabs-color-active-positive .tab-item
 {
-	color : white;
+	color : #23964b;
 }
 
 ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active,
@@ -49,13 +53,13 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated,
 ion-tabs.tabs-color-active-positive .tab-item.tab-item-active,
 ion-tabs.tabs-color-active-positive .tab-item.active,
 ion-tabs.tabs-color-active-positive .tab-item.activated {
-	 color : #112e34;
+	 color : white;
 }
 
 ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active,
 ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.active,
 ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
-  border-bottom : 1px solid #112e34;
+  border-bottom : 2px solid #249b4e;
 }
 
 /*

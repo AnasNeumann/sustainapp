@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'ngCordova', 'pascalprecht.translate'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
@@ -27,7 +27,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
  */
 .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -82,12 +82,17 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
   /**
    * SYSTEME DE TRADUCTION
    */
-  $translateProvider.useSanitizeValueStrategy('escape');
   $translateProvider.useStaticFilesLoader({prefix: 'i18n/', suffix: '.json'});
+  $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
   $translateProvider.registerAvailableLanguageKeys(['en','fr'], {'en_US': 'en', 'en_UK': 'en', 'fr_FR': 'fr', 'fr_BE': 'fr'})
   .determinePreferredLanguage();
   $translateProvider.use();
 });
+
+/**
+ * CONSTANTES
+ */
+angular.module('sustainapp.constantes', []);
 
 /**
  * CONTROLLERS
@@ -98,3 +103,4 @@ angular.module('sustainapp.controllers', []);
  * SERVICES
  */
 angular.module('sustainapp.services', []);
+

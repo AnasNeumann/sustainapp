@@ -69,25 +69,6 @@ angular.module('sustainapp.controllers')
   };
   
   /**
-   * Fonction d'envoi vers la base de données
-   *//*
-  $scope.send = function() {
-	  var options = {
-         fileKey: "file",
-         fileName: $scope.model.picData.substr($scope.model.picData.lastIndexOf('/') + 1),
-         chunkedMode: false,
-         mimeType: "image/jpg"
-      };
-	  $cordovaFileTransfer.upload("http://192.168.43.195:8085/profile/upload", $scope.model.picData,  options).then(function(result) {
-		  alert("SUCCESS: " + JSON.stringify(result.response));
-      }, function(err) {
-    	  alert("ERROR: " + JSON.stringify(err));
-      }, function (progress) {
-          // constant progress updates
-      });
-  }*/
-  
-  /**
    * Autre mode d'envoi post de l'image
    */
   $scope.uploadFile = function() {

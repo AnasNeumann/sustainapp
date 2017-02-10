@@ -13,13 +13,14 @@ import com.ca.sustainapp.pojo.SustainappList;
 public class BadgeHttpRESTfullResponse extends HttpRESTfullResponse {
 		private static final long serialVersionUID = 1L;
 		private List<BadgeEntity> data = new SustainappList<BadgeEntity>();
-		
+
 		/**
 		 * @return the data
 		 */
 		public List<BadgeEntity> getData() {
 			return data;
 		}
+		
 		/**
 		 * @param data the data to set
 		 */
@@ -27,4 +28,5 @@ public class BadgeHttpRESTfullResponse extends HttpRESTfullResponse {
 			this.data = data;
 			return this;
 		}
+
 }

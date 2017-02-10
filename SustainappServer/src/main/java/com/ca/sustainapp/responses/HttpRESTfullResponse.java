@@ -3,6 +3,8 @@ package com.ca.sustainapp.responses;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.ca.sustainapp.utils.JsonUtils;
 
@@ -20,6 +22,7 @@ public class HttpRESTfullResponse implements Serializable {
 	protected static final long serialVersionUID = 1L;
 	protected Calendar buildDate; 
 	protected Integer code;
+	protected Map<String, String> errors = new HashMap<String, String>();
 
 	/**
 	 * @return the buildDate
@@ -48,6 +51,21 @@ public class HttpRESTfullResponse implements Serializable {
 	 */
 	public HttpRESTfullResponse setCode(Integer code) {
 		this.code = code;
+		return this;
+	}
+	
+	/**
+	 * @return the errors
+	 */
+	public Map<String, String> getErrors() {
+		return errors;
+	}
+
+	/**
+	 * @param errors the errors to set
+	 */
+	public HttpRESTfullResponse setErrors(Map<String, String> errors) {
+		this.errors = errors;
 		return this;
 	}
 

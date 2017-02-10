@@ -1,6 +1,11 @@
 {
-    "menu.status": "Statut",
-    "menu.chats": "Messagerie",
-    "menu.account": "Compte",
-    "menu.photo": "Photo"
+    "profile.mail": "adresse mail",
+    "profile.password": "mot de passe",
+    "profile.firstName": "prenom",
+    "profile.lastName": "nom de famille",
+    
+    "login.login": "Connexion",
+    "login.signin": "S'inscrire !",
+    "login.alreadyHave": "Vous avez deja un compte ? Clickez ici",
+    "login.stillNot": "Vous n'etes pas encore inscrit ? Clickez ici"
 }

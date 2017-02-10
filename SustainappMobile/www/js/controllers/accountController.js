@@ -11,14 +11,12 @@ angular.module('sustainapp.controllers')
   };
   
 	var badgeService = function(){
-  	  $scope.loadingProfiles = true;
-  	  profilService.allBadges().then(function(response){
-  		  $scope.badges = response.data;
-  		  $scope.loadingProfiles = false;
-  	  });
-    };
-	
-	    
-    badgeService();
-  
+	  $scope.loadingProfiles = true;
+	  profilService.allBadges().then(function(response){
+		  $scope.badges = response.data;
+		  $scope.loadingProfiles = false;
+	  });
+	};
+		    
+	badgeService();
 });

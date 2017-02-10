@@ -1,7 +1,6 @@
 package com.ca.sustainapp.controllers;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,10 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.dao.BadgeServiceDAO;
 import com.ca.sustainapp.entities.BadgeEntity;
-import com.ca.sustainapp.entities.ProfileEntity;
-import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.BadgeHttpRESTfullResponse;
-import com.ca.sustainapp.responses.ProfileHttpRESTfullResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.JsonUtils;
 
@@ -30,42 +26,13 @@ import com.ca.sustainapp.utils.JsonUtils;
  */
 @CrossOrigin
 @RestController
-public class ProfileController {
+public class EssaiUploadController extends GenericController {
 	
 	/**
 	 * Service
 	 */
 	@Autowired
 	private BadgeServiceDAO service;
-	
-	/**
-	 * get all profiles
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/profile", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request) {
-		String query = request.getParameter("query");
-		if(null == query){
-			return SustainappConstantes.SUCCES_JSON;
-		} else {
-			return JsonUtils.objectTojsonQuietly(query,String.class);
-		}      
-    }
-	
-	/**
-	 * get all profiles
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/profile/all", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getAll(HttpServletRequest request) {
-		ProfileEntity p1 = new ProfileEntity().setId(1L).setFirstName("Anas").setLastName("Neumann");
-		ProfileEntity p2 = new ProfileEntity().setId(2L).setFirstName("Hedi").setLastName("Mabrouk");
-		ProfileEntity p3 = new ProfileEntity().setId(3L).setFirstName("Moustapha").setLastName("Roty");
-		List<ProfileEntity> data = new SustainappList<ProfileEntity>().put(p1).put(p2).put(p3);
-		return new ProfileHttpRESTfullResponse().setData(data).buildJson();
-    }
 
 	/**
 	 * Upload d'image dans la table image
