@@ -16,12 +16,8 @@
 [nav-bar-transition="ios"] [nav-bar="entering"] .bar,
 [nav-bar-transition="android"] [nav-bar="active"] .bar,
 [nav-bar-transition="android"] [nav-bar="entering"] .bar {
-  background-color: #28a754;/*
-  background: -webkit-linear-gradient(20deg, #3be8b0, #02ceff);
-  background: -o-linear-gradient(20deg, #3be8b0, #02ceff);
-  background: -moz-linear-gradient(20deg, #3be8b0, #02ceff);
-  background: linear-gradient(20deg, #3be8b0, #02ceff);
-  */
+  background-color: #28a754;
+  box-shadow : 0px 0px 2px 1px rgba(0,0,0,0.35);
   color : white;
 }
 
@@ -67,3 +63,46 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
  * Left Slide Menu 
  *=============================
  */
+
+.menu-left{
+	background-color: #2dbe60 !important;
+}
+
+.sideMenuHeader{
+	background-color: #2dbe60!important;
+	color : white;
+	height : 200px;
+	background-image: none !important;
+	border-bottom : 1px solid #249b4e;
+}
+
+.sideMenuContent{
+	top : 200px;
+	overflow:hidden;
+}
+
+.sideMenuItem,
+.sideMenuItem .item-content {
+	background-color: transparent;
+	border : none;
+	color : white;
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.sideMenuItem{
+   border-bottom : 1px solid #249b4e;
+   font-size : 20px;
+}
+
+.sideMenuItem .item-content:active{
+   background-color: #28a754;
+   -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.sideMenuIcon{
+	margin-right : 5px;
+	position : relative;
+	top : 2px;
+}
