@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('PhotosCtrl', function($scope, $cordovaCamera, $http, $cordovaFile, $cordovaFileTransfer, $cordovaDevice) {
+.controller('notificationsController', function($scope, $cordovaCamera, $http, $cordovaFile, $cordovaFileTransfer, $cordovaDevice) {
 
 	$scope.model = {};
 	

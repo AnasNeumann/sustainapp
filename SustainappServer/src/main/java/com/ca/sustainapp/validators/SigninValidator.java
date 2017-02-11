@@ -51,7 +51,7 @@ public class SigninValidator extends GenericValidator {
 		} else if(exitMail(request.getParameter("mail"))){
 			result.put("mail", "form.mail.exist");
 		}
-		if(isEmpty(request.getParameter("password"))){
+		if(isEmpty(request.getParameter("password")) || request.getParameter("password").length() < 4){
 			result.put("password", "form.password.mandatory");
 		}
 		if(isEmpty(request.getParameter("firstName"))){

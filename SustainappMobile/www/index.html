@@ -27,11 +27,11 @@
 
     <!-- ALL CONTROLLERS -->
     <script src="js/controllers/mainController.js"></script>
-    <script src="js/controllers/photoController.js"></script>
-    <script src="js/controllers/searchController.js"></script>
-    <script src="js/controllers/chatController.js"></script>
-    <script src="js/controllers/accountController.js"></script>
-    <script src="js/controllers/detailController.js"></script>
+    <script src="js/controllers/notificationsController.js"></script>
+    <script src="js/controllers/newsController.js"></script>
+    <script src="js/controllers/challengesController.js"></script>
+    <script src="js/controllers/certificatesController.js"></script>
+    <script src="js/controllers/challengesDetailController.js"></script>
     
     <!-- ALL SERVICES -->
     <script src="js/services/chatService.js"></script>
@@ -41,7 +41,7 @@
     
     <!-- MODE CONNECTE -->
     <ion-side-menus ng-show="loginModel.isConnected">	  	  
-	  <ion-side-menu side="left" expose-aside-when="large"> 
+	  <ion-side-menu side="left"> 
 	   <div ng-include src="'templates/common/sideMenu.html'"></div>   	   
 	  </ion-side-menu>
 	  <ion-side-menu-content >

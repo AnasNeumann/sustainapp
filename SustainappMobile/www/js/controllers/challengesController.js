@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('ChatsCtrl', function($scope, Chats, profilService) {
+	.controller('challengesController', function($scope, Chats, profilService) {
 		/*
 		var profileService = function(){
 	  	  $scope.loadingProfiles = true;

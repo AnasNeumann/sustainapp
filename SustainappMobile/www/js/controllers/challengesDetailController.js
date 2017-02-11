@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+.controller('challengesDetailController', function($scope, $stateParams, Chats) {
  
 	$scope.chat = Chats.get($stateParams.chatId);
 });

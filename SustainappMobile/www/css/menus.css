@@ -21,8 +21,18 @@
   color : white;
 }
 
-.ion-navicon{
-	color : white;
+.ion-navicon,
+.ion-navicon:hover{
+	color : white !important;
+}
+
+.platform-android .bar .title {
+    left : 61px;   
+}
+
+.platform-ios .bar .title,
+.platform-android .bar .title {
+	font-size : 25px;
 }
 
 /*
@@ -71,14 +81,14 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
 .sideMenuHeader{
 	background-color: #2dbe60!important;
 	color : white;
-	height : 200px;
+	height : 170px;
 	background-image: none !important;
 	border-bottom : 1px solid #249b4e;
 }
 
 .sideMenuContent{
-	top : 200px;
-	overflow:hidden;
+	top : 170px;
+	overflow-y : auto;
 }
 
 .sideMenuItem,
@@ -95,10 +105,15 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
    font-size : 20px;
 }
 
-.sideMenuItem .item-content:active{
-   background-color: #28a754;
+.sideMenuItem.active,
+.sideMenuItem.activated,
+.sideMenuItem.active .item-content,
+.sideMenuItem.activated .item-content,
+.sideMenuItem .item-content.active,
+.sideMenuItem .item-content.activated{
+   background-color: #28a754 !important;
    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+   transition: all 0.2s ease-in-out
 }
 
 .sideMenuIcon{

@@ -30,54 +30,54 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/common/tabs.html'
   })
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.news', {
+    url: '/news',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-news': {
+        templateUrl: 'templates/news/news-main.html',
+        controller: 'newsController'
       }
     }
   })
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.challenges', {
+      url: '/challenges',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-challenges': {
+          templateUrl: 'templates/challenges/challenges-main.html',
+          controller: 'challengesController'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    .state('tab.challenges-detail', {
+      url: '/challenges/:id',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+          templateUrl: 'templates/challenges/challenges-detail.html',
+          controller: 'challengesDetailController'
         }
       }
     })
-    .state('tab.account', {
-	  url: '/account',
+    .state('tab.certificates', {
+	  url: '/certificates',
 	  views: {
-	    'tab-account': {
-	      templateUrl: 'templates/tab-account.html',
-	      controller: 'AccountCtrl'
+	    'tab-certificates': {
+	      templateUrl: 'templates/certificates/certificates-main.html',
+	      controller: 'certificatesController'
 	    }
 	  }
     })
-   .state('tab.photo', {
-	  url: '/photo',
+   .state('tab.notifications', {
+	  url: '/notifications',
 	  views: {
-	    'tab-photo': {
-	      templateUrl: 'templates/photo.html',
-	      controller: 'PhotosCtrl'
+	    'tab-notifications': {
+	      templateUrl: 'templates/notifications/notifications-main.html',
+	      controller: 'notificationsController'
 	    }
 	  }
   });
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/news');
   
   /**
    * SYSTEME DE TRADUCTION

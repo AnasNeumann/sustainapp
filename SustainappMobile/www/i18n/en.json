@@ -7,5 +7,15 @@
     "login.login": "Login",
     "login.signin": "Sign in !",
     "login.alreadyHave": "You already have an account ? Click here",
-    "login.stillNot": "You don't have an account ? Please click here'"
+    "login.stillNot": "You don't have an account ? Please click here'",
+    
+    "sideMenu.profile" : "Profile",
+    "sideMenu.teams" : "Teams",
+    "sideMenu.signal" : "Signal",
+    "sideMenu.disconnection" : "Disconnection",
+    
+    "viewTitle.news" : "News",
+    "viewTitle.challenges" : "Challenges",
+    "viewTitle.certificates" : "Certificates",
+    "viewTitle.notifications" : "Notifications"
 }

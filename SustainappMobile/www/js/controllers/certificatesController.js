@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('AccountCtrl', function($scope, profilService) {
+.controller('certificatesController', function($scope, profilService) {
   $scope.settings = {
     enableFriends: true
   };
