@@ -18,7 +18,8 @@ import com.ca.sustainapp.pojo.SearchResult;
 /**
  * Validator pour le formulaire d'inscription
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- *
+ * @since 11/02/2017
+ * @version 1.0
  */
 @Component
 public class SigninValidator extends GenericValidator {
@@ -84,7 +85,7 @@ public class SigninValidator extends GenericValidator {
 		if(null != listResult.getResults()){
 			for(ProfileEntity profile : listResult.getResults()){
 				if(profile.getMail().equals(mail)){
-					return false;
+					return true;
 				}
 			}
 		}

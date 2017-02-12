@@ -17,7 +17,8 @@ angular.module('sustainapp.controllers')
 		$scope.loginModel.lastName = "";
 		$scope.loginModel.isConnected = false;
 		$scope.loginModel.modeLogin = true;
-		
+		$scope.loginModel.allErrors = [];
+			
 		/**
 		 * fonction d'inscription
 		 */
@@ -35,30 +36,59 @@ angular.module('sustainapp.controllers')
 	            },
 		        transformRequest: angular.identity
 		    }).success(function(result) {		    	
-		    	$scope.loginModel.isConnected = true;
-		    	session.profile = result.profile;
+		    	if(result.code == 1){
+		    		$scope.loginModel.allErrors = [];
+		    		$scope.loginModel.isConnected = true;
+			    	session.profile = result.profile;
+		    	} else {
+		    		$scope.loginModel.allErrors = result.errors;
+		    	}
 		    });
-		}		
-		
+		}
+
 		/**
 		 * fonction de connexion
 		 */
 		$scope.login = function(){
-			return null;
+			var data = new FormData();
+			data.append("mail", $scope.loginModel.mail);
+			data.append("password", $scope.loginModel.password);
+			
+			$http.post(config.localServer+"/login", data, {
+		        withCredentials: true,
+		        headers: {
+		        	'Content-Type': undefined
+	            },
+		        transformRequest: angular.identity
+		    }).success(function(result) {		    	
+		    	if(result.code == 1){
+		    		$scope.loginModel.allErrors = [];
+		    		$scope.loginModel.isConnected = true;
+			    	session.profile = result.profile;
+		    	} else {
+		    		$scope.loginModel.allErrors = result.errors;
+		    	}
+		    });
 		}
 
 		/**
 		 * fonction de deconnexion
 		 */
 		$scope.logout = function(){
-			return null;
+			$http.get(config.localServer+"/logout").then(function(response){
+				if(response.data.code == 1){
+					session = {};
+					$scope.loginModel.isConnected = false;
+				}
+		  	});
 		}
 
 		/**
-		 * fonction de verification si on est connecté
+		 * fonction de verification si on est connecté executée au démarage de l'application
 		 */
 		$scope.getSession = function(){
-			
+			return null;
 		}
+		$scope.getSession();
 
 	});

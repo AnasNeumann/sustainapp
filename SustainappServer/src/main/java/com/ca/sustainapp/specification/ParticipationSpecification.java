@@ -14,6 +14,12 @@ import org.springframework.data.jpa.domain.Specification;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
 import com.ca.sustainapp.entities.ParticipationEntity;
 
+/**
+ * specification for database research
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 12/02/2017
+ * @version 1.0
+ */
 public class ParticipationSpecification {
 	/**
 	 * private constructor
@@ -39,8 +45,8 @@ public class ParticipationSpecification {
 						listeCond.add(p);
 					}
 
-					if (null != criteres.getProfilId()) {
-						Predicate p = cb.equal(root.<Long> get("profilId"), criteres.getProfilId());
+					if (null != criteres.getTargetId()) {
+						Predicate p = cb.equal(root.<Long> get("targetId"), criteres.getTargetId());
 						listeCond.add(p);
 					}
 					
@@ -49,8 +55,21 @@ public class ParticipationSpecification {
 						listeCond.add(p);
 					}
 					
-					if (null != criteres.getScore()) {
-						Predicate p = cb.equal(root.<Integer> get("score"), criteres.getScore());
+
+					if (null != criteres.getTitle()) {
+						Predicate p = cb.like(cb.lower(root.<String> get("title")), criteres.getTitle().toLowerCase() + "%");
+						listeCond.add(p);
+					}
+					
+
+					if (null != criteres.getAbout()) {
+						Predicate p = cb.like(cb.lower(root.<String> get("about")), criteres.getAbout().toLowerCase() + "%");
+						listeCond.add(p);
+					}
+					
+
+					if (null != criteres.getTargetType()) {
+						Predicate p = cb.like(cb.lower(root.<String> get("targetType")), criteres.getTargetType().toLowerCase() + "%");
 						listeCond.add(p);
 					}
 					

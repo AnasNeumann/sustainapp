@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.ProfileCriteria;
 import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.SessionResponse;
 import com.ca.sustainapp.utils.StringsUtils;
+import com.ca.sustainapp.validators.LoginValidator;
 import com.ca.sustainapp.validators.SigninValidator;
 
 /**
@@ -32,7 +35,9 @@ public class SessionController extends GenericController {
 	 */
 	@Autowired
 	private SigninValidator signinValidator;
-
+	@Autowired
+	private LoginValidator loginValidator;
+	
 	/**
 	 * create a new account
 	 * @return
@@ -48,7 +53,7 @@ public class SessionController extends GenericController {
 		}
 		ProfileEntity profile = new ProfileEntity()
 				.setMail(request.getParameter("mail"))
-				.setPassword(StringsUtils.md5Hash(request.getParameter("mail")))
+				.setPassword(StringsUtils.md5Hash(request.getParameter("password")))
 				.setFirstName(request.getParameter("firstName"))
 				.setLastName(request.getParameter("lastName"))
 				.setTimestamps(GregorianCalendar.getInstance())
@@ -66,7 +71,21 @@ public class SessionController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/login", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String login(HttpServletRequest request) {
-		return null;
+		SessionResponse response = new SessionResponse();
+		response.setErrors(loginValidator.validate(request));
+		if(null != response.getErrors() && response.getErrors().size() > 0){
+			response.setCode(0);
+			return response.buildJson();
+		}
+		ProfileEntity profile = existAccount(request.getParameter("mail"), request.getParameter("password"));
+		if(null == profile){
+			response.setCode(0);
+			response.getErrors().put("mail", "form.mail.matching");
+			return response.buildJson();
+		}
+		super.reloadSession(request, profile.getId());
+		response.setCode(1);
+		return response.setProfile(profile).buildJson();
     }
 
 	/**
@@ -74,7 +93,7 @@ public class SessionController extends GenericController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/logout", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/logout", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return new HttpRESTfullResponse().setCode(1).buildJson();
@@ -96,5 +115,23 @@ public class SessionController extends GenericController {
 		}
 		return response.buildJson();
     }
+	
+	/**
+	 * Verifier si le compte existe bien
+	 * @param mail
+	 * @param passowrd
+	 * @return
+	 */
+	private ProfileEntity existAccount(String mail, String passowrd){
+		SearchResult<ProfileEntity> listResult = profilService.searchByCriteres(new ProfileCriteria().setMail(mail), 0L, 100L);
+		if(null != listResult.getResults()){
+			for(ProfileEntity profile : listResult.getResults()){
+				if(profile.getMail().equals(mail) && profile.getPassword().equals(StringsUtils.md5Hash(passowrd))){
+					return profile;
+				}
+			}
+		}
+		return null;
+	}
 
 }

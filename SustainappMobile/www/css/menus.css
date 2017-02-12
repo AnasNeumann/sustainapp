@@ -121,3 +121,8 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
 	position : relative;
 	top : 2px;
 }
+
+.s-menus-avatar {
+	border-radius : 150px;
+	overflow:hidden;
+}

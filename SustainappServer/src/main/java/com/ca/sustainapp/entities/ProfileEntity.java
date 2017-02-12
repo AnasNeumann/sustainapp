@@ -90,10 +90,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
-	private List<ParticipationEntity> listParticipation = new ArrayList<ParticipationEntity>();
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
 	private List<ProfilBadgeEntity> listBadge = new ArrayList<ProfilBadgeEntity>();
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -301,21 +297,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	 */
 	public ProfileEntity setListChallenge(List<ChallengeEntity> listChallenge) {
 		this.listChallenge = listChallenge;
-		return this;
-	}
-
-	/**
-	 * @return the listParticipation
-	 */
-	public List<ParticipationEntity> getListParticipation() {
-		return listParticipation;
-	}
-
-	/**
-	 * @param listParticipation the listParticipation to set
-	 */
-	public ProfileEntity setListParticipation(List<ParticipationEntity> listParticipation) {
-		this.listParticipation = listParticipation;
 		return this;
 	}
 

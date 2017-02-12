@@ -90,3 +90,7 @@
 	cursor: pointer;
 	text-decoration: underline;
 }
+
+.s-login-error {
+	color  : white;
+}
