@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.ca.sustainapp.entities.ParticipationEntity;
 
 /**
- * Repository for ParticipationEntity
+ * Repository for ParticipationRepository
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 30/01/2017
  * @version 1.0

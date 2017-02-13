@@ -1,0 +1,96 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles de la page de connexion
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 09/02/2017
+ * @version 1.0
+ */
+
+.s-login-view {
+  background-color: #2dbe60;
+  color : white;
+}
+
+.s-login-content{
+	padding : 25px;
+}
+
+.s-login-logo{
+	width : 110px;
+	height : 110px;
+	display: block;
+	margin:auto;
+	margin-top:30px;
+	margin-bottom:30px;
+}
+
+.s-login-input{
+	width : 100%;
+	background-color: transparent;
+	border-bottom : 1px solid #23964b !important;
+	height : 50px;
+	color : white !important;
+	font-family: sustainapp;
+	font-size : 20px !important;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+.s-login-input:focus{
+	border-bottom : 2px solid white !important;
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+::-webkit-input-placeholder {
+    color: #23964b !important;
+}
+:-moz-placeholder {
+   color: #23964b !important;
+   opacity:  1;
+}
+::-moz-placeholder {
+   color: #23964b !important;
+   opacity:  1;
+}
+:-ms-input-placeholder {
+   color: #23964b !important;
+}
+
+.s-login-label{
+	color: #23964b !important;
+}
+
+.s-login-btn{
+	background-color: #23964b;
+	color: white;
+	border:none;
+	height : 50px;
+	font-size : 20px;
+	font-family: sustainapp;
+	width:100%;
+	display:block;
+	margin-top:30px;
+	margin-bottom:40px;
+	border-radius : 3px;
+	-webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.s-login-btn:active {
+    background-color: #28a754;
+    -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.s-login-p{
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.s-login-error {
+	color  : white;
+}

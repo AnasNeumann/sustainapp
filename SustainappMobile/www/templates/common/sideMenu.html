@@ -1,0 +1,23 @@
+<header class="bar bar-header sideMenuHeader">
+    <img src="img/common/defaultAvatar.png" class="s-login-logo s-menus-avatar"/>
+</header>
+<ion-content class="has-header sideMenuContent">
+  <ion-list class="sideMenuItem">
+    <ion-item menu-close href="#/app/search" class="sideMenuItem">
+      <i class="icon ion-person sideMenuIcon"></i>
+      {{'sideMenu.profile' | translate}}
+    </ion-item>
+    <ion-item menu-close href="#/app/search" class="sideMenuItem">
+      <i class="icon ion-person-stalker sideMenuIcon"></i>
+      {{'sideMenu.teams' | translate}}
+    </ion-item>
+    <ion-item menu-close href="#/app/search" class="sideMenuItem">
+      <i class="icon ion-nuclear sideMenuIcon"></i>
+      {{'sideMenu.signal' | translate}}
+    </ion-item>
+    <ion-item menu-close ng-click="logout()" class="sideMenuItem">
+      <i class="icon ion-log-out sideMenuIcon"></i>
+      {{'sideMenu.disconnection' | translate}}
+    </ion-item>
+  </ion-list>
+</ion-content>   

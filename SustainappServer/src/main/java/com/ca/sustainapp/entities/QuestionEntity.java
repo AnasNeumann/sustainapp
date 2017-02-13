@@ -37,10 +37,10 @@ public class QuestionEntity extends GenericEntity implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	@Column(name = "TOPIC_ID")
 	private Long topicId;
-	
+
 	@Column(name = "MESSAGE")
 	private String message;
 

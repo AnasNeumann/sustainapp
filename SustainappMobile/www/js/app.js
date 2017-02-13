@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'ngCordova', 'pascalprecht.translate'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
@@ -27,67 +27,72 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
  */
 .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/common/tabs.html'
   })
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.news', {
+    url: '/news',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-news': {
+        templateUrl: 'templates/news/news-main.html',
+        controller: 'newsController'
       }
     }
   })
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.challenges', {
+      url: '/challenges',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-challenges': {
+          templateUrl: 'templates/challenges/challenges-main.html',
+          controller: 'challengesController'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    .state('tab.challenges-detail', {
+      url: '/challenges/:id',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+          templateUrl: 'templates/challenges/challenges-detail.html',
+          controller: 'challengesDetailController'
         }
       }
     })
-    .state('tab.account', {
-	  url: '/account',
+    .state('tab.certificates', {
+	  url: '/certificates',
 	  views: {
-	    'tab-account': {
-	      templateUrl: 'templates/tab-account.html',
-	      controller: 'AccountCtrl'
+	    'tab-certificates': {
+	      templateUrl: 'templates/certificates/certificates-main.html',
+	      controller: 'certificatesController'
 	    }
 	  }
     })
-   .state('tab.photo', {
-	  url: '/photo',
+   .state('tab.notifications', {
+	  url: '/notifications',
 	  views: {
-	    'tab-photo': {
-	      templateUrl: 'templates/photo.html',
-	      controller: 'PhotosCtrl'
+	    'tab-notifications': {
+	      templateUrl: 'templates/notifications/notifications-main.html',
+	      controller: 'notificationsController'
 	    }
 	  }
   });
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/news');
   
   /**
    * SYSTEME DE TRADUCTION
    */
-  $translateProvider.useSanitizeValueStrategy('escape');
   $translateProvider.useStaticFilesLoader({prefix: 'i18n/', suffix: '.json'});
+  $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
   $translateProvider.registerAvailableLanguageKeys(['en','fr'], {'en_US': 'en', 'en_UK': 'en', 'fr_FR': 'fr', 'fr_BE': 'fr'})
   .determinePreferredLanguage();
   $translateProvider.use();
 });
+
+/**
+ * CONSTANTES
+ */
+angular.module('sustainapp.constantes', []);
 
 /**
  * CONTROLLERS
@@ -98,3 +103,4 @@ angular.module('sustainapp.controllers', []);
  * SERVICES
  */
 angular.module('sustainapp.services', []);
+

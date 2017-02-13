@@ -1,0 +1,10 @@
+<ion-view view-title="{{'viewTitle.notifications' | translate }}">
+  <ion-content>
+    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+    <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300">
+    <button class="button icon-left ion-camera" ng-click="takePicture()">Take a new picture</button>
+    <button class="button icon-left ion-camera" ng-click="loadPicture()">Choose from gallery</button>
+    <input type="file" id="essai" ng-model="model.picData" />
+    <button class="button icon-left ion-camera" ng-click="uploadFile()">Essai sur PC</button>
+  </ion-content>
+</ion-view>
