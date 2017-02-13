@@ -21,26 +21,4 @@ angular.module('sustainapp.controllers')
 	  $scope.remove = function(chat) {
 	    Chats.remove(chat);
 	  };
-	  
-		/**
-		 * fonction de verification si on est connecté executée au démarage de l'application
-		 *//*
-		$scope.getSession = function(){
-			var data = new FormData();
-			data.append("sessionId", session.id);
-			data.append("sessionToken", session.token);
-			
-			$http.post(config.localServer+"/session", data, {
-		        withCredentials: true,
-		        headers: {
-		        	'Content-Type': undefined
-	            },
-		        transformRequest: angular.identity
-		    }).success(function(result) {		    	
-		    	console.log(result);
-		    });
-
-		}
-		$scope.getSession();
-	  */
 	});
