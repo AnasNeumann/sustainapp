@@ -30,7 +30,7 @@ import com.ca.sustainapp.validators.SigninValidator;
  */
 @CrossOrigin
 @RestController
-public class LoginController extends GenericController {
+public class UserAccountController extends GenericController {
 
 	/**
 	 * Injection de dépendances

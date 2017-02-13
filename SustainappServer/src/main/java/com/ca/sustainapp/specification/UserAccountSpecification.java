@@ -1,7 +1,6 @@
 package com.ca.sustainapp.specification;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
