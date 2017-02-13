@@ -1,6 +1,8 @@
 package com.ca.sustainapp.controllers;
 
 import java.util.GregorianCalendar;
+import java.util.Optional;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
-import com.ca.sustainapp.criteria.ProfileCriteria;
+import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
-import com.ca.sustainapp.pojo.SearchResult;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.SessionResponse;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -28,7 +30,7 @@ import com.ca.sustainapp.validators.SigninValidator;
  */
 @CrossOrigin
 @RestController
-public class SessionController extends GenericController {
+public class LoginController extends GenericController {
 
 	/**
 	 * Injection de dépendances
@@ -37,6 +39,8 @@ public class SessionController extends GenericController {
 	private SigninValidator signinValidator;
 	@Autowired
 	private LoginValidator loginValidator;
+	@Autowired
+	private ProfileServiceDAO profilService;
 	
 	/**
 	 * create a new account
@@ -51,17 +55,24 @@ public class SessionController extends GenericController {
 			response.setCode(0);
 			return response.buildJson();
 		}
-		ProfileEntity profile = new ProfileEntity()
+		UserAccountEntity user = new  UserAccountEntity()
 				.setMail(request.getParameter("mail"))
 				.setPassword(StringsUtils.md5Hash(request.getParameter("password")))
+				.setIsAdmin(false)
+				.setTimestamps(GregorianCalendar.getInstance());
+		Long idUser = super.userService.createOrUpdate(user);
+		ProfileEntity profile = new ProfileEntity()
+				.setUserId(idUser)
 				.setFirstName(request.getParameter("firstName"))
 				.setLastName(request.getParameter("lastName"))
-				.setTimestamps(GregorianCalendar.getInstance())
-				.setIsAdmin(false);
-		response.setCode(1);
+				.setTimestamps(GregorianCalendar.getInstance());
 		profile.setId(profilService.createOrUpdate(profile));
-		super.reloadSession(request, profile.getId());
-		return response.setProfile(profile).buildJson();
+		response.setCode(1);
+		return response
+			.setId(idUser)
+			.setToken(super.createSession(user.setProfile(profile)))
+			.setProfile(profile)
+			.buildJson();
     }
 
 	/**
@@ -77,15 +88,20 @@ public class SessionController extends GenericController {
 			response.setCode(0);
 			return response.buildJson();
 		}
-		ProfileEntity profile = existAccount(request.getParameter("mail"), request.getParameter("password"));
-		if(null == profile){
+		UserAccountEntity user = userService.connect(request.getParameter("mail"), StringsUtils.md5Hash(request.getParameter("password")));
+		if(null == user){
 			response.setCode(0);
 			response.getErrors().put("mail", "form.mail.matching");
 			return response.buildJson();
 		}
-		super.reloadSession(request, profile.getId());
+		String token;
+		if(!isEmpty(user.getToken())){
+			token = user.getToken();
+		}else{
+			token = super.createSession(user);
+		}
 		response.setCode(1);
-		return response.setProfile(profile).buildJson();
+		return response.setId(user.getId()).setToken(token).setProfile(user.getProfile()).buildJson();
     }
 
 	/**
@@ -93,10 +109,17 @@ public class SessionController extends GenericController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/logout", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/logout", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String logout(HttpServletRequest request) {
-		request.getSession().invalidate();
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
+		String token = request.getParameter("sessionToken");
+		if(!id.isPresent() || null == token){
+			return new HttpRESTfullResponse().setCode(0).buildJson(); 
+		}
+		if(super.deleteSession(id.get(), token)){
+			 return new HttpRESTfullResponse().setCode(1).buildJson(); 
+		}
+		return  new HttpRESTfullResponse().setCode(0).buildJson(); 
     }
 
 	/**
@@ -104,34 +127,21 @@ public class SessionController extends GenericController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/session", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/session", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String verifySession(HttpServletRequest request) {
-		SessionResponse response = new SessionResponse();
-		if(super.isConnected(request)){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
+		String token = request.getParameter("sessionToken");
+		if(!id.isPresent() || null == token){
+			return new HttpRESTfullResponse().setCode(0).buildJson(); 
+		}
+		if(super.isConnected(id.get(), token)){
+			SessionResponse response = new SessionResponse()
+					.setId(id.get())
+					.setToken(token)
+					.setProfile(super.verifySession(id.get(), token).getProfile());
 			response.setCode(1);
-			response.setProfile(super.getSession(request));
-		} else {
-			response.setCode(0);
+			return response.buildJson();
 		}
-		return response.buildJson();
+		return new HttpRESTfullResponse().setCode(0).buildJson(); 
     }
-	
-	/**
-	 * Verifier si le compte existe bien
-	 * @param mail
-	 * @param passowrd
-	 * @return
-	 */
-	private ProfileEntity existAccount(String mail, String passowrd){
-		SearchResult<ProfileEntity> listResult = profilService.searchByCriteres(new ProfileCriteria().setMail(mail), 0L, 100L);
-		if(null != listResult.getResults()){
-			for(ProfileEntity profile : listResult.getResults()){
-				if(profile.getMail().equals(mail) && profile.getPassword().equals(StringsUtils.md5Hash(passowrd))){
-					return profile;
-				}
-			}
-		}
-		return null;
-	}
-
 }

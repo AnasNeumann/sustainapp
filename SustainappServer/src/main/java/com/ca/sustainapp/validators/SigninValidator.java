@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ca.sustainapp.criteria.ProfileCriteria;
-import com.ca.sustainapp.dao.ProfileServiceDAO;
-import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.criteria.UserAccountCriteria;
+import com.ca.sustainapp.dao.UserAccountServiceDAO;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 
 /**
@@ -28,7 +28,7 @@ public class SigninValidator extends GenericValidator {
 	 * Service d'accès à la base de données
 	 */
 	@Autowired
-	private ProfileServiceDAO service;
+	private UserAccountServiceDAO service;
 	
 	/**
 	 * Variables
@@ -81,10 +81,10 @@ public class SigninValidator extends GenericValidator {
 	 * @return
 	 */
 	private boolean exitMail(String mail){
-		SearchResult<ProfileEntity> listResult = service.searchByCriteres(new ProfileCriteria().setMail(mail), 0L, 100L);
+		SearchResult<UserAccountEntity> listResult = service.searchByCriteres(new UserAccountCriteria().setMail(mail), 0L, 100L);
 		if(null != listResult.getResults()){
-			for(ProfileEntity profile : listResult.getResults()){
-				if(profile.getMail().equals(mail)){
+			for(UserAccountEntity user : listResult.getResults()){
+				if(user.getMail().equals(mail)){
 					return true;
 				}
 			}

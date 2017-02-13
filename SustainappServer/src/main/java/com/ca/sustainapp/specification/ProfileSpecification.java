@@ -61,16 +61,6 @@ public class ProfileSpecification {
 						listeCond.add(p);
 					}
 					
-					if (null != criteres.getMail()) {
-						Predicate p = cb.like(cb.lower(root.<String> get("mail")), criteres.getMail().toLowerCase() + "%");
-						listeCond.add(p);
-					}
-					
-					if (null != criteres.getIsAdmin()) {
-						Predicate p = cb.equal(root.<Boolean> get("isAdmin"), criteres.getIsAdmin());
-						listeCond.add(p);
-					}
-					
 					if (null != criteres.getTimestamps()) {
 						Predicate p = cb.equal(root.<Calendar> get("timestamps"), criteres.getTimestamps());
 						listeCond.add(p);

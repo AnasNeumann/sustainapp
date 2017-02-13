@@ -45,12 +45,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 	
-	@Column(name = "MAIL")
-	private String mail;
-	
-	@Column(name = "PASSWORD")
-	private String password;
-	
 	@Column(name = "BORN_DATE")
 	private Calendar bornDate;
 	
@@ -66,11 +60,11 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Transient
 	private transient String base64Cover;
 	
-	@Column(name = "IS_ADMIN")
-	private Boolean isAdmin;
-	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
+	
+	@Column(name = "USER_ACCOUNT_ID")
+	private Long userId;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
@@ -207,21 +201,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	 */
 	public ProfileEntity setCover(byte[] cover) {
 		this.cover = cover;
-		return this;
-	}
-
-	/**
-	 * @return the isAdmin
-	 */
-	public Boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	/**
-	 * @param isAdmin the isAdmin to set
-	 */
-	public ProfileEntity setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
 		return this;
 	}
 
@@ -421,36 +400,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the mail
-	 */
-	public String getMail() {
-		return mail;
-	}
-
-	/**
-	 * @param mail the mail to set
-	 */
-	public ProfileEntity setMail(String mail) {
-		this.mail = mail;
-		return this;
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password the password to set
-	 */
-	public ProfileEntity setPassword(String password) {
-		this.password = password;
-		return this;
-	}
-
-	/**
 	 * @return the base64Avatar
 	 */
 	public String getBase64Avatar() {
@@ -477,6 +426,21 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	 */
 	public ProfileEntity setBase64Cover(String base64Cover) {
 		this.base64Cover = base64Cover;
+		return this;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public Long getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public ProfileEntity setUserId(Long userId) {
+		this.userId = userId;
 		return this;
 	}
 }

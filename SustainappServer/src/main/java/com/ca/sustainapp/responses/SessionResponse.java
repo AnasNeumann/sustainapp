@@ -11,6 +11,8 @@ import com.ca.sustainapp.entities.ProfileEntity;
 public class SessionResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private ProfileEntity profile;
+	private Long id;
+	private String token;
 	
 	/**
 	 * @return the profile
@@ -27,4 +29,33 @@ public class SessionResponse extends HttpRESTfullResponse {
 		return this;
 	}
 
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public SessionResponse setId(Long id) {
+		this.id = id;
+		return this;
+	}
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token the token to set
+	 */
+	public SessionResponse setToken(String token) {
+		this.token = token;
+		return this;
+	}
 }

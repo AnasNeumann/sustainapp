@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('challengesController', function($scope, Chats, profilService) {
+	.controller('challengesController', function($scope, $http, Chats, config, session) {
 		/*
 		var profileService = function(){
 	  	  $scope.loadingProfiles = true;
@@ -22,4 +22,25 @@ angular.module('sustainapp.controllers')
 	    Chats.remove(chat);
 	  };
 	  
+		/**
+		 * fonction de verification si on est connecté executée au démarage de l'application
+		 *//*
+		$scope.getSession = function(){
+			var data = new FormData();
+			data.append("sessionId", session.id);
+			data.append("sessionToken", session.token);
+			
+			$http.post(config.localServer+"/session", data, {
+		        withCredentials: true,
+		        headers: {
+		        	'Content-Type': undefined
+	            },
+		        transformRequest: angular.identity
+		    }).success(function(result) {		    	
+		    	console.log(result);
+		    });
+
+		}
+		$scope.getSession();
+	  */
 	});

@@ -13,14 +13,12 @@ import javax.ws.rs.QueryParam;
  */
 public class ProfileCriteria implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	private Long id;
 	private String lastName;
 	private String firstName;
 	private Calendar bornDate;
-	private Boolean isAdmin;
 	private Calendar timestamps;
-	private String mail;
+
 
 	/**
 	 * @return the id
@@ -35,22 +33,6 @@ public class ProfileCriteria implements Serializable {
 	@QueryParam("id")
 	public ProfileCriteria setId(Long id) {
 		this.id = id;
-		return this;
-	}
-	
-	/**
-	 * @return the mail
-	 */
-	public String getMail() {
-		return mail;
-	}
-
-	/**
-	 * @param mail the mail to set
-	 */
-	@QueryParam("mail")
-	public ProfileCriteria setMail(String mail) {
-		this.mail = mail;
 		return this;
 	}
 
@@ -99,22 +81,6 @@ public class ProfileCriteria implements Serializable {
 	@QueryParam("bornDate")
 	public ProfileCriteria setBornDate(Calendar bornDate) {
 		this.bornDate = bornDate;
-		return this;
-	}
-
-	/**
-	 * @return the isAdmin
-	 */
-	public Boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	/**
-	 * @param isAdmin the isAdmin to set
-	 */
-	@QueryParam("isAdmin")
-	public ProfileCriteria setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
 		return this;
 	}
 

@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('mainController', function($scope, $http, config, session) {
+	.controller('mainController', function($scope, $http, $window, config, session) {
 		
 		/**
 		 * Initialisation du model
@@ -29,20 +29,14 @@ angular.module('sustainapp.controllers')
 			data.append("firstName", $scope.loginModel.firstName);
 			data.append("password", $scope.loginModel.password);
 			
-			$http.post(config.localServer+"/signin", data, {
+			$http.post(config.remoteServer+"/signin", data, {
 		        withCredentials: true,
 		        headers: {
 		        	'Content-Type': undefined
 	            },
 		        transformRequest: angular.identity
 		    }).success(function(result) {		    	
-		    	if(result.code == 1){
-		    		$scope.loginModel.allErrors = [];
-		    		$scope.loginModel.isConnected = true;
-			    	session.profile = result.profile;
-		    	} else {
-		    		$scope.loginModel.allErrors = result.errors;
-		    	}
+		    	openSession(result);
 		    });
 		}
 
@@ -54,20 +48,14 @@ angular.module('sustainapp.controllers')
 			data.append("mail", $scope.loginModel.mail);
 			data.append("password", $scope.loginModel.password);
 			
-			$http.post(config.localServer+"/login", data, {
+			$http.post(config.remoteServer+"/login", data, {
 		        withCredentials: true,
 		        headers: {
 		        	'Content-Type': undefined
 	            },
 		        transformRequest: angular.identity
 		    }).success(function(result) {		    	
-		    	if(result.code == 1){
-		    		$scope.loginModel.allErrors = [];
-		    		$scope.loginModel.isConnected = true;
-			    	session.profile = result.profile;
-		    	} else {
-		    		$scope.loginModel.allErrors = result.errors;
-		    	}
+		    	openSession(result);
 		    });
 		}
 
@@ -75,20 +63,65 @@ angular.module('sustainapp.controllers')
 		 * fonction de deconnexion
 		 */
 		$scope.logout = function(){
-			$http.get(config.localServer+"/logout").then(function(response){
-				if(response.data.code == 1){
-					session = {};
+			var data = new FormData();
+			data.append("sessionId", session.id);
+			data.append("sessionToken", session.token);
+			
+			$http.post(config.remoteServer+"/logout", data, {
+		        withCredentials: true,
+		        headers: {
+		        	'Content-Type': undefined
+	            },
+		        transformRequest: angular.identity
+		    }).success(function(result) {		    	
+		    	if(result.code == 1){
+		    		session = {};
+		    		$window.localStorage['id'] = null;
+		    		$window.localStorage['token'] = null;
 					$scope.loginModel.isConnected = false;
-				}
-		  	});
+		    	}
+		    });
 		}
 
 		/**
 		 * fonction de verification si on est connecté executée au démarage de l'application
 		 */
-		$scope.getSession = function(){
-			return null;
+		$scope.initialConnection = function(){
+			if(null == $window.localStorage['id'] || null == $window.localStorage['token']){
+				return;
+			}
+			var data = new FormData();
+			data.append("sessionId", $window.localStorage['id']);
+			data.append("sessionToken", $window.localStorage['token']);
+			$http.post(config.remoteServer+"/session", data, {
+		        withCredentials: true,
+		        headers: {
+		        	'Content-Type': undefined
+	            },
+		        transformRequest: angular.identity
+		    }).success(function(result) {		    	
+		    	openSession(result);
+		    	console.log(result);
+		    });
 		}
-		$scope.getSession();
+		$scope.initialConnection();
+		
+		
+		/**
+		 * Fonction commune d'ouverture local d'une session
+		 */
+		var openSession = function (result){
+			if(result.code == 1){
+	    		$scope.loginModel.allErrors = [];
+	    		$scope.loginModel.isConnected = true;
+		    	session.profile = result.profile;
+		    	session.id = result.id;
+		    	session.token = result.token;
+		    	$window.localStorage['id'] = session.id;
+		    	$window.localStorage['token'] = session.token;
+	    	} else {
+	    		$scope.loginModel.allErrors = result.errors;
+	    	}
+		}
 
 	});
