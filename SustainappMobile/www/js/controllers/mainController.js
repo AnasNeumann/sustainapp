@@ -101,7 +101,6 @@ angular.module('sustainapp.controllers')
 		        transformRequest: angular.identity
 		    }).success(function(result) {		    	
 		    	openSession(result);
-		    	console.log(result);
 		    });
 		}
 		$scope.initialConnection();
