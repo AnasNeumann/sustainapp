@@ -5,16 +5,16 @@
  * @version 1.0
  */
 angular.module('sustainapp.services')
- .factory('profilService', function($http, config) {
+ .factory('profileService', function($http, config) {
 	return {
 		allProfiles : function() {
-			return $http.get(config.localServer+"/profile/all");
+			return $http.get(config.remoteServer+"/profile/all");
 		},
 		search : function(query) {
-			return $http.get(config.localServer+"/profile?query=" + query);
+			return $http.get(config.remoteServer+"/profile?query=" + query);
 		},
 		allBadges : function() {
-			return $http.get(config.localServer+"/badge/all");
+			return $http.get(config.remoteServer+"/badge/all");
 		}
 	};
 });

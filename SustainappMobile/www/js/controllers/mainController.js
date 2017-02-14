@@ -5,19 +5,26 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('mainController', function($scope, $window, userService, session) {
+	.controller('mainController', function($scope, $window, $state, userService, session) {
 		
 		/**
 		 * Initialisation du model
-		 */
-		$scope.loginModel = {};
-		$scope.loginModel.mail = "";
-		$scope.loginModel.password = "";
-		$scope.loginModel.firstName = "";
-		$scope.loginModel.lastName = "";
-		$scope.loginModel.isConnected = false;
-		$scope.loginModel.modeLogin = true;
-		$scope.loginModel.allErrors = [];
+		 */	
+		var initLoginModel = function(){
+			$scope.loginModel = {};
+			$scope.loginModel.mail = "";
+			$scope.loginModel.password = "";
+			$scope.loginModel.firstName = "";
+			$scope.loginModel.lastName = "";
+			$scope.loginModel.isConnected = false;
+			$scope.loginModel.modeLogin = true;
+			$scope.loginModel.allErrors = [];
+			if(null != $window.localStorage['mail'] && null != $window.localStorage['password']){
+				$scope.loginModel.mail = $window.localStorage['mail'];
+				$scope.loginModel.password = $window.localStorage['password'];
+			}
+		};
+		initLoginModel();
 			
 		/**
 		 * fonction d'inscription
@@ -28,8 +35,8 @@ angular.module('sustainapp.controllers')
 			data.append("lastName", $scope.loginModel.lastName);
 			data.append("firstName", $scope.loginModel.firstName);
 			data.append("password", $scope.loginModel.password);
-			userService.sigin(data).success(function(result) {		    	
-		    	openSession(result);
+			userService.signin(data).success(function(result) {		    	
+		    	openSession(result, $scope.loginModel.mail, $scope.loginModel.password);
 		    });
 		}
 
@@ -41,7 +48,7 @@ angular.module('sustainapp.controllers')
 			data.append("mail", $scope.loginModel.mail);
 			data.append("password", $scope.loginModel.password);
 			userService.login(data).success(function(result) {		    	
-		    	openSession(result);
+		    	openSession(result, $scope.loginModel.mail, $scope.loginModel.password);
 		    });
 		}
 
@@ -55,8 +62,7 @@ angular.module('sustainapp.controllers')
 			userService.logout(data).success(function(result) {		    	
 				$scope.loginModel.isConnected = false;
 	    		session = {};
-	    		$window.localStorage['id'] = null;
-	    		$window.localStorage['token'] = null;				
+	    		$window.localStorage['isConnected'] = "false";
 		    });
 		}
 
@@ -64,12 +70,12 @@ angular.module('sustainapp.controllers')
 		 * fonction de verification si on est connecté executée au démarage de l'application
 		 */
 		var initialConnection = function(){
-			if(null != $window.localStorage['id'] && null != $window.localStorage['token']){
+			if(null != $window.localStorage['mail'] && null != $window.localStorage['password'] && "true" == $window.localStorage['isConnected']){
 				var data = new FormData();
-				data.append("sessionId", $window.localStorage['id']);
-				data.append("sessionToken", $window.localStorage['token']);
-				userService.session(data).success(function(result) {		    	
-			    	openSession(result);
+				data.append("mail", $window.localStorage['mail']);
+				data.append("password", $window.localStorage['password']);
+				userService.login(data).success(function(result) {		    	
+			    	openSession(result, $window.localStorage['mail'], $window.localStorage['password']);
 			    });
 			}
 		}
@@ -80,18 +86,26 @@ angular.module('sustainapp.controllers')
 		 * Fonction commune d'ouverture local d'une session
 		 * @param result
 		 */
-		var openSession = function (result){
+		var openSession = function (result, mail, password){
+			$window.localStorage['mail'] = mail;
+	    	$window.localStorage['password'] = password;
 			if(result.code == 1){
 	    		$scope.loginModel.allErrors = [];
 	    		$scope.loginModel.isConnected = true;
 		    	session.profile = result.profile;
 		    	session.id = result.id;
 		    	session.token = result.token;
-		    	$window.localStorage['id'] = session.id;
-		    	$window.localStorage['token'] = session.token;
+		    	$window.localStorage['isConnected'] = "true";
 	    	} else {
 	    		$scope.loginModel.allErrors = result.errors;
 	    	}
+		}
+		
+		/**
+		 * Affichage du journal d'actualités
+		 */
+		$scope.displayNews = function(){
+			$state.go('tab.news')
 		}
 
 	});

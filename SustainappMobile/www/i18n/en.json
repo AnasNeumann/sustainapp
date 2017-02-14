@@ -1,8 +1,13 @@
 {
+    "common.modify" : "modify",
+    "common.loading" : "Loading",
+    
     "profile.mail": "email address",
     "profile.password": "password",
     "profile.firstName": "first name",
     "profile.lastName": "last name",
+    "profile.bornDate" : "date of birth",
+    "profile.yearsOld" : "years old",
     
     "login.login": "Login",
     "login.signin": "Sign in !",
@@ -19,11 +24,12 @@
     "viewTitle.certificates" : "Certificates",
     "viewTitle.notifications" : "Notifications",
     
-     "form.mail.mandatory" : "The mail field is mandatory",
-     "form.mail.format" : "Please enter a valid mail format",
-     "form.mail.exist" : "The email address is already used",
-     "form.password.mandatory" : "The password field is mandatory and must contains at least 4 characters",
-     "form.firstName.mandatory" : "The first name field is mandatory",
-     "form.lastName.mandatory" : "The last name field is mandatory",
-     "form.mail.matching" : "This couple mail/passowrd doesn't exist"
+    "form.mail.mandatory" : "The mail field is mandatory",
+    "form.mail.format" : "Please enter a valid mail format",
+    "form.mail.exist" : "The email address is already used",
+    "form.password.mandatory" : "The password field is mandatory and must contains at least 4 characters",
+    "form.firstName.mandatory" : "The first name field is mandatory",
+    "form.lastName.mandatory" : "The last name field is mandatory",
+    "form.mail.matching" : "This couple mail/passowrd doesn't exist",
+    "form.bornDate.mandatory" : "Please enter a valid date format"
 }

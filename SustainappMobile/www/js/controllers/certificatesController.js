@@ -5,11 +5,11 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('certificatesController', function($scope, profilService) {
+.controller('certificatesController', function($scope, profileService) {
   $scope.settings = {
     enableFriends: true
   };
-  
+  /*
 	var badgeService = function(){
 	  $scope.loadingProfiles = true;
 	  profilService.allBadges().then(function(response){
@@ -19,4 +19,5 @@ angular.module('sustainapp.controllers')
 	};
 		    
 	badgeService();
+	*/
 });

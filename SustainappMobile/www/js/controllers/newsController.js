@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('newsController', function($scope, profilService) {
+.controller('newsController', function($scope, profileService) {
 	
 	$scope.model = {};
 	

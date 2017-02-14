@@ -112,8 +112,14 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
 .sideMenuItem .item-content.active,
 .sideMenuItem .item-content.activated{
    background-color: #28a754 !important;
-   -webkit-transition: all 0.2s ease-in-out;
-   transition: all 0.2s ease-in-out
+   -webkit-transition: background-color 0.2s ease-in-out;
+   transition: background-color 0.2s ease-in-out;
+   border : none; 
+}
+
+.sideMenuItem.active,
+.sideMenuItem.activated{
+	border-bottom : 1px solid #249b4e;
 }
 
 .sideMenuIcon{

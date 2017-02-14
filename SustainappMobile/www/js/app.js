@@ -32,6 +32,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
     abstract: true,
     templateUrl: 'templates/common/tabs.html'
   })
+  .state('tab.profile', {
+    url: '/profile',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/profile/profile-main.html',
+        controller: 'profileController'
+      }
+    }
+  })
   .state('tab.news', {
     url: '/news',
     views: {
