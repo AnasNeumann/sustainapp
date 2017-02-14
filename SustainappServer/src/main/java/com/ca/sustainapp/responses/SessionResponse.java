@@ -3,7 +3,7 @@ package com.ca.sustainapp.responses;
 import com.ca.sustainapp.entities.ProfileEntity;
 
 /**
- * Json de réponse lors d'une tentative d'inscription l'inscription
+ * Json de réponse lors d'une tentative d'inscription ou de connexion
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 10/02/2017
  * @version 1.0

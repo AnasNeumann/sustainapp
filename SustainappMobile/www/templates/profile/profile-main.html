@@ -1,8 +1,8 @@
 <ion-view view-title="{{'sideMenu.profile' | translate }}">
-  <ion-content ng-show="profileModel.loading">
+  <ion-content ng-show="profileModel.loaded">
     <!-- Cover Picture -->
     <div class="s-profile-coverContainer">
-	    <div class="s-profile-camera">
+	    <div class="s-profile-camera" ng-show="profileModel.owner">
 	       <i class="icon ion-camera"></i>
 	    </div>
     </div>
@@ -11,49 +11,51 @@
         <!-- Avatar Picture-->
         <div class="s-profile-avatarContainer">
             <div style="background-image: url('img/common/defaultAvatarMin.png');" class="s-profile-avatar">
-                <div class="s-profile-camera">
+                <div class="s-profile-camera" ng-show="profileModel.owner">
 		           <i class="icon ion-camera"></i>
 		        </div>
             </div>
-        </div>
-        
+        </div>       
         
         <!-- Personal Informations -->
         <div class="s-profile-infos" >
             <div ng-show="profileModel.modeRead" class="animate">
-	            <h2 class="s-profile-name">Anas Neumann</h2>
-	            <p>13/09/1992</p>
-	            <div class="s-profile-edit" ng-click="profileModel.modeRead = false;">
+	            <h2 class="s-profile-name">{{profileModel.profile.firstName}} {{profileModel.profile.lastName}}</h2>
+	            <p>{{profileModel.profile.bornDate}}</p>
+	            <div class="s-profile-edit" ng-click="profileModel.modeRead = false;" ng-show="profileModel.owner">
 	               <i class="icon ion-edit"></i>
 	            </div>
             </div>
-            <div ng-hide="profileModel.modeRead" class="animate">
-              <div class="s-profile-edit" ng-click="profileModel.modeRead = true;">
-                   <i class="icon ion-close-round"></i>
-              </div>
-              <label class="item item-input item-floating-label" >
-                <span class="input-label s-common-label">{{'profile.firstName' | translate}}</span>
-                <input ng-model="profileModel.firstName" type="text" placeholder="{{'profile.firstName' | translate}}" class="s-common-input">
-                <span class="">{{profileModel.allErrors.firstName | translate}}</span>
-              </label>
-              <label class="item item-input item-floating-label" > 
-                <span class="input-label s-common-label">{{'profile.lastName' | translate}}</span> 
-                <input ng-model="profileModel.lastName" type="text" placeholder="{{'profile.lastName' | translate}}" class="s-common-input">
-                <span class="">{{profileModel.allErrors.lastName | translate}}</span>
-              </label>
-              <label class="item item-input item-floating-label" >
-                <span class="input-label s-common-label">{{'profile.bornDate' | translate}}</span>
-                <input ng-model="profileModel.bornDate" type="date" placeholder="{{'profile.bornDate' | translate}}" class="s-common-input">
-                <span class="">{{profileModel.allErrors.bornDate | translate}}</span>
-              </label>
-              <button class="s-login-btn" ng-click="profileModel.update()">{{'common.modify' | translate}}</button>
-            </div>
+            <div ng-show="profileModel.owner">
+	            <div ng-hide="profileModel.modeRead" >
+	              <div class="s-profile-edit" ng-click="profileModel.modeRead = true;">
+	                   <i class="icon ion-close-round"></i>
+	              </div>
+	              <label class="item item-input item-floating-label" >
+	                <span class="input-label s-common-label">{{'profile.firstName' | translate}}</span>
+	                <input ng-model="profileModel.profileTemp.firstName" type="text" placeholder="{{'profile.firstName' | translate}}" class="s-common-input">
+	                <span class="">{{profileModel.allErrors.firstName | translate}}</span>
+	              </label>
+	              <label class="item item-input item-floating-label" > 
+	                <span class="input-label s-common-label">{{'profile.lastName' | translate}}</span> 
+	                <input ng-model="profileModel.profileTemp.lastName" type="text" placeholder="{{'profile.lastName' | translate}}" class="s-common-input">
+	                <span class="">{{profileModel.allErrors.lastName | translate}}</span>
+	              </label>
+	              <label class="item item-input item-floating-label" >
+	                <span class="input-label s-common-label">{{'profile.bornDate' | translate}}</span>
+	                <input ng-model="profileModel.profileTemp.bornDate" type="date" placeholder="{{'profile.bornDate' | translate}}" class="s-common-input">
+	                <span class="">{{profileModel.allErrors.bornDate | translate}}</span>
+	              </label>
+	              <button class="s-login-btn" ng-click="profileModel.update()">{{'common.modify' | translate}}</button>
+	            </div>
+	        </div>
         </div>
-        
         
     </div>
   </ion-content>
-  <ion-content class="s-common-loading" ng-hide="profileModel.loading">
+  
+  <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="profileModel.loaded">
         <ion-spinner icon="dots"></ion-spinner>
         <h1 class="s-common-loadingText">{{'common.loading' | translate}}</h1>
   </ion-content>

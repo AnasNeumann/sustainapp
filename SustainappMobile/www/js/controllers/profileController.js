@@ -5,22 +5,36 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('profileController', function($scope, session, profileService) {
+	.controller('profileController', function($scope, $stateParams, session, profileService) {
+		
+		/**
+		 * Entrée dans la page
+		 */
+		$scope.$on('$ionicView.beforeEnter', function() {
+				loadProfile();
+	        });
 		
 		/**
 		 * Fonction initiale d'affichage de la page
 		 */
-		var initProfileModel = function(){
+		var loadProfile = function(){
 			$scope.profileModel = {};
-			$scope.profileModel.loading = true;
-			$scope.profileModel.modeRead = true;
-			$scope.profileModel.firstName = "";
-			$scope.profileModel.lastName = "";
-			$scope.profileModel.bornDate = "";
-			$scope.profileModel.allErrors = [];
-		};
-		initProfileModel();
-		
-		
-		
+			$scope.profileModel.profile = {};
+			$scope.profileModel.modeRead = true; 
+			$scope.profileModel.loaded = false;
+			$scope.profileModel.owner = false;
+			profileService.getById($stateParams.id).then(function(response){
+				if(response.data.code == 1) {
+	    			 $scope.profileModel.profile = response.data.profiles[0];
+	    			 $scope.profileModel.profileTemp = response.data.profiles[0];
+		    		 $scope.profileModel.loaded = true;
+		    		 $scope.profileModel.allErrors = [];	
+		    		 if(response.data.profiles[0].id == session.profile.id){
+		    			 $scope.profileModel.owner = true;
+		    		 }
+	    		 }
+	     	  });
+	    };
+	    
+				
 	});

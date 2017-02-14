@@ -7,14 +7,8 @@
 angular.module('sustainapp.services')
  .factory('profileService', function($http, config) {
 	return {
-		allProfiles : function() {
-			return $http.get(config.remoteServer+"/profile/all");
-		},
-		search : function(query) {
-			return $http.get(config.remoteServer+"/profile?query=" + query);
-		},
-		allBadges : function() {
-			return $http.get(config.remoteServer+"/badge/all");
+		getById : function(id) {
+			return $http.get(config.remoteServer+"/profile?id="+id);
 		}
 	};
 });

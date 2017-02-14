@@ -92,6 +92,7 @@ angular.module('sustainapp.controllers')
 			if(result.code == 1){
 	    		$scope.loginModel.allErrors = [];
 	    		$scope.loginModel.isConnected = true;
+	    		$scope.loginModel.profileId = result.profile.id;
 		    	session.profile = result.profile;
 		    	session.id = result.id;
 		    	session.token = result.token;

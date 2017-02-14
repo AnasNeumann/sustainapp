@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.dao.BadgeServiceDAO;
 import com.ca.sustainapp.entities.BadgeEntity;
-import com.ca.sustainapp.responses.BadgeHttpRESTfullResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.JsonUtils;
 
@@ -51,15 +50,4 @@ public class EssaiUploadController extends GenericController {
 				.setIcon(FilesUtils.compressImage(bytes, FilesUtils.FORMAT_JPG));
 		return JsonUtils.objectTojsonQuietly(service.createOrUpdate(badge),Long.class);
 	}
-	
-	/**
-	 * get all badge
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/badge/all", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-	public String getAllBadge(HttpServletRequest request){
-		return new BadgeHttpRESTfullResponse().setData(service.getAll()).buildJson(); 
-	}
-	
 }
