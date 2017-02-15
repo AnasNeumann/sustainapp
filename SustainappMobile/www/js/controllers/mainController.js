@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('mainController', function($scope, $window, $state, userService, session) {
+	.controller('mainController', function($scope, sessionService, $state, userService) {
 		
 		/**
 		 * Initialisation du model
@@ -19,9 +19,9 @@ angular.module('sustainapp.controllers')
 			$scope.loginModel.isConnected = false;
 			$scope.loginModel.modeLogin = true;
 			$scope.loginModel.allErrors = [];
-			if(null != $window.localStorage['mail'] && null != $window.localStorage['password']){
-				$scope.loginModel.mail = $window.localStorage['mail'];
-				$scope.loginModel.password = $window.localStorage['password'];
+			if(null != sessionService.get('mail') && null != sessionService.get('password')){
+				$scope.loginModel.mail = sessionService.get('mail');
+				$scope.loginModel.password = sessionService.get('password');
 			}
 		};
 		initLoginModel();
@@ -57,12 +57,13 @@ angular.module('sustainapp.controllers')
 		 */
 		$scope.logout = function(){
 			var data = new FormData();
-			data.append("sessionId", session.id);
-			data.append("sessionToken", session.token);
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
 			userService.logout(data).success(function(result) {		    	
 				$scope.loginModel.isConnected = false;
-	    		session = {};
-	    		$window.localStorage['isConnected'] = "false";
+				sessionService.set('id' ,null);
+				sessionService.set('token' ,null);
+				sessionService.set('isConnected' ,null);
 		    });
 		}
 
@@ -70,12 +71,12 @@ angular.module('sustainapp.controllers')
 		 * fonction de verification si on est connecté executée au démarage de l'application
 		 */
 		var initialConnection = function(){
-			if(null != $window.localStorage['mail'] && null != $window.localStorage['password'] && "true" == $window.localStorage['isConnected']){
+			if(null != sessionService.get('mail') && null != sessionService.get('password') && "true" == sessionService.get('isConnected')){
 				var data = new FormData();
-				data.append("mail", $window.localStorage['mail']);
-				data.append("password", $window.localStorage['password']);
+				data.append("mail", sessionService.get('mail'));
+				data.append("password", sessionService.get('password'));
 				userService.login(data).success(function(result) {		    	
-			    	openSession(result, $window.localStorage['mail'], $window.localStorage['password']);
+			    	openSession(result, sessionService.get('mail'), sessionService.get('password'));
 			    });
 			}
 		}
@@ -87,16 +88,16 @@ angular.module('sustainapp.controllers')
 		 * @param result
 		 */
 		var openSession = function (result, mail, password){
-			$window.localStorage['mail'] = mail;
-	    	$window.localStorage['password'] = password;
+	    	sessionService.set('mail' ,mail);
+    		sessionService.set('password' ,password);
 			if(result.code == 1){
-	    		$scope.loginModel.allErrors = [];
-	    		$scope.loginModel.isConnected = true;
-	    		$scope.loginModel.profileId = result.profile.id;
-		    	session.profile = result.profile;
-		    	session.id = result.id;
-		    	session.token = result.token;
-		    	$window.localStorage['isConnected'] = "true";
+	    		$scope.loginModel.allErrors = [];    		
+	    		$scope.loginModel.profileId = result.profile.id;  
+	    		sessionService.setObject('profile' ,result.profile);
+	    		sessionService.set('id' ,result.id);
+	    		sessionService.set('token' ,result.token);
+	    		sessionService.set('isConnected' ,"true");
+		    	$scope.loginModel.isConnected = true;
 	    	} else {
 	    		$scope.loginModel.allErrors = result.errors;
 	    	}

@@ -1,6 +1,8 @@
 {
     "common.modify" : "modifier",
     "common.loading" : "Chargement",
+    "common.takePicture" : "Prendre une photo",
+    "common.chooseFormGallery" : "Importer",
 
     "profile.mail": "adresse mail",
     "profile.password": "mot de passe",

@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('challengesController', function($scope, $http, Chats, config, session) {
+	.controller('challengesController', function($scope) {
 		/*
 		var profileService = function(){
 	  	  $scope.loadingProfiles = true;
@@ -17,8 +17,10 @@ angular.module('sustainapp.controllers')
 	
 	  profileService();
 	  */
+		/*
 	  $scope.chats = Chats.all();
 	  $scope.remove = function(chat) {
 	    Chats.remove(chat);
 	  };
+	  */
 	});

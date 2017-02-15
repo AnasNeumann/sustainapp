@@ -45,7 +45,7 @@ public class GenericController {
 	 * @param request
 	 * @return
 	 */
-	protected UserAccountEntity verifySession(Long userId, String token){
+	protected UserAccountEntity getConnectedUser(Long userId, String token){
 		return userService.getByToken(userId, token);
 	}
 	
@@ -56,7 +56,7 @@ public class GenericController {
 	 * @return
 	 */
 	protected boolean isConnected(Long userId, String token){
-		return verifySession(userId, token) != null;
+		return getConnectedUser(userId, token) != null;
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class GenericController {
 		if(!id.isPresent() || null == token){
 			return false;
 		}
-		return verifySession(id.get(), token) != null;
+		return getConnectedUser(id.get(), token) != null;
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class GenericController {
 		if(!id.isPresent() || null == token){
 			return false;
 		}
-		return verifySession(id.get(), token).getIsAdmin();
+		return getConnectedUser(id.get(), token).getIsAdmin();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class GenericController {
 	 * @return
 	 */
 	protected boolean isAdmin(Long userId, String token){
-		return verifySession(userId, token).getIsAdmin();
+		return getConnectedUser(userId, token).getIsAdmin();
 	}
 	
 	/**

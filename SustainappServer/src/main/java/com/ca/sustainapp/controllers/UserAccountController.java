@@ -138,7 +138,7 @@ public class UserAccountController extends GenericController {
 			SessionResponse response = new SessionResponse()
 					.setId(id.get())
 					.setToken(token)
-					.setProfile(super.verifySession(id.get(), token).getProfile());
+					.setProfile(super.getConnectedUser(id.get(), token).getProfile());
 			response.setCode(1);
 			return response.buildJson();
 		}
