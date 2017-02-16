@@ -1,5 +1,8 @@
 package com.ca.sustainapp.controllers;
 
+import static org.apache.commons.codec.binary.Base64.decodeBase64;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,6 +23,7 @@ import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.ProfileResponse;
 import com.ca.sustainapp.utils.DateUtils;
+import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.ProfileValidator;
 
@@ -89,9 +93,15 @@ public class ProfileController extends GenericController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/profile/cover", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String cover(){
-		return null;
+	@RequestMapping(value="/profile/cover", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	public String cover(HttpServletRequest request){
+		UserAccountEntity user = super.getConnectedUser(request);	
+		if(null == user || null == user.getProfile() || isEmpty(request.getParameter("file"))){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		user.getProfile().setCover(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+		profileService.createOrUpdate(user.getProfile());
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -99,8 +109,14 @@ public class ProfileController extends GenericController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/profile/avatar", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String avatar(){
-		return null;
+	@RequestMapping(value="/profile/avatar", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	public String avatar(HttpServletRequest request){
+		UserAccountEntity user = super.getConnectedUser(request);	
+		if(null == user || null == user.getProfile() || isEmpty(request.getParameter("file"))){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		user.getProfile().setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+		profileService.createOrUpdate(user.getProfile());
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 }

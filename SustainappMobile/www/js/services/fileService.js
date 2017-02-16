@@ -5,40 +5,27 @@
  * @version 1.0
  */
 angular.module('sustainapp.services')
-	 .factory('Service', function($cordovaCamera, $cordovaFile, $cordovaDevice) {
+	 .factory('fileService', function($cordovaCamera, $cordovaFileTransfer, $cordovaFile, $cordovaDevice) {
 		 var buildOptions = function(quality, width, height){
 			 return {
 			      destinationType: Camera.DestinationType.DATA_URL,
 			      allowEdit: true,
 			      encodingType: Camera.EncodingType.JPEG,
-			      quality : quality;
-				  targetWidth : width;
-				 options.targetHeight : height;
+			      quality : quality,
+				  targetWidth : width,
+				  targetHeight : height,
 			      saveToPhotoAlbum: false
 			    };
-		 }
-		 return {
-			 getFromCamera = function(quality, width, height){
-				 var option =  buildOptions(quality, width, height);
-				 options.sourceType = Camera.PictureSourceType.CAMERA;
-				 var result = null;
-				 $cordovaCamera.getPicture(options).then(function(imageData) {
-					 result = imageData;
-				 }, function(err) {
-					 console.log(err);
-				 });
-				 return result;
-			 },
-			 getFromGallery = function(quality, width, height){
-				 var option =  buildOptions(quality, width, height);
-				 options.sourceType = Camera.PictureSourceType.CAMERA;
-				 var result = null;
-				 $cordovaCamera.getPicture(options).then(function(imageData) {
-					 result = imageData;
-				 }, function(err) {
-				      console.log(err);
-				 });
-				 return result;
+		 } 
+		return {
+			 getFile : function(newFile, quality, width, height){
+				 var options =  buildOptions(quality, width, height);
+				 if(true == newFile){
+					 options.sourceType = Camera.PictureSourceType.CAMERA;
+				 } else {
+					 options.sourceType = Camera.PictureSourceType.PHOTOLIBRARY;
+				 }
+				 return $cordovaCamera.getPicture(options);
 			 }
 		 };
 	 });

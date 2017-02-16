@@ -1,15 +1,15 @@
 <ion-view view-title="{{'sideMenu.profile' | translate }}">
   <ion-content ng-show="profileModel.loaded">
     <!-- Cover Picture -->
-    <div class="s-profile-coverContainer">
+    <div class="s-profile-coverContainer" style="background-image: url({{profileModel.displayCover}});">
 	    <div ng-show="profileModel.owner" class="s-profile-camera">
             <div class="s-profile-choosePictureToogle" ng-show="profileModel.coverEdit" ng-click="profileModel.coverEdit = false">
                <i class="icon ion-close-round"></i>
             </div>
-            <div class="s-profile-choosePicture" ng-show="profileModel.coverEdit">
+            <div class="s-profile-choosePicture" ng-show="profileModel.coverEdit" ng-click="cover(true)">
                {{'common.takePicture' | translate}}
             </div>
-            <div class="s-profile-choosePicture" ng-show="profileModel.coverEdit">
+            <div class="s-profile-choosePicture" ng-show="profileModel.coverEdit" ng-click="cover(false)">
               {{'common.chooseFormGallery' | translate}}
             </div>
             <div class="s-profile-choosePictureToogle s-common-22" ng-hide="profileModel.coverEdit" ng-click="profileModel.coverEdit = true">
@@ -21,15 +21,15 @@
         
         <!-- Avatar Picture-->
         <div class="s-profile-avatarContainer">
-            <div style="background-image: url('img/common/defaultAvatarMin.png');" class="s-profile-avatar">
+            <div style="background-image: url({{profileModel.displayAvatar}});" class="s-profile-avatar">
                 <div ng-show="profileModel.owner" class="s-profile-camera">
 		           <div class="s-profile-choosePictureToogle" ng-show="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = false">
 		              <i class="icon ion-close-round"></i>
 		           </div>
-		           <div class="s-profile-choosePicture" ng-show="profileModel.avatarEdit">
+		           <div class="s-profile-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(true)">
 		              {{'common.takePicture' | translate}}
 		           </div>
-		           <div class="s-profile-choosePicture" ng-show="profileModel.avatarEdit">
+		           <div class="s-profile-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(false)">
 		             {{'common.chooseFormGallery' | translate}}
 		           </div>
 		           <div class="s-profile-choosePictureToogle s-common-22" ng-hide="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = true">
@@ -40,7 +40,7 @@
         </div>       
         
         <!-- Personal Informations -->
-        <div class="s-profile-infos" >
+        <div class="padding s-profile-infos" >
             <div ng-show="profileModel.modeRead" class="animate">
 	            <h2 class="s-profile-name">{{profileModel.profile.firstName}} {{profileModel.profile.lastName}}</h2>
 	            <p>{{profileModel.profile.bornDate | date: 'dd/MM/yyyy' }}</p>

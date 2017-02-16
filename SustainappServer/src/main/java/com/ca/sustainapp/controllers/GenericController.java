@@ -39,14 +39,29 @@ public class GenericController {
 		userService.createOrUpdate(user.setToken(token));
 		return token;
 	}
+
+	/**
+	 * Recuperer la session d'un utilisateur
+	 * @param userId
+	 * @param token
+	 * @return
+	 */
+	protected UserAccountEntity getConnectedUser(Long userId, String token){
+		return userService.getByToken(userId, token);
+	}
 	
 	/**
 	 * Recuperer la session d'un utilisateur
 	 * @param request
 	 * @return
 	 */
-	protected UserAccountEntity getConnectedUser(Long userId, String token){
-		return userService.getByToken(userId, token);
+	protected UserAccountEntity getConnectedUser(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
+		String token = request.getParameter("sessionToken");
+		if(!id.isPresent() || null == token){
+			return null;
+		}
+		return userService.getByToken(id.get(), token);
 	}
 	
 	/**
