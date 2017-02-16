@@ -42,18 +42,18 @@
     transition: all 0.2s ease-in-out;
 }
 
-::-webkit-input-placeholder {
+.s-login-input::-webkit-input-placeholder {
     color: #23964b !important;
 }
-:-moz-placeholder {
+.s-login-input:-moz-placeholder {
    color: #23964b !important;
    opacity:  1;
 }
-::-moz-placeholder {
+.s-login-input::-moz-placeholder {
    color: #23964b !important;
    opacity:  1;
 }
-:-ms-input-placeholder {
+.s-login-input:-ms-input-placeholder {
    color: #23964b !important;
 }
 

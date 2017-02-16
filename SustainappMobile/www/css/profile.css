@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles de la page des profiles
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 09/02/2017
+ * @version 1.0
+ */
+ 
+ .s-profile-coverContainer {
+    background-color: #2dbe60;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height : 120px;
+    width : 100%;
+    position : relative;
+ }
+ 
+ .s-profile-camera {
+    position : absolute;
+    bottom : 0px;
+    right : 0px;
+    cursor : pointer;
+    z-index : 1000;
+    font-size: 16px;
+ }
+ 
+ .s-profile-choosePicture,
+ .s-profile-choosePictureToogle{
+    background-color: black; 
+    color: white;
+    opacity : 0.5;
+     padding-right:10px;
+    padding-left : 10px;
+    padding-bottom : 5px;
+    padding-top : 5px; 
+ }
+ 
+ .s-profile-choosePictureToogle {
+    border-top-left-radius : 10px;
+ }
+ 
+ .s-profile-choosePicture:active,
+ .s-profile-choosePictureToogle:active,
+ .s-profile-edit:active {
+    opacity : 0.75;
+ }
+ 
+ .s-profile-pageContainer {
+    position : relative;
+    top : -70px;
+ }
+ 
+  .s-profile-avatarContainer {
+    background-color: white;
+    height : 120px;
+    width : 120px;
+    overflow : hidden;
+    margin : 0px;
+    display:inline-block;
+ }
+ 
+ .s-profile-avatar {
+    height : 110px;
+    width : 110px;
+    margin : 5px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position : relative;
+ }
+ 
+ .s-profile-infos {
+    display : inline-block;
+    position : relative;
+    width : 100%;
+ }
+ 
+ .s-profile-name {
+    display : inline-block;
+    font-family: sustainapp-bold;
+    margin : 0px;
+    color : #333;
+ }
+ 
+ .s-profile-edit {
+    position : absolute;
+    top : 0px; 
+    right : 0px;
+    color : black;
+    padding : 5px;
+    opacity : 0.4;
+    cursor : pointer;
+    z-index : 1000;
+ }
+ 
+ 

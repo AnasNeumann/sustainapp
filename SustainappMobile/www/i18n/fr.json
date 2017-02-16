@@ -1,8 +1,15 @@
 {
+    "common.modify" : "modifier",
+    "common.loading" : "Chargement",
+    "common.takePicture" : "Prendre une photo",
+    "common.chooseFormGallery" : "Importer",
+
     "profile.mail": "adresse mail",
     "profile.password": "mot de passe",
     "profile.firstName": "prenom",
     "profile.lastName": "nom de famille",
+    "profile.bornDate" : "date de naissance",
+    "profile.yearsOld" : "ans",
     
     "login.login": "Connexion",
     "login.signin": "S'inscrire !",
@@ -14,16 +21,17 @@
     "sideMenu.signal" : "Signaler",
     "sideMenu.disconnection" : "Deconnexion",
     
-     "viewTitle.news" : "Actualites",
-     "viewTitle.challenges" : "Challenges",
-     "viewTitle.certificates" : "Certificats",
-     "viewTitle.notifications" : "Notifications",
+    "viewTitle.news" : "Actualites",
+    "viewTitle.challenges" : "Challenges",
+    "viewTitle.certificates" : "Certificats",
+    "viewTitle.notifications" : "Notifications",
     
-     "form.mail.mandatory" : "Veuillez remplir le champs adresse mail",
-     "form.mail.format" : "Le format de votre mail n'est pas valide",
-     "form.mail.exist" : "Cette adresse mail est deja utilisee",
-     "form.password.mandatory" : "Le mot de passe doit contenir au moins 4 caracteres",
-     "form.firstName.mandatory" : "Veuillez remplir le champs prenom",
-     "form.lastName.mandatory" : "Veuillez remplir le champs nom de famille",
-     "form.mail.matching" : "Ce couple mail/mot de passe n'existe pas"
+    "form.mail.mandatory" : "Veuillez remplir le champs adresse mail",
+    "form.mail.format" : "Le format de votre mail n'est pas valide",
+    "form.mail.exist" : "Cette adresse mail est deja utilisee",
+    "form.password.mandatory" : "Le mot de passe doit contenir au moins 4 caracteres",
+    "form.firstName.mandatory" : "Veuillez remplir le champs prenom",
+    "form.lastName.mandatory" : "Veuillez remplir le champs nom de famille",
+    "form.mail.matching" : "Ce couple mail/mot de passe n'existe pas",
+    "form.bornDate.mandatory" : "Veuillez remplir une date valide"
 }

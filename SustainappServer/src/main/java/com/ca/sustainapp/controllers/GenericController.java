@@ -39,14 +39,29 @@ public class GenericController {
 		userService.createOrUpdate(user.setToken(token));
 		return token;
 	}
+
+	/**
+	 * Recuperer la session d'un utilisateur
+	 * @param userId
+	 * @param token
+	 * @return
+	 */
+	protected UserAccountEntity getConnectedUser(Long userId, String token){
+		return userService.getByToken(userId, token);
+	}
 	
 	/**
 	 * Recuperer la session d'un utilisateur
 	 * @param request
 	 * @return
 	 */
-	protected UserAccountEntity verifySession(Long userId, String token){
-		return userService.getByToken(userId, token);
+	protected UserAccountEntity getConnectedUser(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
+		String token = request.getParameter("sessionToken");
+		if(!id.isPresent() || null == token){
+			return null;
+		}
+		return userService.getByToken(id.get(), token);
 	}
 	
 	/**
@@ -56,7 +71,7 @@ public class GenericController {
 	 * @return
 	 */
 	protected boolean isConnected(Long userId, String token){
-		return verifySession(userId, token) != null;
+		return getConnectedUser(userId, token) != null;
 	}
 	
 	/**
@@ -70,7 +85,7 @@ public class GenericController {
 		if(!id.isPresent() || null == token){
 			return false;
 		}
-		return verifySession(id.get(), token) != null;
+		return getConnectedUser(id.get(), token) != null;
 	}
 	
 	/**
@@ -84,7 +99,7 @@ public class GenericController {
 		if(!id.isPresent() || null == token){
 			return false;
 		}
-		return verifySession(id.get(), token).getIsAdmin();
+		return getConnectedUser(id.get(), token).getIsAdmin();
 	}
 
 	/**
@@ -94,7 +109,7 @@ public class GenericController {
 	 * @return
 	 */
 	protected boolean isAdmin(Long userId, String token){
-		return verifySession(userId, token).getIsAdmin();
+		return getConnectedUser(userId, token).getIsAdmin();
 	}
 	
 	/**

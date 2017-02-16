@@ -20,7 +20,8 @@ public class DateUtils {
 	public static final String FORMAT_Z = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 	public static final String FORMAT_JOUR_DATE_HOUR = "EE dd/MM/yy HH:mm";
 	public static final String FORMAT_AMERICAN = "yyyy-MM-dd";
-
+	public static final String FORMAT_IONIC_ANDROID = "MMM dd yyyy";
+	
 	/**
 	 * Constructeur privé, classe statique
 	 */
@@ -48,7 +49,7 @@ public class DateUtils {
 	 */
 	public static final Calendar stringToCalendar(final String str, String format, boolean lenient)
 			throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
 		sdf.setLenient(lenient);
 		Date date = sdf.parse(str);
 		Calendar cal = Calendar.getInstance();
@@ -90,6 +91,32 @@ public class DateUtils {
 		} catch (ParseException e) {
 			return getCurrentTime();
 		}
+	}
+	
+	/**
+	 * Transformer une chaine en date ou garder la date courante
+	 * @param str
+	 * @param format
+	 * @param defaultValue
+	 * @return
+	 */
+	public static final Calendar stringToCalendarQuietly(final String str, String format, Calendar defaultValue) {
+		try {
+			return stringToCalendar(str, format, true);
+		} catch (ParseException e) {
+			return defaultValue;
+		}
+	}
+	
+	/**
+	 * Specialement pour la version ionic
+	 * @param str
+	 * @param defaultValue
+	 * @return
+	 */
+	public static final Calendar ionicParse(final String str, Calendar defaultValue){
+		String date = str.substring(4,15);
+		return stringToCalendarQuietly(date, FORMAT_IONIC_ANDROID, defaultValue);
 	}
 
 	/**

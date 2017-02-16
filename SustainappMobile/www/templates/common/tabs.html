@@ -1,6 +1,6 @@
 <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-show="loginModel.isConnected">
 
-  <ion-tab icon-off="ion-ios-paper" icon-on="ion-ios-paper" href="#/tab/news">
+  <ion-tab icon-off="ion-ios-paper" icon-on="ion-ios-paper" href="#/tab/news" ng-click="displayNews()">
     <ion-nav-view name="tab-news"></ion-nav-view>
   </ion-tab>
 
@@ -15,5 +15,5 @@
   <ion-tab icon-off="ion-ios-bell" icon-on="ion-ios-bell" href="#/tab/notifications">
     <ion-nav-view name="tab-notifications"></ion-nav-view>
   </ion-tab>
-
+  
 </ion-tabs>

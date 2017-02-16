@@ -1,0 +1,85 @@
+<ion-view view-title="{{'sideMenu.profile' | translate }}">
+  <ion-content ng-show="profileModel.loaded">
+    <!-- Cover Picture -->
+    <div class="s-profile-coverContainer" style="background-image: url({{profileModel.displayCover}});">
+	    <div ng-show="profileModel.owner" class="s-profile-camera">
+            <div class="s-profile-choosePictureToogle" ng-show="profileModel.coverEdit" ng-click="profileModel.coverEdit = false">
+               <i class="icon ion-close-round"></i>
+            </div>
+            <div class="s-profile-choosePicture" ng-show="profileModel.coverEdit" ng-click="cover(true)">
+               {{'common.takePicture' | translate}}
+            </div>
+            <div class="s-profile-choosePicture" ng-show="profileModel.coverEdit" ng-click="cover(false)">
+              {{'common.chooseFormGallery' | translate}}
+            </div>
+            <div class="s-profile-choosePictureToogle s-common-22" ng-hide="profileModel.coverEdit" ng-click="profileModel.coverEdit = true">
+               <i class="icon ion-camera"></i>
+            </div>
+        </div>
+    </div>
+    <div class="padding s-profile-pageContainer">
+        
+        <!-- Avatar Picture-->
+        <div class="s-profile-avatarContainer">
+            <div style="background-image: url({{profileModel.displayAvatar}});" class="s-profile-avatar">
+                <div ng-show="profileModel.owner" class="s-profile-camera">
+		           <div class="s-profile-choosePictureToogle" ng-show="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = false">
+		              <i class="icon ion-close-round"></i>
+		           </div>
+		           <div class="s-profile-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(true)">
+		              {{'common.takePicture' | translate}}
+		           </div>
+		           <div class="s-profile-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(false)">
+		             {{'common.chooseFormGallery' | translate}}
+		           </div>
+		           <div class="s-profile-choosePictureToogle s-common-22" ng-hide="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = true">
+		              <i class="icon ion-camera"></i>
+		           </div>
+		       </div>
+            </div>
+        </div>       
+        
+        <!-- Personal Informations -->
+        <div class="padding s-profile-infos" >
+            <div ng-show="profileModel.modeRead" class="animate">
+	            <h2 class="s-profile-name">{{profileModel.profile.firstName}} {{profileModel.profile.lastName}}</h2>
+	            <p>{{profileModel.profile.bornDate | date: 'dd/MM/yyyy' }}</p>
+	            <div class="s-profile-edit" ng-click="profileModel.modeRead = false;" ng-show="profileModel.owner">
+	               <i class="icon ion-edit"></i>
+	            </div>
+            </div>
+            <div ng-show="profileModel.owner">
+	            <div ng-hide="profileModel.modeRead" >
+	              <div class="s-profile-edit" ng-click="profileModel.modeRead = true;">
+	                   <i class="icon ion-close-round"></i>
+	              </div>
+	              <label class="item item-input item-floating-label" >
+	                <span class="input-label s-common-label">{{'profile.firstName' | translate}}</span>
+	                <input ng-model="profileModel.profileTemp.firstName" type="text" placeholder="{{'profile.firstName' | translate}}" class="s-common-input">
+	                <span class="s-common-errors">{{profileModel.allErrors.firstName | translate}}</span>
+	              </label>
+	              <label class="item item-input item-floating-label" > 
+	                <span class="input-label s-common-label">{{'profile.lastName' | translate}}</span> 
+	                <input ng-model="profileModel.profileTemp.lastName" type="text" placeholder="{{'profile.lastName' | translate}}" class="s-common-input">
+	                <span class="s-common-errors">{{profileModel.allErrors.lastName | translate}}</span>
+	              </label>
+	             
+	              <label class="item item-input item-floating-label" >
+	                <span class="input-label s-common-label">{{'profile.bornDate' | translate}}</span>
+	                <input ng-model="profileModel.profileTemp.bornDate" type="date" placeholder="{{'profile.bornDate' | translate}}" class="s-common-input">
+	                <span class="s-common-errors">{{profileModel.allErrors.bornDate | translate}}</span>
+	              </label>
+	              <button class="s-login-btn" ng-click="updateProfile()">{{'common.modify' | translate}}</button>
+	            </div>
+	        </div>
+        </div>
+        
+    </div>
+  </ion-content>
+  
+  <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="profileModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h1 class="s-common-loadingText">{{'common.loading' | translate}}</h1>
+  </ion-content>
+</ion-view>

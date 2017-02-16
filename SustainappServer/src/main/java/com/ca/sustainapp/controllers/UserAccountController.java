@@ -30,7 +30,7 @@ import com.ca.sustainapp.validators.SigninValidator;
  */
 @CrossOrigin
 @RestController
-public class LoginController extends GenericController {
+public class UserAccountController extends GenericController {
 
 	/**
 	 * Injection de dépendances
@@ -138,7 +138,7 @@ public class LoginController extends GenericController {
 			SessionResponse response = new SessionResponse()
 					.setId(id.get())
 					.setToken(token)
-					.setProfile(super.verifySession(id.get(), token).getProfile());
+					.setProfile(super.getConnectedUser(id.get(), token).getProfile());
 			response.setCode(1);
 			return response.buildJson();
 		}
