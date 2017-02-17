@@ -5,15 +5,6 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('newsController', function($scope, profileService) {
+.controller('newsController', function($scope) {
 	
-	$scope.model = {};
-	
-    $scope.searchFx = function(){
-    	 $scope.loadingSearch = true;
-    	 profilService.search($scope.model.maVar).then(function(response){
-    		  $scope.result = response;
-     		  $scope.loadingSearch = false;
-     	  }); 	
-    };
 });

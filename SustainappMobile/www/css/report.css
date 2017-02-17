@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles de la page des signalement
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 16/02/2017
+ * @version 1.0
+ */
+ 
+.s-report-imgContainer {
+	position : relative;
+	height : 280px;
+	width : 280px;
+	background-color: #F0F0F0;
+	margin : auto;
+	border : 1px solid #E0E0E0;
+	color : #D0D0D0;
+	background-position : center;
+	background-repeat : no-repeat;
+	background-size : cover;
+	font-size : 100px;
+	padding:100px;
+}
+
+.s-report-thanksContainer {
+	width : 100%;
+	margin : 0px;
+	padding : 25px;
+	background-color : #23d5fb;
+}
+
+.s-report-thanksImg {
+	display : block;
+	width : 200px;
+	margin : auto;
+	height : auto;
+}

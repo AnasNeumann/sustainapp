@@ -1,0 +1,40 @@
+<ion-view view-title="{{'sideMenu.signal' | translate }}">
+  <!-- NEW REPORT -->
+  <ion-content ng-hide="reportModel.sended" class="s-common-padding20">
+    <div class="s-report-imgContainer" style="background-image: url({{reportModel.displayFile}});">
+        <i ng-show="reportModel.emptyFile" class="icon ion-image"></i>
+        <div class="s-common-camera">
+            <div class="s-common-choosePictureToogle" ng-show="reportModel.editFile" ng-click="reportModel.editFile = false">
+               <i class="icon ion-close-round"></i>
+            </div>
+            <div class="s-common-choosePicture" ng-show="reportModel.editFile" ng-click="chooseFile(true)">
+               {{'common.takePicture' | translate}}
+            </div>
+            <div class="s-common-choosePicture" ng-show="reportModel.editFile" ng-click="chooseFile(false)">
+              {{'common.chooseFormGallery' | translate}}
+            </div>
+            <div class="s-common-choosePictureToogle s-common-22" ng-hide="reportModel.editFile" ng-click="reportModel.editFile = true">
+               <i class="icon ion-camera"></i>
+            </div>
+        </div>
+    </div>
+	<label class="item item-input item-floating-label" > 
+	  <span class="input-label s-common-label">{{'common.message' | translate}}</span> 
+	  <input ng-model="reportModel.message" type="text" placeholder="{{'common.message' | translate}}" class="s-common-input">
+	</label>
+    <button class="s-login-btn" ng-click="signal()">{{'sideMenu.signal' | translate }}</button>
+  </ion-content>
+  
+  <!-- THANKS PART -->
+  <ion-content ng-show="reportModel.sended">
+     <div class="s-report-thanksContainer">
+        <img src="img/report/{{'common.thanks' | translate }}.png" class="s-report-thanksImg" />
+     </div>
+     <div class="s-common-padding20">
+        <p>
+            {{'report.message' | translate }}
+        </p>
+        <button class="s-login-btn" ng-click="reportModel.sended = false">{{'common.back' | translate }}</button>
+     </div>
+  </ion-content>
+</ion-view>

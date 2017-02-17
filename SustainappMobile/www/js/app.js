@@ -41,6 +41,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
+  .state('tab.report', {
+    url: '/report',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/reports/report-main.html',
+        controller: 'reportController'
+      }
+    }
+  })
   .state('tab.news', {
     url: '/news',
     views: {
