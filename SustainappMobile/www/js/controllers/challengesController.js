@@ -6,21 +6,5 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('challengesController', function($scope) {
-		/*
-		var profileService = function(){
-	  	  $scope.loadingProfiles = true;
-	  	  profilService.allProfiles().then(function(response){
-	  		  $scope.profiles = response.data;
-	  		  $scope.loadingProfiles = false;
-	  	  });
-	    };
-	
-	  profileService();
-	  */
-		/*
-	  $scope.chats = Chats.all();
-	  $scope.remove = function(chat) {
-	    Chats.remove(chat);
-	  };
-	  */
+
 	});

@@ -3,6 +3,9 @@
     "common.loading" : "Loading",
     "common.takePicture" : "Take a picture",
     "common.chooseFormGallery" : "Import",
+    "common.message" : "Your message",
+    "common.thanks" : "thanks",
+    "common.back" : "Back",
     
     "profile.mail": "email address",
     "profile.password": "password",
@@ -33,5 +36,7 @@
     "form.firstName.mandatory" : "The first name field is mandatory",
     "form.lastName.mandatory" : "The last name field is mandatory",
     "form.mail.matching" : "This couple mail/passowrd doesn't exist",
-    "form.bornDate.mandatory" : "Please enter a valid date format"
+    "form.bornDate.mandatory" : "Please enter a valid date format",
+    
+    "report.message" : "Your request has been received and will be processed as soon as possible"
 }

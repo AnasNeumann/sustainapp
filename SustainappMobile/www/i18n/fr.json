@@ -3,6 +3,9 @@
     "common.loading" : "Chargement",
     "common.takePicture" : "Prendre une photo",
     "common.chooseFormGallery" : "Importer",
+    "common.message" : "Votre message",
+    "common.thanks" : "merci",
+    "common.back" : "Retour",
 
     "profile.mail": "adresse mail",
     "profile.password": "mot de passe",
@@ -33,5 +36,7 @@
     "form.firstName.mandatory" : "Veuillez remplir le champs prenom",
     "form.lastName.mandatory" : "Veuillez remplir le champs nom de famille",
     "form.mail.matching" : "Ce couple mail/mot de passe n'existe pas",
-    "form.bornDate.mandatory" : "Veuillez remplir une date valide"
+    "form.bornDate.mandatory" : "Veuillez remplir une date valide",
+    
+    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus bref delais"
 }

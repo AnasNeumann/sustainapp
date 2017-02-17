@@ -21,8 +21,8 @@
   color : white;
 }
 
-.ion-navicon,
-.ion-navicon:hover{
+.s-menus-headerBtn,
+.s-menus-headerBtn:hover{
 	color : white !important;
 }
 
@@ -33,6 +33,10 @@
 .platform-ios .bar .title,
 .platform-android .bar .title {
 	font-size : 25px;
+}
+
+.s-menus-searchBtn{
+    font-size : 10px !important;
 }
 
 /*
