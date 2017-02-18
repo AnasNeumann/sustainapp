@@ -6,6 +6,13 @@
     "common.message" : "Votre message",
     "common.thanks" : "merci",
     "common.back" : "Retour",
+    "common.create" : "Creer",
+    "common.createdOn" : "cree le",
+    "common.members" : "membres",
+   
+    "teams.name"  : "nom",
+    "teams.add"   : "Creer une nouvelle equipe",
+    "teams.newTeam" : "Nouvelle equipe",
 
     "profile.mail": "adresse mail",
     "profile.password": "mot de passe",
@@ -38,5 +45,5 @@
     "form.mail.matching" : "Ce couple mail/mot de passe n'existe pas",
     "form.bornDate.mandatory" : "Veuillez remplir une date valide",
     
-    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus bref delais"
+    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais"
 }

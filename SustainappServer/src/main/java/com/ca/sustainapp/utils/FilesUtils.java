@@ -85,7 +85,6 @@ public class FilesUtils {
 		InputStream inputStream = new ByteArrayInputStream(input);
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		BufferedImage initialImage = null;
-
 		try {
 			initialImage = read(inputStream);
 			int height = initialImage.getHeight();

@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 
 
@@ -40,11 +39,11 @@ public class BadgeEntity extends GenericEntity implements Serializable {
 	@Column(name = "SCORE")
 	private Integer score;
 
-	@Column(name = "ICON")
-	private byte[] icon;
-
-	@Transient
-	private transient String base64;
+	@Column(name = "ICON_ON")
+	private String iconOn;
+	
+	@Column(name = "ICON_OFF")
+	private String iconOff;
 
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -98,22 +97,6 @@ public class BadgeEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the icon
-	 */
-	public byte[] getIcon() {
-		return icon;
-	}
-
-	/**
-	 * @param icon
-	 *            the icon to set
-	 */
-	public BadgeEntity setIcon(byte[] icon) {
-		this.icon = icon;
-		return this;
-	}
-
-	/**
 	 * @return the timestamps
 	 */
 	public Calendar getTimestamps() {
@@ -130,17 +113,32 @@ public class BadgeEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the base64
+	 * @return the iconOn
 	 */
-	public String getBase64() {
-		return base64;
+	public String getIconOn() {
+		return iconOn;
 	}
 
 	/**
-	 * @param base64 the base64 to set
+	 * @param iconOn the iconOn to set
 	 */
-	public BadgeEntity setBase64(String base64) {
-		this.base64 = base64;
+	public BadgeEntity setIconOn(String iconOn) {
+		this.iconOn = iconOn;
+		return this;
+	}
+
+	/**
+	 * @return the iconOff
+	 */
+	public String getIconOff() {
+		return iconOff;
+	}
+
+	/**
+	 * @param iconOff the iconOff to set
+	 */
+	public BadgeEntity setIconOff(String iconOff) {
+		this.iconOff = iconOff;
 		return this;
 	}
 }

@@ -6,6 +6,13 @@
     "common.message" : "Your message",
     "common.thanks" : "thanks",
     "common.back" : "Back",
+    "common.create" : "Create",
+    "common.createdOn" : "created on",
+    "common.members" : "members",
+    
+    "teams.name"  : "name",
+    "teams.add"   : "Create a new team",
+    "teams.newTeam" : "New team",
     
     "profile.mail": "email address",
     "profile.password": "password",

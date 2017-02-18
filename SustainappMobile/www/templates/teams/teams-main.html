@@ -1,0 +1,58 @@
+<ion-view view-title="{{'sideMenu.teams' | translate }}">
+    <ion-content class="s-teams-content" >
+        
+        <!-- ADD NEW TEAM -->
+        <div class="s-teams-newHeader">
+                <div class="padding s-teams-addClosed" ng-hide="teamsModel.add" ng-click="teamsModel.add = true">
+                    <i class="icon ion-android-add-circle s-teams-newBtn"></i>
+                    <span class="s-teams-addText" >{{'teams.add' | translate}}</span>
+                </div>
+                <div class="s-teams-addOpen padding" ng-show="teamsModel.add">
+                    <i class="icon ion-android-add-circle s-teams-closeBtn" ng-click="teamsModel.add = false"></i>
+                    <span class="s-teams-addText" >{{'teams.newTeam' | translate}}</span>
+                    <div class="row s-common-padding-top0">
+	                    <div class="col col-50 s-common-padding-top0">
+		                    <div class="s-teams-addPicture" style="background-image: url({{teamsModel.displayFile}});">
+		                        <i class="icon ion-person-stalker" ng-show="teamsModel.emptyPicture"></i>
+		                        <div class="s-common-camera">
+						            <div class="s-common-choosePictureToogle" ng-show="teamsModel.editFile" ng-click="teamsModel.editFile = false">
+						               <i class="icon ion-close-round"></i>
+						            </div>
+						            <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(true)">
+						               {{'common.takePicture' | translate}}
+						            </div>
+						            <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(false)">
+						              {{'common.chooseFormGallery' | translate}}
+						            </div>
+						            <div class="s-common-choosePictureToogle s-common-22" ng-hide="teamsModel.editFile" ng-click="teamsModel.editFile = true">
+						               <i class="icon ion-camera"></i>
+						            </div>
+						        </div>
+		                    </div>
+	                    </div>
+	                    <div class="col col-50 s-common-padding-top0">
+                            <label class="item item-input item-floating-label" > 
+						     <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
+						     <input ng-model="teamsModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+						   </label>
+						   <button class="s-common-btn" ng-click="createTeam()">{{'common.create' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        
+        <!-- ALL TEAMS -->
+        <div class="s-teams-allResults">
+            <ion-list>
+		      <ion-item class="item-avatar" ng-repeat="team in teamsModel.allTeams" type="item-text-wrap" href="#/tab/team/{{team.id}}">
+		          <img ng-src="data:image/jpeg;base64,{{team.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+		          <div class="s-teams-level">{{team.level}}</div>
+		          <h2 class="s-teams-title">{{team.name}}</h2>
+		          <p class="s-teams-text">{{'common.createdOn' | translate}} {{team.timestamps | date: 'dd/MM/yyyy'}}, {{team.listRole.length}} {{'common.members' | translate}}</p>
+		      </ion-item>
+		    </ion-list> 
+	        <ion-infinite-scroll on-infinite="getMoreTeam()" distance="10%" ng-if="teamsModel.moreTeams">
+	        </ion-infinite-scroll>
+        </div>   
+    </ion-content>
+</ion-view>

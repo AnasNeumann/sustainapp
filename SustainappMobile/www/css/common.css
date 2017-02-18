@@ -161,8 +161,58 @@ body {
     padding : 20px;
  }
  
+ .s-common-padding0 {
+    padding : 0px; 
+}
+
+ .s-common-padding-top0 {
+    padding-top : 0px; 
+}
  
  ion-content {
     overflow-x : hidden;
     overflow-y : auto;
  }
+ 
+ .s-common-btn {
+    background-color: #23964b;
+    color: white;
+    border:none;
+    height : 40px;
+    font-size : 20px;
+    font-family: sustainapp;
+    width:100%;
+    display:block;
+    margin-top:20px;
+    border-radius : 3px;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.s-common-btn:active {
+    background-color: #28a754;
+    -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.item-avatar > img:first-child,
+.item-avatar .item-image,
+.item-avatar .item-content > img:first-child,
+.item-avatar .item-content .item-image,
+.item-avatar-left > img:first-child,
+.item-avatar-left .item-image,
+.item-avatar-left .item-content > img:first-child,
+.item-avatar-left .item-content .item-image {
+	max-height: 45px;
+	max-width: 45px;
+}
+
+.item-avatar,
+.item-avatar .item-content, 
+.item-avatar-left, 
+.item-avatar-left .item-content {
+	padding-left : 75px;
+}

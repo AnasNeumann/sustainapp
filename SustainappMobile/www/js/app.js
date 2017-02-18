@@ -32,6 +32,24 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
     abstract: true,
     templateUrl: 'templates/common/tabs.html'
   })
+  .state('tab.teams', {
+    url: '/team/all',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/teams/teams-main.html',
+        controller: 'teamsController'
+      }
+    }
+  })
+  .state('tab.team-one', {
+    url: '/team/:id',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/teams/team-one.html',
+        controller: 'teamController'
+      }
+    }
+  })
   .state('tab.profile', {
     url: '/profile/:id',
     views: {

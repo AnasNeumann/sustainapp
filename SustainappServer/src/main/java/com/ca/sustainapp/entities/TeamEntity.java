@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -43,6 +44,12 @@ public class TeamEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "LEVEL")
 	private Integer level;
+	
+	@Column(name = "AVATAR")
+	private byte[] avatar;
+	
+	@Transient
+	private transient String base64;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -125,4 +132,35 @@ public class TeamEntity extends GenericEntity implements Serializable {
 		this.listRole = listRole;
 		return this;
 	}
+
+	/**
+	 * @return the avatar
+	 */
+	public byte[] getAvatar() {
+		return avatar;
+	}
+
+	/**
+	 * @param avatar the avatar to set
+	 */
+	public TeamEntity setAvatar(byte[] avatar) {
+		this.avatar = avatar;
+		return this;
+	}
+
+	/**
+	 * @return the base64
+	 */
+	public String getBase64() {
+		return base64;
+	}
+
+	/**
+	 * @param base64 the base64 to set
+	 */
+	public TeamEntity setBase64(String base64) {
+		this.base64 = base64;
+		return this;
+	}
+	
 }
