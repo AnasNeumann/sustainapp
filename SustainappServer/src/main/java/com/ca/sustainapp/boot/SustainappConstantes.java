@@ -47,5 +47,10 @@ public class SustainappConstantes {
 	public final static String TEAMROLE_REQUEST = "request";
 	public final static String TEAMROLE_MEMBER = "member";
 	
+	/**
+	 * Target pour un challenge
+	 */
+	public final static String TARGET_TEAM = "team";
+	public final static String TARGET_PROFILE = "profile";
 	
 }

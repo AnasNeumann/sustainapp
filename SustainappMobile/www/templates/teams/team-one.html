@@ -1,5 +1,11 @@
 <ion-view view-title="{{'sideMenu.teams' | translate }}">
-    <ion-content >
+    <ion-content ng-show="teamModel.loaded">
         <p style="font-family : arial">me voici sur la team crée !</p>
     </ion-content>
+
+      <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="teamModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+  </ion-content>
 </ion-view>

@@ -17,14 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
+import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.TeamEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.TeamResponse;
 import com.ca.sustainapp.responses.TeamsResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -49,37 +52,9 @@ public class TeamController extends GenericController {
 	private TeamValidator validator;
 	@Autowired
 	private TeamRoleServiceDAO roleService;
+	@Autowired
+	private ProfileServiceDAO profileService;
 
-	/**
-	 * get all teams
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/team/all", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getAll(HttpServletRequest request) {
-		Optional<Long> startIndex = StringsUtils.parseLongQuickly(request.getParameter("startIndex"));
-		if(!startIndex.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
-		}
-		SearchResult<TeamEntity> listResult = teamService.searchByCriteres(null, startIndex.get(), 20L);
-		List<TeamEntity> teams = new SustainappList<TeamEntity>();
-		for(TeamEntity team : listResult.getResults()){
-			teams.add(team);
-		}
-		return new TeamsResponse().setTeams(teams).setCode(1).buildJson();
-	}
-	
-	
-	/**
-	 * get a team by id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/team", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request) {
-		return null;
-	}
-	
 	/**
 	 * add a new team
 	 * @return
@@ -108,6 +83,51 @@ public class TeamController extends GenericController {
 	}
 	
 	/**
+	 * get all teams
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/team/all", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+    public String getAll(HttpServletRequest request) {
+		Optional<Long> startIndex = StringsUtils.parseLongQuickly(request.getParameter("startIndex"));
+		if(!startIndex.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		SearchResult<TeamEntity> listResult = teamService.searchByCriteres(null, startIndex.get(), 20L);
+		List<TeamEntity> teams = new SustainappList<TeamEntity>();
+		for(TeamEntity team : listResult.getResults()){
+			teams.add(team);
+		}
+		return new TeamsResponse().setTeams(teams).setCode(1).buildJson();
+	}	
+	
+	/**
+	 * get a team by id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/team", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+    public String get(HttpServletRequest request) {
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		if(!id.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		TeamResponse response = new TeamResponse()
+				.setTeam(teamService.getById(id.get()));
+		if(null == response.getTeam()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		return response
+			.setRequests(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_REQUEST))
+			.setMembers(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_REQUEST))
+			.setOwner(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_ADMIN).get(0))
+			.setParticipations(null)
+			.setCode(1)
+			.buildJson();
+	}
+
+	
+	/**
 	 * modify team informations
 	 * @return
 	 */
@@ -126,5 +146,20 @@ public class TeamController extends GenericController {
     public String delete(HttpServletRequest request) {
 		return null;
 	}
-
+	
+	/**
+	 * Retrieve profiles by teamRole
+	 * @param team
+	 * @param role
+	 * @return
+	 */
+	private List<ProfileEntity> getProfileByRole(TeamEntity team, String role){
+		List<ProfileEntity> result = new SustainappList<ProfileEntity>();
+		for(TeamRoleEntity teamRole : team.getListRole()){
+			if(teamRole.getRole().equals(role)){
+				result.add(profileService.getById(teamRole.getProfilId()));
+			}
+		}
+		return result;
+	}
 }
