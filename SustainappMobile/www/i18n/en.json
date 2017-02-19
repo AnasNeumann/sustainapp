@@ -9,10 +9,15 @@
     "common.create" : "Create",
     "common.createdOn" : "created on",
     "common.members" : "members",
+    "common.registeredSince" : "registered since",
     
     "teams.name"  : "name",
     "teams.add"   : "Create a new team",
     "teams.newTeam" : "New team",
+    
+    "team.teamLeader" : "team leader",
+    "team.requests" : "Requests",
+    "team.members" : "Members",
     
     "profile.mail": "email address",
     "profile.password": "password",

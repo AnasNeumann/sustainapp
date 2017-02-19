@@ -19,7 +19,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.annotation.Transient;
 
 /**
  * PARTICIPATION table mapping
@@ -47,9 +46,6 @@ public class ParticipationEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "DOCUMENT")
 	private byte[] document;
-	
-	@Transient
-	private transient String base64;
 	
 	@Column(name = "TARGET_ID")
 	private Long targetId;
@@ -124,21 +120,6 @@ public class ParticipationEntity extends GenericEntity implements Serializable {
 	 */
 	public ParticipationEntity setDocument(byte[] document) {
 		this.document = document;
-		return this;
-	}
-
-	/**
-	 * @return the base64
-	 */
-	public String getBase64() {
-		return base64;
-	}
-
-	/**
-	 * @param base64 the base64 to set
-	 */
-	public ParticipationEntity setBase64(String base64) {
-		this.base64 = base64;
 		return this;
 	}
 

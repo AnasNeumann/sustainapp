@@ -23,6 +23,7 @@ import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.TeamEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
@@ -108,7 +109,7 @@ public class TeamController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/team", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String get(HttpServletRequest request) {
-		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("team"));
 		if(!id.isPresent()){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
@@ -119,21 +120,31 @@ public class TeamController extends GenericController {
 		}
 		return response
 			.setRequests(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_REQUEST))
-			.setMembers(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_REQUEST))
+			.setMembers(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_MEMBER))
 			.setOwner(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_ADMIN).get(0))
+			.setRole(searchRole(response.getTeam(), request))
 			.setParticipations(null)
 			.setCode(1)
 			.buildJson();
 	}
 
-	
 	/**
 	 * modify team informations
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/team", headers = "Content-Type= multipart/form-data", method = RequestMethod.PUT, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/team", method = RequestMethod.PUT, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
+		return null;
+	}
+	
+	/**
+	 * modify team avatar
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/team/avatar", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String avatar(HttpServletRequest request) {
 		return null;
 	}
 	
@@ -144,6 +155,39 @@ public class TeamController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/team", method = RequestMethod.DELETE, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
+		return null;
+	}
+	
+	/**
+	 * modify team role
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/team/role", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String handleRole(HttpServletRequest request) {
+		return null;
+	}
+	
+	/**
+	 * Retrieve user role
+	 * @param team
+	 * @param request
+	 * @return
+	 */
+	private String searchRole(TeamEntity team, HttpServletRequest request){
+		Optional<Long> idUser = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		if(!idUser.isPresent()){
+			return null;
+		}
+		UserAccountEntity user = super.userService.getById(idUser.get());
+		if(null == user || null == user.getProfile()){
+			return null;
+		}
+		for(TeamRoleEntity role : team.getListRole()){
+			if(role.getProfilId().equals(user.getProfile().getId())){
+				return role.getRole();
+			}
+		}
 		return null;
 	}
 	

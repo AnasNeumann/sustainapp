@@ -1,7 +1,5 @@
 package com.ca.sustainapp.dao;
 
-import static org.apache.commons.codec.binary.Base64.encodeBase64String;
-
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -43,8 +41,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 		if(null == id){
 			return null;
 		}
-		ProfileEntity entity = repository.findOne(id);
-		return entity.setBase64Avatar(encodeBase64String(entity.getAvatar())).setBase64Cover(encodeBase64String(entity.getCover()));
+		return repository.findOne(id);
 	}
 	
 	/**
@@ -77,11 +74,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 */
 	@Transactional
 	public List<ProfileEntity> getAll(){
-		List<ProfileEntity> listResult = repository.findAll();
-		for(ProfileEntity entity : listResult){
-			entity.setBase64Avatar(encodeBase64String(entity.getAvatar())).setBase64Cover(encodeBase64String(entity.getCover()));
-		}
-		return listResult;
+		return repository.findAll();
 	}
 
 	/**
@@ -99,9 +92,6 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 		
 		SearchResult<ProfileEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
-		for(ProfileEntity entity : result.getResults()){
-			entity.setBase64Avatar(encodeBase64String(entity.getAvatar())).setBase64Cover(encodeBase64String(entity.getCover()));
-		}
 		return result;
 	}
 }

@@ -9,10 +9,15 @@
     "common.create" : "Creer",
     "common.createdOn" : "cree le",
     "common.members" : "membres",
+    "common.registeredSince" : "inscrit depuis le",
    
     "teams.name"  : "nom",
     "teams.add"   : "Creer une nouvelle equipe",
     "teams.newTeam" : "Nouvelle equipe",
+    
+    "team.teamLeader" : "capitaine",
+    "team.requests" : "Demandes",
+    "team.members" : "Membres",
 
     "profile.mail": "adresse mail",
     "profile.password": "mot de passe",

@@ -19,7 +19,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.annotation.Transient;
 
 /**
  * PROFILE table mapping
@@ -54,14 +53,8 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Column(name = "LEVEL")
 	private Integer level;
 	
-	@Transient
-	private transient String base64Avatar;
-	
 	@Column(name = "COVER")
 	private byte[] cover;
-	
-	@Transient
-	private transient String base64Cover;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -360,36 +353,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	 */
 	public ProfileEntity setListMissionToDo(List<MissionEntity> listMissionToDo) {
 		this.listMissionToDo = listMissionToDo;
-		return this;
-	}
-
-	/**
-	 * @return the base64Avatar
-	 */
-	public String getBase64Avatar() {
-		return base64Avatar;
-	}
-
-	/**
-	 * @param base64Avatar the base64Avatar to set
-	 */
-	public ProfileEntity setBase64Avatar(String base64Avatar) {
-		this.base64Avatar = base64Avatar;
-		return this;
-	}
-
-	/**
-	 * @return the base64Cover
-	 */
-	public String getBase64Cover() {
-		return base64Cover;
-	}
-
-	/**
-	 * @param base64Cover the base64Cover to set
-	 */
-	public ProfileEntity setBase64Cover(String base64Cover) {
-		this.base64Cover = base64Cover;
 		return this;
 	}
 

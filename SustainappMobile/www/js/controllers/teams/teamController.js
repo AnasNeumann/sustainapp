@@ -22,10 +22,11 @@ angular.module('sustainapp.controllers')
 		$scope.teamModel.loaded = false;
 		$scope.teamModel.displayAvatar = "img/common/defaultAvatarMin.png";
 		$scope.teamModel.file  = null;		
-		teamService.getById($stateParams.id).then(function(response){
+		teamService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 			var result = response.data;
 			if(result.code == 1) {
 				$scope.teamModel.loaded = true;
+				$scope.teamModel.team  = result.team;
 				$scope.teamModel.owner  = result.owner;
 				$scope.teamModel.members  = result.members;
 				$scope.teamModel.requests  = result.requests;

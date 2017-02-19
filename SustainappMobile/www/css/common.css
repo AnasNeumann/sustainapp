@@ -216,3 +216,38 @@ body {
 .item-avatar-left .item-content {
 	padding-left : 75px;
 }
+
+.s-common-flagContainer {
+    width : 100%;
+    margin : 0px;
+    padding : 20px;
+    background-color : #23d5fb;
+    height : 100px;
+    overflow : hidden;
+    text-align : center;
+}
+
+.s-common-flagImg {
+	display : block;
+    width : 250px;
+    margin : auto;
+    height : auto;
+}
+
+.s-common-flagText{
+	position : relative; 
+	top : -71px;
+	color : #2dbe60;
+	font-family : sustainapp;
+}
+
+.s-common-btnList {
+	background-color : #2dbe60;
+	color : #25984e;
+}
+
+.s-common-btnList:hover,
+.s-common-btnList:active {
+	background-color : #2dbe60;
+	color : white;
+}

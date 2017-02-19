@@ -14,8 +14,8 @@ angular.module('sustainapp.services')
 	        transformRequest: angular.identity
 	 };
 	 return {
-		getById : function(id) {
-			return $http.get(config.remoteServer+"/team?id="+id);
+		getById : function(team, id) {
+			return $http.get(config.remoteServer+"/team?team="+team+"&id="+id);
 		},
 		getAll : function(startIndex) {
 			return $http.get(config.remoteServer+"/team/all?startIndex="+startIndex);
@@ -24,7 +24,13 @@ angular.module('sustainapp.services')
 			return $http.post(config.remoteServer+"/team", data, params);
 		},
 		update : function(data) {
-			return $http.update(config.remoteServer+"/team", data, params);
+			return $http.put(config.remoteServer+"/team", data, params);
+		},
+		avatar : function(data) {
+			return $http.post(config.remoteServer+"/team/avatar", data, params);
+		},
+		handleRole : function(data) {
+			return $http.post(config.remoteServer+"/team/role", data, params);
 		},
 		deleteById : function(data) {
 			return $http.delete(config.remoteServer+"/team", data, params);

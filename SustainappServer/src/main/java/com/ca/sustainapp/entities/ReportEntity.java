@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.Transient;
-
 /**
  * REPORT table mapping
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
@@ -37,9 +35,6 @@ public class ReportEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "DOCUMENT")
 	private byte[] document;
-
-	@Transient
-	private transient String base64;
 	
 	@Column(name = "DOCUMENT_TYPE")
 	private String documentType;
@@ -158,18 +153,4 @@ public class ReportEntity extends GenericEntity implements Serializable {
 		return this;
 	}
 
-	/**
-	 * @return the base64
-	 */
-	public String getBase64() {
-		return base64;
-	}
-
-	/**
-	 * @param base64 the base64 to set
-	 */
-	public ReportEntity setBase64(String base64) {
-		this.base64 = base64;
-		return this;
-	}
 }

@@ -107,4 +107,16 @@
     font-family: sustainapp-bold;
     font-size : 18px;
 }
- 
+
+.s-teams-teamLeader{
+	font-size : 18px;
+	font-family : sustainapp;
+	color : #81710c;
+}
+
+.s-team-containerAvatar{
+	border : 1px solid #D0D0D0;
+	height : 123px;
+	width : 123px;
+	background-color: #F0F0F0;
+}
