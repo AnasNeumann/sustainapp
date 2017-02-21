@@ -15,6 +15,11 @@
     "teams.add"   : "Creer une nouvelle equipe",
     "teams.newTeam" : "Nouvelle equipe",
     
+    "action.apply" : "Postuler",
+    "action.delete" : "Supprimer",
+    "action.leave" : "Quitter",
+    "action.cancel" : "Annuler",
+    
     "team.teamLeader" : "capitaine",
     "team.requests" : "Demandes",
     "team.members" : "Membres",

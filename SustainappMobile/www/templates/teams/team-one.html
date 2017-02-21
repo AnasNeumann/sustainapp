@@ -33,7 +33,8 @@
 	                  <span><i class="icon ion-ribbon-b"></i> {{'team.level' | translate}} {{teamModel.team.level}}<br /></span>
 	                  <span><i class="icon ion-person-stalker"></i> {{teamModel.team.listRole.length}} {{'common.members' | translate}}</span>
                   </p>
-                  <button class="s-common-lightBtn" ng-click="createTeam()">{{'common.modify' | translate}}</button>
+                  <button ng-show="teamModel.isAdmin" class="s-common-lightBtn" ng-click="deleteTeam()">{{'action.delete' | translate}}</button>
+                  <button ng-hide="teamModel.isAdmin" class="s-common-lightBtn" ng-click="handleTeam({{loginModel.profileId}}, '{{teamModel.action}}', 'me')">{{teamModel.displayAction | translate}}</button>
 	        </div>
 	        <div class="col col-50" ng-show="teamModel.edit">
                   <div class="s-common-floatEdit"  ng-click="teamModel.edit = false" >
@@ -66,7 +67,7 @@
               <h2 class="s-teams-title">{{profile.firstName}} {{profile.lastName}}</h2>
               <p class="s-teams-text">{{'common.registeredSince' | translate}} {{teamModel.owner.timestamps | date: 'dd/MM/yyyy'}}</p>
               <i class="icon ion-chevron-right icon-accessory" ng-if="teamModel.role == 'admin'"></i>
-              <ion-option-button ng-if="teamModel.role == 'admin'" class="button s-common-btnList" ng-click="remove(chat)">
+              <ion-option-button ng-if="teamModel.role == 'admin'" class="button s-common-btnList" ng-click="handleTeam(profile, 'action.fire.refuse', 'member')">
                 <i class="icon ion-close-circled"></i>
               </ion-option-button>
           </ion-item>
@@ -85,10 +86,10 @@
 	              <h2 class="s-teams-title">{{profile.firstName}} {{profile.lastName}}</h2>
 	              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{teamModel.owner.timestamps | date: 'dd/MM/yyyy'}}</p>
 	              <i class="icon ion-chevron-right icon-accessory"></i>
-	              <ion-option-button class="button s-common-btnList" ng-click="remove(chat)">
+	              <ion-option-button class="button s-common-btnList" ng-click="handleTeam(profile, 'action.apply.accept', 'request')">
 	                    <i class="icon ion-checkmark-circled"></i>
 	              </ion-option-button>
-	              <ion-option-button class="button s-common-btnList" ng-click="remove(chat)">
+	              <ion-option-button class="button s-common-btnList" ng-click="handleTeam(profile, 'action.fire.refuse', 'request')">
 	                    <i class="icon ion-close-circled"></i>
 	              </ion-option-button>
 	          </ion-item>

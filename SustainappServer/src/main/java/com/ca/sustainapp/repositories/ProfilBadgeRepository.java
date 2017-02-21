@@ -2,6 +2,7 @@ package com.ca.sustainapp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -25,4 +26,12 @@ public interface ProfilBadgeRepository extends JpaSpecificationExecutor<ProfilBa
 	@Query("SELECT COUNT(*) FROM ProfilBadgeEntity AS p WHERE p.id = :id")
 	Integer countById(@Param("id") Long id);
 
+	
+	/**
+	 * delete entities by id
+	 * @param id
+	 */
+	@Modifying
+	@Query("DELETE FROM ProfilBadgeEntity p WHERE p.id = :id")
+	void delete(@Param("id") Long id);
 }

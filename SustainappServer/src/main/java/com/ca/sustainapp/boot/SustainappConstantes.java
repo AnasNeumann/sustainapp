@@ -50,9 +50,9 @@ public class SustainappConstantes {
 	/**
 	 * Actions dans une team
 	 */
-	public final static String TEAMROLE_CANCEL_OR_LEAVE = "leave";
-	public final static String TEAMROLE_REQUEST_OR_ACCEPT = "request";
-	public final static String TEAMROLE_FIRE_OR_REFUSE = "fire";
+	public final static String TEAMROLE_CANCEL_OR_LEAVE = "action.leave.cancel";
+	public final static String TEAMROLE_REQUEST_OR_ACCEPT = "action.apply.accept";
+	public final static String TEAMROLE_FIRE_OR_REFUSE = "action.fire.refuse";
 	
 	/**
 	 * Target pour un challenge

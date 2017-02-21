@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -43,4 +44,12 @@ public interface UserAccountRepository extends JpaSpecificationExecutor<UserAcco
 	 */
 	@Query("FROM UserAccountEntity AS u WHERE u.token = :token")
 	List<UserAccountEntity> getByToken(@Param("token") String token);
+	
+	/**
+	 * delete entities by id
+	 * @param id
+	 */
+	@Modifying
+	@Query("DELETE FROM UserAccountEntity u WHERE u.id = :id")
+	void delete(@Param("id") Long id);
 }

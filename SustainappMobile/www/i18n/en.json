@@ -15,6 +15,11 @@
     "teams.add"   : "Create a new team",
     "teams.newTeam" : "New team",
     
+    "action.apply" : "Apply",
+    "action.delete" : "Delete",
+    "action.leave" : "Leave",
+    "action.cancel" : "Cancel",
+    
     "team.teamLeader" : "team leader",
     "team.requests" : "Requests",
     "team.members" : "Members",
