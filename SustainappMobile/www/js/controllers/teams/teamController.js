@@ -119,18 +119,30 @@ angular.module('sustainapp.controllers')
 		data.append("team", $scope.teamModel.team.id);
 		if("me" == previous){
 			data.append("target", target);
+			data.append("role", $scope.teamModel.action);
 		}else{
 			data.append("target", target.id);
+			data.append("role", role);
 		}
 		data.append("sessionId", sessionService.get('id'));
-		data.append("sessionToken", sessionService.get('token'));
-		data.append("role", role);
+		data.append("sessionToken", sessionService.get('token'));		
 		teamService.handleRole(data).success(function(result) {
 			if(result.code == 1){
 				if("me" == previous){
-					$scope.teamModel.displayAction = "action.apply";
-					$scope.teamModel.action = "action.apply.accept";
-					$scope.teamModel.role = null;
+					if($scope.teamModel.action == "action.apply.accept"){
+						$scope.teamModel.displayAction = "action.cancel";
+						$scope.teamModel.action = "action.leave.cancel";
+						$scope.teamModel.role = "request";
+					} else{
+						$scope.teamModel.displayAction = "action.apply";
+						$scope.teamModel.action = "action.apply.accept";
+						$scope.teamModel.role = null;
+						$scope.teamModel.members.splice(
+								$scope.teamModel.members.indexOf(
+										$scope.teamModel.members.filter(function(member){
+												return member.id == target;
+										})[0]), 1);
+					}					
 				} else if("member" == previous) {
 					$scope.teamModel.members.splice($scope.teamModel.members.indexOf(target), 1);
 				} else {
