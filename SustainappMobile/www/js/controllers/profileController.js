@@ -109,7 +109,7 @@ angular.module('sustainapp.controllers')
 					}
 				});
 			 }, function(err) {
-			 });	    	
+			 });
 	    }
-				
+
 	});

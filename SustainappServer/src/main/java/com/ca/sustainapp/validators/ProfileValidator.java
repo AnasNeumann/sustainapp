@@ -24,10 +24,10 @@ public class ProfileValidator extends GenericValidator {
 	public Map<String, String> validate(HttpServletRequest request){
 		Map<String, String> result = super.validate(request);
 		if(isEmpty(request.getParameter("firstName"))){
-			result.put("mail", "form.firstName.mandatory");
+			result.put("firstName", "form.firstName.mandatory");
 		}
 		if(isEmpty(request.getParameter("lastName"))){
-			result.put("password", "form.lastName.mandatory");
+			result.put("lastName", "form.lastName.mandatory");
 		}
 		return result;
 	}

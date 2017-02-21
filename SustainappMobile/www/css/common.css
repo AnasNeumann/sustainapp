@@ -151,6 +151,16 @@ body {
     z-index : 1000;
  }
  
+ .s-common-floatEdit{
+    display:inline-block;
+    float:right;
+    color : black;
+    opacity : 0.4;
+    cursor : pointer;
+    z-index : 1000;
+ }
+ 
+ .s-common-floatEdit:active,
  .s-common-choosePicture:active,
  .s-common-choosePictureToogle:active,
  .s-common-edit:active {
@@ -159,6 +169,10 @@ body {
  
  .s-common-padding20 {
     padding : 20px;
+ }
+ 
+ .s-common-padding10 {
+    padding : 10px;
  }
  
  .s-common-padding0 {
@@ -191,6 +205,31 @@ body {
 
 .s-common-btn:active {
     background-color: #28a754;
+    -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.s-common-lightBtn {
+	background-color: transparent;
+    color: #A0A0A0;
+    border: 1px solid #C0C0C0;
+    height : 40px;
+    font-size : 20px;
+    font-family: sustainapp;
+    width:100%;
+    display:block;
+    margin-top:20px;
+    border-radius : 3px;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.s-common-lightBtn:active {
+    background-color: #28a754;
+    color : white;
     -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
     -moz-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
     box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);

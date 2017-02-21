@@ -48,9 +48,29 @@ public class SustainappConstantes {
 	public final static String TEAMROLE_MEMBER = "member";
 	
 	/**
+	 * Actions dans une team
+	 */
+	public final static String TEAMROLE_CANCEL_OR_LEAVE = "leave";
+	public final static String TEAMROLE_REQUEST_OR_ACCEPT = "request";
+	public final static String TEAMROLE_FIRE_OR_REFUSE = "fire";
+	
+	/**
 	 * Target pour un challenge
 	 */
 	public final static String TARGET_TEAM = "team";
 	public final static String TARGET_PROFILE = "profile";
 	
+	/**
+	 * Badges
+	 */
+	public final static String BADGE_JOURNALIST = "journalist";
+	public final static String BADGE_SUPERHERO = "superhero";
+	public final static String BADGE_GRADUATE = "graduate";
+	public final static String BADGE_TEACHER = "teacher";
+	public final static String BADGE_STAR = "star";
+	public final static String BADGE_MISSIONARY = "missionary";
+	public final static String BADGE_READER = "reader";
+	public final static String BADGE_OMNIPRESENT = "omnipresent";
+	public final static String BADGE_WALKER = "walker";
+	public final static String BADGE_LEADER = "capitaine";
 }

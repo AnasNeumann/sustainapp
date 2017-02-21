@@ -18,6 +18,7 @@
     "team.teamLeader" : "team leader",
     "team.requests" : "Requests",
     "team.members" : "Members",
+    "team.level" : "Level",
     
     "profile.mail": "email address",
     "profile.password": "password",
@@ -49,6 +50,8 @@
     "form.lastName.mandatory" : "The last name field is mandatory",
     "form.mail.matching" : "This couple mail/passowrd doesn't exist",
     "form.bornDate.mandatory" : "Please enter a valid date format",
+    "form.name.mandatory" : "The name field is mandatory",
+    "form.name.exist" : "This team name is not available",
     
     "report.message" : "Your request has been received and will be processed as soon as possible"
 }

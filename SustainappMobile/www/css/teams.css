@@ -120,3 +120,9 @@
 	width : 123px;
 	background-color: #F0F0F0;
 }
+
+.s-team-title{
+    font-family: sustainapp-bold;
+    font-size : 22px !important;
+    display : inline;
+}

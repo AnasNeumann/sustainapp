@@ -24,7 +24,7 @@ angular.module('sustainapp.services')
 			return $http.post(config.remoteServer+"/team", data, params);
 		},
 		update : function(data) {
-			return $http.put(config.remoteServer+"/team", data, params);
+			return $http.post(config.remoteServer+"/team/update", data, params);
 		},
 		avatar : function(data) {
 			return $http.post(config.remoteServer+"/team/avatar", data, params);

@@ -50,12 +50,14 @@ public class TeamController extends GenericController {
 	@Autowired
 	private TeamServiceDAO teamService;
 	@Autowired
-	private TeamValidator validator;
-	@Autowired
 	private TeamRoleServiceDAO roleService;
 	@Autowired
 	private ProfileServiceDAO profileService;
 
+	@Autowired
+	private TeamValidator validator;
+	
+	
 	/**
 	 * add a new team
 	 * @return
@@ -133,11 +135,17 @@ public class TeamController extends GenericController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/team", method = RequestMethod.PUT, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/team/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		String name = request.getParameter("name");
+		TeamEntity team = verifyAllOwnerInformations(request);
+		if(null == team || !validator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+		}
+		teamService.createOrUpdate(team.setName(name));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
-	
+
 	/**
 	 * modify team avatar
 	 * @return
@@ -145,9 +153,14 @@ public class TeamController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/team/avatar", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String avatar(HttpServletRequest request) {
-		return null;
+		TeamEntity team = verifyAllOwnerInformations(request);
+		if(null == team){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		teamService.createOrUpdate(team.setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
-	
+
 	/**
 	 * delete a team by id
 	 * @return
@@ -155,9 +168,14 @@ public class TeamController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/team", method = RequestMethod.DELETE, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		TeamEntity team = verifyAllOwnerInformations(request);
+		if(null == team){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		teamService.delete(team.getId());
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
-	
+
 	/**
 	 * modify team role
 	 * @return
@@ -165,11 +183,119 @@ public class TeamController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/team/role", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String handleRole(HttpServletRequest request) {
+		Optional<Long> teamId = StringsUtils.parseLongQuickly(request.getParameter("team"));
+		Optional<Long> targetId = StringsUtils.parseLongQuickly(request.getParameter("target"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		String role = request.getParameter("role");
+		if(!teamId.isPresent() || !targetId.isPresent() || null == user || isEmpty(role)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		TeamEntity team = teamService.getById(teamId.get());
+		ProfileEntity profile = profileService.getById(targetId.get());
+		if(null == team || null == profile){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		return new HttpRESTfullResponse().setCode(isCorrectAction(team, profile, role, user)? 1 : 0).buildJson();
+	}
+
+	/**
+	 * Verifier les droits d'action et agir sur les teamRoles
+	 * @param team
+	 * @param profile
+	 * @param role
+	 * @param user
+	 * @return
+	 */
+	private Boolean isCorrectAction(TeamEntity team, ProfileEntity profile, String role, UserAccountEntity user){
+		TeamRoleEntity currentRole = this.searchTeamRoleProfile(team, profile);
+		switch(role){
+			case SustainappConstantes.TEAMROLE_CANCEL_OR_LEAVE :
+				if(user.getProfile().getId().equals(profile.getId()) && null != currentRole){
+					roleService.delete(currentRole.getId());
+					return true;
+				}
+				break;
+			case SustainappConstantes.TEAMROLE_FIRE_OR_REFUSE : 
+				if(isOwnerTeam(team, user.getProfile()) && null != currentRole){
+					roleService.delete(currentRole.getId());
+					return true;
+				}
+				break;
+			case SustainappConstantes.TEAMROLE_REQUEST_OR_ACCEPT :
+				if(user.getProfile().getId().equals(profile.getId()) && null == currentRole){
+					roleService.createOrUpdate(new TeamRoleEntity()
+							.setProfilId(profile.getId())
+							.setRole(SustainappConstantes.TEAMROLE_REQUEST)
+							.setTeamId(team.getId())
+							.setTimestamps(GregorianCalendar.getInstance()));
+					return true;
+				} else if(isOwnerTeam(team, user.getProfile()) && null != currentRole){
+					roleService.createOrUpdate(currentRole
+							.setRole(SustainappConstantes.TEAMROLE_MEMBER));
+					return true;
+				}
+				break;
+		}
+		return false;
+	}
+	
+	/**
+	 * Verify if a connected user is owner of a team
+	 * @param team
+	 * @param request
+	 * @return
+	 */
+	private boolean isConnectedOwner(TeamEntity team, HttpServletRequest request){
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(null == user || null == user.getProfile() || !isOwnerTeam(team, user.getProfile())){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Verify if a profile is owner of a team
+	 * @param team
+	 * @param profile
+	 * @return
+	 */
+	private boolean isOwnerTeam(TeamEntity team, ProfileEntity profile){
+		return searchRoleProfile(team, profile).equals(SustainappConstantes.TEAMROLE_ADMIN);
+	}
+	
+	
+	/**
+	 * retrieve TeamRole of a profile
+	 * @param team
+	 * @param profile
+	 * @return
+	 */
+	private TeamRoleEntity searchTeamRoleProfile(TeamEntity team, ProfileEntity profile){
+		for(TeamRoleEntity role : team.getListRole()){
+			if(role.getProfilId().equals(profile.getId())){
+				return role;
+			}
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * retrieve role of a profile
+	 * @param team
+	 * @param profile
+	 * @return
+	 */
+	private String searchRoleProfile(TeamEntity team, ProfileEntity profile){
+		TeamRoleEntity role = searchTeamRoleProfile(team, profile);
+		if(null != role){
+			return role.getRole();
+		}
 		return null;
 	}
 	
 	/**
-	 * Retrieve user role
+	 * Retrieve user role by HttpServletRequest
 	 * @param team
 	 * @param request
 	 * @return
@@ -183,12 +309,7 @@ public class TeamController extends GenericController {
 		if(null == user || null == user.getProfile()){
 			return null;
 		}
-		for(TeamRoleEntity role : team.getListRole()){
-			if(role.getProfilId().equals(user.getProfile().getId())){
-				return role.getRole();
-			}
-		}
-		return null;
+		return searchRoleProfile(team, user.getProfile());
 	}
 	
 	/**
@@ -205,5 +326,22 @@ public class TeamController extends GenericController {
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * Verifier toutes les informations nécéssaires à l'action sur une team
+	 * @param request
+	 * @return
+	 */
+	public TeamEntity verifyAllOwnerInformations(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("team"));
+		if(!id.isPresent()){
+			return null;
+		}
+		TeamEntity team = teamService.getById(id.get());
+		if(null == team || !isConnectedOwner(team, request)){
+			return null;
+		}
+		return team;
 	}
 }

@@ -3,42 +3,43 @@
         
         <!-- ADD NEW TEAM -->
         <div class="s-teams-newHeader">
-                <div class="padding s-teams-addClosed" ng-hide="teamsModel.add" ng-click="teamsModel.add = true">
-                    <i class="icon ion-android-add-circle s-teams-newBtn"></i>
-                    <span class="s-teams-addText" >{{'teams.add' | translate}}</span>
-                </div>
-                <div class="s-teams-addOpen padding" ng-show="teamsModel.add">
-                    <i class="icon ion-android-add-circle s-teams-closeBtn" ng-click="teamsModel.add = false"></i>
-                    <span class="s-teams-addText" >{{'teams.newTeam' | translate}}</span>
-                    <div class="row s-common-padding-top0">
-	                    <div class="col col-50 s-common-padding-top0">
-		                    <div class="s-teams-addPicture" style="background-image: url({{teamsModel.displayFile}});">
-		                        <i class="icon ion-person-stalker" ng-show="teamsModel.emptyPicture"></i>
-		                        <div class="s-common-camera">
-						            <div class="s-common-choosePictureToogle" ng-show="teamsModel.editFile" ng-click="teamsModel.editFile = false">
-						               <i class="icon ion-close-round"></i>
-						            </div>
-						            <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(true)">
-						               {{'common.takePicture' | translate}}
-						            </div>
-						            <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(false)">
-						              {{'common.chooseFormGallery' | translate}}
-						            </div>
-						            <div class="s-common-choosePictureToogle s-common-22" ng-hide="teamsModel.editFile" ng-click="teamsModel.editFile = true">
-						               <i class="icon ion-camera"></i>
-						            </div>
-						        </div>
-		                    </div>
+               <div class="padding s-teams-addClosed" ng-hide="teamsModel.add" ng-click="teamsModel.add = true">
+                   <i class="icon ion-android-add-circle s-teams-newBtn"></i>
+                   <span class="s-teams-addText" >{{'teams.add' | translate}}</span>
+               </div>
+               <div class="s-teams-addOpen padding" ng-show="teamsModel.add">
+                   <i class="icon ion-android-add-circle s-teams-closeBtn" ng-click="teamsModel.add = false"></i>
+                   <span class="s-teams-addText" >{{'teams.newTeam' | translate}}</span>
+                   <div class="row s-common-padding-top0">
+                    <div class="col col-50 s-common-padding-top0">
+	                    <div class="s-teams-addPicture" style="background-image: url({{teamsModel.displayFile}});">
+	                        <i class="icon ion-person-stalker" ng-show="teamsModel.emptyPicture"></i>
+	                        <div class="s-common-camera">
+					            <div class="s-common-choosePictureToogle" ng-show="teamsModel.editFile" ng-click="teamsModel.editFile = false">
+					               <i class="icon ion-close-round"></i>
+					            </div>
+					            <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(true)">
+					               {{'common.takePicture' | translate}}
+					            </div>
+					            <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(false)">
+					              {{'common.chooseFormGallery' | translate}}
+					            </div>
+					            <div class="s-common-choosePictureToogle s-common-22" ng-hide="teamsModel.editFile" ng-click="teamsModel.editFile = true">
+					               <i class="icon ion-camera"></i>
+					            </div>
+					        </div>
 	                    </div>
-	                    <div class="col col-50 s-common-padding-top0">
-                            <label class="item item-input item-floating-label" > 
-						     <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
-						     <input ng-model="teamsModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
-						   </label>
-						   <button class="s-common-btn" ng-click="createTeam()">{{'common.create' | translate }}</button>
-                        </div>
+                    </div>
+                    <div class="col col-50 s-common-padding-top0">
+	                   <label class="item item-input item-floating-label" > 
+					      <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
+					      <input ng-model="teamsModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+					      <span class="s-common-errors">{{teamsModel.allErrors.name | translate}}</span>
+					   </label>
+					   <button class="s-common-btn" ng-click="createTeam()">{{'common.create' | translate }}</button>
                     </div>
                 </div>
+            </div>
         </div>
         
         <!-- ALL TEAMS -->

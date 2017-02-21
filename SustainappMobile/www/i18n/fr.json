@@ -18,6 +18,7 @@
     "team.teamLeader" : "capitaine",
     "team.requests" : "Demandes",
     "team.members" : "Membres",
+    "team.level" : "Niveau",
 
     "profile.mail": "adresse mail",
     "profile.password": "mot de passe",
@@ -49,6 +50,8 @@
     "form.lastName.mandatory" : "Veuillez remplir le champs nom de famille",
     "form.mail.matching" : "Ce couple mail/mot de passe n'existe pas",
     "form.bornDate.mandatory" : "Veuillez remplir une date valide",
+    "form.name.mandatory" : "Veuillez remplir le champs nom",
+    "form.name.exist" : "Ce nom d'equipe n'est plus disponible",
     
     "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais"
 }

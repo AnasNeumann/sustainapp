@@ -82,7 +82,6 @@ angular.module('sustainapp.controllers')
 		}
 		initialConnection();
 		
-		
 		/**
 		 * Fonction commune d'ouverture local d'une session
 		 * @param result
