@@ -30,6 +30,7 @@ import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.TeamResponse;
 import com.ca.sustainapp.responses.TeamsResponse;
+import com.ca.sustainapp.services.CascadeDeleteService;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.TeamValidator;
@@ -53,7 +54,10 @@ public class TeamController extends GenericController {
 	private TeamRoleServiceDAO roleService;
 	@Autowired
 	private ProfileServiceDAO profileService;
+	@Autowired
+	private CascadeDeleteService deleteService;
 
+	
 	@Autowired
 	private TeamValidator validator;
 	
@@ -166,13 +170,13 @@ public class TeamController extends GenericController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/team", method = RequestMethod.DELETE, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/team/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
 		TeamEntity team = verifyAllOwnerInformations(request);
 		if(null == team){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		teamService.delete(team.getId());
+		deleteService.cascadeDelete(team);
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 

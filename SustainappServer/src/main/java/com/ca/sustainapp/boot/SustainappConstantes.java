@@ -70,7 +70,6 @@ public class SustainappConstantes {
 	public final static String BADGE_STAR = "star";
 	public final static String BADGE_MISSIONARY = "missionary";
 	public final static String BADGE_READER = "reader";
-	public final static String BADGE_OMNIPRESENT = "omnipresent";
 	public final static String BADGE_WALKER = "walker";
 	public final static String BADGE_LEADER = "capitaine";
 }

@@ -1,5 +1,8 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,4 +36,12 @@ public interface TeamRepository extends JpaSpecificationExecutor<TeamEntity>, Jp
 	@Modifying
 	@Query("DELETE FROM TeamEntity t WHERE t.id = :id")
 	void delete(@Param("id") Long id);
+	
+	/**
+	 * Select all teams by keywords
+	 * @param Keywords
+	 * @return
+	 */
+	@Query("FROM TeamEntity t where (t.name in :keywords)")
+	List<TeamEntity> searchByKeywords(@Param("keywords") List<String> Keywords, Pageable pageable);
 }

@@ -94,4 +94,15 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
+	
+	/**
+	 * Search by keywords and Max results
+	 * @param Keywords
+	 * @param maximum
+	 * @return
+	 */
+	@Transactional
+	public List<ProfileEntity> searchByKeywords(List<String> keywords, Integer maximum){
+		return repository.searchByKeywords(keywords, new PageRequest(0, maximum));
+	}
 }

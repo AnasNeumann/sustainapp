@@ -10,6 +10,9 @@
     "common.createdOn" : "cree le",
     "common.members" : "membres",
     "common.registeredSince" : "inscrit depuis le",
+    
+    "modal.confirm" : "Confirmer",
+    "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
    
     "teams.name"  : "nom",
     "teams.add"   : "Creer une nouvelle equipe",

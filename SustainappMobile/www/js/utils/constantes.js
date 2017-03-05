@@ -14,5 +14,3 @@ angular.module('sustainapp.constantes')
 		request : "request",
 		member : "member"
 	});
-	
-	

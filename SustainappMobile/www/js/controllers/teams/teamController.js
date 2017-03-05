@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('teamController', function($scope, $stateParams, teamService, sessionService, teamRole, fileService) {
+.controller('teamController', function($scope, $stateParams, $ionicModal, $state, teamService, sessionService, teamRole, fileService) {
 	
 	/**
 	 * Entrée dans la page
@@ -155,10 +155,29 @@ angular.module('sustainapp.controllers')
 	    });	
 	};
 	
+   /***
+    * Modal de confirmation de la suppression d'une team
+    */
+   $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
+     scope: $scope
+   }).then(function(modal) {
+     $scope.modal = modal;
+   });
+	
 	/**
-	 * delete the team
+	 * Suppression définitive d'une team
 	 */
-	$scope.deleteTeam = function(){
+	$scope.confirmDelete = function(){
+		$scope.modal.hide();
+		var data = new FormData();
+		data.append("team", $scope.teamModel.team.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		teamService.deleteById(data).success(function(result) {
+			if(result.code == 1){
+				$state.go('tab.teams');
+	    	}
+	    });
 		return;
 	};
 });

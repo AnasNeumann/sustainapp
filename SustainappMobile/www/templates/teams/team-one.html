@@ -33,7 +33,7 @@
 	                  <span><i class="icon ion-ribbon-b"></i> {{'team.level' | translate}} {{teamModel.team.level}}<br /></span>
 	                  <span><i class="icon ion-person-stalker"></i> {{teamModel.team.listRole.length}} {{'common.members' | translate}}</span>
                   </p>
-                  <button ng-show="teamModel.isAdmin" class="s-common-lightBtn" ng-click="deleteTeam()">{{'action.delete' | translate}}</button>
+                  <button ng-show="teamModel.isAdmin" class="s-common-lightBtn" ng-click="modal.show()">{{'action.delete' | translate}}</button>
                   <button ng-hide="teamModel.isAdmin" class="s-common-lightBtn" ng-click="handleTeam({{loginModel.profileId}}, '', 'me')">{{teamModel.displayAction | translate}}</button>
 	        </div>
 	        <div class="col col-50" ng-show="teamModel.edit">

@@ -11,6 +11,9 @@
     "common.members" : "members",
     "common.registeredSince" : "registered since",
     
+    "modal.confirm" : "Confirm",
+    "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
+    
     "teams.name"  : "name",
     "teams.add"   : "Create a new team",
     "teams.newTeam" : "New team",

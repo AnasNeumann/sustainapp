@@ -33,7 +33,7 @@ angular.module('sustainapp.services')
 			return $http.post(config.remoteServer+"/team/role", data, params);
 		},
 		deleteById : function(data) {
-			return $http.delete(config.remoteServer+"/team", data, params);
+			return $http.post(config.remoteServer+"/team/delete", data, params);
 		}
 	};
 });

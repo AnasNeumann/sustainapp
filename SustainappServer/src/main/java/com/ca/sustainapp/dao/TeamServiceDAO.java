@@ -67,7 +67,7 @@ public class TeamServiceDAO extends GenericServiceDAO {
 			repository.delete(id);
 		}
 	}
-	
+
 	/**
 	 * get All
 	 * @return
@@ -95,4 +95,14 @@ public class TeamServiceDAO extends GenericServiceDAO {
 		return result;
 	}
 
+	/**
+	 * Search by keywords and Max results
+	 * @param Keywords
+	 * @param maximum
+	 * @return
+	 */
+	@Transactional
+	public List<TeamEntity> searchByKeywords(List<String> keywords, Integer maximum){
+		return repository.searchByKeywords(keywords, new PageRequest(0, maximum));
+	}
 }

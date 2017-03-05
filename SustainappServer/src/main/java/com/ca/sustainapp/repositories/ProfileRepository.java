@@ -1,5 +1,8 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -34,4 +37,12 @@ public interface ProfileRepository extends JpaSpecificationExecutor<ProfileEntit
 	@Modifying
 	@Query("DELETE FROM ProfileEntity p WHERE p.id = :id")
 	void delete(@Param("id") Long id);
+
+	/**
+	 * Select all profiles by keywords
+	 * @param Keywords
+	 * @return
+	 */
+	@Query("FROM ProfileEntity p where (p.firstName in :keywords) OR (p.lastName in :keywords)")
+	List<ProfileEntity> searchByKeywords(@Param("keywords") List<String> Keywords, Pageable pageable);
 }
