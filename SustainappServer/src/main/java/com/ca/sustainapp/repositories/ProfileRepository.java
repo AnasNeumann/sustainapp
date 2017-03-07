@@ -1,7 +1,11 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -25,5 +29,30 @@ public interface ProfileRepository extends JpaSpecificationExecutor<ProfileEntit
 	 */
 	@Query("SELECT COUNT(*) FROM ProfileEntity AS p WHERE p.id = :id")
 	Integer countById(@Param("id") Long id); 
+	
+	/**
+	 * delete entities by id
+	 * @param id
+	 */
+	@Modifying
+	@Query("DELETE FROM ProfileEntity p WHERE p.id = :id")
+	void delete(@Param("id") Long id);
+
+	/**
+	 * Select all profiles by keywords
+	 * @param Keywords
+	 * @return
+	 */
+	@Query("FROM ProfileEntity p where (LOWER(p.firstName) LIKE CONCAT('%',LOWER(:keywords),'%')) OR (LOWER(p.lastName) LIKE CONCAT('%',LOWER(:keywords),'%'))")
+	List<ProfileEntity> searchByKeywords(@Param("keywords") String Keywords, Pageable pageable);
+	
+	
+	/**
+	 * Select all profiles by keywords
+	 * @param Keywords
+	 * @return
+	 */
+	@Query("FROM ProfileEntity p where (CONCAT(LOWER(p.lastName),' ',LOWER(p.firstName)) LIKE CONCAT('%',LOWER(:fullName),'%')) OR (CONCAT(LOWER(p.firstName),' ',LOWER(p.lastName)) LIKE CONCAT('%',LOWER(:fullName),'%'))")
+	List<ProfileEntity> searchByFullName(@Param("fullName") String fullName, Pageable pageable);
 	
 }

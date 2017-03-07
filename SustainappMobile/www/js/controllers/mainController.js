@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('mainController', function($scope, sessionService, $state, userService) {
+	.controller('mainController', function($scope, $state, sessionService, userService) {
 		
 		/**
 		 * Initialisation du model
@@ -82,13 +82,12 @@ angular.module('sustainapp.controllers')
 		}
 		initialConnection();
 		
-		
 		/**
 		 * Fonction commune d'ouverture local d'une session
 		 * @param result
 		 */
-		var openSession = function (result, mail, password){
-	    	sessionService.set('mail' ,mail);
+		var openSession = function (result, mail, password){			
+			sessionService.set('mail' ,mail);
     		sessionService.set('password' ,password);
 			if(result.code == 1){
 	    		$scope.loginModel.allErrors = [];    		
@@ -97,17 +96,18 @@ angular.module('sustainapp.controllers')
 	    		sessionService.set('id' ,result.id);
 	    		sessionService.set('token' ,result.token);
 	    		sessionService.set('isConnected' ,"true");
-		    	$scope.loginModel.isConnected = true;
+		    	$scope.loginModel.isConnected = true;	
+		    	$state.go('tab.news');
 	    	} else {
 	    		$scope.loginModel.allErrors = result.errors;
-	    	}
+	    	}			
 		}
 		
 		/**
 		 * Affichage du journal d'actualités
 		 */
 		$scope.displayNews = function(){
-			$state.go('tab.news')
+			$state.go('tab.news');
 		}
 
 	});

@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles les fenêtres modales
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 23/02/2017
+ * @version 1.0
+ */
+ 
+ .s-modal-views{
+    background-color: rgba(0,0,0,0.55);
+ }
+ 
+ .s-modal-confirm{
+	background-color: white;
+	border-radius: 3px;
+	margin-top : 25px;
+	padding: 10px;
+ }

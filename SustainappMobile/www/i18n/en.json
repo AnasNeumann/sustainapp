@@ -6,6 +6,28 @@
     "common.message" : "Your message",
     "common.thanks" : "thanks",
     "common.back" : "Back",
+    "common.create" : "Create",
+    "common.createdOn" : "created on",
+    "common.members" : "members",
+    "common.registeredSince" : "registered since",
+    "common.profiles" : "Profiles",
+    
+    "modal.confirm" : "Confirm",
+    "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
+    
+    "teams.name"  : "name",
+    "teams.add"   : "Create a new team",
+    "teams.newTeam" : "New team",
+    
+    "action.apply" : "Apply",
+    "action.delete" : "Delete",
+    "action.leave" : "Leave",
+    "action.cancel" : "Cancel",
+    
+    "team.teamLeader" : "team leader",
+    "team.requests" : "Requests",
+    "team.members" : "Members",
+    "team.level" : "Level",
     
     "profile.mail": "email address",
     "profile.password": "password",
@@ -13,6 +35,7 @@
     "profile.lastName": "last name",
     "profile.bornDate" : "date of birth",
     "profile.yearsOld" : "years old",
+    "profile.registeredSince" : "registered since",
     
     "login.login": "Login",
     "login.signin": "Sign in !",
@@ -37,6 +60,8 @@
     "form.lastName.mandatory" : "The last name field is mandatory",
     "form.mail.matching" : "This couple mail/passowrd doesn't exist",
     "form.bornDate.mandatory" : "Please enter a valid date format",
+    "form.name.mandatory" : "The name field is mandatory",
+    "form.name.exist" : "This team name is not available",
     
     "report.message" : "Your request has been received and will be processed as soon as possible"
 }

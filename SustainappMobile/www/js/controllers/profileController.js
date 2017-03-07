@@ -34,11 +34,11 @@ angular.module('sustainapp.controllers')
 	    			 $scope.profileModel.profileTemp = response.data.profiles[0];
 	    			 $scope.profileModel.loaded = true;
 		    		 $scope.profileModel.allErrors = [];
-		    		 if(null != response.data.profiles[0].base64Avatar && "" != response.data.profiles[0].base64Avatar){
-		    			 $scope.profileModel.displayAvatar = "data:image/jpeg;base64,"+ response.data.profiles[0].base64Avatar;
+		    		 if(null != response.data.profiles[0].avatar && "" != response.data.profiles[0].avatar){
+		    			 $scope.profileModel.displayAvatar = "data:image/jpeg;base64,"+ response.data.profiles[0].avatar;
 		    		 } 
-		    		 if(null != response.data.profiles[0].base64Cover && "" != response.data.profiles[0].base64Cover){
-		    			 $scope.profileModel.displayCover = "data:image/jpeg;base64,"+ response.data.profiles[0].base64Cover;
+		    		 if(null != response.data.profiles[0].cover && "" != response.data.profiles[0].cover){
+		    			 $scope.profileModel.displayCover = "data:image/jpeg;base64,"+ response.data.profiles[0].cover;
 		    		 }
 		    		 if(response.data.profiles[0].id == sessionService.getObject('profile').id){
 		    			 $scope.profileModel.owner = true;
@@ -109,7 +109,7 @@ angular.module('sustainapp.controllers')
 					}
 				});
 			 }, function(err) {
-			 });	    	
+			 });
 	    }
-				
+
 	});

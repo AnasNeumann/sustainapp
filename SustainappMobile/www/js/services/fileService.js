@@ -1,5 +1,5 @@
 /**
- * WS pour la gestion des profiles
+ * service de traitement sur les images avec NG-CORDOVA
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 03/02/2017
  * @version 1.0

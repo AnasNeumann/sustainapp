@@ -17,3 +17,16 @@
 	font-size : 20px !important;
 	font-family : sustainapp;
 }
+
+.s-search-empty {
+	color :  #D5D5D5;
+	font-size : 110px;
+	text-align  : center;
+	width : 100%;
+	margin-top : 25px;
+}
+
+.s-search-type{
+   color :  #888;
+   padding : 10px;
+}

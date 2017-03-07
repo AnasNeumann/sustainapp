@@ -21,7 +21,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.annotation.Transient;
 
 /**
  * CHALLENGE table mapping
@@ -53,9 +52,6 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	@Column(name = "ICON")
 	private byte[] icon;
 	
-	@Transient
-	private transient String base64;
-	
 	@Column(name = "TEAM_ENABLED")
 	private Boolean teamEnabled;
 	
@@ -65,6 +61,9 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "CREATOR_ID")
 	private Long creatorId;
+
+	@Column(name = "MIN_LEVEL")
+	private Integer minLevel;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -222,19 +221,19 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 		this.listParticipation = listParticipation;
 		return this;
 	}
-	
+
 	/**
-	 * @return the base64
+	 * @return the minLevel
 	 */
-	public String getBase64() {
-		return base64;
+	public Integer getMinLevel() {
+		return minLevel;
 	}
 
 	/**
-	 * @param base64 the base64 to set
+	 * @param minLevel the minLevel to set
 	 */
-	public ChallengeEntity setBase64(String base64) {
-		this.base64 = base64;
+	public ChallengeEntity setMinLevel(Integer minLevel) {
+		this.minLevel = minLevel;
 		return this;
 	}
 }

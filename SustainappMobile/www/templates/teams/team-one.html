@@ -1,0 +1,105 @@
+<ion-view view-title="{{'sideMenu.teams' | translate }}">
+    <ion-content ng-show="teamModel.loaded" >
+        
+        <!-- TEAM INFOS -->
+        <div class="row">
+            <div class="col col-50">
+	            <div class="s-team-containerAvatar">
+		            <div style="background-image: url({{teamModel.displayAvatar}});" class="s-profile-avatar">
+		                <div ng-if="teamModel.role == 'admin'" class="s-common-camera">
+		                   <div class="s-common-choosePictureToogle" ng-show="teamModel.avatarEdit" ng-click="teamModel.avatarEdit = false">
+		                      <i class="icon ion-close-round"></i>
+		                   </div>
+		                   <div class="s-common-choosePicture" ng-show="teamModel.avatarEdit" ng-click="avatar(true)">
+		                      {{'common.takePicture' | translate}}
+		                   </div>
+		                   <div class="s-common-choosePicture" ng-show="teamModel.avatarEdit" ng-click="avatar(false)">
+		                     {{'common.chooseFormGallery' | translate}}
+		                   </div>
+		                   <div class="s-common-choosePictureToogle s-common-22" ng-hide="teamModel.avatarEdit" ng-click="teamModel.avatarEdit = true">
+		                      <i class="icon ion-camera"></i>
+		                   </div>
+		               </div>
+		            </div>
+		        </div>
+	        </div>
+	        <div class="col col-50" ng-hide="teamModel.edit">
+	              <div class="s-common-floatEdit"  ng-click="teamModel.edit = true" ng-if="teamModel.role == 'admin'">
+                        <i class="icon ion-edit"></i>
+                  </div>
+                  <h2 class="s-team-title">{{teamModel.team.name}}</h2>
+                  <p class="s-teams-text">
+	                  <span><i class="icon ion-ios-calendar-outline"></i> {{'common.createdOn' | translate}} {{teamModel.team.timestamps | date: 'dd/MM/yyyy'}}<br /></span>
+	                  <span><i class="icon ion-ribbon-b"></i> {{'team.level' | translate}} {{teamModel.team.level}}<br /></span>
+	                  <span><i class="icon ion-person-stalker"></i> {{teamModel.team.listRole.length}} {{'common.members' | translate}}</span>
+                  </p>
+                  <button ng-show="teamModel.isAdmin" class="s-common-lightBtn" ng-click="modal.show()">{{'action.delete' | translate}}</button>
+                  <button ng-hide="teamModel.isAdmin" class="s-common-lightBtn" ng-click="handleTeam({{loginModel.profileId}}, '', 'me')">{{teamModel.displayAction | translate}}</button>
+	        </div>
+	        <div class="col col-50" ng-show="teamModel.edit">
+                  <div class="s-common-floatEdit"  ng-click="teamModel.edit = false" >
+                        <i class="icon ion-close-round"></i>
+                  </div>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
+                    <input ng-model="teamModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{teamModel.allErrors.name | translate}}</span>
+                  </label>
+                  <button class="s-common-btn" ng-click="updateTeam()">{{'common.modify' | translate}}</button>
+            </div>
+        </div>
+       
+        <!-- MEMBERS -->
+        <div class="s-common-flagContainer">
+	        <img src="img/common/flag.png" class="s-common-flagImg" />
+	        <h2 class="s-common-flagText">{{'team.members' | translate}}</h2>
+	    </div>
+	    <ion-list>
+	      <ion-item class="item-avatar" type="item-text-wrap" href="#/tab/profile/{{teamModel.owner.id}}">
+              <img ng-src="data:image/jpeg;base64,{{teamModel.owner.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+              <div class="s-teams-level">{{teamModel.owner.level}}</div>
+              <h2 class="s-teams-title">{{teamModel.owner.firstName}} {{teamModel.owner.lastName}} <span class="s-teams-teamLeader"><i class="icon ion-ribbon-a"></i> {{ 'team.teamLeader' | translate}}</span></h2>
+              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{teamModel.owner.timestamps | date: 'dd/MM/yyyy'}}</p>
+          </ion-item>
+          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="profile in teamModel.members" type="item-text-wrap" href="#/tab/profile/{{profile.id}}">
+              <img ng-src="data:image/jpeg;base64,{{profile.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+              <div class="s-teams-level">{{profile.level}}</div>
+              <h2 class="s-teams-title">{{profile.firstName}} {{profile.lastName}}</h2>
+              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{teamModel.owner.timestamps | date: 'dd/MM/yyyy'}}</p>
+              <i class="icon ion-chevron-right icon-accessory" ng-if="teamModel.role == 'admin'"></i>
+              <ion-option-button ng-if="teamModel.role == 'admin'" class="button s-common-btnList" ng-click="handleTeam(profile, 'action.fire.refuse', 'member')">
+                <i class="icon ion-close-circled"></i>
+              </ion-option-button>
+          </ion-item>
+        </ion-list>
+        
+        <!-- REQUESTS -->
+	    <div ng-if="teamModel.role == 'admin'">
+		    <div class="s-common-flagContainer">
+	            <img src="img/common/flag.png" class="s-common-flagImg" />
+	            <h2 class="s-common-flagText">{{'team.requests' | translate}}</h2>
+	        </div>
+	        <ion-list>
+	          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="profile in teamModel.requests" type="item-text-wrap" href="#/tab/profile/{{profile.id}}">
+	              <img ng-src="data:image/jpeg;base64,{{profile.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+	              <div class="s-teams-level">{{profile.level}}</div>
+	              <h2 class="s-teams-title">{{profile.firstName}} {{profile.lastName}}</h2>
+	              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{teamModel.owner.timestamps | date: 'dd/MM/yyyy'}}</p>
+	              <i class="icon ion-chevron-right icon-accessory"></i>
+	              <ion-option-button class="button s-common-btnList" ng-click="handleTeam(profile, 'action.apply.accept', 'request')">
+	                    <i class="icon ion-checkmark-circled"></i>
+	              </ion-option-button>
+	              <ion-option-button class="button s-common-btnList" ng-click="handleTeam(profile, 'action.fire.refuse', 'request')">
+	                    <i class="icon ion-close-circled"></i>
+	              </ion-option-button>
+	          </ion-item>
+	        </ion-list>
+        </div>
+    </ion-content>
+
+      <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="teamModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+  </ion-content>
+</ion-view>

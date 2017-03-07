@@ -16,7 +16,6 @@ import com.ca.sustainapp.entities.BadgeEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.repositories.BadgeRepository;
 import com.ca.sustainapp.specification.BadgeSpecification;
-import static org.apache.commons.codec.binary.Base64.encodeBase64String;
 
 /**
  * data access object service for Badge
@@ -42,8 +41,7 @@ public class BadgeServiceDAO extends GenericServiceDAO {
 		if(null == id){
 			return null;
 		}
-		BadgeEntity entity = repository.findOne(id);
-		return entity.setBase64(encodeBase64String(entity.getIcon()));
+		return repository.findOne(id);
 	}
 	
 	/**
@@ -76,11 +74,7 @@ public class BadgeServiceDAO extends GenericServiceDAO {
 	 */
 	@Transactional
 	public List<BadgeEntity> getAll(){
-		List<BadgeEntity> listResult = repository.findAll();
-		for(BadgeEntity entity : listResult){
-			entity.setBase64(encodeBase64String(entity.getIcon()));
-		}
-		return listResult;
+		return repository.findAll();
 	}
 
 	/**
@@ -94,13 +88,9 @@ public class BadgeServiceDAO extends GenericServiceDAO {
 	public SearchResult<BadgeEntity> searchByCriteres(BadgeCriteria criteria, Long startIndex, Long maxResults) {		
 		Specification<BadgeEntity> spec = BadgeSpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<BadgeEntity> page = repository.findAll(spec, paginator);
-		
+		Page<BadgeEntity> page = repository.findAll(spec, paginator);		
 		SearchResult<BadgeEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
-		for(BadgeEntity entity : result.getResults()){
-			entity.setBase64(encodeBase64String(entity.getIcon()));
-		}
 		return result;
 	}
 }

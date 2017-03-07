@@ -22,19 +22,19 @@
 	  <span class="input-label s-common-label">{{'common.message' | translate}}</span> 
 	  <input ng-model="reportModel.message" type="text" placeholder="{{'common.message' | translate}}" class="s-common-input">
 	</label>
-    <button class="s-login-btn" ng-click="signal()">{{'sideMenu.signal' | translate }}</button>
+    <button class="s-common-btn" ng-click="signal()">{{'sideMenu.signal' | translate }}</button>
   </ion-content>
   
   <!-- THANKS PART -->
   <ion-content ng-show="reportModel.sended">
-     <div class="s-report-thanksContainer">
+     <div class="s-common-flagContainer">
         <img src="img/report/{{'common.thanks' | translate }}.png" class="s-report-thanksImg" />
      </div>
      <div class="s-common-padding20">
         <p>
             {{'report.message' | translate }}
         </p>
-        <button class="s-login-btn" ng-click="reportModel.sended = false">{{'common.back' | translate }}</button>
+        <button class="s-common-btn" ng-click="reportModel.sended = false">{{'common.back' | translate }}</button>
      </div>
   </ion-content>
 </ion-view>

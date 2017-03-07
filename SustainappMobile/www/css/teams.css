@@ -1,0 +1,128 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles de la page des teams
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 17/02/2017
+ * @version 1.0
+ */
+ 
+ .s-teams-newHeader{
+    width : 100%;
+    margin : 0px;
+    font-size : 20px;
+    background-color: white;
+}
+
+.s-teams-addOpen,
+.s-teams-addClosed{
+	border-bottom : 1px solid #E0E0E0;
+	color : #444;
+}
+
+.s-teams-addText{
+	display : inline-block;
+	position : relative;
+	top : -5px;
+	margin-left : 10px;
+}
+
+.s-teams-closeBtn {
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.s-teams-closeBtn,
+.s-teams-newBtn {
+	font-size : 30px;
+	color : #23d5fb;
+	display : inline-block;
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+     cursor : pointer;
+}
+
+.s-teams-newBtn:active {
+	-ms-transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.s-teams-closeBtn:active {
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.s-teams-load {
+    text-align : center;
+ }
+
+.s-teams-addPicture {
+	margin-top : 30px;
+	background-color : #F0F0F0;
+	border : 1px solid #C0C0C0;
+	width : 115px;
+	height : 115px;
+	position : relative;
+	padding : 40px;
+	color : #C0C0C0;
+	font-size : 35px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.s-teams-content{
+	background-color: #F0F0F0;
+}
+
+.s-teams-title {
+	font-family: sustainapp-bold;
+	font-size : 22px !important;
+}
+
+.s-teams-text {
+	font-size : 18px !important;
+}
+
+.s-teams-level{
+	position: absolute;
+    top: 42px;
+    left: 42px;
+    max-width: 25px;
+    max-height: 25px;
+    width: 100%;
+    height: 100%;
+    background-color: #23d5fb;
+    border-radius: 50%;
+    border : 2px solid white;
+    color : white;
+    text-align : center;
+    padding-top : 2px;
+    font-family: sustainapp-bold;
+    font-size : 18px;
+}
+
+.s-teams-teamLeader{
+	font-size : 18px;
+	font-family : sustainapp;
+	color : #81710c;
+}
+
+.s-team-containerAvatar{
+	border : 1px solid #D0D0D0;
+	height : 123px;
+	width : 123px;
+	background-color: #F0F0F0;
+}
+
+.s-team-title{
+    font-family: sustainapp-bold;
+    font-size : 22px !important;
+    display : inline;
+}

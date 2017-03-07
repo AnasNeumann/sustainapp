@@ -6,6 +6,28 @@
     "common.message" : "Votre message",
     "common.thanks" : "merci",
     "common.back" : "Retour",
+    "common.create" : "Creer",
+    "common.createdOn" : "cree le",
+    "common.members" : "membres",
+    "common.registeredSince" : "inscrit depuis le",
+    "common.profiles" : "Personnes",
+    
+    "modal.confirm" : "Confirmer",
+    "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
+   
+    "teams.name"  : "nom",
+    "teams.add"   : "Creer une nouvelle equipe",
+    "teams.newTeam" : "Nouvelle equipe",
+    
+    "action.apply" : "Postuler",
+    "action.delete" : "Supprimer",
+    "action.leave" : "Quitter",
+    "action.cancel" : "Annuler",
+    
+    "team.teamLeader" : "capitaine",
+    "team.requests" : "Demandes",
+    "team.members" : "Membres",
+    "team.level" : "Niveau",
 
     "profile.mail": "adresse mail",
     "profile.password": "mot de passe",
@@ -13,6 +35,7 @@
     "profile.lastName": "nom de famille",
     "profile.bornDate" : "date de naissance",
     "profile.yearsOld" : "ans",
+    "profile.registeredSince" : "inscrit depuis le",
     
     "login.login": "Connexion",
     "login.signin": "S'inscrire !",
@@ -37,6 +60,8 @@
     "form.lastName.mandatory" : "Veuillez remplir le champs nom de famille",
     "form.mail.matching" : "Ce couple mail/mot de passe n'existe pas",
     "form.bornDate.mandatory" : "Veuillez remplir une date valide",
+    "form.name.mandatory" : "Veuillez remplir le champs nom",
+    "form.name.exist" : "Ce nom d'equipe n'est plus disponible",
     
-    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus bref delais"
+    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais"
 }

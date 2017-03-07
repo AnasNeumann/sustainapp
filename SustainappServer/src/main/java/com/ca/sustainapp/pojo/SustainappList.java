@@ -18,4 +18,5 @@ public class SustainappList<E> extends ArrayList<E>{
 		this.add(object);
 		return this;
 	}
+	
 }

@@ -44,6 +44,9 @@ public class TeamEntity extends GenericEntity implements Serializable {
 	@Column(name = "LEVEL")
 	private Integer level;
 	
+	@Column(name = "AVATAR")
+	private byte[] avatar;
+	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
 	
@@ -125,4 +128,20 @@ public class TeamEntity extends GenericEntity implements Serializable {
 		this.listRole = listRole;
 		return this;
 	}
+
+	/**
+	 * @return the avatar
+	 */
+	public byte[] getAvatar() {
+		return avatar;
+	}
+
+	/**
+	 * @param avatar the avatar to set
+	 */
+	public TeamEntity setAvatar(byte[] avatar) {
+		this.avatar = avatar;
+		return this;
+	}
+	
 }

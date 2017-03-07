@@ -19,7 +19,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.annotation.Transient;
 
 /**
  * NEWS table mapping
@@ -48,9 +47,6 @@ public class NewsEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "PICTURE")
 	private byte[] picture;
-	
-	@Transient
-	private transient String base64;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -148,19 +144,5 @@ public class NewsEntity extends GenericEntity implements Serializable {
 		this.listRead = listRead;
 		return this;
 	}
-	
-	/**
-	 * @return the base64
-	 */
-	public String getBase64() {
-		return base64;
-	}
 
-	/**
-	 * @param base64 the base64 to set
-	 */
-	public NewsEntity setBase64(String base64) {
-		this.base64 = base64;
-		return this;
-	}
 }

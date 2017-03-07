@@ -19,7 +19,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.annotation.Transient;
 
 /**
  * PROFILE table mapping
@@ -51,14 +50,11 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Column(name = "AVATAR")
 	private byte[] avatar;
 	
-	@Transient
-	private transient String base64Avatar;
+	@Column(name = "LEVEL")
+	private Integer level;
 	
 	@Column(name = "COVER")
 	private byte[] cover;
-	
-	@Transient
-	private transient String base64Cover;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -66,9 +62,11 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Column(name = "USER_ACCOUNT_ID")
 	private Long userId;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<CourseEntity> listCourse = new ArrayList<CourseEntity>();
+	/**
+		@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
+		@Fetch(FetchMode.SELECT)
+		private List<CourseEntity> listCourse = new ArrayList<CourseEntity>();
+	**/
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
@@ -78,10 +76,12 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Fetch(FetchMode.SELECT)
 	private List<TeamRoleEntity> listTeam = new ArrayList<TeamRoleEntity>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<ChallengeEntity> listChallenge = new ArrayList<ChallengeEntity>();
-
+	/**
+		@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
+		@Fetch(FetchMode.SELECT)
+		private List<ChallengeEntity> listChallenge = new ArrayList<ChallengeEntity>();
+	**/
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private List<ProfilBadgeEntity> listBadge = new ArrayList<ProfilBadgeEntity>();
@@ -98,9 +98,11 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Fetch(FetchMode.SELECT)
 	private List<AwardEntity> listAward = new ArrayList<AwardEntity>();
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<ReportEntity> listReport = new ArrayList<ReportEntity>();
+	/**
+		@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
+		@Fetch(FetchMode.SELECT)
+		private List<ReportEntity> listReport = new ArrayList<ReportEntity>();
+	**/
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
@@ -220,21 +222,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the listHabilitationProjet
-	 */
-	public List<CourseEntity> getListCourse() {
-		return listCourse;
-	}
-
-	/**
-	 * @param listHabilitationProjet the listHabilitationProjet to set
-	 */
-	public ProfileEntity setListCourse(List<CourseEntity> listCourse) {
-		this.listCourse = listCourse;
-		return this;
-	}
-
-	/**
 	 * @return the listValidation
 	 */
 	public List<TopicValidationEntity> getListValidation() {
@@ -261,21 +248,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	 */
 	public ProfileEntity setListTeam(List<TeamRoleEntity> listTeam) {
 		this.listTeam = listTeam;
-		return this;
-	}
-
-	/**
-	 * @return the listChallenge
-	 */
-	public List<ChallengeEntity> getListChallenge() {
-		return listChallenge;
-	}
-
-	/**
-	 * @param listChallenge the listChallenge to set
-	 */
-	public ProfileEntity setListChallenge(List<ChallengeEntity> listChallenge) {
-		this.listChallenge = listChallenge;
 		return this;
 	}
 
@@ -340,21 +312,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the listReport
-	 */
-	public List<ReportEntity> getListReport() {
-		return listReport;
-	}
-
-	/**
-	 * @param listReport the listReport to set
-	 */
-	public ProfileEntity setListReport(List<ReportEntity> listReport) {
-		this.listReport = listReport;
-		return this;
-	}
-
-	/**
 	 * @return the listNotification
 	 */
 	public List<NotificationEntity> getListNotification() {
@@ -400,36 +357,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the base64Avatar
-	 */
-	public String getBase64Avatar() {
-		return base64Avatar;
-	}
-
-	/**
-	 * @param base64Avatar the base64Avatar to set
-	 */
-	public ProfileEntity setBase64Avatar(String base64Avatar) {
-		this.base64Avatar = base64Avatar;
-		return this;
-	}
-
-	/**
-	 * @return the base64Cover
-	 */
-	public String getBase64Cover() {
-		return base64Cover;
-	}
-
-	/**
-	 * @param base64Cover the base64Cover to set
-	 */
-	public ProfileEntity setBase64Cover(String base64Cover) {
-		this.base64Cover = base64Cover;
-		return this;
-	}
-
-	/**
 	 * @return the userId
 	 */
 	public Long getUserId() {
@@ -443,4 +370,20 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 		this.userId = userId;
 		return this;
 	}
+
+	/**
+	 * @return the level
+	 */
+	public Integer getLevel() {
+		return level;
+	}
+
+	/**
+	 * @param level the level to set
+	 */
+	public ProfileEntity setLevel(Integer level) {
+		this.level = level;
+		return this;
+	}
+
 }

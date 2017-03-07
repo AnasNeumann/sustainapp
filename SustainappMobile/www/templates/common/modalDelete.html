@@ -1,0 +1,11 @@
+<ion-modal-view  class="s-modal-views" ng-show="teamModel.isAdmin">     
+   <ion-content class="padding">
+     <div class="s-modal-confirm">
+      <div class="s-common-floatEdit" ng-click="modal.hide()">
+            <i class="icon ion-close-round"></i>
+      </div>
+      <p>{{'modal.text' | translate}}</p>
+      <button class="s-common-btn" ng-click="confirmDelete()">{{'modal.confirm' | translate}}</button>
+     </div>
+   </ion-content>
+</ion-modal-view>

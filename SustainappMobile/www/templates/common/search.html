@@ -1,6 +1,39 @@
 <header class="bar bar-header"> 
-    <input type="text" placeholder="search ..." class="s-search-input" />
+    <input type="text" placeholder="search ..." class="s-search-input" ng-model="searchModel.query" ng-change="search()"/>
 </header>
-<ion-content class="has-header s-search-content">
-
+<ion-content class="has-header s-search-content" >
+    
+    <!-- EMPTY RESULTS -->
+    <div class="s-search-empty" ng-show="searchModel.empty">
+        <i class="icon ion-android-search"></i>
+    </div>
+    
+    <!-- ALL TEAMS -->
+    <div class="s-search-type" ng-hide="searchModel.empty">
+      <i class="icon ion-person-stalker"></i>
+      {{'sideMenu.teams' | translate}}
+    </div>
+    <ion-list>
+     <ion-item class="item-avatar" ng-repeat="team in searchModel.teams" type="item-text-wrap" href="#/tab/team/{{team.id}}" menu-toggle="right">
+         <img ng-src="data:image/jpeg;base64,{{team.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+         <div class="s-teams-level">{{team.level}}</div>
+         <h2 class="s-teams-title">{{team.name}}</h2>
+         <p class="s-teams-text">{{'common.createdOn' | translate}} {{team.timestamps | date: 'dd/MM/yyyy'}}, {{team.listRole.length}} {{'common.members' | translate}}</p>
+     </ion-item>
+   </ion-list>
+   
+   <!-- ALL PROFILES -->
+   <div class="s-search-type" ng-hide="searchModel.empty">
+       <i class="icon ion-person"></i>
+      {{'common.profiles' | translate}}
+   </div>
+   <ion-list>
+     <ion-item class="item-avatar" ng-repeat="profil in searchModel.profiles" type="item-text-wrap" href="#/tab/profile/{{profil.id}}" menu-toggle="right">
+         <img ng-src="data:image/jpeg;base64,{{profil.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+         <div class="s-teams-level">{{profil.level}}</div>
+         <h2 class="s-teams-title">{{profil.firstName}} {{profil.lastName}}</h2>
+         <p class="s-teams-text">{{'profile.registeredSince' | translate}} {{profil.timestamps | date: 'dd/MM/yyyy'}}</p>
+     </ion-item>
+   </ion-list>
+            
 </ion-content> 
