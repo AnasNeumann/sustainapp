@@ -10,6 +10,7 @@
     "common.createdOn" : "created on",
     "common.members" : "members",
     "common.registeredSince" : "registered since",
+    "common.profiles" : "Profiles",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
@@ -34,6 +35,7 @@
     "profile.lastName": "last name",
     "profile.bornDate" : "date of birth",
     "profile.yearsOld" : "years old",
+    "profile.registeredSince" : "registered since",
     
     "login.login": "Login",
     "login.signin": "Sign in !",

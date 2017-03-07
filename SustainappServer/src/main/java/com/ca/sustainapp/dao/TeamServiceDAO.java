@@ -102,7 +102,7 @@ public class TeamServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<TeamEntity> searchByKeywords(List<String> keywords, Integer maximum){
+	public List<TeamEntity> searchByKeywords(String keywords, Integer maximum){
 		return repository.searchByKeywords(keywords, new PageRequest(0, maximum));
 	}
 }

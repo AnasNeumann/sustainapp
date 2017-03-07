@@ -42,6 +42,6 @@ public interface TeamRepository extends JpaSpecificationExecutor<TeamEntity>, Jp
 	 * @param Keywords
 	 * @return
 	 */
-	@Query("FROM TeamEntity t where (t.name in :keywords)")
-	List<TeamEntity> searchByKeywords(@Param("keywords") List<String> Keywords, Pageable pageable);
+	@Query("FROM TeamEntity t where LOWER(t.name) LIKE  CONCAT('%',LOWER(:keywords),'%')")
+	List<TeamEntity> searchByKeywords(@Param("keywords") String Keywords, Pageable pageable);
 }

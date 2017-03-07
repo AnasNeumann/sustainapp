@@ -43,6 +43,16 @@ public interface ProfileRepository extends JpaSpecificationExecutor<ProfileEntit
 	 * @param Keywords
 	 * @return
 	 */
-	@Query("FROM ProfileEntity p where (p.firstName in :keywords) OR (p.lastName in :keywords)")
-	List<ProfileEntity> searchByKeywords(@Param("keywords") List<String> Keywords, Pageable pageable);
+	@Query("FROM ProfileEntity p where (LOWER(p.firstName) LIKE CONCAT('%',LOWER(:keywords),'%')) OR (LOWER(p.lastName) LIKE CONCAT('%',LOWER(:keywords),'%'))")
+	List<ProfileEntity> searchByKeywords(@Param("keywords") String Keywords, Pageable pageable);
+	
+	
+	/**
+	 * Select all profiles by keywords
+	 * @param Keywords
+	 * @return
+	 */
+	@Query("FROM ProfileEntity p where (CONCAT(LOWER(p.lastName),' ',LOWER(p.firstName)) LIKE CONCAT('%',LOWER(:fullName),'%')) OR (CONCAT(LOWER(p.firstName),' ',LOWER(p.lastName)) LIKE CONCAT('%',LOWER(:fullName),'%'))")
+	List<ProfileEntity> searchByFullName(@Param("fullName") String fullName, Pageable pageable);
+	
 }

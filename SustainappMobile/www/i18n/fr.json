@@ -10,6 +10,7 @@
     "common.createdOn" : "cree le",
     "common.members" : "membres",
     "common.registeredSince" : "inscrit depuis le",
+    "common.profiles" : "Personnes",
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
@@ -34,6 +35,7 @@
     "profile.lastName": "nom de famille",
     "profile.bornDate" : "date de naissance",
     "profile.yearsOld" : "ans",
+    "profile.registeredSince" : "inscrit depuis le",
     
     "login.login": "Connexion",
     "login.signin": "S'inscrire !",

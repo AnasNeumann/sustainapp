@@ -102,7 +102,18 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<ProfileEntity> searchByKeywords(List<String> keywords, Integer maximum){
-		return repository.searchByKeywords(keywords, new PageRequest(0, maximum));
+	public List<ProfileEntity> searchByKeywords(String query, Integer maximum){
+		return repository.searchByKeywords(query, new PageRequest(0, maximum));
+	}
+	
+	/**
+	 * Search by fullname
+	 * @param fullName
+	 * @param maximum
+	 * @return
+	 */
+	@Transactional
+	public List<ProfileEntity> searchByFulName(String fullName, Integer maximum){
+		return repository.searchByFullName(fullName, new PageRequest(0, maximum));
 	}
 }
