@@ -61,6 +61,9 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "CREATOR_ID")
 	private Long creatorId;
+
+	@Column(name = "MIN_LEVEL")
+	private Integer minLevel;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -219,4 +222,18 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return the minLevel
+	 */
+	public Integer getMinLevel() {
+		return minLevel;
+	}
+
+	/**
+	 * @param minLevel the minLevel to set
+	 */
+	public ChallengeEntity setMinLevel(Integer minLevel) {
+		this.minLevel = minLevel;
+		return this;
+	}
 }

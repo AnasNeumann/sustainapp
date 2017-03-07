@@ -36,7 +36,6 @@ public class ChallengeTypeEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "ICON")
 	private byte[] icon;
-
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
