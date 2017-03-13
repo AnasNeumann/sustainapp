@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles de la page d'administration
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 13/03/2017
+ * @version 1.0
+ */
+ 
+ .s-admin-icon{
+    color : #28a754;
+    font-size : 25px;
+    margin-right : 5px;
+    position : relative;
+    top : 5px;
+ }
+ 
+ .s-admin-item {
+    font-family : sustainapp;
+    font-size : 22px !important;
+ }

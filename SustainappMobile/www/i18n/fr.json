@@ -64,5 +64,9 @@
     "form.name.mandatory" : "Veuillez remplir le champs nom",
     "form.name.exist" : "Ce nom d'equipe n'est plus disponible",
     
-    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais"
+    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais",
+    
+    "administration.challengeTypes" : "Gestion des types de challenges",
+    "administration.categories" : "Gestion des categories de cours",
+    "administration.transport" : "Gestion des moyens de transport"
 }

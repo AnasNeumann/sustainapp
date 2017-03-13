@@ -64,5 +64,9 @@
     "form.name.mandatory" : "The name field is mandatory",
     "form.name.exist" : "This team name is not available",
     
-    "report.message" : "Your request has been received and will be processed as soon as possible"
+    "report.message" : "Your request has been received and will be processed as soon as possible",
+    
+    "administration.challengeTypes" : "Manage challenge types",
+    "administration.categories" : "Manage courses categories",
+    "administration.transport" : "Manage means of transport"
 }
