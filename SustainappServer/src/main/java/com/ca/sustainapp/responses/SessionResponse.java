@@ -13,6 +13,7 @@ public class SessionResponse extends HttpRESTfullResponse {
 	private ProfileEntity profile;
 	private Long id;
 	private String token;
+	private Boolean isAdmin;
 	
 	/**
 	 * @return the profile
@@ -56,6 +57,21 @@ public class SessionResponse extends HttpRESTfullResponse {
 	 */
 	public SessionResponse setToken(String token) {
 		this.token = token;
+		return this;
+	}
+
+	/**
+	 * @return the isAdmin
+	 */
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	/**
+	 * @param isAdmin the isAdmin to set
+	 */
+	public SessionResponse setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 		return this;
 	}
 }

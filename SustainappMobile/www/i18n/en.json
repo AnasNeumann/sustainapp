@@ -46,6 +46,7 @@
     "sideMenu.teams" : "Teams",
     "sideMenu.signal" : "Signal",
     "sideMenu.disconnection" : "Disconnection",
+    "sideMenu.administration" : "Administration",
     
     "viewTitle.news" : "News",
     "viewTitle.challenges" : "Challenges",

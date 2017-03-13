@@ -64,6 +64,7 @@ angular.module('sustainapp.controllers')
 				sessionService.set('id' ,null);
 				sessionService.set('token' ,null);
 				sessionService.set('isConnected' ,null);
+				$scope.loginModel.isAdmin = false;
 		    });
 		}
 
@@ -96,7 +97,8 @@ angular.module('sustainapp.controllers')
 	    		sessionService.set('id' ,result.id);
 	    		sessionService.set('token' ,result.token);
 	    		sessionService.set('isConnected' ,"true");
-		    	$scope.loginModel.isConnected = true;	
+		    	$scope.loginModel.isConnected = true;
+		    	$scope.loginModel.isAdmin = result.isAdmin;
 		    	$state.go('tab.news');
 	    	} else {
 	    		$scope.loginModel.allErrors = result.errors;
