@@ -41,15 +41,6 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
-  .state('tab.challengetype', {
-    url: '/administration/challengetype',
-    views: {
-      'tab-news': {
-        templateUrl: 'templates/administration/challenge-type.html',
-        controller: 'challengeTypeController'
-      }
-    }
-  })
   .state('tab.teams', {
     url: '/team/all',
     views: {
