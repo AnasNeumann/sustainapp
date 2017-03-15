@@ -73,7 +73,7 @@ angular.module('sustainapp.controllers')
 	};
 	
 	/**
-	 * Recuperation de plus de teams
+	 * Recuperation de plus de teams [InfinityScroll]
 	 */
 	$scope.getMoreTeam = function(){
 		$scope.teamsModel.load = true;

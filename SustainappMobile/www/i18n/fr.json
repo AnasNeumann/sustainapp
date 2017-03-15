@@ -68,5 +68,6 @@
     
     "administration.challengeTypes" : "Gestion des types de challenges",
     "administration.categories" : "Gestion des categories de cours",
-    "administration.transport" : "Gestion des moyens de transport"
+    "administration.transport" : "Gestion des moyens de transport",
+    "administration.challengeTypes.title" : "Types de challenges"
 }

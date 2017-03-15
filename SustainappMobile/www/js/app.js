@@ -33,7 +33,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
     templateUrl: 'templates/common/tabs.html'
   })
   .state('tab.administration', {
-    url: '/administation/menu',
+    url: '/administration/menu',
     views: {
       'tab-news': {
         templateUrl: 'templates/administration/menu.html',
@@ -41,8 +41,8 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
-  .state('tab.administration.challengetype', {
-    url: '/administation/challengetype',
+  .state('tab.challengetype', {
+    url: '/administration/challengetype',
     views: {
       'tab-news': {
         templateUrl: 'templates/administration/challenge-type.html',

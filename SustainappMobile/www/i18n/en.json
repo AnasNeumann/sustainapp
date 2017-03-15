@@ -68,5 +68,6 @@
     
     "administration.challengeTypes" : "Manage challenge types",
     "administration.categories" : "Manage courses categories",
-    "administration.transport" : "Manage means of transport"
+    "administration.transport" : "Manage means of transport",
+    "administration.challengeTypes.title" : "Challenge types"
 }
