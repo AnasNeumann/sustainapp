@@ -35,7 +35,7 @@ public class ChallengeTypeEntity extends GenericEntity implements Serializable {
 	private String name;
 	
 	@Column(name = "ICON")
-	private byte[] icon;
+	private String icon;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -73,14 +73,14 @@ public class ChallengeTypeEntity extends GenericEntity implements Serializable {
 	/**
 	 * @return the icon
 	 */
-	public byte[] getIcon() {
+	public String getIcon() {
 		return icon;
 	}
 
 	/**
 	 * @param icon the icon to set
 	 */
-	public ChallengeTypeEntity setIcon(byte[] icon) {
+	public ChallengeTypeEntity setIcon(String icon) {
 		this.icon = icon;
 		return this;
 	}
