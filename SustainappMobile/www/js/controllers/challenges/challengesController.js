@@ -5,6 +5,6 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('challengesController', function($scope) {
+	.controller('challengesController', function($scope, sessionService, challengeService, fileService, listService) {
 
 	});

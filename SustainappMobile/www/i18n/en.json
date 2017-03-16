@@ -69,5 +69,18 @@
     "administration.challengeTypes" : "Manage challenge types",
     "administration.categories" : "Manage courses categories",
     "administration.transport" : "Manage means of transport",
-    "administration.challengeTypes.title" : "Challenge types"
+    "administration.challengeTypes.title" : "Challenge types",
+    
+    "challengetype.building" : "eco-builing",
+    "challengetype.design" : "eco-desgin",
+    "challengetype.energy" : "sustainable energy",
+    "challengetype.gastronomy" : "eco-gastronomy",
+    "challengetype.manage" : "eco-management",
+    "challengetype.recycling" : "recycling and reuse",
+    
+    "challenges.add" : "Create a new challenge",
+    "challenges.new" : "New challenge",
+    "challenges.about" : "About this challenge",
+    "challenges.endDate" : "Challenge deadline",
+    "challenges.teamEnabled" : "Do team have the right to participate ?"
 }

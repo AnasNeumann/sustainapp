@@ -69,5 +69,18 @@
     "administration.challengeTypes" : "Gestion des types de challenges",
     "administration.categories" : "Gestion des categories de cours",
     "administration.transport" : "Gestion des moyens de transport",
-    "administration.challengeTypes.title" : "Types de challenges"
+    "administration.challengeTypes.title" : "Types de challenges",
+    
+    "challengetype.building" : "eco-construction",
+    "challengetype.design" : "eco-desgin",
+    "challengetype.energy" : "energies renouvelables",
+    "challengetype.gastronomy" : "eco-gastronomie",
+    "challengetype.manage" : "eco-gestion",
+    "challengetype.recycling" : "recyclage et reutilisation",
+    
+    "challenges.add" : "Créer un nouveau challenge",
+    "challenges.new" : "Nouveau challenge",
+    "challenges.about" : "Description du challenge",
+    "challenges.endDate" : "Date limite de participation",
+    "challenges.teamEnabled" : "Les equipes peuvent-elle participer ?"
 }
