@@ -5,288 +5,333 @@
  * @since 10/02/2017
  * @version 1.0
  */
- 
-@font-face {
-    font-family: sustainapp;
-    src: url(../fonts/MAJALLA.TTF);
-}
 
-@font-face {
-    font-family: sustainapp-bold;
-    src: url(../fonts/MAJALLAB.TTF);
-}
-
+/**
+ * ===========================================
+ * GENERAL
+ * =========================================== 
+ */
 body {
 	font-family: sustainapp !important;
-	font-size : 20px;
-	color : #333;
+	font-size: 20px;
+	color: #333;
 }
 
-.s-common-center{
-	text-align:center;
-	margin: auto;
+ion-content {
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
-.ng-hide{
-     display: none !important;
-}
-
-.item-floating-label{
-	border : none !important;
-	margin-top : 0px;
-	padding:0px;
-}
-
-.animate.ng-hide-add,
-.animate.ng-hide-remove {
-  transition: all linear 0.15s !important;
+.animate.ng-hide-add, .animate.ng-hide-remove {
+	transition: all linear 0.15s !important;
 }
 
 .animate.ng-hide {
-  opacity: 0;
+	opacity: 0;
 }
 
-.s-common-input {
-	width : 100%;
-    background-color: transparent;
-    border-bottom : 1px solid #ccc !important;
-    height : 50px;
-    color : #333 !important;
-    font-family: sustainapp;
-    font-size : 20px !important;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+.ng-hide {
+	display: none !important;
 }
 
-.s-common-select {
-	background-color: transparent;
-	border : none;
-	border-bottom : 1px solid #ccc !important;
-	height : 50px;
-	color : #333 !important;
-    font-family: sustainapp;
-    font-size : 20px !important;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+/**
+ * ===========================================
+ * COLORS ET FONTS
+ * =========================================== 
+ */
+@font-face {
+	font-family: sustainapp;
+	src: url(../fonts/MAJALLA.TTF);
 }
 
-.s-common-input:focus,
-.s-common-select:focus{
-    border-bottom : 2px solid #23d5fb !important;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+@font-face {
+	font-family: sustainapp-bold;
+	src: url(../fonts/MAJALLAB.TTF);
 }
 
-.s-common-label{
-    color : #A0A0A0;
+/**
+ * ===========================================
+ * DIV ET PLACEMENT
+ * =========================================== 
+ */
+.s-common-center {
+	text-align: center;
+	margin: auto;
 }
 
-.s-common-loading{
-	padding : 100px;
+.s-common-loading {
+	padding: 100px;
 	text-align: center;
 }
 
 .spinner svg {
-  width: 80px;
-  height: 80px;
-  stroke: #23d5fb;
-  fill: #23d5fb;
+	width: 80px;
+	height: 80px;
+	stroke: #23d5fb;
+	fill: #23d5fb;
 }
 
-.s-common-loadingText{
-	color : #2dbe60;
+.s-common-loadingText {
+	color: #2dbe60;
 	font-family: sustainapp;
 	margin-top: 0px;
 	padding: 0px;
-	position : relative;
-	top : -25px;
+	position: relative;
+	top: -25px;
 }
 
 .s-common-errors {
-	color : red;
+	color: red;
 }
 
 .s-common-tiers {
-	width : 30%;
-	margin-right : 1%;
-	margin-left : 1%
+	width: 30%;
+	margin-right: 1%;
+	margin-left: 1%
 }
 
 .s-common-22 {
-	font-size : 22px;
+	font-size: 22px;
 }
 
 .s-common-camera {
-	position : absolute;
-    bottom : 0px;
-    right : 0px;
-    cursor : pointer;
-    z-index : 1000;
-    font-size: 16px;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	cursor: pointer;
+	z-index: 1000;
+	font-size: 16px;
 }
 
- .s-common-choosePicture,
- .s-common-choosePictureToogle{
-    background-color: black; 
-    color: white;
-    opacity : 0.6;
-    padding-right:10px;
-    padding-left : 10px;
-    padding-bottom : 5px;
-    padding-top : 5px; 
- }
- 
- .s-common-choosePictureToogle {
-    border-top-left-radius : 10px;
- }
- 
-  .s-common-edit {
-    position : absolute;
-    top : 0px; 
-    right : 0px;
-    color : black;
-    padding : 5px;
-    opacity : 0.4;
-    cursor : pointer;
-    z-index : 1000;
- }
- 
- .s-common-floatEdit{
-    display:inline-block;
-    float:right;
-    color : black;
-    opacity : 0.4;
-    cursor : pointer;
-    z-index : 1000;
- }
- 
- .s-common-floatEdit:active,
- .s-common-choosePicture:active,
- .s-common-choosePictureToogle:active,
- .s-common-edit:active {
-    opacity : 0.8;
- }
- 
- .s-common-padding20 {
-    padding : 20px;
- }
- 
- .s-common-padding10 {
-    padding : 10px;
- }
- 
- .s-common-padding0 {
-    padding : 0px; 
+.s-common-choosePicture, .s-common-choosePictureToogle {
+	background-color: black;
+	color: white;
+	opacity: 0.6;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
 }
 
- .s-common-padding-top0 {
-    padding-top : 0px; 
-}
- 
- ion-content {
-    overflow-x : hidden;
-    overflow-y : auto;
- }
- 
- .s-common-btn {
-    background-color: #23964b;
-    color: white;
-    border:none;
-    height : 40px;
-    font-size : 20px;
-    font-family: sustainapp;
-    width:100%;
-    display:block;
-    margin-top:20px;
-    border-radius : 3px;
-    -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+.s-common-choosePictureToogle {
+	border-top-left-radius: 10px;
 }
 
-.s-common-btn:active {
-    background-color: #28a754;
-    -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
-    -moz-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
-    box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
-    -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+.s-common-edit {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	color: black;
+	padding: 5px;
+	opacity: 0.4;
+	cursor: pointer;
+	z-index: 1000;
 }
 
-.s-common-lightBtn {
-	background-color: transparent;
-    color: #A0A0A0;
-    border: 1px solid #C0C0C0;
-    height : 40px;
-    font-size : 20px;
-    font-family: sustainapp;
-    width:100%;
-    display:block;
-    margin-top:20px;
-    border-radius : 3px;
-    -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+.s-common-floatEdit {
+	display: inline-block;
+	float: right;
+	color: black;
+	opacity: 0.4;
+	cursor: pointer;
+	z-index: 1000;
 }
 
-.s-common-lightBtn:active {
-    background-color: #28a754;
-    color : white;
-    -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
-    -moz-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
-    box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.25);
-    -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+.s-common-floatEdit:active, .s-common-choosePicture:active,
+	.s-common-choosePictureToogle:active, .s-common-edit:active {
+	opacity: 0.8;
 }
 
-.item-avatar > img:first-child,
-.item-avatar .item-image,
-.item-avatar .item-content > img:first-child,
-.item-avatar .item-content .item-image,
-.item-avatar-left > img:first-child,
-.item-avatar-left .item-image,
-.item-avatar-left .item-content > img:first-child,
-.item-avatar-left .item-content .item-image {
+.s-common-padding20 {
+	padding: 20px;
+}
+
+.s-common-padding10 {
+	padding: 10px;
+}
+
+.s-common-padding0 {
+	padding: 0px;
+}
+
+.s-common-padding-top0 {
+	padding-top: 0px;
+}
+
+.item-avatar>img:first-child, .item-avatar .item-image, .item-avatar .item-content>img:first-child,
+	.item-avatar .item-content .item-image, .item-avatar-left>img:first-child,
+	.item-avatar-left .item-image, .item-avatar-left .item-content>img:first-child,
+	.item-avatar-left .item-content .item-image {
 	max-height: 45px;
 	max-width: 45px;
 }
 
-.item-avatar,
-.item-avatar .item-content, 
-.item-avatar-left, 
-.item-avatar-left .item-content {
-	padding-left : 75px;
+.item-avatar, .item-avatar .item-content, .item-avatar-left,
+	.item-avatar-left .item-content {
+	padding-left: 75px;
 }
 
 .s-common-flagContainer {
-    width : 100%;
-    margin : 0px;
-    padding : 20px;
-    background-color : #23d5fb;
-    height : 100px;
-    overflow : hidden;
-    text-align : center;
+	width: 100%;
+	margin: 0px;
+	padding: 20px;
+	background-color: #23d5fb;
+	height: 100px;
+	overflow: hidden;
+	text-align: center;
 }
 
 .s-common-flagImg {
-	display : block;
-    width : 250px;
-    margin : auto;
-    height : auto;
+	display: block;
+	width: 250px;
+	margin: auto;
+	height: auto;
 }
 
-.s-common-flagText{
-	position : relative; 
-	top : -71px;
-	color : #2dbe60;
-	font-family : sustainapp;
+.s-common-flagText {
+	position: relative;
+	top: -71px;
+	color: #2dbe60;
+	font-family: sustainapp;
 }
 
 .s-common-btnList {
-	background-color : #2dbe60;
-	color : #25984e;
+	background-color: #2dbe60;
+	color: #25984e;
 }
 
-.s-common-btnList:hover,
-.s-common-btnList:active {
-	background-color : #2dbe60;
-	color : white;
+.s-common-btnList:hover, .s-common-btnList:active {
+	background-color: #2dbe60;
+	color: white;
 }
+
+.s-common-margin-top10{
+	margin-top : 10px;
+}
+
+/**
+ * ===========================================
+ * INPUTS ET FORMULAIRES
+ * =========================================== 
+ */
+.item-floating-label {
+	border: none !important;
+	margin-top: 0px;
+	padding: 0px;
+}
+
+.s-common-input {
+	width: 100%;
+	background-color: transparent;
+	border-bottom: 1px solid #ccc !important;
+	height: 50px;
+	color: #333 !important;
+	font-family: sustainapp;
+	font-size: 20px !important;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+  
+.s-common-select {
+	width: 100%;
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid #ccc !important;
+	height: 50px;
+	color: #333 !important;
+	font-family: sustainapp;
+	font-size: 20px !important;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	 -webkit-appearance: none; 
+   -moz-appearance: none;
+   appearance: none;      
+	outline : none;
+}
+
+.s-common-input:focus, .s-common-select:focus {
+	border-bottom: 2px solid #23d5fb !important;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+.s-common-option{
+	border : none;
+}
+
+.s-common-label {
+	color: #A0A0A0;
+}
+
+.s-common-btn {
+	background-color: #23964b;
+	color: white;
+	border: none;
+	height: 40px;
+	font-size: 20px;
+	font-family: sustainapp;
+	width: 100%;
+	display: block;
+	margin-top: 20px;
+	border-radius: 3px;
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+.s-common-btn:active {
+	background-color: #28a754;
+	-webkit-box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25);
+	box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25);
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+.s-common-lightBtn {
+	background-color: transparent;
+	color: #A0A0A0;
+	border: 1px solid #C0C0C0;
+	height: 40px;
+	font-size: 20px;
+	font-family: sustainapp;
+	width: 100%;
+	display: block;
+	margin-top: 20px;
+	border-radius: 3px;
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+.s-common-lightBtn:active {
+	background-color: #28a754;
+	color: white;
+	-webkit-box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25);
+	box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25);
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+.s-common-checkbox-label input:before, .s-common-checkbox-label .checkbox-icon:before {
+	border-color: #2dbe60;
+}
+
+.s-common-checkbox-label input:checked:before, .s-common-checkbox-label input:checked+.checkbox-icon:before {
+	background: #2dbe60;
+	border-color: #2dbe60;
+}
+
+.s-common-checkbox {
+	border: none;
+	background-color: transparent;
+	font-size: 20px;
+	cursor : pointer;
+}
+
+.s-common-inputLarge {
+	width: 100%;
+}
+
+
+

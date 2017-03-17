@@ -1,27 +1,98 @@
 <ion-view view-title="{{'viewTitle.challenges' | translate }}">
-  <ion-content>
-  {{model.isConnected}}
-  <ion-list>
-    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="profile in profiles.data" type="item-text-wrap">
-      {{profile.firstName}} {{profile.lastName}}
-       <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-    </ion-item>
-  </ion-list>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-       <!--  <img ng-src="{{chat.face}}"> --> 
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+    <ion-content class="s-teams-content" ng-show="challengesModel.loaded">
+        <!-- ADD NEW TEAM -->
+        <div class="s-teams-newHeader">
+               <div class="padding s-teams-addClosed" ng-hide="challengesModel.add" ng-click="challengesModel.add = true">
+                   <i class="icon ion-android-add-circle s-teams-newBtn"></i>
+                   <span class="s-teams-addText" >{{'challenges.add' | translate}}</span>
+               </div>
+               <div class="s-teams-addOpen padding" ng-show="challengesModel.add">
+                  <i class="icon ion-android-add-circle s-teams-closeBtn" ng-click="challengesModel.add = false"></i>
+                  <span class="s-teams-addText" >{{'challenges.new' | translate}}</span>
+                  <div class="row s-common-padding-top0">
+                    <div class="col col-50 s-common-padding-top0">
+                        <div class="s-teams-addPicture" style="background-image: url({{teamsModel.displayFile}});">
+                            <i class="icon ion-trophy" ng-show="challengesModel.emptyPicture"></i>
+                            <div class="s-common-camera">
+                                <div class="s-common-choosePictureToogle" ng-show="teamsModel.editFile" ng-click="teamsModel.editFile = false">
+                                   <i class="icon ion-close-round"></i>
+                                </div>
+                                <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(true)">
+                                   {{'common.takePicture' | translate}}
+                                </div>
+                                <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(false)">
+                                  {{'common.chooseFormGallery' | translate}}
+                                </div>
+                                <div class="s-common-choosePictureToogle s-common-22" ng-hide="teamsModel.editFile" ng-click="teamsModel.editFile = true">
+                                   <i class="icon ion-camera"></i>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="col col-50 s-common-padding-top0">
+                       <label class="item item-input item-floating-label" > 
+                          <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
+                          <input ng-model="teamsModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+                          <span class="s-common-errors">{{challengesModel.allErrors.name | translate}}</span>
+                       </label>                                                   
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-100">
+                        <label class="item item-input item-floating-label" > 
+                          <span class="input-label s-common-label">{{'challenges.about' | translate}}</span> 
+                          <input ng-model="challengesModel.about" type="text" placeholder="{{'challenges.about' | translate}}" class="s-common-input">
+                          <span class="s-common-errors">{{challengesModel.allErrors.about | translate}}</span>
+                       </label>    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-100">
+	                    <label class="item item-input item-floating-label" > 
+	                      <span class="input-label s-common-label">{{'challenges.endDate' | translate}}</span> 
+	                      <input ng-model="challengesModel.endDate" type="date" placeholder="{{'challenges.endDate' | translate}}" class="s-common-input">
+	                      <span class="s-common-errors">{{challengesModel.allErrors.endDate | translate}}</span>
+	                   </label>
+                   </div>
+                </div>
+                <div class="row">
+                    <div class="col col-100 s-challenges-types" ng-click="openTypes($event)">
+                      <p>
+                        <img src="img/challengetype/{{challengesModel.type.icon}}.png" class="s-challenges-type-icon"/>
+                        <span class="s-challenges-types-name">{{challengesModel.type.name | translate}}</span>
+                      </p>
+                      <span class="s-common-errors">{{challengesModel.allErrors.type | translate}}</span>  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-100 s-challenges-levelMin" ng-click="openLevelMin($event)">
+                       <span class="s-challenges-levelMin-number">{{challengesModel.levelMin}}</span>{{'challenges.levelMin' | translate}}
+                       <span class="s-common-errors">{{challengesModel.allErrors.levelMin | translate}}</span>
+                    </div>
+                </div>               
+                <div class="row">
+                    <label class="checkbox s-common-checkbox-label">
+                        <ion-checkbox class="s-common-checkbox" ng-model="challengesModel.teamEnabled">{{'challenges.teamEnabled' | translate}}</ion-checkbox>
+                    </label>
+                </div>
+                <div class="row">                
+                    <button class="s-common-btn" ng-click="addChallenge()">{{'common.create' | translate }}</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ALL CHALLENGES -->
+        <div class="s-teams-allResults">
+            <ion-list>
+            </ion-list> 
+            <ion-infinite-scroll on-infinite="getMoreChallenges()" distance="10%" ng-if="challengesModel.moreChallenges">
+            </ion-infinite-scroll>
+        </div>   
+    </ion-content>
+    
+   <!-- Loading Part -->
+   <ion-content class="s-common-loading" ng-hide="challengesModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+   </ion-content>
 </ion-view>

@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles de la page des challenges
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 17/03/2017
+ * @version 1.0
+ */
+
+.s-challenges-levelMin {
+	margin-top : 40px;
+	cursor : pointer;
+	padding-left : 67px;
+}
+
+.s-challenges-levelMin-number{
+	display : inline-block;	
+	position: absolute;
+    left: 38px;
+	width : 22px;
+	height : 22px;
+	text-align :center;
+	border-radius : 3px;
+	border: 2px solid #2dbe60;
+	font-size : 22px;
+	padding-top : 1px;
+	color : #2dbe60;
+	font-family:  sustainapp-bold;
+}
+
+.s-challenges-types {
+    margin-top : 15px;
+    cursor : pointer;
+    padding-left : 67px;
+}
+
+.s-challenges-type-icon {
+	position: absolute;
+    left: 24px;
+	witdh : 50px;
+	height : 50px;
+}
+
+.s-challenges-types-name{
+    position : relative;
+    top : 17px;	
+}
+
+.s-challenges-title{
+	font-family: sustainapp;
+	margin-left: 5px;
+}
+
+.s-challenges-type-item {
+	position : relative;
+    top : 10px; 
+}

@@ -82,5 +82,7 @@
     "challenges.new" : "New challenge",
     "challenges.about" : "About this challenge",
     "challenges.endDate" : "Challenge deadline",
-    "challenges.teamEnabled" : "Do team have the right to participate ?"
+    "challenges.teamEnabled" : "Do team have the right to participate ?",
+    "challenges.levelMin" : "Minimum level",
+    "challenges.types" : "Types of challenges"
 }
