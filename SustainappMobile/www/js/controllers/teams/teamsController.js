@@ -33,7 +33,7 @@ angular.module('sustainapp.controllers')
 	};
 
 	/**
-	 * Modification de l'image d'une team
+	 * Modification de l'image de la nouvelle team
 	 */
 	$scope.chooseFile = function(newFile){
 		fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {

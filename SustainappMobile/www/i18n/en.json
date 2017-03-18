@@ -63,6 +63,7 @@
     "form.bornDate.mandatory" : "Please enter a valid date format",
     "form.name.mandatory" : "The name field is mandatory",
     "form.name.exist" : "This team name is not available",
+    "form.field.mandatory" : "This field is mandatory",
     
     "report.message" : "Your request has been received and will be processed as soon as possible",
     

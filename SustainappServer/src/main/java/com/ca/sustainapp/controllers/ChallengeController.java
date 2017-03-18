@@ -1,5 +1,9 @@
 package com.ca.sustainapp.controllers;
 
+import static org.apache.commons.codec.binary.Base64.decodeBase64;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +25,9 @@ import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.ChallengeTypesResponse;
 import com.ca.sustainapp.responses.ChallengesResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.utils.DateUtils;
+import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.ChallengeValidator;
 
@@ -74,22 +81,38 @@ public class ChallengeController extends GenericController {
 	}
 	
 	/**
-	 * get a challenge by id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/challenge", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request) {
-		return null;
-	}
-	
-	/**
 	 * create a new challenge
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/challenge", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String create(HttpServletRequest request) {
+		if(!isConnected(request) || !validator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+		}
+		ChallengeEntity challenge = new ChallengeEntity()
+				.setName(request.getParameter("name"))
+				.setAbout(request.getParameter("about"))
+				.setEndDate(DateUtils.ionicParse(request.getParameter("endDate"),GregorianCalendar.getInstance()))
+				.setChallengType(challengeTypeService.getById(StringsUtils.parseLongQuickly(request.getParameter("type")).get()))
+				.setTeamEnabled(new Boolean(request.getParameter("teamEnabled")))
+				.setMinLevel(StringsUtils.parseIntegerQuietly(request.getParameter("levelMin")).get())
+				.setTimestamps(GregorianCalendar.getInstance())
+				.setCreatorId(super.getConnectedUser(request).getProfile().getId());
+		if(!isEmpty(request.getParameter("file"))){
+			challenge.setIcon(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+		}
+		Long idChallenge = challengeService.createOrUpdate(challenge);
+		return new IdResponse().setId(idChallenge).setCode(1).buildJson();
+	}
+	
+	/**
+	 * get a challenge by id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/challenge", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+    public String get(HttpServletRequest request) {
 		return null;
 	}
 	

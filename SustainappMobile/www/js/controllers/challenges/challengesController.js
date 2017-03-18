@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('challengesController', function($scope, $ionicPopover, sessionService, challengeService, fileService, listService) {
+	.controller('challengesController', function($scope, $ionicPopover, $state, sessionService, challengeService, fileService, listService) {
 		
 		/**
 		 * Entrée dans la page
@@ -106,7 +106,47 @@ angular.module('sustainapp.controllers')
 		 * fonction d'ajout d'un nouveau challenge
 		 */
 		$scope.addChallenge = function(){
-			//TODO
+			var data = new FormData();
+			if(null != $scope.challengesModel.file) {
+				data.append("file", $scope.challengesModel.file);
+			}
+			data.append("name", $scope.challengesModel.name);
+			data.append("about", $scope.challengesModel.about);
+			data.append("endDate", $scope.challengesModel.endDate);
+			data.append("levelMin", $scope.challengesModel.levelMin);
+			data.append("teamEnabled", $scope.challengesModel.teamEnabled);
+			data.append("type", $scope.challengesModel.type.id);
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			challengeService.create(data).success(function(result) {
+				if(result.code == 1){
+					$scope.challengesModel.emptyPicture = true;
+					$scope.challengesModel.editFile = false;
+					$scope.challengesModel.file = null;
+					$scope.challengesModel.displayFile = "";					
+					$scope.challengesModel.name = "";
+					$scope.challengesModel.about = "";
+					$scope.challengesModel.endDate = "";
+					$scope.challengesModel.levelMin = 0;
+					$scope.challengesModel.allErrors = [];
+					$state.go('tab.challenge-one', {'id' : result.id});
+				} else {
+					$scope.challengesModel.allErrors = result.errors;
+				}
+			});			
 		}
+
+		/**
+		 * Modification de l'image pour le nouveau challenge
+		 */
+		$scope.chooseFile = function(newFile){
+			fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+				$scope.challengesModel.file = imageData;
+				$scope.challengesModel.displayFile = "data:image/jpeg;base64,"+imageData;
+				$scope.challengesModel.emptyPicture = false;
+				$scope.challengesModel.editFile = false;
+			 }, function(err) {
+			 });
+		};
 
 	});

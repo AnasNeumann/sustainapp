@@ -11,19 +11,19 @@
                   <span class="s-teams-addText" >{{'challenges.new' | translate}}</span>
                   <div class="row s-common-padding-top0">
                     <div class="col col-50 s-common-padding-top0">
-                        <div class="s-teams-addPicture" style="background-image: url({{teamsModel.displayFile}});">
+                        <div class="s-teams-addPicture" style="background-image: url({{challengesModel.displayFile}});">
                             <i class="icon ion-trophy" ng-show="challengesModel.emptyPicture"></i>
                             <div class="s-common-camera">
-                                <div class="s-common-choosePictureToogle" ng-show="teamsModel.editFile" ng-click="teamsModel.editFile = false">
+                                <div class="s-common-choosePictureToogle" ng-show="challengesModel.editFile" ng-click="challengesModel.editFile = false">
                                    <i class="icon ion-close-round"></i>
                                 </div>
-                                <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(true)">
+                                <div class="s-common-choosePicture" ng-show="challengesModel.editFile" ng-click="chooseFile(true)">
                                    {{'common.takePicture' | translate}}
                                 </div>
-                                <div class="s-common-choosePicture" ng-show="teamsModel.editFile" ng-click="chooseFile(false)">
+                                <div class="s-common-choosePicture" ng-show="challengesModel.editFile" ng-click="chooseFile(false)">
                                   {{'common.chooseFormGallery' | translate}}
                                 </div>
-                                <div class="s-common-choosePictureToogle s-common-22" ng-hide="teamsModel.editFile" ng-click="teamsModel.editFile = true">
+                                <div class="s-common-choosePictureToogle s-common-22" ng-hide="challengesModel.editFile" ng-click="challengesModel.editFile = true">
                                    <i class="icon ion-camera"></i>
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
                     <div class="col col-50 s-common-padding-top0">
                        <label class="item item-input item-floating-label" > 
                           <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
-                          <input ng-model="teamsModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+                          <input ng-model="challengesModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
                           <span class="s-common-errors">{{challengesModel.allErrors.name | translate}}</span>
                        </label>                                                   
                     </div>
@@ -87,7 +87,7 @@
             </ion-list> 
             <ion-infinite-scroll on-infinite="getMoreChallenges()" distance="10%" ng-if="challengesModel.moreChallenges">
             </ion-infinite-scroll>
-        </div>   
+        </div>
     </ion-content>
     
    <!-- Loading Part -->

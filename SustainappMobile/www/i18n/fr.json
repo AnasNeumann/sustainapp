@@ -63,6 +63,7 @@
     "form.bornDate.mandatory" : "Veuillez remplir une date valide",
     "form.name.mandatory" : "Veuillez remplir le champs nom",
     "form.name.exist" : "Ce nom d'equipe n'est plus disponible",
+    "form.field.mandatory" : "Veuillez remplir ce champs",
     
     "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais",
     
