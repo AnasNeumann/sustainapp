@@ -95,12 +95,12 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
         }
       }
     })
-    .state('tab.challenges-detail', {
+    .state('tab.challenge-one', {
       url: '/challenges/:id',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/challenges/challenges-detail.html',
-          controller: 'challengesDetailController'
+        'tab-challenges': {
+          templateUrl: 'templates/challenges/challenge-one.html',
+          controller: 'challengeController'
         }
       }
     })
