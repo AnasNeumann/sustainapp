@@ -57,7 +57,7 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "CHALLENGE_TYPE_ID", referencedColumnName = "ID")
-	private ChallengeTypeEntity challengType;
+	private ChallengeTypeEntity challengeType;
 	
 	@Column(name = "CREATOR_ID")
 	private Long creatorId;
@@ -165,15 +165,15 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	/**
 	 * @return the challengType
 	 */
-	public ChallengeTypeEntity getChallengType() {
-		return challengType;
+	public ChallengeTypeEntity getChallengeType() {
+		return challengeType;
 	}
 
 	/**
 	 * @param challengType the challengType to set
 	 */
-	public ChallengeEntity setChallengType(ChallengeTypeEntity challengType) {
-		this.challengType = challengType;
+	public ChallengeEntity setChallengeType(ChallengeTypeEntity challengeType) {
+		this.challengeType = challengeType;
 		return this;
 	}
 

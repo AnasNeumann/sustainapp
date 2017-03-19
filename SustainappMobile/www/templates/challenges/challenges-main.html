@@ -84,7 +84,14 @@
         <!-- ALL CHALLENGES -->
         <div class="s-teams-allResults">
             <ion-list>
-            </ion-list> 
+               <ion-item class="item item-thumbnail-left" ng-repeat="challenge in challengesModel.allChallenges" type="item-text-wrap" href="#/tab/challenges/{{challenge.id}}">
+                    <img ng-src="data:image/jpeg;base64,{{challenge.icon}}" onerror="this.src='img/challenge/default.png'" />
+                    <div class="s-challenges-level">{{challenge.minLevel}}</div>
+                    <h2 class="s-teams-title">{{challenge.name}}</h2>
+                    <p class="s-teams-text">{{challenge.about}}</p>
+                    <p class="s-teams-text"><i class="icon ion-ios-calendar-outline"></i> {{'common.from' | translate}} {{challenge.timestamps | date: 'dd/MM/yyyy'}} {{'common.to' | translate}} {{challenge.endDate | date: 'dd/MM/yyyy'}}</p>                   
+              </ion-item>
+            </ion-list>
             <ion-infinite-scroll on-infinite="getMoreChallenges()" distance="10%" ng-if="challengesModel.moreChallenges">
             </ion-infinite-scroll>
         </div>

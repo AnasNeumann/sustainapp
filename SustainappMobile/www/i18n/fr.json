@@ -11,6 +11,8 @@
     "common.members" : "membres",
     "common.registeredSince" : "inscrit depuis le",
     "common.profiles" : "Personnes",
+    "common.from" : "Du",
+    "common.to" : "au",
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",

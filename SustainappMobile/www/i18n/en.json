@@ -11,6 +11,8 @@
     "common.members" : "members",
     "common.registeredSince" : "registered since",
     "common.profiles" : "Profiles",
+    "common.from" : "From",
+    "common.to" : "to",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",

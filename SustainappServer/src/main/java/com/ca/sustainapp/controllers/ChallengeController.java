@@ -94,7 +94,7 @@ public class ChallengeController extends GenericController {
 				.setName(request.getParameter("name"))
 				.setAbout(request.getParameter("about"))
 				.setEndDate(DateUtils.ionicParse(request.getParameter("endDate"),GregorianCalendar.getInstance()))
-				.setChallengType(challengeTypeService.getById(StringsUtils.parseLongQuickly(request.getParameter("type")).get()))
+				.setChallengeType(challengeTypeService.getById(StringsUtils.parseLongQuickly(request.getParameter("type")).get()))
 				.setTeamEnabled(new Boolean(request.getParameter("teamEnabled")))
 				.setMinLevel(StringsUtils.parseIntegerQuietly(request.getParameter("levelMin")).get())
 				.setTimestamps(GregorianCalendar.getInstance())

@@ -21,7 +21,7 @@ angular.module('sustainapp.controllers')
 			$scope.challengesModel = {};
 			$scope.challengesModel.loaded = false;
 			
-			$scope.challengesModel.moreTeams = true;
+			$scope.challengesModel.moreChallenges = true;
 			$scope.challengesModel.startIndex = 0;
 			$scope.challengesModel.add = false;
 			$scope.challengesModel.allChallenges = [];
@@ -69,7 +69,19 @@ angular.module('sustainapp.controllers')
 		 * fonction de chargement infinity scroll de plus de challenges
 		 */
 		$scope.getMoreChallenges = function(){
-			//TODO
+			$scope.challengesModel.load = true;
+			challengeService.getAll($scope.challengesModel.startIndex).then(function(response){
+				result = response.data;
+				$scope.challengesModel.load = false;
+				$scope.$broadcast('scroll.infiniteScrollComplete');
+				if(result.code == 1 && result.challenges.length >0) {
+					$scope.challengesModel.startIndex += result.challenges.length;
+					$scope.challengesModel.allChallenges = listService.addWithoutDoublons($scope.challengesModel.allChallenges, result.challenges);
+					console.log($scope.challengesModel.allChallenges);
+				} else {
+					$scope.challengesModel.moreChallenges = false;
+				}
+			});
 		}
 		
 		/**
