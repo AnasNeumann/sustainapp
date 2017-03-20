@@ -77,7 +77,6 @@ angular.module('sustainapp.controllers')
 				if(result.code == 1 && result.challenges.length >0) {
 					$scope.challengesModel.startIndex += result.challenges.length;
 					$scope.challengesModel.allChallenges = listService.addWithoutDoublons($scope.challengesModel.allChallenges, result.challenges);
-					console.log($scope.challengesModel.allChallenges);
 				} else {
 					$scope.challengesModel.moreChallenges = false;
 				}

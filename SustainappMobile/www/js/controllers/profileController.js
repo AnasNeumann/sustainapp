@@ -18,6 +18,7 @@ angular.module('sustainapp.controllers')
 		 * Fonction initiale d'affichage de la page
 		 */
 		var loadProfile = function(){
+			$scope.title = "";
 			$scope.profileModel = {};
 			$scope.profileModel.profile = {};
 			$scope.profileModel.coverEdit = false;
@@ -30,7 +31,8 @@ angular.module('sustainapp.controllers')
 			profileService.getById($stateParams.id).then(function(response){
 				if(response.data.code == 1) {
 					 response.data.profiles[0].bornDate = new Date(response.data.profiles[0].bornDate);
-	    			 $scope.profileModel.profile = response.data.profiles[0];
+					 $scope.title = response.data.profiles[0].firstName+" "+response.data.profiles[0].lastName;
+					 $scope.profileModel.profile = response.data.profiles[0];
 	    			 $scope.profileModel.profileTemp = response.data.profiles[0];
 	    			 $scope.profileModel.loaded = true;
 		    		 $scope.profileModel.allErrors = [];

@@ -62,12 +62,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Column(name = "USER_ACCOUNT_ID")
 	private Long userId;
 	
-	/**
-		@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
-		@Fetch(FetchMode.SELECT)
-		private List<CourseEntity> listCourse = new ArrayList<CourseEntity>();
-	**/
-	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private List<TopicValidationEntity> listValidation = new ArrayList<TopicValidationEntity>();
@@ -75,12 +69,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private List<TeamRoleEntity> listTeam = new ArrayList<TeamRoleEntity>();
-
-	/**
-		@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
-		@Fetch(FetchMode.SELECT)
-		private List<ChallengeEntity> listChallenge = new ArrayList<ChallengeEntity>();
-	**/
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
@@ -97,12 +85,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private List<AwardEntity> listAward = new ArrayList<AwardEntity>();
-	
-	/**
-		@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-		@Fetch(FetchMode.SELECT)
-		private List<ReportEntity> listReport = new ArrayList<ReportEntity>();
-	**/
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
