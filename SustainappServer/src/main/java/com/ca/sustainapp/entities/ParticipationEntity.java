@@ -61,7 +61,7 @@ public class ParticipationEntity extends GenericEntity implements Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "participationId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
-	private List<ChallengeVoteEntity> lisVote = new ArrayList<ChallengeVoteEntity>();
+	private List<ChallengeVoteEntity> votes = new ArrayList<ChallengeVoteEntity>();
 
 	/**
 	 * @return the id
@@ -186,15 +186,15 @@ public class ParticipationEntity extends GenericEntity implements Serializable {
 	/**
 	 * @return the lisVote
 	 */
-	public List<ChallengeVoteEntity> getLisVote() {
-		return lisVote;
+	public List<ChallengeVoteEntity> getVotes() {
+		return votes;
 	}
 
 	/**
 	 * @param lisVote the lisVote to set
 	 */
-	public ParticipationEntity setLisVote(List<ChallengeVoteEntity> lisVote) {
-		this.lisVote = lisVote;
+	public ParticipationEntity setVotes(List<ChallengeVoteEntity> votes) {
+		this.votes = votes;
 		return this;
 	}	
 }

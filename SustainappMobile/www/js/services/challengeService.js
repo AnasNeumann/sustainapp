@@ -34,6 +34,15 @@ angular.module('sustainapp.services')
 		},
 		deleteById : function(data) {
 			return $http.post(config.remoteServer+"/challenge/delete", data, params);
+		},
+		participate : function(data) {
+			return $http.post(config.remoteServer+"/participation/create", data, params);
+		},
+		deleteParticipation : function(data) {
+			return $http.post(config.remoteServer+"/participation/delete", data, params);
+		},
+		vote : function(data) {
+			return $http.post(config.remoteServer+"/participation/vote", data, params);
 		}
 	};
 });

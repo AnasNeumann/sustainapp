@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
+import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.utils.StringsUtils;
 
@@ -130,5 +131,18 @@ public class GenericController {
 	 */
 	private String generateSessionToken(){
 		return StringsUtils.md5Hash(new BigInteger(130, new SecureRandom()).toString());
+	}
+	
+	/**
+	 * Get a profile by userId
+	 * @param id
+	 * @return
+	 */
+	protected ProfileEntity getProfileByUser(Long id){
+		UserAccountEntity user = userService.getById(id);
+		if(null == user){
+			return null;
+		}
+		return user.getProfile();
 	}
 }

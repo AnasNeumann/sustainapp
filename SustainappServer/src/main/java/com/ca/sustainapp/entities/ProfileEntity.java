@@ -1,24 +1,16 @@
 package com.ca.sustainapp.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * PROFILE table mapping
@@ -61,42 +53,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "USER_ACCOUNT_ID")
 	private Long userId;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<TopicValidationEntity> listValidation = new ArrayList<TopicValidationEntity>();
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<TeamRoleEntity> listTeam = new ArrayList<TeamRoleEntity>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<ProfilBadgeEntity> listBadge = new ArrayList<ProfilBadgeEntity>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<ReadNewsEntity> listNews = new ArrayList<ReadNewsEntity>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<TravelEntity> listTravel = new ArrayList<TravelEntity>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<AwardEntity> listAward = new ArrayList<AwardEntity>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<NotificationEntity> listNotification = new ArrayList<NotificationEntity>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "creatorId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<MissionEntity> listOwnMission = new ArrayList<MissionEntity>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "profilId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<MissionEntity> listMissionToDo = new ArrayList<MissionEntity>();
 	
 	/**
 	 * @return the id
@@ -200,141 +156,6 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	 */
 	public ProfileEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
-		return this;
-	}
-
-	/**
-	 * @return the listValidation
-	 */
-	public List<TopicValidationEntity> getListValidation() {
-		return listValidation;
-	}
-
-	/**
-	 * @param listValidation the listValidation to set
-	 */
-	public ProfileEntity setListValidation(List<TopicValidationEntity> listValidation) {
-		this.listValidation = listValidation;
-		return this;
-	}
-
-	/**
-	 * @return the listTeam
-	 */
-	public List<TeamRoleEntity> getListTeam() {
-		return listTeam;
-	}
-
-	/**
-	 * @param listTeam the listTeam to set
-	 */
-	public ProfileEntity setListTeam(List<TeamRoleEntity> listTeam) {
-		this.listTeam = listTeam;
-		return this;
-	}
-
-	/**
-	 * @return the listBadge
-	 */
-	public List<ProfilBadgeEntity> getListBadge() {
-		return listBadge;
-	}
-
-	/**
-	 * @param listBadge the listBadge to set
-	 */
-	public ProfileEntity setListBadge(List<ProfilBadgeEntity> listBadge) {
-		this.listBadge = listBadge;
-		return this;
-	}
-
-	/**
-	 * @return the listNews
-	 */
-	public List<ReadNewsEntity> getListNews() {
-		return listNews;
-	}
-
-	/**
-	 * @param listNews the listNews to set
-	 */
-	public ProfileEntity setListNews(List<ReadNewsEntity> listNews) {
-		this.listNews = listNews;
-		return this;
-	}
-
-	/**
-	 * @return the listTravel
-	 */
-	public List<TravelEntity> getListTravel() {
-		return listTravel;
-	}
-
-	/**
-	 * @param listTravel the listTravel to set
-	 */
-	public ProfileEntity setListTravel(List<TravelEntity> listTravel) {
-		this.listTravel = listTravel;
-		return this;
-	}
-
-	/**
-	 * @return the listAward
-	 */
-	public List<AwardEntity> getListAward() {
-		return listAward;
-	}
-
-	/**
-	 * @param listAward the listAward to set
-	 */
-	public ProfileEntity setListAward(List<AwardEntity> listAward) {
-		this.listAward = listAward;
-		return this;
-	}
-
-	/**
-	 * @return the listNotification
-	 */
-	public List<NotificationEntity> getListNotification() {
-		return listNotification;
-	}
-
-	/**
-	 * @param listNotification the listNotification to set
-	 */
-	public ProfileEntity setListNotification(List<NotificationEntity> listNotification) {
-		this.listNotification = listNotification;
-		return this;
-	}
-
-	/**
-	 * @return the listOwnMission
-	 */
-	public List<MissionEntity> getListOwnMission() {
-		return listOwnMission;
-	}
-
-	/**
-	 * @param listOwnMission the listOwnMission to set
-	 */
-	public ProfileEntity setListOwnMission(List<MissionEntity> listOwnMission) {
-		this.listOwnMission = listOwnMission;
-		return this;
-	}
-
-	/**
-	 * @return the listMissionToDo
-	 */
-	public List<MissionEntity> getListMissionToDo() {
-		return listMissionToDo;
-	}
-
-	/**
-	 * @param listMissionToDo the listMissionToDo to set
-	 */
-	public ProfileEntity setListMissionToDo(List<MissionEntity> listMissionToDo) {
-		this.listMissionToDo = listMissionToDo;
 		return this;
 	}
 

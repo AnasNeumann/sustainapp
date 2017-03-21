@@ -17,15 +17,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.ParticipationCriteria;
+import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.dao.ChallengeServiceDAO;
 import com.ca.sustainapp.dao.ChallengeTypeServiceDAO;
+import com.ca.sustainapp.dao.ProfileServiceDAO;
+import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.ChallengeEntity;
+import com.ca.sustainapp.entities.ChallengeVoteEntity;
+import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.entities.TeamEntity;
+import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
+import com.ca.sustainapp.responses.ChallengeResponse;
 import com.ca.sustainapp.responses.ChallengeTypesResponse;
 import com.ca.sustainapp.responses.ChallengesResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.ParticipationResponse;
+import com.ca.sustainapp.services.cascadeGetService;
 import com.ca.sustainapp.utils.DateUtils;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -34,7 +46,7 @@ import com.ca.sustainapp.validators.ChallengeValidator;
 /**
  * Restfull controller for challenge management
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 15/03/2017 <3
+ * @since 15/03/2017
  * @version 1.0
  */
 @CrossOrigin
@@ -42,14 +54,29 @@ import com.ca.sustainapp.validators.ChallengeValidator;
 public class ChallengeController extends GenericController {
 
 	/**
-	 * Injection de dépendances
+	 * DAO services
 	 */
 	@Autowired
 	private ChallengeServiceDAO challengeService;
 	@Autowired
 	private ChallengeTypeServiceDAO challengeTypeService;
 	@Autowired
+	private ProfileServiceDAO profileService;
+	@Autowired
+	private TeamServiceDAO teamService;
+	
+	/**
+	 * Business services
+	 */
+	@Autowired
+	private cascadeGetService getService;
+	
+	/**
+	 * Validators
+	 */
+	@Autowired
 	private ChallengeValidator validator;
+	
 	
 	/**
 	 * get all challenges types
@@ -113,7 +140,22 @@ public class ChallengeController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/challenge", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String get(HttpServletRequest request) {
-		return null;
+		Optional<Long> challengeId = StringsUtils.parseLongQuickly(request.getParameter("challenge"));
+		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		if(!challengeId.isPresent() || !userId.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		ChallengeResponse response = new ChallengeResponse().setChallenge(challengeService.getById(challengeId.get()));
+		if(null == response.getChallenge()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		ProfileEntity profile = super.getProfileByUser(userId.get());
+		return response
+				.setOwner(profileService.getById(response.getChallenge().getCreatorId()))
+				.setTeams(searchTeam(profile.getId()))
+				.setParticipations(searchAllParticipations(profile.getId(),response.getChallenge()))
+				.setCode(1)
+				.buildJson();
 	}
 	
 	/**
@@ -145,5 +187,125 @@ public class ChallengeController extends GenericController {
     public String delete(HttpServletRequest request) {
 		return null;
 	}
+
+	/**
+	 * create a participation
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/participation/create", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String participate(HttpServletRequest request) {
+		return null;
+	}
 	
+	/**
+	 * delete a participation
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/participation/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String deleteParticipation(HttpServletRequest request) {
+		return null;
+	}
+	
+	/**
+	 * vote for a participation
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/participation/vote", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String vote(HttpServletRequest request) {
+		return null;
+	}
+
+	/**
+	 * Rechercher toutes les teams pour lesquels un user est membre ou owner
+	 * @param profileId
+	 * @return
+	 */ 
+	private List<TeamEntity> searchTeam(Long profileId){
+		List<TeamRoleEntity> roles = getService.cascadeGetTeamRole(new TeamRoleCriteria().setProfilId(profileId));
+		List<TeamEntity> teams = new SustainappList<TeamEntity>();
+		for(TeamRoleEntity role : roles){
+			TeamEntity team = teamService.getById(role.getTeamId());
+			if(null != team){
+				teams.add(team);
+			}
+		}
+		return teams;
+	}
+	
+	/**
+	 * Rechercher toutes les participations a un challenge
+	 * @param profileId
+	 * @param challengeId
+	 * @return
+	 */
+	private List<ParticipationResponse> searchAllParticipations(Long profileId, ChallengeEntity challenge){
+		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challenge.getId()));
+		List<ParticipationResponse> result = new SustainappList<ParticipationResponse>();
+		ChallengeVoteEntity currentVote = searchVote(participations, profileId);
+		for(ParticipationEntity participation : participations){
+			ParticipationResponse response = new ParticipationResponse()
+					.setParticipation(participation)
+					.setAlreadyVoted(alreadyVoted(currentVote, participation.getId()))
+					.setIsOwner(isOwnerParticiaption(participation, profileId));
+			if(participation.getTargetType().equals(SustainappConstantes.TARGET_TEAM)){
+				response.setOwnerTeam(teamService.getById(participation.getTargetId()));
+			} else {
+				response.setOwnerProfil(profileService.getById(participation.getTargetId()));
+			}
+			result.add(response);
+		}
+		return result;
+	}
+	
+	/**
+	 * Verify if a profile is owner of a participation
+	 * @param participation
+	 * @param idProfil
+	 * @return
+	 */
+	private boolean isOwnerParticiaption(ParticipationEntity participation, Long idProfil){
+		if(participation.getTargetType().equals(SustainappConstantes.TARGET_PROFILE) && participation.getTargetId().equals(idProfil)){
+			return true;
+		}else{
+			for(TeamEntity team : searchTeam(idProfil)){
+				if(team.getId().equals(participation.getTargetId())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * verifier si un profil a voté pour une participation ou non
+	 * @param vote
+	 * @param idParticipation
+	 * @return
+	 */
+	private boolean alreadyVoted(ChallengeVoteEntity vote, Long idParticipation){
+		if(null != vote && vote.getParticipationId().equals(idParticipation)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Recuperer le vote d'un profil sur les participations d'un challenge
+	 * @param participations
+	 * @param id
+	 * @return
+	 */
+	private ChallengeVoteEntity searchVote(List<ParticipationEntity> participations, Long id){
+		for(ParticipationEntity participation : participations){
+			for(ChallengeVoteEntity vote : participation.getVotes()){
+				if(vote.getProfilId().equals(id)){
+					return vote;
+				}
+			}
+		}
+		return null;
+	}
 }
