@@ -24,7 +24,7 @@ import com.ca.sustainapp.pojo.SearchResult;
  * @verion 1.0
  */
 @Service("getService")
-public class cascadeGetService {
+public class CascadeGetService {
 
 	/**
 	 * les services
