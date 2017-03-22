@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('challengeController', function($scope, $stateParams, $ionicModal, $state, sessionService, fileService, challengeService) {
+.controller('challengeController', function($scope, $stateParams, $ionicModal, $state, sessionService, fileService, challengeService, participationService) {
 
 	/**
 	 * Entrée dans la page

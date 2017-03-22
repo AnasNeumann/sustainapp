@@ -212,36 +212,6 @@ public class ChallengeController extends GenericController {
 	}
 
 	/**
-	 * create a participation
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/participation/create", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String participate(HttpServletRequest request) {
-		return null;
-	}
-	
-	/**
-	 * delete a participation
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/participation/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String deleteParticipation(HttpServletRequest request) {
-		return null;
-	}
-	
-	/**
-	 * vote for a participation
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/participation/vote", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String vote(HttpServletRequest request) {
-		return null;
-	}
-
-	/**
 	 * Rechercher toutes les teams pour lesquels un user est membre ou owner
 	 * @param profileId
 	 * @return

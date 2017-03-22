@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
-import com.ca.sustainapp.criteria.TeamCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
