@@ -82,9 +82,12 @@
         </div>
         
         <!-- ALL CHALLENGES -->
+        <div class="s-common-greyPart">
+            <h2 class="s-common-greyTitle" ng-click="openFilter($event)">{{'challenges.filter' | translate}}</h2>
+        </div>
         <div class="s-teams-allResults">
             <ion-list>
-               <ion-item class="item item-thumbnail-left" ng-repeat="challenge in challengesModel.allChallenges" type="item-text-wrap" href="#/tab/challenges/{{challenge.id}}">
+               <ion-item ng-if="challengesModel.filter =='' || challengesModel.filter == challenge.challengeType.name" class="item item-thumbnail-left" ng-repeat="challenge in challengesModel.allChallenges" type="item-text-wrap" href="#/tab/challenges/{{challenge.id}}">
                     <img ng-src="data:image/jpeg;base64,{{challenge.icon}}" onerror="this.src='img/challenge/default.png'" />
                     <div class="s-challenges-level">{{challenge.minLevel}}</div>
                     <h2 class="s-teams-title">{{challenge.name}}</h2>

@@ -89,6 +89,9 @@
     "challenges.teamEnabled" : "Do team have the right to participate ?",
     "challenges.levelMin" : "Minimum level",
     "challenges.types" : "Types of challenges",
+    "challenges.filter" : "Filter",
+    "challenges.filterBy" : "Filter by",
+    "challenges.nothing" : "No filter",
     
     "challenge.teamEnabled" : "Teams can participate",
     "challenge.teamDisabled" : "Teams can not participate",

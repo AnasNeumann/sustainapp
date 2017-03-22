@@ -194,6 +194,23 @@ ion-content {
 	color: white;
 }
 
+.s-common-greyPart{
+	width: 100%;
+    margin: 0px;
+    padding: 10px;
+    background-color: #F0F0F0;
+    height: 50px;
+    overflow: hidden;
+    text-align: center;
+    color: #888;
+}
+
+.s-common-greyTitle{
+	color: #888;
+	font-family: sustainapp;
+	cursor : pointer;
+}
+
 .s-common-whiteTitle {
 	color: white;
 	font-family: sustainapp;

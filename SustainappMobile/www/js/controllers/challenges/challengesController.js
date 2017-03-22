@@ -20,6 +20,7 @@ angular.module('sustainapp.controllers')
 		var loadChallengesPage = function(){
 			$scope.challengesModel = {};
 			$scope.challengesModel.loaded = false;
+			$scope.challengesModel.filter = "";
 			
 			$scope.challengesModel.moreChallenges = true;
 			$scope.challengesModel.startIndex = 0;
@@ -49,6 +50,11 @@ angular.module('sustainapp.controllers')
 			    scope: $scope
 			  }).then(function(popover) {
 			    $scope.popoverType = popover;
+			  });
+			$ionicPopover.fromTemplateUrl('templates/challenges/popover-filter.html', {
+			    scope: $scope
+			  }).then(function(popover) {
+			    $scope.popoverFilter = popover;
 			  });
 			
 			/**
@@ -83,6 +89,14 @@ angular.module('sustainapp.controllers')
 			});
 		}
 		
+		
+		/**
+		 * fonction d'ouverture du menu de choix du filtre
+		 */
+		$scope.openFilter = function($event){
+			$scope.popoverFilter.show($event);
+		}
+		
 		/**
 		 * fonction d'ouverture du menu de choix du level min
 		 */
@@ -103,6 +117,14 @@ angular.module('sustainapp.controllers')
 		$scope.changeType = function(type){
 			$scope.popoverType.hide();
 			$scope.challengesModel.type = type;
+		}
+		
+		/**
+		 * Fonction de changement de filtre d'affichage
+		 */
+		$scope.changeFilter = function(filter){
+			$scope.popoverFilter.hide();
+			$scope.challengesModel.filter = filter;
 		}
 		
 		/**

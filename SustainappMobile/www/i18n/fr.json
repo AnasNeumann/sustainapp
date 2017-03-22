@@ -89,6 +89,9 @@
     "challenges.teamEnabled" : "Les equipes peuvent-elle participer ?",
     "challenges.levelMin" : "Niveau mininum pour participer",
     "challenges.types" : "Types de challenges",
+    "challenges.filter" : "Filtrer",
+    "challenges.filterBy" : "Filtrer par",
+    "challenges.nothing" : "Aucun filtre",
     
     "challenge.teamEnabled" : "Les equipes peuvent participer",
     "challenge.teamDisabled" : "Les equipes ne peuvent pas participer",
