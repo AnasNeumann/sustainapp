@@ -11,6 +11,7 @@ angular.module('sustainapp.controllers')
 		 * Initialisation du model
 		 */	
 		var initLoginModel = function(){
+			$scope.title = "...";
 			$scope.loginModel = {};
 			$scope.loginModel.mail = "";
 			$scope.loginModel.password = "";

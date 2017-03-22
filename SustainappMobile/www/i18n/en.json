@@ -13,6 +13,7 @@
     "common.profiles" : "Profiles",
     "common.from" : "From",
     "common.to" : "to",
+    "common.about" : "About", 
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
@@ -87,5 +88,13 @@
     "challenges.endDate" : "Challenge deadline",
     "challenges.teamEnabled" : "Do team have the right to participate ?",
     "challenges.levelMin" : "Minimum level",
-    "challenges.types" : "Types of challenges"
+    "challenges.types" : "Types of challenges",
+    
+    "challenge.teamEnabled" : "Teams can participate",
+    "challenge.teamDisabled" : "Teams can not participate",
+    "challenge.participations" : "Participations",
+    "challenge.participation.add" : "Add a participation",
+    "challenge.participation.new" : "New participation",
+    "challenge.votes" : "votes",
+    "challenge.addedOn" : "Added on"
 }

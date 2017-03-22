@@ -137,8 +137,20 @@ ion-content {
 	z-index: 1000;
 }
 
-.s-common-floatEdit:active, .s-common-choosePicture:active,
-	.s-common-choosePictureToogle:active, .s-common-edit:active {
+.s-common-floatDelete {
+	display: inline-block;
+	float: right;
+	color: black;
+	opacity: 0.4;
+	cursor: pointer;
+	z-index: 1000;
+	margin-left : 10px;
+	font-size : 22px;
+}
+
+.s-common-floatDelete:active, .s-common-floatEdit:active,
+	.s-common-choosePicture:active, .s-common-choosePictureToogle:active,
+	.s-common-edit:active {
 	opacity: 0.8;
 }
 
@@ -169,6 +181,22 @@ ion-content {
 .item-avatar, .item-avatar .item-content, .item-avatar-left,
 	.item-avatar-left .item-content {
 	padding-left: 75px;
+}
+
+.s-common-bluePart {
+	width: 100%;
+	margin: 0px;
+	padding: 10px;
+	background-color: #23d5fb;
+	height: 50px;
+	overflow: hidden;
+	text-align: center;
+	color: white;
+}
+
+.s-common-whiteTitle {
+	color: white;
+	font-family: sustainapp;
 }
 
 .s-common-flagContainer {
@@ -205,8 +233,8 @@ ion-content {
 	color: white;
 }
 
-.s-common-margin-top10{
-	margin-top : 10px;
+.s-common-margin-top10 {
+	margin-top: 10px;
 }
 
 /**
@@ -232,7 +260,6 @@ ion-content {
 	transition: all 0.2s ease-in-out;
 }
 
-  
 .s-common-select {
 	width: 100%;
 	background-color: transparent;
@@ -244,10 +271,10 @@ ion-content {
 	font-size: 20px !important;
 	-webkit-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
-	 -webkit-appearance: none; 
-   -moz-appearance: none;
-   appearance: none;      
-	outline : none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
 }
 
 .s-common-input:focus, .s-common-select:focus {
@@ -256,8 +283,8 @@ ion-content {
 	transition: all 0.2s ease-in-out;
 }
 
-.s-common-option{
-	border : none;
+.s-common-option {
+	border: none;
 }
 
 .s-common-label {
@@ -313,11 +340,13 @@ ion-content {
 	transition: all 0.4s ease-in-out;
 }
 
-.s-common-checkbox-label input:before, .s-common-checkbox-label .checkbox-icon:before {
+.s-common-checkbox-label input:before, .s-common-checkbox-label .checkbox-icon:before
+	{
 	border-color: #2dbe60;
 }
 
-.s-common-checkbox-label input:checked:before, .s-common-checkbox-label input:checked+.checkbox-icon:before {
+.s-common-checkbox-label input:checked:before, .s-common-checkbox-label input:checked+.checkbox-icon:before
+	{
 	background: #2dbe60;
 	border-color: #2dbe60;
 }
@@ -326,12 +355,9 @@ ion-content {
 	border: none;
 	background-color: transparent;
 	font-size: 20px;
-	cursor : pointer;
+	cursor: pointer;
 }
 
 .s-common-inputLarge {
 	width: 100%;
 }
-
-
-

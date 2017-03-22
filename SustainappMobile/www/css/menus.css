@@ -26,6 +26,12 @@
 	color : white !important;
 }
 
+@media (min-width: 680px) {
+  .s-menus-headerBtn {
+    display : none;
+  }
+}
+
 .platform-android .bar .title {
     left : 61px;   
 }

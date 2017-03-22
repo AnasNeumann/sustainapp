@@ -63,7 +63,7 @@
     <!-- MODE CONNECTE -->
     <ion-side-menus ng-show="loginModel.isConnected">	  	  
 
-	  <ion-side-menu side="left" > 
+	  <ion-side-menu side="left" expose-aside-when="large"> 
 	   <div ng-include src="'templates/common/sideMenu.html'"></div>   	   
 	  </ion-side-menu>
 
@@ -82,7 +82,7 @@
             </ion-nav-view>            
 	  </ion-side-menu-content>
 	  
-	  <ion-side-menu side="right" ng-controller="searchController"> 
+	  <ion-side-menu side="right" ng-controller="searchController" expose-aside-when="large"> 
        <div ng-include src="'templates/common/search.html'"></div>       
       </ion-side-menu>
 

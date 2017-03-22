@@ -13,6 +13,7 @@
     "common.profiles" : "Personnes",
     "common.from" : "Du",
     "common.to" : "au",
+    "common.about" : "A propos", 
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
@@ -87,5 +88,13 @@
     "challenges.endDate" : "Date limite de participation",
     "challenges.teamEnabled" : "Les equipes peuvent-elle participer ?",
     "challenges.levelMin" : "Niveau mininum pour participer",
-    "challenges.types" : "Types de challenges"
+    "challenges.types" : "Types de challenges",
+    
+    "challenge.teamEnabled" : "Les equipes peuvent participer",
+    "challenge.teamDisabled" : "Les equipes ne peuvent pas participer",
+    "challenge.participations" : "Participations",
+    "challenge.participation.add" : "Ajouter une participation",
+    "challenge.participation.new" : "Nouvelle participation",
+    "challenge.votes" : "votes",
+    "challenge.addedOn" : "Ajoutée le"
 }

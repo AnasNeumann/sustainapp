@@ -3,6 +3,72 @@
     
     <!-- Challenge loaded -->
     <ion-content ng-show="challengeModel.loaded" >
+        
+        <!-- CHALLENGE INFOS -->
+        <div class="row">
+            <div class="col col-50">
+                <div class="s-team-containerAvatar">
+                    <div style="background-image: url({{challengeModel.displayIcon}});" class="s-profile-avatar">
+                        <div ng-if="challengeModel.isAdmin" class="s-common-camera">
+                           <div class="s-common-choosePictureToogle" ng-show="challengeModel.iconEdit" ng-click="challengeModel.iconEdit = false">
+                              <i class="icon ion-close-round"></i>
+                           </div>
+                           <div class="s-common-choosePicture" ng-show="challengeModel.iconEdit" ng-click="icon(true)">
+                              {{'common.takePicture' | translate}}
+                           </div>
+                           <div class="s-common-choosePicture" ng-show="challengeModel.iconEdit" ng-click="icon(false)">
+                             {{'common.chooseFormGallery' | translate}}
+                           </div>
+                           <div class="s-common-choosePictureToogle s-common-22" ng-hide="challengeModel.iconEdit" ng-click="challengeModel.iconEdit = true">
+                              <i class="icon ion-camera"></i>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-50" ng-hide="challengeModel.edit">
+                  <div class="s-common-floatDelete" ng-click="modal.show()" ng-if="challengeModel.isAdmin" >
+                        <i class="icon ion-trash-a"></i>
+                  </div>
+                  <div class="s-common-floatEdit"  ng-click="challengeModel.edit = true" ng-if="challengeModel.isAdmin" >
+                        <i class="icon ion-edit"></i>
+                  </div>                
+                  <br />    
+                  <h2 class="s-team-title">{{challengeModel.challenge.name}}</h2>
+                  <p class="s-teams-text">{{challengeModel.challenge.about}}</p>                 
+            </div>
+            <div class="col col-50" ng-show="challengeModel.edit">
+                  <div class="s-common-floatEdit"  ng-click="challengeModel.edit = false" >
+                        <i class="icon ion-close-round"></i>
+                  </div>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
+                    <input ng-model="challengeModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{teamModel.allErrors.name | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+                    <input ng-model="challengeModel.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{teamModel.allErrors.about | translate}}</span>
+                  </label>
+                  <button class="s-common-btn" ng-click="updateChallenge()">{{'common.modify' | translate}}</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-100">
+                 <p>
+                    <span ng-show="challengeModel.challenge.teamEnabled"><i class="icon ion-android-checkbox s-challenge-greenPuce"></i> {{'challenge.teamEnabled' | translate}} <br /></span>
+                    <span ng-hide="challengeModel.challenge.teamEnabled"><i class="icon ion-android-checkbox-outline-blank s-challenge-greenPuce"></i> {{'challenge.teamDisabled' | translate}} <br /></span>
+                    <span ><i class="icon ion-ios-calendar-outline s-challenge-greenPuce"></i> {{'challenges.endDate' | translate}} : {{challengeModel.challenge.endDate | date: 'dd/MM/yyyy' }}<br /></span>
+                    <span ><span class="s-challenge-greenCube">{{challengeModel.challenge.minLevel}}</span> {{'challenges.levelMin' | translate}} <br /></span>
+                 </p>
+            </div>
+        </div>
+        
+        <div class="s-common-bluePart">
+            <h2 class="s-common-whiteTitle">{{'challenge.participations' | translate}}</h2>
+        </div>
+    
     </ion-content>
     
     <!-- Loading Part -->

@@ -17,6 +17,7 @@ import com.ca.sustainapp.pojo.SustainappList;
 public class ChallengeResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private ProfileEntity owner;
+	private Boolean isAdmin;
 	private ChallengeEntity challenge;
 	private List<ParticipationResponse> participations = new SustainappList<ParticipationResponse>();
 	private List<TeamEntity> teams = new SustainappList<TeamEntity>();
@@ -82,6 +83,21 @@ public class ChallengeResponse extends HttpRESTfullResponse {
 	 */
 	public ChallengeResponse setTeams(List<TeamEntity> teams) {
 		this.teams = teams;
+		return this;
+	}
+
+	/**
+	 * @return the isAdmin
+	 */
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	/**
+	 * @param isAdmin the isAdmin to set
+	 */
+	public ChallengeResponse setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 		return this;
 	}
 }

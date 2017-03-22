@@ -154,6 +154,7 @@ public class ChallengeController extends GenericController {
 				.setOwner(profileService.getById(response.getChallenge().getCreatorId()))
 				.setTeams(searchTeam(profile.getId()))
 				.setParticipations(searchAllParticipations(profile.getId(),response.getChallenge()))
+				.setIsAdmin(response.getOwner().getId().equals(profile.getId()))
 				.setCode(1)
 				.buildJson();
 	}
@@ -227,9 +228,8 @@ public class ChallengeController extends GenericController {
 		List<TeamRoleEntity> roles = getService.cascadeGetTeamRole(new TeamRoleCriteria().setProfilId(profileId));
 		List<TeamEntity> teams = new SustainappList<TeamEntity>();
 		for(TeamRoleEntity role : roles){
-			TeamEntity team = teamService.getById(role.getTeamId());
-			if(null != team){
-				teams.add(team);
+			if(role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN) || role.getRole().equals(SustainappConstantes.TEAMROLE_MEMBER)){
+				teams.add(teamService.getById(role.getTeamId()));
 			}
 		}
 		return teams;
