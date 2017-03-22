@@ -49,7 +49,23 @@ angular.module('sustainapp.controllers')
 	 * Modification des informations du challenge
 	 */
 	$scope.updateChallenge = function(){
-		
+		var data = new FormData();
+		data.append("name", $scope.challengeModel.name);
+		data.append("about", $scope.challengeModel.about);
+		data.append("challenge", $scope.challengeModel.challenge.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		challengeService.update(data).success(function(result) {
+			if(result.code == 1){
+				$scope.challengeModel.allErrors = [];	
+				$scope.challengeModel.challenge.name = $scope.challengeModel.name;
+				$scope.challengeModel.challenge.about = $scope.challengeModel.about;
+				$scope.challengeModel.edit = false;
+				$scope.challengeModel.iconEdit = false;
+	    	} else {
+	    		$scope.challengeModel.allErrors = result.errors;
+	    	}
+	    });
 	}
 	
 	/**
@@ -87,6 +103,15 @@ angular.module('sustainapp.controllers')
 	 */
 	$scope.confirmDelete = function(){
 		$scope.modal.hide();
+		var data = new FormData();
+		data.append("challenge", $scope.challengeModel.challenge.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		challengeService.deleteById(data).success(function(result) {
+			if(result.code == 1){
+				$state.go('tab.challenges');
+	    	}
+	    });
 		return;
 	};
 	

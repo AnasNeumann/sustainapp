@@ -64,6 +64,7 @@
     "form.lastName.mandatory" : "The last name field is mandatory",
     "form.mail.matching" : "This couple mail/passowrd doesn't exist",
     "form.bornDate.mandatory" : "Please enter a valid date format",
+    "form.about.mandatory" : "The about field is mandatory",
     "form.name.mandatory" : "The name field is mandatory",
     "form.name.exist" : "This team name is not available",
     "form.field.mandatory" : "This field is mandatory",

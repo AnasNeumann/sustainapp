@@ -37,10 +37,12 @@ import com.ca.sustainapp.responses.ChallengesResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.ParticipationResponse;
-import com.ca.sustainapp.services.cascadeGetService;
+import com.ca.sustainapp.services.CascadeDeleteService;
+import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.utils.DateUtils;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
+import com.ca.sustainapp.validators.ChallengeUpdateValidator;
 import com.ca.sustainapp.validators.ChallengeValidator;
 
 /**
@@ -69,14 +71,17 @@ public class ChallengeController extends GenericController {
 	 * Business services
 	 */
 	@Autowired
-	private cascadeGetService getService;
+	private CascadeGetService getService;
+	@Autowired
+	private CascadeDeleteService deleteService;
 	
 	/**
 	 * Validators
 	 */
 	@Autowired
 	private ChallengeValidator validator;
-	
+	@Autowired
+	private ChallengeUpdateValidator updateValidator;
 	
 	/**
 	 * get all challenges types
@@ -160,23 +165,35 @@ public class ChallengeController extends GenericController {
 	}
 	
 	/**
-	 * update challenge informations
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/challenge/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
-		return null;
-	}
-	
-	/**
 	 * update challenge icon
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/challenge/icon", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String icon(HttpServletRequest request) {
-		return null;
+    public String icon(HttpServletRequest request) {		
+		ChallengeEntity challenge = verifyAllOwnerInformations(request);
+		if(null == challenge){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		challengeService.createOrUpdate(challenge.setIcon(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
+	 * update challenge informations
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/challenge/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String update(HttpServletRequest request) {	
+		String name = request.getParameter("name");
+		String about = request.getParameter("about");
+		ChallengeEntity challenge = verifyAllOwnerInformations(request);
+		if(null == challenge || !updateValidator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+		}
+		challengeService.createOrUpdate(challenge.setName(name).setAbout(about));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -186,7 +203,12 @@ public class ChallengeController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/challenge/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		ChallengeEntity challenge = verifyAllOwnerInformations(request);
+		if(null == challenge){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		deleteService.cascadeDelete(challenge);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
 	/**
@@ -307,5 +329,22 @@ public class ChallengeController extends GenericController {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Verifier toutes les informations avant modification d'un challenge
+	 * @param request
+	 * @return
+	 */
+	private ChallengeEntity verifyAllOwnerInformations(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("challenge"));
+		if(!id.isPresent()){
+			return null;
+		}
+		ChallengeEntity challenge = challengeService.getById(id.get());
+		if(null == challenge || !challenge.getCreatorId().equals(super.getConnectedUser(request).getProfile().getId())){
+			return null;
+		}
+		return challenge;
 	}
 }

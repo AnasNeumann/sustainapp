@@ -44,12 +44,12 @@
                   <label class="item item-input item-floating-label" > 
                     <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
                     <input ng-model="challengeModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
-                    <span class="s-common-errors">{{teamModel.allErrors.name | translate}}</span>
+                    <span class="s-common-errors">{{challengeModel.allErrors.name | translate}}</span>
                   </label>
                   <label class="item item-input item-floating-label" > 
                     <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
                     <input ng-model="challengeModel.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
-                    <span class="s-common-errors">{{teamModel.allErrors.about | translate}}</span>
+                    <span class="s-common-errors">{{challengeModel.allErrors.about | translate}}</span>
                   </label>
                   <button class="s-common-btn" ng-click="updateChallenge()">{{'common.modify' | translate}}</button>
             </div>

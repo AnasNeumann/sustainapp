@@ -46,7 +46,7 @@ public class CascadeDeleteService {
 	 * les services
 	 */
 	@Autowired
-	cascadeGetService getService;
+	CascadeGetService getService;
 	
 	/**
 	 * cascade delete a challenge
