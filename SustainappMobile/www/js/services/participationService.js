@@ -20,9 +20,6 @@ angular.module('sustainapp.services')
 		deleteById : function(data) {
 			return $http.post(config.remoteServer+"/participation/delete", data, params);
 		},
-		update : function(data) {
-			return $http.post(config.remoteServer+"/participation/update", data, params);
-		},
 		vote : function(data) {
 			return $http.post(config.remoteServer+"/participation/vote", data, params);
 		},

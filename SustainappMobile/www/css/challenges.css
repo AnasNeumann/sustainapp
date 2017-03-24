@@ -119,16 +119,3 @@
     padding-left:95px;
     padding-top : 20px;
 }
-
-.s-challenge-participant{
-	cursor : pointer;
-	-webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    background: white;
-}
-
-.s-challenge-participant:active{
-	-webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    background: #E5E5E5;
-}

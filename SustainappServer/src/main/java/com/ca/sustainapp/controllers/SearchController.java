@@ -51,5 +51,5 @@ public class SearchController extends GenericController {
 				.setCode(1)
 				.buildJson();
 	}
-	
+
 }

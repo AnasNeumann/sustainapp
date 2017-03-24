@@ -72,6 +72,7 @@
     "form.name.mandatory" : "The name field is mandatory",
     "form.name.exist" : "This team name is not available",
     "form.field.mandatory" : "This field is mandatory",
+    "form.level.min" : "You don't have the level to participate",
     
     "report.message" : "Your request has been received and will be processed as soon as possible",
     

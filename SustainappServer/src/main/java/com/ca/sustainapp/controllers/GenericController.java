@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
@@ -30,6 +31,12 @@ public class GenericController {
 	@Autowired
 	protected UserAccountServiceDAO userService;
 
+	/**
+	 * Comparator
+	 */
+	@Autowired
+	protected EntityComparator compartor;
+	
 	/**
 	 * Creer une nouvelle session pour un utilisateur
 	 * @param request

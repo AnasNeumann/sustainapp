@@ -32,14 +32,15 @@
       <span class="s-common-errors">{{challengeModel.allErrors.about | translate}}</span>
     </label>
     <br />
-      <ion-list>
-	     <ion-item class="item-avatar s-challenge-participant" type="item-text-wrap" ng-click="openProfiles($event)">
-	         <img ng-src="data:image/jpeg;base64,{{challengeModel.selectedProfile.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
-	         <div class="s-teams-level">{{challengeModel.selectedProfile.level}}</div>
-	         <h2 class="s-teams-title">{{challengeModel.selectedProfile.denomination}}</h2>
-	         <p class="s-teams-text">{{challengeModel.selectedProfile.type | translate}}</p>
-	     </ion-item>
+    <ion-list ng-show="challengeModel.challenge.teamEnabled" >
+	   <ion-item class="item-avatar s-challenge-participant" type="item-text-wrap" ng-click="openProfiles($event)">
+         <img ng-src="data:image/jpeg;base64,{{challengeModel.selectedProfile.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+         <div class="s-teams-level">{{challengeModel.selectedProfile.level}}</div>
+         <h2 class="s-teams-title">{{challengeModel.selectedProfile.denomination}}</h2>
+         <p class="s-teams-text">{{challengeModel.selectedProfile.type | translate}}</p>
+	    </ion-item>
 	  </ion-list>
+	  <span class="s-common-errors">{{challengeModel.allErrors.level | translate}}</span>
       <button class="s-common-btn" ng-click="participate()">{{'common.create' | translate}}</button>
      </div>
    </ion-content>

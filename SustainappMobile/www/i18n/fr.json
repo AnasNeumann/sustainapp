@@ -72,6 +72,7 @@
     "form.name.mandatory" : "Veuillez remplir le champs nom",
     "form.name.exist" : "Ce nom d'equipe n'est plus disponible",
     "form.field.mandatory" : "Veuillez remplir ce champs",
+    "form.level.min" : "Vous n'avez pas le niveau pour participer",
     
     "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais",
     
