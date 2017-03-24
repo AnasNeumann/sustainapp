@@ -96,3 +96,39 @@
     padding-top : 1px;
     margin-right : 10px;
 }
+
+.s-challenge-plus {
+	position : relative;
+	top : 3px;
+	margin-right : 5px;
+}
+
+.s-participation-imgContainer {
+    position : relative;
+    height : 140px;
+    width : 280px;
+    background-color: #F0F0F0;
+    margin : auto;
+    margin-top : 25px;
+    border : 1px solid #E0E0E0;
+    color : #D0D0D0;
+    background-position : center;
+    background-repeat : no-repeat;
+    background-size : cover;
+    font-size : 100px;
+    padding-left:95px;
+    padding-top : 20px;
+}
+
+.s-challenge-participant{
+	cursor : pointer;
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    background: white;
+}
+
+.s-challenge-participant:active{
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    background: #E5E5E5;
+}

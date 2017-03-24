@@ -2,7 +2,6 @@ package com.ca.sustainapp.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
-import com.ca.sustainapp.dao.ChallengeServiceDAO;
-import com.ca.sustainapp.dao.ParticipationServiceDAO;
 
 /**
  * Restfull controller for participation management
@@ -21,15 +18,7 @@ import com.ca.sustainapp.dao.ParticipationServiceDAO;
  */
 @CrossOrigin
 @RestController
-public class ParticipationController extends GenericController {
-
-	/**
-	 * DAO services
-	 */
-	@Autowired
-	private ChallengeServiceDAO challengeService;
-	@Autowired
-	private ParticipationServiceDAO participationService;
+public class ParticipationController extends GenericChallengeController {
 	
 	/**
 	 * create a participation
@@ -68,6 +57,16 @@ public class ParticipationController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/participation/vote", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String vote(HttpServletRequest request) {
+		return null;
+	}
+	
+	/**
+	 * get all votes of a participation
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/participation/votes", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+    public String getVotes(HttpServletRequest request) {
 		return null;
 	}
 	

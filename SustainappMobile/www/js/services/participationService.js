@@ -25,6 +25,9 @@ angular.module('sustainapp.services')
 		},
 		vote : function(data) {
 			return $http.post(config.remoteServer+"/participation/vote", data, params);
+		},
+		getVotes : function(participation) {
+			return $http.get(config.remoteServer+"/participation/votes?participation="+participation);
 		}
 	};
 });

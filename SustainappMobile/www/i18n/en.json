@@ -1,4 +1,7 @@
 {
+    "team" : "team",
+    "profile" : "personal profile",
+    
     "common.modify" : "modify",
     "common.loading" : "Loading",
     "common.takePicture" : "Take a picture",
@@ -14,6 +17,7 @@
     "common.from" : "From",
     "common.to" : "to",
     "common.about" : "About", 
+    "common.title" : "Title",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",

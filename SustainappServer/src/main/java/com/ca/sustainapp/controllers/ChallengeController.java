@@ -18,17 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
-import com.ca.sustainapp.criteria.TeamRoleCriteria;
-import com.ca.sustainapp.dao.ChallengeServiceDAO;
-import com.ca.sustainapp.dao.ChallengeTypeServiceDAO;
-import com.ca.sustainapp.dao.ProfileServiceDAO;
-import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.ChallengeEntity;
 import com.ca.sustainapp.entities.ChallengeVoteEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
-import com.ca.sustainapp.entities.TeamEntity;
-import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.ChallengeResponse;
@@ -36,9 +29,6 @@ import com.ca.sustainapp.responses.ChallengeTypesResponse;
 import com.ca.sustainapp.responses.ChallengesResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
-import com.ca.sustainapp.responses.ParticipationResponse;
-import com.ca.sustainapp.services.CascadeDeleteService;
-import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.utils.DateUtils;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -53,27 +43,7 @@ import com.ca.sustainapp.validators.ChallengeValidator;
  */
 @CrossOrigin
 @RestController
-public class ChallengeController extends GenericController {
-
-	/**
-	 * DAO services
-	 */
-	@Autowired
-	private ChallengeServiceDAO challengeService;
-	@Autowired
-	private ChallengeTypeServiceDAO challengeTypeService;
-	@Autowired
-	private ProfileServiceDAO profileService;
-	@Autowired
-	private TeamServiceDAO teamService;
-	
-	/**
-	 * Business services
-	 */
-	@Autowired
-	private CascadeGetService getService;
-	@Autowired
-	private CascadeDeleteService deleteService;
+public class ChallengeController extends GenericChallengeController {
 	
 	/**
 	 * Validators
@@ -155,11 +125,19 @@ public class ChallengeController extends GenericController {
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
 		ProfileEntity profile = super.getProfileByUser(userId.get());
+		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challengeId.get()));
+		ChallengeVoteEntity currentVote = searchVote(participations, profile.getId());
+		Long idVote = null;
+		if(currentVote != null){
+			idVote = currentVote.getId();
+		}
 		return response
 				.setOwner(profileService.getById(response.getChallenge().getCreatorId()))
-				.setTeams(searchTeam(profile.getId()))
-				.setParticipations(searchAllParticipations(profile.getId(),response.getChallenge()))
+				.setLightProfiles(searchAllProfiles(profile))
+				.setParticipations(searchAllParticipations(participations, currentVote, profile))
 				.setIsAdmin(response.getOwner().getId().equals(profile.getId()))
+				.setCurrentVote(idVote)			
+				.setIsOpen(calculateIsOpen(response.getChallenge()))
 				.setCode(1)
 				.buildJson();
 	}
@@ -211,110 +189,4 @@ public class ChallengeController extends GenericController {
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
-	/**
-	 * Rechercher toutes les teams pour lesquels un user est membre ou owner
-	 * @param profileId
-	 * @return
-	 */ 
-	private List<TeamEntity> searchTeam(Long profileId){
-		List<TeamRoleEntity> roles = getService.cascadeGetTeamRole(new TeamRoleCriteria().setProfilId(profileId));
-		List<TeamEntity> teams = new SustainappList<TeamEntity>();
-		for(TeamRoleEntity role : roles){
-			if(role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN) || role.getRole().equals(SustainappConstantes.TEAMROLE_MEMBER)){
-				teams.add(teamService.getById(role.getTeamId()));
-			}
-		}
-		return teams;
-	}
-	
-	/**
-	 * Rechercher toutes les participations a un challenge
-	 * @param profileId
-	 * @param challengeId
-	 * @return
-	 */
-	private List<ParticipationResponse> searchAllParticipations(Long profileId, ChallengeEntity challenge){
-		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challenge.getId()));
-		List<ParticipationResponse> result = new SustainappList<ParticipationResponse>();
-		ChallengeVoteEntity currentVote = searchVote(participations, profileId);
-		for(ParticipationEntity participation : participations){
-			ParticipationResponse response = new ParticipationResponse()
-					.setParticipation(participation)
-					.setAlreadyVoted(alreadyVoted(currentVote, participation.getId()))
-					.setIsOwner(isOwnerParticiaption(participation, profileId));
-			if(participation.getTargetType().equals(SustainappConstantes.TARGET_TEAM)){
-				response.setOwnerTeam(teamService.getById(participation.getTargetId()));
-			} else {
-				response.setOwnerProfil(profileService.getById(participation.getTargetId()));
-			}
-			result.add(response);
-		}
-		return result;
-	}
-	
-	/**
-	 * Verify if a profile is owner of a participation
-	 * @param participation
-	 * @param idProfil
-	 * @return
-	 */
-	private boolean isOwnerParticiaption(ParticipationEntity participation, Long idProfil){
-		if(participation.getTargetType().equals(SustainappConstantes.TARGET_PROFILE) && participation.getTargetId().equals(idProfil)){
-			return true;
-		}else{
-			for(TeamEntity team : searchTeam(idProfil)){
-				if(team.getId().equals(participation.getTargetId())){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * verifier si un profil a voté pour une participation ou non
-	 * @param vote
-	 * @param idParticipation
-	 * @return
-	 */
-	private boolean alreadyVoted(ChallengeVoteEntity vote, Long idParticipation){
-		if(null != vote && vote.getParticipationId().equals(idParticipation)){
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Recuperer le vote d'un profil sur les participations d'un challenge
-	 * @param participations
-	 * @param id
-	 * @return
-	 */
-	private ChallengeVoteEntity searchVote(List<ParticipationEntity> participations, Long id){
-		for(ParticipationEntity participation : participations){
-			for(ChallengeVoteEntity vote : participation.getVotes()){
-				if(vote.getProfilId().equals(id)){
-					return vote;
-				}
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * Verifier toutes les informations avant modification d'un challenge
-	 * @param request
-	 * @return
-	 */
-	private ChallengeEntity verifyAllOwnerInformations(HttpServletRequest request){
-		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("challenge"));
-		if(!id.isPresent()){
-			return null;
-		}
-		ChallengeEntity challenge = challengeService.getById(id.get());
-		if(null == challenge || !challenge.getCreatorId().equals(super.getConnectedUser(request).getProfile().getId())){
-			return null;
-		}
-		return challenge;
-	}
 }

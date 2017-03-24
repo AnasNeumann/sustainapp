@@ -1,4 +1,7 @@
 {
+    "team" : "equipe",
+    "profile" : "profil personnel",
+
     "common.modify" : "modifier",
     "common.loading" : "Chargement",
     "common.takePicture" : "Prendre une photo",
@@ -14,6 +17,7 @@
     "common.from" : "Du",
     "common.to" : "au",
     "common.about" : "A propos", 
+    "common.title" : "Titre", 
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",

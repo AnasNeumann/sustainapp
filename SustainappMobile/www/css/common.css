@@ -203,6 +203,12 @@ ion-content {
     overflow: hidden;
     text-align: center;
     color: #888;
+    transition : all O.3s ease-in-out;
+}
+
+.s-common-greyPart:active{
+	background-color: #E0E0E0;
+	transition : all O.3s ease-in-out;
 }
 
 .s-common-greyTitle{

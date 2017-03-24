@@ -65,10 +65,14 @@
             </div>
         </div>
         
+        <!-- ALL PARTICIPATIONS -->
         <div class="s-common-bluePart">
             <h2 class="s-common-whiteTitle">{{'challenge.participations' | translate}}</h2>
         </div>
-    
+        <div class="s-common-greyPart" ng-show="challengeModel.isOpen">
+            <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'challenge.participation.add' | translate}}</h3>
+        </div>
+        
     </ion-content>
     
     <!-- Loading Part -->

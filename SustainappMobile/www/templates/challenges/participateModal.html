@@ -1,0 +1,46 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+     <div class="s-modal-confirm">
+      <div class="s-common-floatEdit" ng-click="participateModal.hide()">
+            <i class="icon ion-close-round"></i>
+      </div>
+    <div class="s-participation-imgContainer" style="background-image: url({{challengeModel.displayParticipationFile}});">
+        <i ng-show="challengeModel.emptyParticipationFile" class="icon ion-image"></i>
+        <div class="s-common-camera">
+            <div class="s-common-choosePictureToogle" ng-show="challengeModel.editParticipationFile" ng-click="challengeModel.editParticipationFile = false">
+               <i class="icon ion-close-round"></i>
+            </div>
+            <div class="s-common-choosePicture" ng-show="challengeModel.editParticipationFile" ng-click="chooseParticipationFile(true)">
+               {{'common.takePicture' | translate}}
+            </div>
+            <div class="s-common-choosePicture" ng-show="challengeModel.editParticipationFile" ng-click="chooseParticipationFile(false)">
+              {{'common.chooseFormGallery' | translate}}
+            </div>
+            <div class="s-common-choosePictureToogle s-common-22" ng-hide="challengeModel.editParticipationFile" ng-click="challengeModel.editParticipationFile = true">
+               <i class="icon ion-camera"></i>
+            </div>
+        </div>
+    </div>
+    <label class="item item-input item-floating-label" > 
+      <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
+      <input ng-model="challengeModel.participation.title" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+      <span class="s-common-errors">{{challengeModel.allErrors.title | translate}}</span>
+    </label>
+    <label class="item item-input item-floating-label" > 
+      <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+      <input ng-model="challengeModel.participation.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+      <span class="s-common-errors">{{challengeModel.allErrors.about | translate}}</span>
+    </label>
+    <br />
+      <ion-list>
+	     <ion-item class="item-avatar s-challenge-participant" type="item-text-wrap" ng-click="openProfiles($event)">
+	         <img ng-src="data:image/jpeg;base64,{{challengeModel.selectedProfile.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+	         <div class="s-teams-level">{{challengeModel.selectedProfile.level}}</div>
+	         <h2 class="s-teams-title">{{challengeModel.selectedProfile.denomination}}</h2>
+	         <p class="s-teams-text">{{challengeModel.selectedProfile.type | translate}}</p>
+	     </ion-item>
+	  </ion-list>
+      <button class="s-common-btn" ng-click="participate()">{{'common.create' | translate}}</button>
+     </div>
+   </ion-content>
+</ion-modal-view>
