@@ -81,13 +81,13 @@ public class GenericChallengeController extends GenericController {
 	 * @param profile
 	 * @return
 	 */
-	protected List<ParticipationResponse> searchAllParticipations(List<ParticipationEntity> participations, ChallengeVoteEntity currentVote, ProfileEntity profile){		
+	protected List<ParticipationResponse> searchAllParticipations(List<ParticipationEntity> participations, ChallengeVoteEntity currentVote, ProfileEntity profile, boolean isAdmin){		
 		List<ParticipationResponse> result = new SustainappList<ParticipationResponse>();
 		for(ParticipationEntity participation : participations){
 			ParticipationResponse response = new ParticipationResponse()
 					.setParticipation(participation)
 					.setAlreadyVoted(alreadyVoted(currentVote, participation.getId()))
-					.setIsOwner(isOwnerParticiaption(participation, profile));
+					.setIsOwner(isAdmin || isOwnerParticiaption(participation, profile));
 			if(participation.getTargetType().equals(SustainappConstantes.TARGET_TEAM)){
 				response.setOwnerTeam(teamService.getById(participation.getTargetId()));
 			} else {
@@ -154,6 +154,9 @@ public class GenericChallengeController extends GenericController {
 			return null;
 		}
 		ChallengeEntity challenge = challengeService.getById(id.get());
+		if(null !=challenge && super.getConnectedUser(request).getIsAdmin()){
+			return challenge;
+		}
 		if(null == challenge || !challenge.getCreatorId().equals(super.getConnectedUser(request).getProfile().getId())){
 			return null;
 		}

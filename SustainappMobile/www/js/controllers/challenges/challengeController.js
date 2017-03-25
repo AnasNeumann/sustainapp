@@ -181,20 +181,22 @@ angular.module('sustainapp.controllers')
 	 * Ajout d'une participation
 	 */
 	$scope.participate = function(){
-		
+		var data = new FormData();
+		data.append("challenge", $scope.challengeModel.challenge.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		participationService.create(data).success(function(result) {
+			if(result.code == 1){
+				$scope.participateModal.hide();
+	    	}
+	    });
+		return;
 	}
 	
 	/**
 	 * Ajout d'un vote
 	 */
 	$scope.vote = function(participation){
-		
-	}
-	
-	/**
-	 * Modification d'une participation
-	 */
-	$scope.updateParticipation = function(){
 		
 	}
 	

@@ -22,6 +22,7 @@ import com.ca.sustainapp.entities.ChallengeEntity;
 import com.ca.sustainapp.entities.ChallengeVoteEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.ChallengeResponse;
@@ -124,18 +125,18 @@ public class ChallengeController extends GenericChallengeController {
 		if(null == response.getChallenge()){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		ProfileEntity profile = super.getProfileByUser(userId.get());
+		UserAccountEntity user = userService.getById(userId.get());
 		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challengeId.get()));
-		ChallengeVoteEntity currentVote = searchVote(participations, profile.getId());
+		ChallengeVoteEntity currentVote = searchVote(participations, user.getProfile().getId());
 		Long idVote = null;
 		if(currentVote != null){
 			idVote = currentVote.getId();
 		}
 		return response
 				.setOwner(profileService.getById(response.getChallenge().getCreatorId()))
-				.setLightProfiles(searchAllProfiles(profile))
-				.setParticipations(searchAllParticipations(participations, currentVote, profile))
-				.setIsAdmin(response.getOwner().getId().equals(profile.getId()))
+				.setLightProfiles(searchAllProfiles(user.getProfile()))
+				.setParticipations(searchAllParticipations(participations, currentVote, user.getProfile(), user.getIsAdmin()))
+				.setIsAdmin(user.getIsAdmin() || response.getOwner().getId().equals(user.getProfile().getId()))
 				.setCurrentVote(idVote)			
 				.setIsOpen(calculateIsOpen(response.getChallenge()))
 				.setCode(1)
