@@ -3,8 +3,6 @@ package com.ca.sustainapp.responses;
 import java.io.Serializable;
 
 import com.ca.sustainapp.entities.ParticipationEntity;
-import com.ca.sustainapp.entities.ProfileEntity;
-import com.ca.sustainapp.entities.TeamEntity;
 
 /**
  * Json de présentation d'une participation
@@ -18,8 +16,7 @@ public class ParticipationResponse implements Serializable {
 	private ParticipationEntity participation;
 	private Boolean isOwner;
 	private Boolean alreadyVoted;
-	private ProfileEntity ownerProfil;
-	private TeamEntity ownerTeam;
+	private LightProfileResponse owner;
 
 	/**
 	 * @return the participation
@@ -70,35 +67,17 @@ public class ParticipationResponse implements Serializable {
 	}
 
 	/**
-	 * @return the ownerProfil
+	 * @return the owner
 	 */
-	public ProfileEntity getOwnerProfil() {
-		return ownerProfil;
+	public LightProfileResponse getOwner() {
+		return owner;
 	}
 
 	/**
-	 * @param ownerProfil
-	 *            the ownerProfil to set
+	 * @param owner the owner to set
 	 */
-	public ParticipationResponse setOwnerProfil(ProfileEntity ownerProfil) {
-		this.ownerProfil = ownerProfil;
+	public ParticipationResponse setOwner(LightProfileResponse owner) {
+		this.owner = owner;
 		return this;
 	}
-
-	/**
-	 * @return the ownerTeam
-	 */
-	public TeamEntity getOwnerTeam() {
-		return ownerTeam;
-	}
-
-	/**
-	 * @param ownerTeam
-	 *            the ownerTeam to set
-	 */
-	public ParticipationResponse setOwnerTeam(TeamEntity ownerTeam) {
-		this.ownerTeam = ownerTeam;
-		return this;
-	}
-
 }

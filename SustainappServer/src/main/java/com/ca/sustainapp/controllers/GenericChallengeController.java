@@ -26,6 +26,7 @@ import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.responses.ParticipationResponse;
 import com.ca.sustainapp.services.CascadeDeleteService;
 import com.ca.sustainapp.services.CascadeGetService;
+import com.ca.sustainapp.utils.ListUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 
 /**
@@ -89,13 +90,13 @@ public class GenericChallengeController extends GenericController {
 					.setAlreadyVoted(alreadyVoted(currentVote, participation.getId()))
 					.setIsOwner(isAdmin || isOwnerParticiaption(participation, profile));
 			if(participation.getTargetType().equals(SustainappConstantes.TARGET_TEAM)){
-				response.setOwnerTeam(teamService.getById(participation.getTargetId()));
+				response.setOwner(new LightProfileResponse(teamService.getById(participation.getTargetId())));
 			} else {
-				response.setOwnerProfil(profileService.getById(participation.getTargetId()));
+				response.setOwner(new LightProfileResponse(profileService.getById(participation.getTargetId())));
 			}
 			result.add(response);
-		}
-		return result;
+		}	
+		return ListUtils.reverseList(result);
 	}
 
 	/**

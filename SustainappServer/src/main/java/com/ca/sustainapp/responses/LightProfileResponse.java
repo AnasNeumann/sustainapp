@@ -24,11 +24,13 @@ public class LightProfileResponse extends HttpRESTfullResponse {
 	 * @param profile
 	 */
 	public LightProfileResponse(ProfileEntity profile){
-		this.denomination = profile.getFirstName()+" "+profile.getLastName();
-		this.id = profile.getId();
-		this.avatar = profile.getAvatar();
-		this.type = SustainappConstantes.TARGET_PROFILE;
-		this.level = profile.getLevel();
+		if(null != profile){
+			this.denomination = profile.getFirstName()+" "+profile.getLastName();
+			this.id = profile.getId();
+			this.avatar = profile.getAvatar();
+			this.type = SustainappConstantes.TARGET_PROFILE;
+			this.level = profile.getLevel();
+		}	
 	}
 	
 	/**
@@ -36,11 +38,13 @@ public class LightProfileResponse extends HttpRESTfullResponse {
 	 * @param team
 	 */
 	public LightProfileResponse(TeamEntity team){
-		this.denomination = team.getName();
-		this.id = team.getId();
-		this.avatar = team.getAvatar();
-		this.type = SustainappConstantes.TARGET_TEAM;
-		this.level = team.getLevel();
+		if(null != team){
+			this.denomination = team.getName();
+			this.id = team.getId();
+			this.avatar = team.getAvatar();
+			this.type = SustainappConstantes.TARGET_TEAM;
+			this.level = team.getLevel();
+		}		
 	}
 	
 	/**

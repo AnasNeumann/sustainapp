@@ -105,5 +105,6 @@
     "challenge.participation.add" : "Add a participation",
     "challenge.participation.new" : "New participation",
     "challenge.votes" : "votes",
-    "challenge.addedOn" : "Added on"
+    "challenge.addedOn" : "Added on",
+    "challenge.haveVoted" : "people have voted"
 }

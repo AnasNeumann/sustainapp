@@ -33,6 +33,9 @@ angular.module('sustainapp.controllers')
 		$scope.challengeModel.displayParticipationFile = null;
 		$scope.challengeModel.selectedProfile = {};
 		$scope.challengeModel.allProfiles = [];
+		$scope.challengeModel.participation = {};
+		$scope.challengeModel.participation.title = "";
+		$scope.challengeModel.participation.about = "";
 		
 		$scope.challengeModel.allErrors = [];	
 		challengeService.getById($stateParams.id, sessionService.get('id')).then(function(response){
@@ -183,11 +186,39 @@ angular.module('sustainapp.controllers')
 	$scope.participate = function(){
 		var data = new FormData();
 		data.append("challenge", $scope.challengeModel.challenge.id);
+		data.append("title", $scope.challengeModel.participation.title);
+		data.append("about", $scope.challengeModel.participation.about);
+		data.append("targetType", $scope.challengeModel.selectedProfile.type);
+		data.append("targetId", $scope.challengeModel.selectedProfile.id);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
+		if(null != $scope.challengeModel.participationFile) {
+			data.append("file", $scope.challengeModel.participationFile);
+		}
 		participationService.create(data).success(function(result) {
-			if(result.code == 1){
+			if(result.code == 1){				
+				$scope.challengeModel.allErrors = [];
+				var participation = {
+						"participation" : {
+							"title" : $scope.challengeModel.participation.title,
+							"about" : $scope.challengeModel.participation.about,
+							"document" : $scope.challengeModel.participation.participationFile,
+							"timestamps" : "now"
+						},
+						"isOwner" : true,
+						"alreadyVoted" : false,
+						"owner" : $scope.challengeModel.selectedProfile
+				};
+				$scope.challengeModel.participations.push(participation);
 				$scope.participateModal.hide();
+				$scope.challengeModel.emptyParticipationFile = true;
+				$scope.challengeModel.editParticipationFile = false;
+				$scope.challengeModel.participationFile = null;
+				$scope.challengeModel.displayParticipationFile = null;
+				$scope.challengeModel.participation.title = "";
+				$scope.challengeModel.participation.about = "";
+	    	} else {
+	    		$scope.challengeModel.allErrors = result.errors;
 	    	}
 	    });
 		return;

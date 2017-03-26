@@ -1,5 +1,5 @@
 {
-    "team" : "equipe",
+    "team" : "équipe",
     "profile" : "profil personnel",
 
     "common.modify" : "modifier",
@@ -9,8 +9,8 @@
     "common.message" : "Votre message",
     "common.thanks" : "merci",
     "common.back" : "Retour",
-    "common.create" : "Creer",
-    "common.createdOn" : "cree le",
+    "common.create" : "Créer",
+    "common.createdOn" : "crée le",
     "common.members" : "membres",
     "common.registeredSince" : "inscrit depuis le",
     "common.profiles" : "Personnes",
@@ -23,7 +23,7 @@
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
    
     "teams.name"  : "nom",
-    "teams.add"   : "Creer une nouvelle equipe",
+    "teams.add"   : "Créer une nouvelle equipe",
     "teams.newTeam" : "Nouvelle equipe",
     
     "action.apply" : "Postuler",
@@ -46,8 +46,8 @@
     
     "login.login": "Connexion",
     "login.signin": "S'inscrire !",
-    "login.alreadyHave": "Vous avez deja un compte ? Clickez ici",
-    "login.stillNot": "Vous n'etes pas encore inscrit ? Clickez ici",
+    "login.alreadyHave": "Vous avez déjà un compte ? Clickez ici",
+    "login.stillNot": "Vous n'êtes pas encore inscrit ? Clickez ici",
     
     "sideMenu.profile" : "Profil",
     "sideMenu.teams" : "Equipes",
@@ -55,14 +55,14 @@
     "sideMenu.disconnection" : "Deconnexion",
     "sideMenu.administration" : "Administration",
     
-    "viewTitle.news" : "Actualites",
+    "viewTitle.news" : "Actualités",
     "viewTitle.challenges" : "Challenges",
     "viewTitle.certificates" : "Certificats",
     "viewTitle.notifications" : "Notifications",
     
     "form.mail.mandatory" : "Veuillez remplir le champs adresse mail",
     "form.mail.format" : "Le format de votre mail n'est pas valide",
-    "form.mail.exist" : "Cette adresse mail est deja utilisee",
+    "form.mail.exist" : "Cette adresse mail est déjà utilisee",
     "form.password.mandatory" : "Le mot de passe doit contenir au moins 4 caracteres",
     "form.firstName.mandatory" : "Veuillez remplir le champs prenom",
     "form.lastName.mandatory" : "Veuillez remplir le champs nom de famille",
@@ -74,7 +74,7 @@
     "form.field.mandatory" : "Veuillez remplir ce champs",
     "form.level.min" : "Vous n'avez pas le niveau pour participer",
     
-    "report.message" : "Votre demande a bien ete prise en compte et sera traitee dans les plus brefs delais",
+    "report.message" : "Votre demande a bien été prise en compte et sera traitée dans les plus brefs delais",
     
     "administration.challengeTypes" : "Gestion des types de challenges",
     "administration.categories" : "Gestion des categories de cours",
@@ -86,24 +86,25 @@
     "challengetype.energy" : "energies renouvelables",
     "challengetype.gastronomy" : "eco-gastronomie",
     "challengetype.manage" : "eco-gestion",
-    "challengetype.recycling" : "recyclage et reutilisation",
+    "challengetype.recycling" : "recyclage et réutilisation",
     
-    "challenges.add" : "Creer un nouveau challenge",
+    "challenges.add" : "Créer un nouveau challenge",
     "challenges.new" : "Nouveau challenge",
     "challenges.about" : "Description du challenge",
     "challenges.endDate" : "Date limite de participation",
-    "challenges.teamEnabled" : "Les equipes peuvent-elle participer ?",
+    "challenges.teamEnabled" : "Les équipes peuvent-elle participer ?",
     "challenges.levelMin" : "Niveau mininum pour participer",
     "challenges.types" : "Types de challenges",
     "challenges.filter" : "Filtrer",
     "challenges.filterBy" : "Filtrer par",
     "challenges.nothing" : "Aucun filtre",
     
-    "challenge.teamEnabled" : "Les equipes peuvent participer",
-    "challenge.teamDisabled" : "Les equipes ne peuvent pas participer",
+    "challenge.teamEnabled" : "Les équipes peuvent participer",
+    "challenge.teamDisabled" : "Les équipes ne peuvent pas participer",
     "challenge.participations" : "Participations",
     "challenge.participation.add" : "Ajouter une participation",
     "challenge.participation.new" : "Nouvelle participation",
     "challenge.votes" : "votes",
-    "challenge.addedOn" : "Ajout�e le"
+    "challenge.addedOn" : "Ajoutée le",
+    "challenge.haveVoted" : "personnes ont voté"
 }

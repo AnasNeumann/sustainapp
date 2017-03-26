@@ -43,7 +43,7 @@ public class ParticipationValidator extends GenericValidator {
 	@Override
 	public Map<String, String> validate(HttpServletRequest request){
 		Map<String, String> result = super.validate(request);
-		if(isEmpty(request.getParameter("name"))){
+		if(isEmpty(request.getParameter("title"))){
 			result.put("title", "form.field.mandatory");
 		}
 		if(isEmpty(request.getParameter("about"))){

@@ -72,7 +72,28 @@
         <div class="s-common-greyPart" ng-show="challengeModel.isOpen">
             <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'challenge.participation.add' | translate}}</h3>
         </div>
-        
+        <div class="s-participation-all">
+	        <div ng-repeat="elt in challengeModel.participations" class="s-participation-one">
+		         <img ng-src="data:image/jpeg;base64,{{elt.participation.document}}" ng-if="elt.participation.document != null" class="s-participation-img" width="100%" height="auto" />
+		         <div class="padding s-participation-txt">
+			         <div class="s-common-floatEdit" ng-if="elt.isOwner" >
+	                        <i class="icon ion-trash-a"></i>
+	                  </div>
+			         <h2 class="s-teams-title">{{elt.participation.title}}</h2>
+			         <p class="s-teams-text s-participation-p">{{elt.participation.about}}</p>
+			         <p class="s-teams-text s-participation-vote s-participation-p">{{elt.participation.votes.length}} {{'challenge.haveVoted' | translate}} 
+			             <i class="icon ion-ios-heart-outline s-participation-love"></i>
+			             <i class="icon ion-ios-heart s-participation-love s-participation-voted"></i>
+			         </p>
+		         </div>
+		         <ion-item class="item item-avatar" type="item-text-wrap" >
+		             <img ng-src="data:image/jpeg;base64,{{elt.owner.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+		             <div class="s-teams-level">{{elt.owner.level}}</div>
+		             <h2 class="s-teams-title">{{elt.owner.denomination}}</h2>
+		             <p class="s-teams-text">{{elt.owner.type | translate}}</p>
+		         </ion-item>
+	        </div>
+        </div>
     </ion-content>
     
     <!-- Loading Part -->

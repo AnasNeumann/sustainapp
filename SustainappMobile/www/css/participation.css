@@ -1,0 +1,51 @@
+@CHARSET "UTF-8";
+/**
+ * Le styles d'une participation
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 25/03/2017
+ * @version 1.0
+ */
+ 
+.s-participation-all{
+   background-color: #E5E5E5;
+}
+
+.s-participation-one{
+	background-color: white !important;
+	padding : 0px;
+	margin-bottom : 15px;
+}
+ 
+.s-participation-img{
+	width : 100%;
+	height : auto;
+}
+
+.s-participation-txt{
+	border-bottom : 1px solid #E0E0E0;
+}
+
+.s-participation-p{
+	margin : 0px;
+}
+
+.s-participation-vote{
+	text-align : right;
+}
+
+.s-participation-love{
+    color : #ccc;
+    font-size : 28px;
+    position : relative;
+    top : 6px;
+    margin-left :10px;
+    cursor : pointer;
+}
+
+.s-participation-love:active{
+	color : #23d5fb;
+}
+
+.s-participation-voted {
+	color : #23d5fb !important;
+}
