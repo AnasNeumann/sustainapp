@@ -129,7 +129,7 @@ public class ChallengeController extends GenericChallengeController {
 		ChallengeVoteEntity currentVote = searchVote(participations, user.getProfile().getId());
 		Long idVote = null;
 		if(currentVote != null){
-			idVote = currentVote.getId();
+			idVote = currentVote.getParticipationId();
 		}
 		return response
 				.setOwner(profileService.getById(response.getChallenge().getCreatorId()))

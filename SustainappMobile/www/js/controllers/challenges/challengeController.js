@@ -46,7 +46,8 @@ angular.module('sustainapp.controllers')
 				$scope.challengeModel.challenge = result.challenge;
 				$scope.challengeModel.name = result.challenge.name;
 				$scope.challengeModel.about = result.challenge.about;
-				$scope.challengeModel.owner = result.owner;						
+				$scope.challengeModel.owner = result.owner;
+				$scope.challengeModel.currentVote = result.currentVote;
 				$scope.challengeModel.allProfiles = result.lightProfiles;
 				$scope.challengeModel.selectedProfile = result.lightProfiles[0];
 				$scope.challengeModel.isOpen = result.isOpen;
@@ -227,8 +228,28 @@ angular.module('sustainapp.controllers')
 	/**
 	 * Ajout d'un vote
 	 */
-	$scope.vote = function(participation){
-		
+	$scope.vote = function(elt){
+		var data = new FormData();
+		data.append("participation", elt.participation.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		participationService.vote(data).success(function(result) {
+			if(result.code == 1){			
+				if(elt.participation.id != $scope.challengeModel.currentVote){
+					angular.forEach($scope.challengeModel.participations, function(value, key) {
+						  if(value.participation.id == $scope.challengeModel.currentVote){
+							  value.nbrVotes-=1;
+						  }
+						});
+					$scope.challengeModel.currentVote =  elt.participation.id;
+					elt.nbrVotes +=1;
+				} else {
+					$scope.challengeModel.currentVote = null;
+					elt.nbrVotes -=1;
+				}
+			}
+		});
+		return;
 	}
 	
 	/**

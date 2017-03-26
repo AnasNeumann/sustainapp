@@ -81,12 +81,12 @@
 	                  </div>
 			         <h2 class="s-teams-title">{{elt.participation.title}}</h2>
 			         <p class="s-teams-text s-participation-p">{{elt.participation.about}}</p>
-			         <p class="s-teams-text s-participation-vote s-participation-p">{{elt.participation.votes.length}} {{'challenge.haveVoted' | translate}} 
-			             <i class="icon ion-ios-heart-outline s-participation-love"></i>
-			             <i class="icon ion-ios-heart s-participation-love s-participation-voted"></i>
+			         <p class="s-teams-text s-participation-vote s-participation-p">{{elt.nbrVotes}} {{'challenge.haveVoted' | translate}} 
+			             <i ng-click="vote(elt)" ng-if="null == challengeModel.currentVote  || elt.participation.id != challengeModel.currentVote" class="icon ion-ios-heart-outline s-participation-love"></i>
+			             <i ng-click="vote(elt)" ng-if="elt.participation.id == challengeModel.currentVote" class="icon ion-ios-heart s-participation-love s-participation-voted"></i>
 			         </p>
 		         </div>
-		         <ion-item class="item item-avatar" type="item-text-wrap" >
+		         <ion-item class="item item-avatar" type="item-text-wrap" href="#/tab/{{elt.owner.type}}/{{elt.owner.id}}">
 		             <img ng-src="data:image/jpeg;base64,{{elt.owner.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
 		             <div class="s-teams-level">{{elt.owner.level}}</div>
 		             <h2 class="s-teams-title">{{elt.owner.denomination}}</h2>

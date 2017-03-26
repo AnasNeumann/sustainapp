@@ -15,7 +15,7 @@ public class ParticipationResponse implements Serializable {
 	protected static final long serialVersionUID = 1L;
 	private ParticipationEntity participation;
 	private Boolean isOwner;
-	private Boolean alreadyVoted;
+	private Integer nbrVotes;
 	private LightProfileResponse owner;
 
 	/**
@@ -31,6 +31,7 @@ public class ParticipationResponse implements Serializable {
 	 */
 	public ParticipationResponse setParticipation(ParticipationEntity participation) {
 		this.participation = participation;
+		this.nbrVotes = participation.getVotes().size();
 		return this;
 	}
 
@@ -51,22 +52,6 @@ public class ParticipationResponse implements Serializable {
 	}
 
 	/**
-	 * @return the alreadyVoted
-	 */
-	public Boolean getAlreadyVoted() {
-		return alreadyVoted;
-	}
-
-	/**
-	 * @param alreadyVoted
-	 *            the alreadyVoted to set
-	 */
-	public ParticipationResponse setAlreadyVoted(Boolean alreadyVoted) {
-		this.alreadyVoted = alreadyVoted;
-		return this;
-	}
-
-	/**
 	 * @return the owner
 	 */
 	public LightProfileResponse getOwner() {
@@ -78,6 +63,21 @@ public class ParticipationResponse implements Serializable {
 	 */
 	public ParticipationResponse setOwner(LightProfileResponse owner) {
 		this.owner = owner;
+		return this;
+	}
+
+	/**
+	 * @return the nbrVotes
+	 */
+	public Integer getNbrVotes() {
+		return nbrVotes;
+	}
+
+	/**
+	 * @param nbrVotes the nbrVotes to set
+	 */
+	public ParticipationResponse setNbrVotes(Integer nbrVotes) {
+		this.nbrVotes = nbrVotes;
 		return this;
 	}
 }

@@ -87,7 +87,6 @@ public class GenericChallengeController extends GenericController {
 		for(ParticipationEntity participation : participations){
 			ParticipationResponse response = new ParticipationResponse()
 					.setParticipation(participation)
-					.setAlreadyVoted(alreadyVoted(currentVote, participation.getId()))
 					.setIsOwner(isAdmin || isOwnerParticiaption(participation, profile));
 			if(participation.getTargetType().equals(SustainappConstantes.TARGET_TEAM)){
 				response.setOwner(new LightProfileResponse(teamService.getById(participation.getTargetId())));
@@ -110,19 +109,6 @@ public class GenericChallengeController extends GenericController {
 			if(participation.getTargetType().equals(teamOrProfil.getType()) && participation.getTargetId().equals(teamOrProfil.getId())){
 				return true;
 			}
-		}
-		return false;
-	}
-
-	/**
-	 * verifier si un profil a voté pour une participation ou non
-	 * @param vote
-	 * @param idParticipation
-	 * @return
-	 */
-	protected boolean alreadyVoted(ChallengeVoteEntity vote, Long idParticipation){
-		if(null != vote && vote.getParticipationId().equals(idParticipation)){
-			return true;
 		}
 		return false;
 	}
