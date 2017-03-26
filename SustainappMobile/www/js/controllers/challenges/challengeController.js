@@ -21,6 +21,8 @@ angular.module('sustainapp.controllers')
 		$scope.challengeModel = {};
 		$scope.challengeModel.loaded = false;
 		$scope.title = "...";
+		$scope.deleteType = true;
+		$scope.eltToDelete = null;
 		
 		$scope.challengeModel.emptyFile = true;
 		$scope.challengeModel.edit = false;
@@ -141,12 +143,39 @@ angular.module('sustainapp.controllers')
 	     $scope.participateModal = modal;
 	   });
    
+   /**
+    * demande de confirmation de la suppression du challenge
+    */
+   $scope.confirmDeleteChallenge = function(){
+	   $scope.deleteType = true;
+	   $scope.modal.show();
+	}
+   
+   /**
+    * demande de confirmation de la suppression d'une participation
+    */
+   $scope.confirmDeleteParticipation = function(participation){
+	   $scope.deleteType = false;
+	   $scope.eltToDelete  = participation;
+	   $scope.modal.show();
+	}
    
     /**
 	 * Suppression définitive d'un chalenge
 	 */
 	$scope.confirmDelete = function(){
 		$scope.modal.hide();
+		if($scope.deleteType){
+			deleteChallenge();
+		}else{
+			deleteParticipation();
+		}
+	};
+	
+	/**
+	 * Suppression en base d'un challenge
+	 */
+	var deleteChallenge = function(){
 		var data = new FormData();
 		data.append("challenge", $scope.challengeModel.challenge.id);
 		data.append("sessionId", sessionService.get('id'));
@@ -157,7 +186,24 @@ angular.module('sustainapp.controllers')
 	    	}
 	    });
 		return;
-	};
+	}
+	
+	/**
+	 * Suppression en base d'une participation
+	 */
+	var deleteParticipation = function(){
+		var data = new FormData();
+		data.append("participation", $scope.eltToDelete.participation.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		participationService.deleteById(data).success(function(result) {
+			if(result.code == 1){
+				$scope.challengeModel.participations.splice($scope.challengeModel.participations.indexOf($scope.eltToDelete), 1);
+	    	}
+	    });
+		return;
+	}
+	
 	
 	/**
 	 * fonction d'ouverture du menu de choix du profile ou de la team
@@ -250,13 +296,6 @@ angular.module('sustainapp.controllers')
 			}
 		});
 		return;
-	}
-	
-	/**
-	 * Suppression d'une participation
-	 */
-	$scope.deleteParticipation = function(participation){
-		
 	}
 	
 	/**

@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col col-50" ng-hide="challengeModel.edit">
-                  <div class="s-common-floatDelete" ng-click="modal.show()" ng-if="challengeModel.isAdmin" >
+                  <div class="s-common-floatDelete" ng-click="confirmDeleteChallenge()" ng-if="challengeModel.isAdmin" >
                         <i class="icon ion-trash-a"></i>
                   </div>
                   <div class="s-common-floatEdit"  ng-click="challengeModel.edit = true" ng-if="challengeModel.isAdmin" >
@@ -76,7 +76,7 @@
 	        <div ng-repeat="elt in challengeModel.participations" class="s-participation-one">
 		         <img ng-src="data:image/jpeg;base64,{{elt.participation.document}}" ng-if="elt.participation.document != null" class="s-participation-img" width="100%" height="auto" />
 		         <div class="padding s-participation-txt">
-			         <div class="s-common-floatEdit" ng-if="elt.isOwner" >
+			         <div class="s-common-floatEdit" ng-if="elt.isOwner" ng-click="confirmDeleteParticipation(elt)">
 	                        <i class="icon ion-trash-a"></i>
 	                  </div>
 			         <h2 class="s-teams-title">{{elt.participation.title}}</h2>
