@@ -6,19 +6,19 @@
  */
 angular.module('sustainapp.services')
 	 .factory('fileService', function($cordovaCamera, $cordovaFileTransfer, $cordovaFile, $cordovaDevice) {
-		 var buildOptions = function(quality, width, height){
+		 var buildOptions = function(quality, width, height, edit){
 			 return {
 			      destinationType: Camera.DestinationType.DATA_URL,
-			      allowEdit: true,
+			      allowEdit: edit,
 			      encodingType: Camera.EncodingType.JPEG,
 			      quality : quality,
 				  targetWidth : width,
 				  targetHeight : height,
 			      saveToPhotoAlbum: false
 			    };
-		 } 
+		 };
 		return {
-			 getFile : function(newFile, quality, width, height){
+			 getFile : function(newFile, quality, width, height, edit){
 				 var options =  buildOptions(quality, width, height);
 				 if(true == newFile){
 					 options.sourceType = Camera.PictureSourceType.CAMERA;

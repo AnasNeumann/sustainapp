@@ -96,7 +96,7 @@ angular.module('sustainapp.controllers')
 	 * Modification de l'avatar d'une équipe
 	 */
 	$scope.avatar = function(newFile){
-		fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {			
+		fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {			
 			var data = new FormData();
 			data.append("file", imageData);
 			data.append("team", $scope.teamModel.team.id);

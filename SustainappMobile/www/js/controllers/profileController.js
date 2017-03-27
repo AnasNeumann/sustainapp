@@ -78,7 +78,7 @@ angular.module('sustainapp.controllers')
 	     * update cover file
 	     */
 	    $scope.cover = function(newFile){
-	    	fileService.getFile(newFile, 100, 600, 240).then(function(imageData) {
+	    	fileService.getFile(newFile, 100, 600, 240, false).then(function(imageData) {
 	    		var data = new FormData();
 				data.append("file", imageData);
 				data.append("sessionId", sessionService.get('id'));
@@ -98,7 +98,7 @@ angular.module('sustainapp.controllers')
 	     * update avatar file
 	     */
 	    $scope.avatar = function(newFile){
-	    	var base64 = fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+	    	var base64 = fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
 	    		var data = new FormData();
 				data.append("file", imageData);
 				data.append("sessionId", sessionService.get('id'));

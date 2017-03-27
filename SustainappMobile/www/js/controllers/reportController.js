@@ -26,7 +26,7 @@ angular.module('sustainapp.controllers')
 		 * Choix d'une photo a envoyer
 		 */
 		$scope.chooseFile = function(newFile){
-			fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+			fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
 				$scope.reportModel.file = imageData;
 				$scope.reportModel.displayFile = "data:image/jpeg;base64,"+imageData;
 				$scope.reportModel.emptyFile = false;

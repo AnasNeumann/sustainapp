@@ -36,7 +36,7 @@ angular.module('sustainapp.controllers')
 	 * Modification de l'image de la nouvelle team
 	 */
 	$scope.chooseFile = function(newFile){
-		fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+		fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
 			$scope.teamsModel.file = imageData;
 			$scope.teamsModel.displayFile = "data:image/jpeg;base64,"+imageData;
 			$scope.teamsModel.emptyPicture = false;

@@ -173,7 +173,7 @@ angular.module('sustainapp.controllers')
 		 * Modification de l'image pour le nouveau challenge
 		 */
 		$scope.chooseFile = function(newFile){
-			fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+			fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
 				$scope.challengesModel.file = imageData;
 				$scope.challengesModel.displayFile = "data:image/jpeg;base64,"+imageData;
 				$scope.challengesModel.emptyPicture = false;

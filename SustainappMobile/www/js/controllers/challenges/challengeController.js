@@ -95,7 +95,7 @@ angular.module('sustainapp.controllers')
 	 * Modification de l'icon d'un challenge
 	 */
 	$scope.icon = function(newFile){
-		fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {			
+		fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {			
 			var data = new FormData();
 			data.append("file", imageData);
 			data.append("challenge", $scope.challengeModel.challenge.id);
@@ -116,7 +116,7 @@ angular.module('sustainapp.controllers')
 	 * Modification de l'image d'une nouvelle participation
 	 */
 	$scope.chooseParticipationFile = function(newFile){
-		fileService.getFile(newFile, 100, 700, 300).then(function(imageData) {			
+		fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {			
 			$scope.challengeModel.participationFile = imageData;
 			$scope.challengeModel.displayParticipationFile = "data:image/jpeg;base64,"+imageData;
 			$scope.challengeModel.emptyParticipationFile = false;
