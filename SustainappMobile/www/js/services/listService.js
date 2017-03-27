@@ -20,6 +20,14 @@ angular.module('sustainapp.services')
 				         }
 			          });
 					 return targetList;
+				 },
+				 addOnTop : function(containerList, elt){
+					 var result = [];
+					 result.push(elt);				
+					 for (i = 0; i < containerList.length; i++) {
+						 result.push(containerList[i]);
+					 }
+					 return result;
 				 }
 			 };
 		 });

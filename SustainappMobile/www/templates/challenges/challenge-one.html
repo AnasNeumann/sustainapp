@@ -9,7 +9,8 @@
             <div class="col col-50">
                 <div class="s-team-containerAvatar">
                     <div style="background-image: url({{challengeModel.displayIcon}});" class="s-profile-avatar">
-                        <div ng-if="challengeModel.isAdmin" class="s-common-camera">
+                        <!-- Mobile view -->
+                        <div ng-if="challengeModel.isAdmin && _isNotMobile == false" class="s-common-camera">
                            <div class="s-common-choosePictureToogle" ng-show="challengeModel.iconEdit" ng-click="challengeModel.iconEdit = false">
                               <i class="icon ion-close-round"></i>
                            </div>
@@ -23,6 +24,13 @@
                               <i class="icon ion-camera"></i>
                            </div>
                        </div>
+                       <!-- Desktop view -->
+				       <div class="s-common-camera"ng-if="challengeModel.isAdmin && _isNotMobile == true">
+				            <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+				                <i class="icon ion-camera"></i>
+				                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopIcon(this)" />
+				            </div>
+				        </div>
                     </div>
                 </div>
             </div>

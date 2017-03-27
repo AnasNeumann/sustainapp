@@ -5,7 +5,8 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('teamController', function($scope, $stateParams, $ionicModal, $state, teamService, sessionService, teamRole, fileService) {
+.controller('teamController', 
+		function($scope, $stateParams, $ionicModal, $state, teamService, sessionService, teamRole, fileService, displayService) {
 	
 	/**
 	 * Entrée dans la page
@@ -45,6 +46,7 @@ angular.module('sustainapp.controllers')
 				$scope.teamModel.loaded = true;
 	   		}
     	});
+		$scope._isNotMobile = displayService.isNotMobile;
 	};
 	
 	/**
@@ -93,7 +95,7 @@ angular.module('sustainapp.controllers')
 	};
 	
 	/**
-	 * Modification de l'avatar d'une équipe
+	 * Modification de l'avatar d'une équipe [mobile mode]
 	 */
 	$scope.avatar = function(newFile){
 		fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {			
@@ -112,6 +114,27 @@ angular.module('sustainapp.controllers')
 		 }, function(err) {
 		 });		
 	};
+	
+	/**
+     * update avatar file [desktop mode]
+     */
+    $scope.desktopAvatar = function(input){
+    	var reader = new FileReader();
+        reader.onload = function (e) {
+        	var data = new FormData();
+			data.append("file", e.target.result.substring(e.target.result.indexOf(",")+1));
+			data.append("team", $scope.teamModel.team.id);
+			data.append("sessionId", sessionService.get('id'));		
+			data.append("sessionToken", sessionService.get('token'));
+			teamService.avatar(data).success(function(result) {
+				if(result.code == 1){
+					$scope.teamModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
+					$scope.teamModel.displayAvatar = e.target.result;
+				}
+			}); 
+        }
+        reader.readAsDataURL(input.files[0]);  
+    }
 	
 	/**
 	 * Handle role for a profile

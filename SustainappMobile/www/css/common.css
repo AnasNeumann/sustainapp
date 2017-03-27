@@ -111,6 +111,7 @@ ion-content {
 	padding-left: 10px;
 	padding-bottom: 5px;
 	padding-top: 5px;
+	cursor: pointer;
 }
 
 .s-common-choosePictureToogle {
@@ -383,4 +384,19 @@ ion-content {
 
 .s-common-inputLarge {
 	width: 100%;
+}
+
+.s-common-inputFile-container{
+	height : 35px;
+	width : 35px;
+	overflow : hidden;
+}
+
+.s-common-inputFile{
+	position : relative;
+	top : -35px;
+	left : -17px;
+	width : 35px;
+	height : 35px;
+	opacity : 0 !important;
 }

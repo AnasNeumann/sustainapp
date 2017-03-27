@@ -5,7 +5,8 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('teamsController', function($scope, $state, teamService, sessionService, teamRole, fileService, listService) {
+.controller('teamsController',
+		function($scope, $state, teamService, sessionService, teamRole, fileService, listService, displayService) {
 	
 	/**
 	 * Entrée dans la page
@@ -30,10 +31,11 @@ angular.module('sustainapp.controllers')
 		$scope.teamsModel.allErrors = [];
 		$scope.teamsModel.allTeams = [];
 		$scope.getMoreTeam();
+		$scope._isNotMobile = displayService.isNotMobile;
 	};
 
 	/**
-	 * Modification de l'image de la nouvelle team
+	 * Modification de l'image de la nouvelle team [mobile mode]
 	 */
 	$scope.chooseFile = function(newFile){
 		fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
@@ -44,6 +46,21 @@ angular.module('sustainapp.controllers')
 		 }, function(err) {
 		 });
 	};
+	
+	/**
+	 * Modification de l'image de la nouvelle team [desktop mode]
+	 */
+	$scope.desktopChooseFile = function(input){
+		var reader = new FileReader();
+        reader.onload = function (e) {
+        	$scope.$apply(function () {
+        		$scope.teamsModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
+        		$scope.teamsModel.displayFile = e.target.result;
+        		$scope.teamsModel.emptyPicture = false;   
+            });           	         	
+        }
+        reader.readAsDataURL(input.files[0]);  
+	}
 	
 	/**
 	 * Creation d'une nouvelle équipe

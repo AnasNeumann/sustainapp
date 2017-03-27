@@ -6,7 +6,8 @@
       </div>
     <div class="s-participation-imgContainer" style="background-image: url({{challengeModel.displayParticipationFile}});">
         <i ng-show="challengeModel.emptyParticipationFile" class="icon ion-image"></i>
-        <div class="s-common-camera">
+        <!-- Mobile view -->
+        <div class="s-common-camera" ng-if="_isNotMobile == false">
             <div class="s-common-choosePictureToogle" ng-show="challengeModel.editParticipationFile" ng-click="challengeModel.editParticipationFile = false">
                <i class="icon ion-close-round"></i>
             </div>
@@ -20,6 +21,13 @@
                <i class="icon ion-camera"></i>
             </div>
         </div>
+        <!-- Desktop view -->
+         <div class="s-common-camera" ng-if="_isNotMobile">
+             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                <i class="icon ion-camera"></i>
+                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopParticipationFile(this)" />
+             </div>
+         </div>
     </div>
     <label class="item item-input item-floating-label" > 
       <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
