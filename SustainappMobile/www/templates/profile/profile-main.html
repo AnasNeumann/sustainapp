@@ -3,7 +3,8 @@
   <ion-content ng-show="profileModel.loaded">
     <!-- Cover Picture -->
     <div class="s-profile-coverContainer" style="background-image: url({{profileModel.displayCover}});">
-	    <div ng-show="profileModel.owner" class="s-common-camera">
+	    <!-- Mobile view -->
+	    <div ng-show="profileModel.owner" class="s-common-camera" ng-if="_isNotMobile == false">
             <div class="s-common-choosePictureToogle" ng-show="profileModel.coverEdit" ng-click="profileModel.coverEdit = false">
                <i class="icon ion-close-round"></i>
             </div>
@@ -17,13 +18,21 @@
                <i class="icon ion-camera"></i>
             </div>
         </div>
+        <!-- Desktop view -->
+         <div class="s-common-camera" ng-show="profileModel.owner" ng-if="_isNotMobile">
+             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                <i class="icon ion-camera"></i>
+                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopCover(this)" />
+             </div>
+         </div>
     </div>
     <div class="padding s-profile-pageContainer">
         
         <!-- Avatar Picture-->
         <div class="s-profile-avatarContainer">
             <div style="background-image: url({{profileModel.displayAvatar}});" class="s-profile-avatar">
-                <div ng-show="profileModel.owner" class="s-common-camera">
+                <!-- Mobile view -->
+                <div ng-show="profileModel.owner" class="s-common-camera" ng-if="_isNotMobile == false">
 		           <div class="s-common-choosePictureToogle" ng-show="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = false">
 		              <i class="icon ion-close-round"></i>
 		           </div>
@@ -37,6 +46,13 @@
 		              <i class="icon ion-camera"></i>
 		           </div>
 		       </div>
+		       <!-- Desktop view -->
+		        <div class="s-common-camera" ng-show="profileModel.owner" ng-if="_isNotMobile">
+		            <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+		               <i class="icon ion-camera"></i>
+		               <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopAvatar(this)" />
+		            </div>
+		        </div>
             </div>
         </div>       
         

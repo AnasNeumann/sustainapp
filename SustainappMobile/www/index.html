@@ -59,6 +59,7 @@
     <script src="js/services/searchService.js"></script>
     <script src="js/services/challengeService.js"></script>
     <script src="js/services/participationService.js"></script>
+    <script src="js/services/displayService.js"></script>
   </head>
   <body ng-app="sustainapp" ng-controller="mainController">
 
@@ -68,7 +69,7 @@
     <!-- MODE CONNECTE -->
     <ion-side-menus ng-show="loginModel.isConnected">	  	  
 
-	  <ion-side-menu side="left"> 
+	  <ion-side-menu side="left" > 
 	   <div ng-include src="'templates/common/sideMenu.html'"></div>   	   
 	  </ion-side-menu>
 

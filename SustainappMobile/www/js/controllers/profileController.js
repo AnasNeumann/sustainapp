@@ -5,7 +5,8 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('profileController', function($scope, $stateParams, $filter, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService) {
+	.controller('profileController', 
+			function($scope, $stateParams, $filter, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -47,6 +48,7 @@ angular.module('sustainapp.controllers')
 		    		 }
 	    		 }
 	     	  });
+	        $scope._isNotMobile = displayService.isNotMobile;
 	    };
 	    
 	    /**
@@ -75,10 +77,10 @@ angular.module('sustainapp.controllers')
 	    };
 	    
 	    /**
-	     * update cover file
+	     * update cover file [mobile mode]
 	     */
 	    $scope.cover = function(newFile){
-	    	fileService.getFile(newFile, 100, 600, 240).then(function(imageData) {
+	    	fileService.getFile(newFile, 100, 600, 240, false).then(function(imageData) {
 	    		var data = new FormData();
 				data.append("file", imageData);
 				data.append("sessionId", sessionService.get('id'));
@@ -95,10 +97,10 @@ angular.module('sustainapp.controllers')
 	    };
 	    
 	    /**
-	     * update avatar file
+	     * update avatar file [mobile mode]
 	     */
 	    $scope.avatar = function(newFile){
-	    	var base64 = fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+	    	var base64 = fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
 	    		var data = new FormData();
 				data.append("file", imageData);
 				data.append("sessionId", sessionService.get('id'));
@@ -112,6 +114,44 @@ angular.module('sustainapp.controllers')
 				});
 			 }, function(err) {
 			 });
+	    }
+	    
+	    /**
+	     * update avatar file [desktop mode]
+	     */
+	    $scope.desktopAvatar = function(input){
+	    	var reader = new FileReader();
+            reader.onload = function (e) {
+            	var data = new FormData();
+				data.append("file", e.target.result.substring(e.target.result.indexOf(",")+1));
+				data.append("sessionId", sessionService.get('id'));
+				data.append("sessionToken", sessionService.get('token'));
+				profileService.avatar(data).success(function(result) {
+					if(result.code == 1){
+						$scope.profileModel.displayAvatar = e.target.result;
+					}
+				});
+            }
+            reader.readAsDataURL(input.files[0]);  
+	    }
+	    
+	    /**
+	     * update cover file [desktop mode]
+	     */
+	    $scope.desktopCover = function(input){
+	    	var reader = new FileReader();
+            reader.onload = function (e) {
+            	var data = new FormData();
+				data.append("file", e.target.result.substring(e.target.result.indexOf(",")+1));
+				data.append("sessionId", sessionService.get('id'));
+				data.append("sessionToken", sessionService.get('token'));
+				profileService.cover(data).success(function(result) {
+					if(result.code == 1){
+						$scope.profileModel.displayCover = e.target.result;
+					}
+				});       	         	
+            }
+            reader.readAsDataURL(input.files[0]);  
 	    }
 
 	});

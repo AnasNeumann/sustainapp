@@ -5,7 +5,8 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('challengeController', function($scope, $stateParams, $ionicModal, $state, $ionicPopover, sessionService, fileService, challengeService, participationService) {
+.controller('challengeController', 
+		function($scope, $stateParams, $ionicModal, $state, $ionicPopover, sessionService, fileService, challengeService, participationService, listService, displayService) {
 
 	/**
 	 * Entrée dans la page
@@ -38,6 +39,8 @@ angular.module('sustainapp.controllers')
 		$scope.challengeModel.participation = {};
 		$scope.challengeModel.participation.title = "";
 		$scope.challengeModel.participation.about = "";
+
+		$scope._isNotMobile = displayService.isNotMobile;
 		
 		$scope.challengeModel.allErrors = [];	
 		challengeService.getById($stateParams.id, sessionService.get('id')).then(function(response){
@@ -92,10 +95,10 @@ angular.module('sustainapp.controllers')
 	}
 	
 	/**
-	 * Modification de l'icon d'un challenge
+	 * Modification de l'icon d'un challenge [mobile mode]
 	 */
 	$scope.icon = function(newFile){
-		fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {			
+		fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {			
 			var data = new FormData();
 			data.append("file", imageData);
 			data.append("challenge", $scope.challengeModel.challenge.id);
@@ -113,16 +116,52 @@ angular.module('sustainapp.controllers')
 	};
 	
 	/**
-	 * Modification de l'image d'une nouvelle participation
+	 * Modification de l'icon d'un challenge [desktop mode]
+	 */
+	$scope.desktopIcon = function(input){
+		var reader = new FileReader();
+        reader.onload = function (e) {
+        	var data = new FormData();
+			data.append("file", e.target.result.substring(e.target.result.indexOf(",")+1));
+			data.append("challenge", $scope.challengeModel.challenge.id);
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			challengeService.icon(data).success(function(result) {
+				if(result.code == 1){
+					$scope.challengeModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
+					$scope.challengeModel.displayIcon = e.target.result;
+				}
+			});
+        }
+        reader.readAsDataURL(input.files[0]);  
+	}
+	
+	/**
+	 * Modification de l'image d'une nouvelle participation [mobile mode]
 	 */
 	$scope.chooseParticipationFile = function(newFile){
-		fileService.getFile(newFile, 100, 700, 300).then(function(imageData) {			
+		fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {			
 			$scope.challengeModel.participationFile = imageData;
 			$scope.challengeModel.displayParticipationFile = "data:image/jpeg;base64,"+imageData;
 			$scope.challengeModel.emptyParticipationFile = false;
 			$scope.challengeModel.editParticipationFile = false;
 		 }, function(err) {
 		 });
+	}
+	
+	/**
+	 * Modification de l'image d'une nouvelle participation [mobile mode]
+	 */
+	$scope.desktopParticipationFile = function(input){
+		var reader = new FileReader();
+        reader.onload = function (e) {
+        	$scope.$apply(function () {
+            	$scope.challengeModel.participationFile = e.target.result.substring(e.target.result.indexOf(",")+1);
+    			$scope.challengeModel.displayParticipationFile = e.target.result;
+    			$scope.challengeModel.emptyParticipationFile = false;
+            });           	         	
+        }
+        reader.readAsDataURL(input.files[0]); 
 	}
 	
    /**
@@ -249,14 +288,14 @@ angular.module('sustainapp.controllers')
 						"participation" : {
 							"title" : $scope.challengeModel.participation.title,
 							"about" : $scope.challengeModel.participation.about,
-							"document" : $scope.challengeModel.participation.participationFile,
+							"document" : $scope.challengeModel.participationFile,
 							"timestamps" : "now"
 						},
 						"isOwner" : true,
 						"alreadyVoted" : false,
 						"owner" : $scope.challengeModel.selectedProfile
 				};
-				$scope.challengeModel.participations.push(participation);
+				$scope.challengeModel.participations = listService.addOnTop($scope.challengeModel.participations, participation);
 				$scope.participateModal.hide();
 				$scope.challengeModel.emptyParticipationFile = true;
 				$scope.challengeModel.editParticipationFile = false;

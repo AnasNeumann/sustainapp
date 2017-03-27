@@ -7,7 +7,8 @@
             <div class="col col-50">
 	            <div class="s-team-containerAvatar">
 		            <div style="background-image: url({{teamModel.displayAvatar}});" class="s-profile-avatar">
-		                <div ng-if="teamModel.role == 'admin'" class="s-common-camera">
+		                <!-- Mobile view -->
+		                <div ng-if="teamModel.role == 'admin' && _isNotMobile == false" class="s-common-camera">
 		                   <div class="s-common-choosePictureToogle" ng-show="teamModel.avatarEdit" ng-click="teamModel.avatarEdit = false">
 		                      <i class="icon ion-close-round"></i>
 		                   </div>
@@ -21,6 +22,13 @@
 		                      <i class="icon ion-camera"></i>
 		                   </div>
 		               </div>
+		               <!-- Desktop view -->
+				       <div class="s-common-camera" ng-if="teamModel.role == 'admin' && _isNotMobile == true">
+				             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+				                <i class="icon ion-camera"></i>
+				                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopAvatar(this)" />
+				             </div>
+				       </div>
 		            </div>
 		        </div>
 	        </div>

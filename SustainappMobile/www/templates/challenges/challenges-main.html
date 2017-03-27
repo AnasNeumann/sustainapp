@@ -13,7 +13,8 @@
                     <div class="col col-50 s-common-padding-top0">
                         <div class="s-teams-addPicture" style="background-image: url({{challengesModel.displayFile}});">
                             <i class="icon ion-trophy" ng-show="challengesModel.emptyPicture"></i>
-                            <div class="s-common-camera">
+                            <!-- Mobile view -->
+                            <div class="s-common-camera" ng-if="_isNotMobile == false">
                                 <div class="s-common-choosePictureToogle" ng-show="challengesModel.editFile" ng-click="challengesModel.editFile = false">
                                    <i class="icon ion-close-round"></i>
                                 </div>
@@ -27,6 +28,13 @@
                                    <i class="icon ion-camera"></i>
                                 </div>
                             </div>
+                            <!-- Desktop view -->
+					         <div class="s-common-camera" ng-if="_isNotMobile">
+					             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+					                <i class="icon ion-camera"></i>
+					                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopChooseFile(this)" />
+					             </div>
+					         </div>
                         </div>                    
                     </div>
                     <div class="col col-50 s-common-padding-top0">

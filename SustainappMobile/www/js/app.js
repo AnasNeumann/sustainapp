@@ -135,6 +135,11 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 });
 
 /**
+ * DIRECTIVES
+ */
+angular.module('sustainapp.directives', []);
+
+/**
  * CONSTANTES
  */
 angular.module('sustainapp.constantes', []);

@@ -3,7 +3,9 @@
   <ion-content ng-hide="reportModel.sended" class="s-common-padding20">
     <div class="s-report-imgContainer" style="background-image: url({{reportModel.displayFile}});">
         <i ng-show="reportModel.emptyFile" class="icon ion-image"></i>
-        <div class="s-common-camera">
+        
+        <!-- Mobile view -->
+        <div class="s-common-camera" ng-hide="_isNotMobile">
             <div class="s-common-choosePictureToogle" ng-show="reportModel.editFile" ng-click="reportModel.editFile = false">
                <i class="icon ion-close-round"></i>
             </div>
@@ -15,6 +17,14 @@
             </div>
             <div class="s-common-choosePictureToogle s-common-22" ng-hide="reportModel.editFile" ng-click="reportModel.editFile = true">
                <i class="icon ion-camera"></i>
+            </div>
+        </div>
+        
+        <!-- Desktop view -->
+        <div class="s-common-camera" ng-show="_isNotMobile">
+            <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+               <i class="icon ion-camera"></i>
+               <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopFile(this)" />
             </div>
         </div>
     </div>

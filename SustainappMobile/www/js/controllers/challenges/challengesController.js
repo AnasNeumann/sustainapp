@@ -5,7 +5,8 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('challengesController', function($scope, $ionicPopover, $state, sessionService, challengeService, fileService, listService) {
+	.controller('challengesController', 
+			function($scope, $ionicPopover, $state, sessionService, challengeService, fileService, listService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -40,6 +41,8 @@ angular.module('sustainapp.controllers')
 			$scope.challengesModel.type = {};
 			$scope.challengesModel.types = [];
 			$scope.challengesModel.allErrors = [];
+			
+			$scope._isNotMobile = displayService.isNotMobile;
 						
 			$ionicPopover.fromTemplateUrl('templates/challenges/popover-level.html', {
 			    scope: $scope
@@ -170,10 +173,10 @@ angular.module('sustainapp.controllers')
 		}
 
 		/**
-		 * Modification de l'image pour le nouveau challenge
+		 * Modification de l'image pour le nouveau challenge [mobile mode]
 		 */
 		$scope.chooseFile = function(newFile){
-			fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+			fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
 				$scope.challengesModel.file = imageData;
 				$scope.challengesModel.displayFile = "data:image/jpeg;base64,"+imageData;
 				$scope.challengesModel.emptyPicture = false;
@@ -181,5 +184,20 @@ angular.module('sustainapp.controllers')
 			 }, function(err) {
 			 });
 		};
+		
+		/**
+		 * Modification de l'image pour le nouveau challenge [desktop mode]
+		 */
+		$scope.desktopChooseFile = function(input){
+			var reader = new FileReader();
+            reader.onload = function (e) {
+            	$scope.$apply(function () {
+            		$scope.challengesModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
+                	$scope.challengesModel.displayFile = e.target.result;
+                	$scope.challengesModel.emptyPicture = false;   
+                });	
+            }
+            reader.readAsDataURL(input.files[0]);  
+		}
 
 	});

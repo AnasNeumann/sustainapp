@@ -5,7 +5,8 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('reportController', function($scope, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, fileService, reportService) {
+	.controller('reportController', 
+			function($scope, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, fileService, reportService, displayService) {
 		
 		/**
 		 * Initialisation du model
@@ -19,20 +20,36 @@ angular.module('sustainapp.controllers')
 			$scope.reportModel.emptyFile = true;
 			$scope.reportModel.editFile = false;
 			$scope.reportModel.allErrors = [];
+			$scope._isNotMobile = displayService.isNotMobile;
 		};
 		initPage();
 		
 		/**
-		 * Choix d'une photo a envoyer
+		 * Choix d'une photo a envoyer en mode mobile
 		 */
 		$scope.chooseFile = function(newFile){
-			fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
+			fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
 				$scope.reportModel.file = imageData;
 				$scope.reportModel.displayFile = "data:image/jpeg;base64,"+imageData;
 				$scope.reportModel.emptyFile = false;
 				$scope.reportModel.editFile = false;
 			 }, function(err) {
 			 });
+		}
+		
+		/**
+		 * Choix d'une photo en mode desktop
+		 */
+		$scope.desktopFile = function(input){
+			var reader = new FileReader();
+            reader.onload = function (e) {
+            	$scope.$apply(function () {
+            		$scope.reportModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
+                	$scope.reportModel.displayFile = e.target.result;
+                	$scope.reportModel.emptyFile = false;   
+                });           	         	
+            }
+            reader.readAsDataURL(input.files[0]);  
 		}
 		
 		/**

@@ -8,6 +8,7 @@
  
  .s-modal-views{
     background-color: transparent;
+    height : 100%;
  }
  
  @media (max-width: 680px) {
