@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 /**
- * Le styles des menus
+ * Le style des menus
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 04/02/2017
  * @version 1.0
@@ -25,6 +25,12 @@
 .s-menus-headerBtn:hover{
 	color : white !important;
 }
+/*
+@media (min-width: 680px) {
+  .s-menus-headerBtn {
+    display : none;
+  }
+}*/
 
 .platform-android .bar .title {
     left : 61px;   

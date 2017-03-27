@@ -101,7 +101,12 @@ public class UserAccountController extends GenericController {
 			token = super.createSession(user);
 		}
 		response.setCode(1);
-		return response.setId(user.getId()).setToken(token).setProfile(user.getProfile()).buildJson();
+		return response
+				.setId(user.getId())
+				.setToken(token)
+				.setProfile(user.getProfile())
+				.setIsAdmin(user.getIsAdmin())
+				.buildJson();
     }
 
 	/**

@@ -251,6 +251,9 @@ public class TeamController extends GenericController {
 	 */
 	private boolean isConnectedOwner(TeamEntity team, HttpServletRequest request){
 		UserAccountEntity user = super.getConnectedUser(request);
+		if(null!= user && user.getIsAdmin()){
+			return true;
+		}
 		if(null == user || null == user.getProfile() || !isOwnerTeam(team, user.getProfile())){
 			return false;
 		}
@@ -312,6 +315,9 @@ public class TeamController extends GenericController {
 		UserAccountEntity user = super.userService.getById(idUser.get());
 		if(null == user || null == user.getProfile()){
 			return null;
+		}
+		if(user.getIsAdmin()){
+			return SustainappConstantes.TEAMROLE_ADMIN;
 		}
 		return searchRoleProfile(team, user.getProfile());
 	}

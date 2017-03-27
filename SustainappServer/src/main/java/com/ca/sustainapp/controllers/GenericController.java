@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
+import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.utils.StringsUtils;
 
@@ -29,6 +31,12 @@ public class GenericController {
 	@Autowired
 	protected UserAccountServiceDAO userService;
 
+	/**
+	 * Comparator
+	 */
+	@Autowired
+	protected EntityComparator compartor;
+	
 	/**
 	 * Creer une nouvelle session pour un utilisateur
 	 * @param request
@@ -130,5 +138,18 @@ public class GenericController {
 	 */
 	private String generateSessionToken(){
 		return StringsUtils.md5Hash(new BigInteger(130, new SecureRandom()).toString());
+	}
+	
+	/**
+	 * Get a profile by userId
+	 * @param id
+	 * @return
+	 */
+	protected ProfileEntity getProfileByUser(Long id){
+		UserAccountEntity user = userService.getById(id);
+		if(null == user){
+			return null;
+		}
+		return user.getProfile();
 	}
 }

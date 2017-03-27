@@ -33,7 +33,7 @@ angular.module('sustainapp.controllers')
 	};
 
 	/**
-	 * Modification de l'image d'une team
+	 * Modification de l'image de la nouvelle team
 	 */
 	$scope.chooseFile = function(newFile){
 		fileService.getFile(newFile, 100, 600, 600).then(function(imageData) {
@@ -73,7 +73,7 @@ angular.module('sustainapp.controllers')
 	};
 	
 	/**
-	 * Recuperation de plus de teams
+	 * Recuperation de plus de teams [InfinityScroll]
 	 */
 	$scope.getMoreTeam = function(){
 		$scope.teamsModel.load = true;

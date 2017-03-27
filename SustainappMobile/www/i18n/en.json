@@ -1,4 +1,7 @@
 {
+    "team" : "team",
+    "profile" : "personal profile",
+    
     "common.modify" : "modify",
     "common.loading" : "Loading",
     "common.takePicture" : "Take a picture",
@@ -11,6 +14,10 @@
     "common.members" : "members",
     "common.registeredSince" : "registered since",
     "common.profiles" : "Profiles",
+    "common.from" : "From",
+    "common.to" : "to",
+    "common.about" : "About", 
+    "common.title" : "Title",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
@@ -46,6 +53,7 @@
     "sideMenu.teams" : "Teams",
     "sideMenu.signal" : "Signal",
     "sideMenu.disconnection" : "Disconnection",
+    "sideMenu.administration" : "Administration",
     
     "viewTitle.news" : "News",
     "viewTitle.challenges" : "Challenges",
@@ -60,8 +68,43 @@
     "form.lastName.mandatory" : "The last name field is mandatory",
     "form.mail.matching" : "This couple mail/passowrd doesn't exist",
     "form.bornDate.mandatory" : "Please enter a valid date format",
+    "form.about.mandatory" : "The about field is mandatory",
     "form.name.mandatory" : "The name field is mandatory",
     "form.name.exist" : "This team name is not available",
+    "form.field.mandatory" : "This field is mandatory",
+    "form.level.min" : "You don't have the level to participate",
     
-    "report.message" : "Your request has been received and will be processed as soon as possible"
+    "report.message" : "Your request has been received and will be processed as soon as possible",
+    
+    "administration.challengeTypes" : "Manage challenge types",
+    "administration.categories" : "Manage courses categories",
+    "administration.transport" : "Manage means of transport",
+    "administration.challengeTypes.title" : "Challenge types",
+    
+    "challengetype.building" : "eco-builing",
+    "challengetype.design" : "eco-desgin",
+    "challengetype.energy" : "sustainable energy",
+    "challengetype.gastronomy" : "eco-gastronomy",
+    "challengetype.manage" : "eco-management",
+    "challengetype.recycling" : "recycling and reuse",
+    
+    "challenges.add" : "Create a new challenge",
+    "challenges.new" : "New challenge",
+    "challenges.about" : "About this challenge",
+    "challenges.endDate" : "Challenge deadline",
+    "challenges.teamEnabled" : "Do team have the right to participate ?",
+    "challenges.levelMin" : "Minimum level",
+    "challenges.types" : "Types of challenges",
+    "challenges.filter" : "Filter",
+    "challenges.filterBy" : "Filter by",
+    "challenges.nothing" : "No filter",
+    
+    "challenge.teamEnabled" : "Teams can participate",
+    "challenge.teamDisabled" : "Teams can not participate",
+    "challenge.participations" : "Participations",
+    "challenge.participation.add" : "Add a participation",
+    "challenge.participation.new" : "New participation",
+    "challenge.votes" : "votes",
+    "challenge.addedOn" : "Added on",
+    "challenge.haveVoted" : "people have voted"
 }

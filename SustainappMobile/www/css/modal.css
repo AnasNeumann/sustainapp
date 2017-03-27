@@ -1,14 +1,20 @@
 @CHARSET "UTF-8";
 /**
- * Le styles les fenêtres modales
+ * Le style les fenêtres modales
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 23/02/2017
  * @version 1.0
  */
  
  .s-modal-views{
-    background-color: rgba(0,0,0,0.55);
+    background-color: transparent;
  }
+ 
+ @media (max-width: 680px) {
+  .s-modal-views {
+    background-color: rgba(0,0,0,0.50);
+  }
+}
  
  .s-modal-confirm{
 	background-color: white;

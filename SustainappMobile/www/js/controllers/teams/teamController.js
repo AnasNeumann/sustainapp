@@ -18,6 +18,7 @@ angular.module('sustainapp.controllers')
 	 * Chargement des informations sur la team
 	 */
 	var loadTeam = function(){
+		$scope.title = "";
 		$scope.teamModel = {};
 		$scope.teamModel.loaded = false;
 		$scope.teamModel.edit = false;
@@ -28,13 +29,14 @@ angular.module('sustainapp.controllers')
 		teamService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 			var result = response.data;
 			if(result.code == 1) {			
+				$scope.title = result.team.name;
 				$scope.teamModel.team  = result.team;
 				$scope.teamModel.owner  = result.owner;
 				$scope.teamModel.members  = result.members;
 				$scope.teamModel.requests  = result.requests;
 				$scope.teamModel.participations = result.participations;
 				$scope.teamModel.role = result.role;
-				$scope.teamModel.isAdmin = (result.role == 'admin');
+				$scope.teamModel.isAdmin = (result.role == teamRole.admin);
 				$scope.teamModel.name = result.team.name;
 				if(null != result.team.avatar){
 					$scope.teamModel.displayAvatar = "data:image/jpeg;base64,"+ result.team.avatar;
@@ -53,15 +55,15 @@ angular.module('sustainapp.controllers')
 		$scope.teamModel.action = "action.apply.accept";
 		if(null != $scope.teamModel.role){
 			switch($scope.teamModel.role){
-				case "admin" :
+				case teamRole.admin :
 					$scope.teamModel.displayAction = "action.delete";
 					$scope.teamModel.action = "action.delete";
 					break;
-				case "member" :
+				case teamRole.member :
 					$scope.teamModel.displayAction = "action.leave";
 					$scope.teamModel.action = "action.leave.cancel";
 					break;
-				case "request" :
+				case teamRole.request :
 					$scope.teamModel.displayAction = "action.cancel";
 					$scope.teamModel.action = "action.leave.cancel";
 					break;
@@ -155,7 +157,7 @@ angular.module('sustainapp.controllers')
 	    });	
 	};
 	
-   /***
+   /**
     * Modal de confirmation de la suppression d'une team
     */
    $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
@@ -163,7 +165,7 @@ angular.module('sustainapp.controllers')
    }).then(function(modal) {
      $scope.modal = modal;
    });
-	
+
 	/**
 	 * Suppression définitive d'une team
 	 */

@@ -1,26 +1,19 @@
 package com.ca.sustainapp.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * CHALLENGE table mapping
@@ -57,7 +50,7 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "CHALLENGE_TYPE_ID", referencedColumnName = "ID")
-	private ChallengeTypeEntity challengType;
+	private ChallengeTypeEntity challengeType;
 	
 	@Column(name = "CREATOR_ID")
 	private Long creatorId;
@@ -68,10 +61,6 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "challengeId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<ParticipationEntity> listParticipation = new ArrayList<ParticipationEntity>();
-
 	/**
 	 * @return the id
 	 */
@@ -165,15 +154,15 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	/**
 	 * @return the challengType
 	 */
-	public ChallengeTypeEntity getChallengType() {
-		return challengType;
+	public ChallengeTypeEntity getChallengeType() {
+		return challengeType;
 	}
 
 	/**
 	 * @param challengType the challengType to set
 	 */
-	public ChallengeEntity setChallengType(ChallengeTypeEntity challengType) {
-		this.challengType = challengType;
+	public ChallengeEntity setChallengeType(ChallengeTypeEntity challengeType) {
+		this.challengeType = challengeType;
 		return this;
 	}
 
@@ -204,21 +193,6 @@ public class ChallengeEntity extends GenericEntity implements Serializable {
 	 */
 	public ChallengeEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
-		return this;
-	}
-
-	/**
-	 * @return the listParticipation
-	 */
-	public List<ParticipationEntity> getListParticipation() {
-		return listParticipation;
-	}
-
-	/**
-	 * @param listParticipation the listParticipation to set
-	 */
-	public ChallengeEntity setListParticipation(List<ParticipationEntity> listParticipation) {
-		this.listParticipation = listParticipation;
 		return this;
 	}
 
