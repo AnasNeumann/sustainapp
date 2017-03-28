@@ -33,7 +33,6 @@ public class CascadeGetService {
 	@Autowired
 	private TeamRoleServiceDAO teamRoleService;
 	
-	
 	/**
 	 * Comparator
 	 */
