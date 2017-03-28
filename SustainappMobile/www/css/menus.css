@@ -138,7 +138,13 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
 	top : 2px;
 }
 
-.s-menus-avatar {
-	border-radius : 150px;
-	overflow:hidden;
+.s-menus-laval{
+	display : block !important;
+	margin : auto;
+}
+
+.s-menus-title{
+	display : block;
+	text-align:center;
+	margin : auto;
 }
