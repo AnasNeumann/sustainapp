@@ -8,118 +8,111 @@ import javax.ws.rs.QueryParam;
 /**
  * Criteria for research
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 29/03/2017
  * @version 1.0
  */
-public class TopicCriteria implements Serializable {
+public class PartCriteria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String title;
 	private String content;
-	private Long curseId;
-	private Integer difficulty;
+	private Integer type;
+	private Long topicId;
 	private Calendar timestamps;
-
+	
 	/**
 	 * @return the id
 	 */
 	public Long getId() {
 		return id;
 	}
-
+	
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	@QueryParam("id")
-	public TopicCriteria setId(Long id) {
+	public PartCriteria setId(Long id) {
 		this.id = id;
 		return this;
 	}
-
+	
 	/**
 	 * @return the title
 	 */
 	public String getTitle() {
 		return title;
 	}
-
+	
 	/**
-	 * @param title
-	 *            the title to set
+	 * @param title the title to set
 	 */
 	@QueryParam("title")
-	public TopicCriteria setTitle(String title) {
+	public PartCriteria setTitle(String title) {
 		this.title = title;
 		return this;
 	}
-
+	
 	/**
 	 * @return the content
 	 */
 	public String getContent() {
 		return content;
 	}
-
+	
 	/**
-	 * @param content
-	 *            the content to set
+	 * @param content the content to set
 	 */
 	@QueryParam("content")
-	public TopicCriteria setContent(String content) {
+	public PartCriteria setContent(String content) {
 		this.content = content;
 		return this;
 	}
-
+	
 	/**
-	 * @return the curseId
+	 * @return the type
 	 */
-	public Long getCurseId() {
-		return curseId;
+	public Integer getType() {
+		return type;
 	}
-
+	
 	/**
-	 * @param curseId
-	 *            the curseId to set
+	 * @param type the type to set
 	 */
-	@QueryParam("curseId")
-	public TopicCriteria setCurseId(Long curseId) {
-		this.curseId = curseId;
+	@QueryParam("type")
+	public PartCriteria setType(Integer type) {
+		this.type = type;
 		return this;
 	}
-
+	
 	/**
-	 * @return the difficulty
+	 * @return the topicId
 	 */
-	public Integer getDifficulty() {
-		return difficulty;
+	public Long getTopicId() {
+		return topicId;
 	}
-
+	
 	/**
-	 * @param difficulty
-	 *            the difficulty to set
+	 * @param topicId the topicId to set
 	 */
-	@QueryParam("difficulty")
-	public TopicCriteria setDifficulty(Integer difficulty) {
-		this.difficulty = difficulty;
+	@QueryParam("topicId")
+	public PartCriteria setTopicId(Long topicId) {
+		this.topicId = topicId;
 		return this;
 	}
-
+	
 	/**
 	 * @return the timestamps
 	 */
 	public Calendar getTimestamps() {
 		return timestamps;
 	}
-
+	
 	/**
-	 * @param timestamps
-	 *            the timestamps to set
+	 * @param timestamps the timestamps to set
 	 */
 	@QueryParam("timestamps")
-	public TopicCriteria setTimestamps(Calendar timestamps) {
+	public PartCriteria setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
 		return this;
 	}
-
 }

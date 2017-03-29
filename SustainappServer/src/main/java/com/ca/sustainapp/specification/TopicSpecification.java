@@ -51,23 +51,8 @@ public class TopicSpecification {
 						listeCond.add(p);
 					}
 					
-					if (null != criteres.getParentId()) {
-						Predicate p = cb.equal(root.<Long> get("parentId"), criteres.getParentId());
-						listeCond.add(p);
-					}
-					
 					if (null != criteres.getDifficulty()) {
 						Predicate p = cb.equal(root.<Integer> get("difficulty"), criteres.getDifficulty());
-						listeCond.add(p);
-					}
-					
-					if (null != criteres.getChildLevel()) {
-						Predicate p = cb.equal(root.<Integer> get("childLevel"), criteres.getChildLevel());
-						listeCond.add(p);
-					}
-
-					if (null != criteres.getLink()) {
-						Predicate p = cb.like(cb.lower(root.<String> get("link")), criteres.getLink().toLowerCase() + "%");
 						listeCond.add(p);
 					}
 					

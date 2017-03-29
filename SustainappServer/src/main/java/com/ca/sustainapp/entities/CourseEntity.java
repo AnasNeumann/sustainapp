@@ -46,12 +46,18 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	@Column(name = "ABOUT")
 	private String about;
 	
+	@Column(name = "LEVEL_MIN")
+	private Integer levelMin;
+	
+	@Column(name = "OPEN")
+	private Integer open;
+	
 	@Column(name = "PICTURE")
 	private byte[] picture;
 	
 	@ManyToOne
-	@JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID")
-	private CategoryEntity category;
+	@JoinColumn(name = "CHALLENGE_TYPE_ID", referencedColumnName = "ID")
+	private ChallengeTypeEntity type;
 	
 	@Column(name = "CREATOR_ID")
 	private Long creatorId;
@@ -62,10 +68,6 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "courseId", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private List<RankCourseEntity> listRank = new ArrayList<RankCourseEntity>();
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "curseId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<TopicEntity> listTopic = new ArrayList<TopicEntity>();
 
 	/**
 	 * @return the id
@@ -128,21 +130,6 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the category
-	 */
-	public CategoryEntity getCategory() {
-		return category;
-	}
-
-	/**
-	 * @param category the category to set
-	 */
-	public CourseEntity setCategory(CategoryEntity category) {
-		this.category = category;
-		return this;
-	}
-
-	/**
 	 * @return the creatorId
 	 */
 	public Long getCreatorId() {
@@ -188,18 +175,47 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the listTopic
+	 * @return the type
 	 */
-	public List<TopicEntity> getListTopic() {
-		return listTopic;
+	public ChallengeTypeEntity getType() {
+		return type;
 	}
 
 	/**
-	 * @param listTopic the listTopic to set
+	 * @param type the type to set
 	 */
-	public CourseEntity setListTopic(List<TopicEntity> listTopic) {
-		this.listTopic = listTopic;
+	public CourseEntity setType(ChallengeTypeEntity type) {
+		this.type = type;
 		return this;
 	}
-	
+
+	/**
+	 * @return the levelMin
+	 */
+	public Integer getLevelMin() {
+		return levelMin;
+	}
+
+	/**
+	 * @param levelMin the levelMin to set
+	 */
+	public CourseEntity setLevelMin(Integer levelMin) {
+		this.levelMin = levelMin;
+		return this;
+	}
+
+	/**
+	 * @return the open
+	 */
+	public Integer getOpen() {
+		return open;
+	}
+
+	/**
+	 * @param open the open to set
+	 */
+	public CourseEntity setOpen(Integer open) {
+		this.open = open;
+		return this;
+	}
 }
