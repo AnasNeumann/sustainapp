@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+/**
+ * Le style de la page du journal
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 29/03/2017
+ * @version 1.0
+ */
+ 
+.s-news-bluePart {
+    width: 100%;
+    margin: 0px;
+    background-color: #23d5fb;
+    height: 100px;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+}
+
+.s-news-img{
+	height : 100%;
+	width : auto;
+	margin : auto;
+}
