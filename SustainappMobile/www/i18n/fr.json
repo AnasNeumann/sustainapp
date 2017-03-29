@@ -108,5 +108,9 @@
     "challenge.participation.new" : "Nouvelle participation",
     "challenge.votes" : "votes",
     "challenge.addedOn" : "Ajoutée le",
-    "challenge.haveVoted" : "personnes ont voté"
+    "challenge.haveVoted" : "personnes ont voté",
+    
+    "course.about" :"A propos du cours",
+    "course.new" :"Nouveau cours",
+    "course.add" :"Créer un nouveau cours"
 }

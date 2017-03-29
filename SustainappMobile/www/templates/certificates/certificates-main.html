@@ -1,19 +1,96 @@
 <ion-view view-title="{{'viewTitle.certificates' | translate }}">
-  <ion-content>
-  <ion-list>
-    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="badge in badges.data" type="item-text-wrap">
-      <img ng-src="data:image/jpeg;base64,{{badge.base64}}">
-      {{badge.name}}
-       <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-    </ion-item>
-  </ion-list>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
+  <ion-content class="s-teams-content" ng-show="coursModel.loaded">
+    <!-- ADD NEW TEAM -->
+    <div class="s-teams-newHeader">
+       <div class="padding s-teams-addClosed" ng-hide="coursModel.add" ng-click="coursModel.add = true">
+           <i class="icon ion-android-add-circle s-teams-newBtn"></i>
+           <span class="s-teams-addText" >{{'course.add' | translate}}</span>
+       </div>
+       <div class="s-teams-addOpen padding" ng-show="coursModel.add">
+        <i class="icon ion-android-add-circle s-teams-closeBtn" ng-click="coursModel.add = false"></i>
+        <span class="s-teams-addText" >{{'course.new' | translate}}</span>
+        <div class="row s-common-padding-top0">
+          <div class="col col-50 s-common-padding-top0">
+              <div class="s-teams-addPicture" style="background-image: url({{coursModel.displayFile}});">
+                  <i class="icon ion-university" ng-show="coursModel.emptyPicture"></i>
+                  <!-- Mobile view -->
+                  <div class="s-common-camera" ng-if="_isNotMobile == false">
+                      <div class="s-common-choosePictureToogle" ng-show="coursModel.editFile" ng-click="coursModel.editFile = false">
+                         <i class="icon ion-close-round"></i>
+                      </div>
+                      <div class="s-common-choosePicture" ng-show="coursModel.editFile" ng-click="chooseFile(true)">
+                         {{'common.takePicture' | translate}}
+                      </div>
+                      <div class="s-common-choosePicture" ng-show="coursModel.editFile" ng-click="chooseFile(false)">
+                        {{'common.chooseFormGallery' | translate}}
+                      </div>
+                      <div class="s-common-choosePictureToogle s-common-22" ng-hide="coursModel.editFile" ng-click="coursModel.editFile = true">
+                         <i class="icon ion-camera"></i>
+                      </div>
+                  </div>
+                  <!-- Desktop view -->
+                   <div class="s-common-camera" ng-if="_isNotMobile">
+                       <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                          <i class="icon ion-camera"></i>
+                          <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopChooseFile(this)" />
+                       </div>
+                   </div>
+              </div>                    
+          </div>
+          <div class="col col-50 s-common-padding-top0">
+             <label class="item item-input item-floating-label" > 
+                <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
+                <input ng-model="coursModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+                <span class="s-common-errors">{{coursModel.allErrors.name | translate}}</span>
+             </label>                                                   
+          </div>
+      </div>
+      <div class="row">
+          <div class="col col-100">
+              <label class="item item-input item-floating-label" > 
+                <span class="input-label s-common-label">{{'cours.about' | translate}}</span> 
+                <input ng-model="coursModel.about" type="text" placeholder="{{'course.about' | translate}}" class="s-common-input">
+                <span class="s-common-errors">{{coursModel.allErrors.about | translate}}</span>
+             </label>    
+          </div>
+      </div>
+      <div class="row">
+          <div class="col col-100 s-challenges-types" ng-click="openTypes($event)">
+            <p>
+              <img src="img/challengetype/{{coursModel.type.icon}}.png" class="s-challenges-type-icon"/>
+              <span class="s-challenges-types-name">{{coursModel.type.name | translate}}</span>
+            </p>
+            <span class="s-common-errors">{{coursModel.allErrors.type | translate}}</span>  
+          </div>
+      </div>
+      <div class="row">
+          <div class="col col-100 s-challenges-levelMin" ng-click="openLevelMin($event)">
+             <span class="s-challenges-levelMin-number">{{coursModel.levelMin}}</span>{{'challenges.levelMin' | translate}}
+             <span class="s-common-errors">{{coursModel.allErrors.levelMin | translate}}</span>
+          </div>
+      </div>               
+      <div class="row">                
+          <button class="s-common-btn" ng-click="addCours()">{{'common.create' | translate }}</button>
+      </div>
+       </div>
+    </div>
+    
+    <!-- ALL CHALLENGES -->
+   <div class="s-common-greyPart">
+       <h2 class="s-common-greyTitle" ng-click="openFilter($event)">{{'challenges.filter' | translate}}</h2>
+   </div>
+   <div class="s-teams-allResults">
+       <ion-list>
+          
+       </ion-list>
+       <ion-infinite-scroll on-infinite="getMoreCours()" distance="10%" ng-if="coursModel.moreCours">
+       </ion-infinite-scroll>
+   </div>
   </ion-content>
+  
+  <!-- Loading Part -->
+   <ion-content class="s-common-loading" ng-hide="coursModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+   </ion-content>
 </ion-view>

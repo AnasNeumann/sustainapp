@@ -44,17 +44,17 @@ angular.module('sustainapp.controllers')
 			
 			$scope._isNotMobile = displayService.isNotMobile;
 						
-			$ionicPopover.fromTemplateUrl('templates/challenges/popover-level.html', {
+			$ionicPopover.fromTemplateUrl('templates/common/popover-level.html', {
 			    scope: $scope
 			  }).then(function(popover) {
 			    $scope.popoverLevel = popover;
 			  });
-			$ionicPopover.fromTemplateUrl('templates/challenges/popover-type.html', {
+			$ionicPopover.fromTemplateUrl('templates/common/popover-type.html', {
 			    scope: $scope
 			  }).then(function(popover) {
 			    $scope.popoverType = popover;
 			  });
-			$ionicPopover.fromTemplateUrl('templates/challenges/popover-filter.html', {
+			$ionicPopover.fromTemplateUrl('templates/common/popover-filter.html', {
 			    scope: $scope
 			  }).then(function(popover) {
 			    $scope.popoverFilter = popover;
@@ -67,8 +67,8 @@ angular.module('sustainapp.controllers')
 				if(response.data.code == 1) {
 					$scope.challengesModel.loaded = true;
 					$scope.challengesModel.type = response.data.types[0];
-					$scope.challengesModel.types = response.data.types;
-					$scope.challengesModel.levels = [0,1,2,3,4,5,6,7,8,9];
+					$scope.types = response.data.types;
+					$scope.levels = [0,1,2,3,4,5,6,7,8,9];
 				}
 			});
 			$scope.getMoreChallenges();
