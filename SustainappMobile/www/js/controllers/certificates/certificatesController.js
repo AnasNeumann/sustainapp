@@ -32,10 +32,8 @@ angular.module('sustainapp.controllers')
 		$scope.coursModel.file = null;
 		$scope.coursModel.displayFile = "";
 		
-		$scope.coursModel.name = "";
+		$scope.coursModel.title = "";
 		$scope.coursModel.about = "";
-		$scope.coursModel.endDate = "";
-		$scope.coursModel.teamEnabled = true;
 		$scope.coursModel.levelMin = 0;
 		$scope.coursModel.type = {};
 		$scope.coursModel.types = [];
@@ -77,7 +75,19 @@ angular.module('sustainapp.controllers')
 	 * fonction de chargement infinity scroll de plus de cours
 	 */
 	$scope.getMoreCours = function(){
-		$scope.coursModel.moreCours = false;
+		$scope.coursModel.moreCours = true;
+		coursService.getAll($scope.coursModel.startIndex).then(function(response){
+			result = response.data;
+			$scope.coursModel.moreCours = false;
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+			if(result.code == 1 && result.cours.length >0) {
+				//$scope.coursModel.startIndex += result.challenges.length;
+				$scope.coursModel.startIndex += 1;
+				$scope.coursModel.allCours = listService.addWithoutDoublons($scope.coursModel.allCours, result.cours);
+			} else {
+				$scope.coursModel.moreCours = false;
+			}
+		});
 	}
 	
 	
@@ -127,10 +137,34 @@ angular.module('sustainapp.controllers')
 	}
 	
 	/**
-	 * fonction d'ajout d'un nouveau challenge
+	 * fonction d'ajout d'un nouveau cours
 	 */
 	$scope.addCours = function(){
-			
+		var data = new FormData();
+		if(null != $scope.coursModel.file) {
+			data.append("file", $scope.coursModel.file);
+		}
+		data.append("title", $scope.coursModel.title);
+		data.append("about", $scope.coursModel.about);
+		data.append("levelMin", $scope.coursModel.levelMin);
+		data.append("type", $scope.coursModel.type.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		coursService.create(data).success(function(result) {
+			if(result.code == 1){
+				$scope.coursModel.emptyPicture = true;
+				$scope.coursModel.editFile = false;
+				$scope.coursModel.file = null;
+				$scope.coursModel.displayFile = "";					
+				$scope.coursModel.title = "";
+				$scope.coursModel.about = "";
+				$scope.coursModel.levelMin = 0;
+				$scope.coursModel.allErrors = [];
+				$state.go('tab.cours-one', {'id' : result.id});
+			} else {
+				$scope.coursModel.allErrors = result.errors;
+			}
+		});		
 	}
 
 	/**

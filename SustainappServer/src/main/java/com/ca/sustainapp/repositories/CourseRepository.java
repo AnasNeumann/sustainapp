@@ -1,5 +1,8 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,4 +36,12 @@ public interface CourseRepository extends JpaSpecificationExecutor<CourseEntity>
 	@Modifying
 	@Query("DELETE FROM CourseEntity c WHERE c.id = :id")
 	void delete(@Param("id") Long id);
+	
+	/**
+	 * Select all teams by keywords
+	 * @param Keywords
+	 * @return
+	 */
+	@Query("FROM CourseEntity c where LOWER(c.title) LIKE  CONCAT('%',LOWER(:keywords),'%')")
+	List<CourseEntity> searchByKeywords(@Param("keywords") String Keywords, Pageable pageable);
 }

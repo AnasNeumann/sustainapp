@@ -21,7 +21,7 @@ import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
-import com.ca.sustainapp.responses.ProfileResponse;
+import com.ca.sustainapp.responses.ProfilesResponse;
 import com.ca.sustainapp.utils.DateUtils;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -60,7 +60,7 @@ public class ProfileController extends GenericController {
 		if(null == profile){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		return new ProfileResponse().setProfiles(new SustainappList<ProfileEntity>().put(profile)).setCode(1).buildJson();
+		return new ProfilesResponse().setProfiles(new SustainappList<ProfileEntity>().put(profile)).setCode(1).buildJson();
 	}
 	
 	/**

@@ -11,7 +11,7 @@ import com.ca.sustainapp.pojo.SustainappList;
  * @since 10/02/2017
  * @version 1.0
  */
-public class ProfileResponse extends HttpRESTfullResponse {
+public class ProfilesResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private List<ProfileEntity> profiles = new SustainappList<ProfileEntity>();
 	
@@ -25,7 +25,7 @@ public class ProfileResponse extends HttpRESTfullResponse {
 	/**
 	 * @param profile the profile to set
 	 */
-	public ProfileResponse setProfiles(List<ProfileEntity> profiles) {
+	public ProfilesResponse setProfiles(List<ProfileEntity> profiles) {
 		this.profiles = profiles;
 		return this;
 	}

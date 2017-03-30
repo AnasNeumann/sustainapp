@@ -113,6 +113,17 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    }
 	  }
     })
+    /*
+    .state('tab.cours-one', {
+	  url: '/cours/:id',
+	  views: {
+	    'tab-certificates': {
+	      templateUrl: 'templates/certificates/cours-one.html',
+	      controller: 'coursController'
+	    }
+	  }
+    })
+    */
    .state('tab.notifications', {
 	  url: '/notifications',
 	  views: {

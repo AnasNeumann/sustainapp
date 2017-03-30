@@ -35,5 +35,20 @@
          <p class="s-teams-text">{{'profile.registeredSince' | translate}} {{profil.timestamps | date: 'dd/MM/yyyy'}}</p>
      </ion-item>
    </ion-list>
+   
+   <!-- ALL COURSES -->
+   <div class="s-search-type" ng-hide="searchModel.empty">
+       <i class="icon ion-university"></i>
+      {{'viewTitle.certificates' | translate}}
+   </div>
+   <ion-list>
+     <ion-item class="item item-thumbnail-left" ng-repeat="cours in searchModel.courses" type="item-text-wrap" href="#/tab/cours/{{cours.id}}" menu-toggle="right">
+         <img ng-src="data:image/jpeg;base64,{{cours.picture}}" onerror="this.src='img/common/defaultCours.png'">
+         <div class="s-challenges-level">{{cours.levelMin}}</div>
+         <h2 class="s-teams-title">{{cours.title}}</h2>
+         <p class="s-teams-text">{{cours.about}}</p>
+         <p class="s-teams-text"><i class="icon ion-ios-calendar-outline"></i> {{cours.timestamps | date: 'dd/MM/yyyy'}}</p> 
+     </ion-item>
+   </ion-list>
             
 </ion-content> 

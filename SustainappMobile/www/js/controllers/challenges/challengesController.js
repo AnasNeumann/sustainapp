@@ -84,7 +84,8 @@ angular.module('sustainapp.controllers')
 				$scope.challengesModel.load = false;
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 				if(result.code == 1 && result.challenges.length >0) {
-					$scope.challengesModel.startIndex += result.challenges.length;
+					//$scope.challengesModel.startIndex += result.challenges.length;
+					$scope.challengesModel.startIndex += 1;
 					$scope.challengesModel.allChallenges = listService.addWithoutDoublons($scope.challengesModel.allChallenges, result.challenges);
 				} else {
 					$scope.challengesModel.moreChallenges = false;

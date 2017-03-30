@@ -1,6 +1,6 @@
 <ion-view view-title="{{'viewTitle.certificates' | translate }}">
   <ion-content class="s-teams-content" ng-show="coursModel.loaded">
-    <!-- ADD NEW TEAM -->
+    <!-- ADD NEW COURSE -->
     <div class="s-teams-newHeader">
        <div class="padding s-teams-addClosed" ng-hide="coursModel.add" ng-click="coursModel.add = true">
            <i class="icon ion-android-add-circle s-teams-newBtn"></i>
@@ -39,9 +39,9 @@
           </div>
           <div class="col col-50 s-common-padding-top0">
              <label class="item item-input item-floating-label" > 
-                <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
-                <input ng-model="coursModel.name" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
-                <span class="s-common-errors">{{coursModel.allErrors.name | translate}}</span>
+                <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
+                <input ng-model="coursModel.title" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+                <span class="s-common-errors">{{coursModel.allErrors.title | translate}}</span>
              </label>                                                   
           </div>
       </div>
@@ -75,13 +75,19 @@
        </div>
     </div>
     
-    <!-- ALL CHALLENGES -->
+    <!-- ALL COURSES -->
    <div class="s-common-greyPart">
        <h2 class="s-common-greyTitle" ng-click="openFilter($event)">{{'challenges.filter' | translate}}</h2>
    </div>
    <div class="s-teams-allResults">
        <ion-list>
-          
+          <ion-item ng-if="coursModel.filter =='' || coursModel.filter == cours.type.name" class="item item-thumbnail-left" ng-repeat="cours in coursModel.allCours" type="item-text-wrap" href="#/tab/cours/{{cours.id}}">
+            <img ng-src="data:image/jpeg;base64,{{cours.picture}}" onerror="this.src='img/common/defaultCours.png'" />
+            <div class="s-challenges-level">{{cours.levelMin}}</div>
+            <h2 class="s-teams-title">{{cours.title}}</h2>
+            <p class="s-teams-text">{{cours.about}}</p>
+            <p class="s-teams-text"><i class="icon ion-ios-calendar-outline"></i> {{cours.timestamps | date: 'dd/MM/yyyy'}}</p>  
+          </ion-item>
        </ion-list>
        <ion-infinite-scroll on-infinite="getMoreCours()" distance="10%" ng-if="coursModel.moreCours">
        </ion-infinite-scroll>
