@@ -45,6 +45,8 @@
     "profile.bornDate" : "date de naissance",
     "profile.yearsOld" : "ans",
     "profile.registeredSince" : "inscrit depuis le",
+    "profile.badges" : "Badges",
+    "profile.courses" : "Cours",
     
     "login.login": "Connexion",
     "login.signin": "S'inscrire !",

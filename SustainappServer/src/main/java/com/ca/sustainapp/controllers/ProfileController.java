@@ -3,6 +3,8 @@ package com.ca.sustainapp.controllers;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,12 +18,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.CourseCriteria;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
+import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
-import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
-import com.ca.sustainapp.responses.ProfilesResponse;
+import com.ca.sustainapp.responses.LightCourseResponse;
+import com.ca.sustainapp.responses.ProfileResponse;
+import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.utils.DateUtils;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -44,6 +49,8 @@ public class ProfileController extends GenericController {
 	private ProfileServiceDAO profileService;
 	@Autowired
 	private ProfileValidator profileValidator;
+	@Autowired
+	private CascadeGetService getService;
 	
 	/**
 	 * get a profile by id
@@ -60,7 +67,7 @@ public class ProfileController extends GenericController {
 		if(null == profile){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		return new ProfilesResponse().setProfiles(new SustainappList<ProfileEntity>().put(profile)).setCode(1).buildJson();
+		return new ProfileResponse().setProfile(profile).setCourses(getAllProfileCourses(id.get())).setCode(1).buildJson();
 	}
 	
 	/**
@@ -118,5 +125,21 @@ public class ProfileController extends GenericController {
 		user.getProfile().setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
 		profileService.createOrUpdate(user.getProfile());
 		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
+	 * Get all courses made by a profile
+	 * @param profilId
+	 * @return
+	 */
+	private List<LightCourseResponse> getAllProfileCourses(Long profilId){
+		List<CourseEntity> courses = getService.cascadeGetCourses(new CourseCriteria().setCreatorId(profilId));
+		List<LightCourseResponse> result = new ArrayList<LightCourseResponse>();
+		if(null != courses){
+			for(CourseEntity course : courses){
+				result.add(new LightCourseResponse(course));
+			}
+		}
+		return result;
 	}
 }

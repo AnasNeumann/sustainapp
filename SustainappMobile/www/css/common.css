@@ -218,6 +218,11 @@ ion-content {
 	cursor : pointer;
 }
 
+.s-common-chevron{
+	margin-left : 10px;
+	font-size : 20px;
+}
+
 .s-common-whiteTitle {
 	color: white;
 	font-family: sustainapp;

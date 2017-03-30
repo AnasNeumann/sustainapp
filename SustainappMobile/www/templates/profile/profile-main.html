@@ -26,102 +26,136 @@
              </div>
          </div>
     </div>
-    <div class="padding s-profile-pageContainer">
-        
-        <!-- Avatar Picture-->
-        <div class="s-profile-avatarContainer">
-            <div style="background-image: url({{profileModel.displayAvatar}});" class="s-profile-avatar">
-                <!-- Mobile view -->
-                <div ng-show="profileModel.owner" class="s-common-camera" ng-if="_isNotMobile == false">
-		           <div class="s-common-choosePictureToogle" ng-show="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = false">
-		              <i class="icon ion-close-round"></i>
-		           </div>
-		           <div class="s-common-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(true)">
-		              {{'common.takePicture' | translate}}
-		           </div>
-		           <div class="s-common-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(false)">
-		             {{'common.chooseFormGallery' | translate}}
-		           </div>
-		           <div class="s-common-choosePictureToogle s-common-22" ng-hide="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = true">
-		              <i class="icon ion-camera"></i>
-		           </div>
-		       </div>
-		       <!-- Desktop view -->
-		        <div class="s-common-camera" ng-show="profileModel.owner" ng-if="_isNotMobile">
-		            <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
-		               <i class="icon ion-camera"></i>
-		               <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopAvatar(this)" />
+    <div class="s-profile-pageContainer">
+        <div class="padding">
+	        <!-- Avatar Picture-->
+	        <div class="s-profile-avatarContainer">
+	            <div style="background-image: url({{profileModel.displayAvatar}});" class="s-profile-avatar">
+	                <!-- Mobile view -->
+	                <div ng-show="profileModel.owner" class="s-common-camera" ng-if="_isNotMobile == false">
+			           <div class="s-common-choosePictureToogle" ng-show="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = false">
+			              <i class="icon ion-close-round"></i>
+			           </div>
+			           <div class="s-common-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(true)">
+			              {{'common.takePicture' | translate}}
+			           </div>
+			           <div class="s-common-choosePicture" ng-show="profileModel.avatarEdit" ng-click="avatar(false)">
+			             {{'common.chooseFormGallery' | translate}}
+			           </div>
+			           <div class="s-common-choosePictureToogle s-common-22" ng-hide="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = true">
+			              <i class="icon ion-camera"></i>
+			           </div>
+			       </div>
+			       <!-- Desktop view -->
+			        <div class="s-common-camera" ng-show="profileModel.owner" ng-if="_isNotMobile">
+			            <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+			               <i class="icon ion-camera"></i>
+			               <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopAvatar(this)" />
+			            </div>
+			        </div>
+	            </div>
+	        </div>       
+	        
+	        <!-- Personal Informations -->
+	        <div class="padding s-profile-infos" >
+	            <div ng-show="profileModel.modeRead" class="animate">
+		            <h2 class="s-profile-name">{{profileModel.profile.firstName}} {{profileModel.profile.lastName}}</h2>
+		            <p>{{profileModel.profile.bornDate | date: 'dd/MM/yyyy' }}</p>
+		            <div class="s-common-edit" ng-click="profileModel.modeRead = false;" ng-show="profileModel.owner">
+		               <i class="icon ion-edit"></i>
+		            </div>
+	            </div>
+	            <div ng-show="profileModel.owner">
+		            <div ng-hide="profileModel.modeRead" >
+		              <div class="s-common-edit" ng-click="profileModel.modeRead = true;">
+		                   <i class="icon ion-close-round"></i>
+		              </div>
+		              <label class="item item-input item-floating-label" >
+		                <span class="input-label s-common-label">{{'profile.firstName' | translate}}</span>
+		                <input ng-model="profileModel.profileTemp.firstName" type="text" placeholder="{{'profile.firstName' | translate}}" class="s-common-input">
+		                <span class="s-common-errors">{{profileModel.allErrors.firstName | translate}}</span>
+		              </label>
+		              <label class="item item-input item-floating-label" > 
+		                <span class="input-label s-common-label">{{'profile.lastName' | translate}}</span> 
+		                <input ng-model="profileModel.profileTemp.lastName" type="text" placeholder="{{'profile.lastName' | translate}}" class="s-common-input">
+		                <span class="s-common-errors">{{profileModel.allErrors.lastName | translate}}</span>
+		              </label>	             
+		              <label class="item item-input item-floating-label" >
+		                <span class="input-label s-common-label">{{'profile.bornDate' | translate}}</span>
+		                <input ng-model="profileModel.profileTemp.bornDate" type="date" placeholder="{{'profile.bornDate' | translate}}" class="s-common-input">
+		                <span class="s-common-errors">{{profileModel.allErrors.bornDate | translate}}</span>
+		              </label>
+		              <button class="s-common-lightBtn" ng-click="updateProfile()">{{'common.modify' | translate}}</button>
 		            </div>
 		        </div>
-            </div>
-        </div>       
+	        </div>
+        </div>
         
-        <!-- Personal Informations -->
-        <div class="padding s-profile-infos" >
-            <div ng-show="profileModel.modeRead" class="animate">
-	            <h2 class="s-profile-name">{{profileModel.profile.firstName}} {{profileModel.profile.lastName}}</h2>
-	            <p>{{profileModel.profile.bornDate | date: 'dd/MM/yyyy' }}</p>
-	            <div class="s-common-edit" ng-click="profileModel.modeRead = false;" ng-show="profileModel.owner">
-	               <i class="icon ion-edit"></i>
+        <!-- ALL BADGES -->
+        <div class="s-common-greyPart s-profile-greyPart">
+            <h2 class="s-common-greyTitle" ng-click="profileModel.openBadges = !profileModel.openBadges">{{'profile.badges' | translate}}
+            <i class="icon ion-chevron-down s-common-chevron" ng-hide="profileModel.openBadges"></i>
+            <i class="icon ion-chevron-up s-common-chevron" ng-show="profileModel.openBadges"></i>
+            </h2>
+        </div>
+        <div class="padding" ng-show="profileModel.openBadges">       
+	        <div class="row">
+	            <div class="col col-30 s-common-center" >
+	                <img src="img/badges/graduate.png" class="s-profile-badge" />
 	            </div>
-            </div>
-            <div ng-show="profileModel.owner">
-	            <div ng-hide="profileModel.modeRead" >
-	              <div class="s-common-edit" ng-click="profileModel.modeRead = true;">
-	                   <i class="icon ion-close-round"></i>
-	              </div>
-	              <label class="item item-input item-floating-label" >
-	                <span class="input-label s-common-label">{{'profile.firstName' | translate}}</span>
-	                <input ng-model="profileModel.profileTemp.firstName" type="text" placeholder="{{'profile.firstName' | translate}}" class="s-common-input">
-	                <span class="s-common-errors">{{profileModel.allErrors.firstName | translate}}</span>
-	              </label>
-	              <label class="item item-input item-floating-label" > 
-	                <span class="input-label s-common-label">{{'profile.lastName' | translate}}</span> 
-	                <input ng-model="profileModel.profileTemp.lastName" type="text" placeholder="{{'profile.lastName' | translate}}" class="s-common-input">
-	                <span class="s-common-errors">{{profileModel.allErrors.lastName | translate}}</span>
-	              </label>	             
-	              <label class="item item-input item-floating-label" >
-	                <span class="input-label s-common-label">{{'profile.bornDate' | translate}}</span>
-	                <input ng-model="profileModel.profileTemp.bornDate" type="date" placeholder="{{'profile.bornDate' | translate}}" class="s-common-input">
-	                <span class="s-common-errors">{{profileModel.allErrors.bornDate | translate}}</span>
-	              </label>
-	              <button class="s-common-lightBtn" ng-click="updateProfile()">{{'common.modify' | translate}}</button>
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/teacher.png" class="s-profile-badge" />
+	            </div>
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/superhero.png" class="s-profile-badge" />
+	            </div>
+	       </div>
+	       <div class="row">
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/reader.png" class="s-profile-badge" />
+	            </div>
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/journalist.png" class="s-profile-badge" />
+	            </div>
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/capitaine.png" class="s-profile-badge" />
 	            </div>
 	        </div>
-        </div>       
-        <div class="row">
-            <div class="col col-30 s-common-center" >
-                <img src="img/badges/graduate.png" class="s-profile-badge" />
-            </div>
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/teacher.png" class="s-profile-badge" />
-            </div>
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/superhero.png" class="s-profile-badge" />
-            </div>
-       </div>
-       <div class="row">
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/reader.png" class="s-profile-badge" />
-            </div>
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/journalist.png" class="s-profile-badge" />
-            </div>
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/capitaine.png" class="s-profile-badge" />
-            </div>
+	        <div class="row">
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/walker.png" class="s-profile-badge" />
+	            </div>
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/star.png" class="s-profile-badge" />
+	            </div>
+	            <div class="col col-30 s-common-center">
+	                <img src="img/badges/missionary.png" class="s-profile-badge" />
+	            </div>
+	        </div>
         </div>
-        <div class="row">
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/walker.png" class="s-profile-badge" />
-            </div>
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/star.png" class="s-profile-badge" />
-            </div>
-            <div class="col col-30 s-common-center">
-                <img src="img/badges/missionary.png" class="s-profile-badge" />
-            </div>
+        
+        <!-- ALL COURSES -->
+        <div class="s-common-greyPart s-profile-greyPart">
+            <h2 class="s-common-greyTitle" ng-click="profileModel.openCourses = !profileModel.openCourses">{{'profile.courses' | translate}}
+            <i class="icon ion-chevron-down s-common-chevron" ng-hide="profileModel.openCourses"></i>
+            <i class="icon ion-chevron-up s-common-chevron" ng-show="profileModel.openCourses"></i>
+            </h2>
         </div>
+        <div ng-show="profileModel.openCourses">          
+            <div class="s-profile-emptyCourses" ng-if="profileModel.courses.length == 0"> 
+                <i class="icon  ion-more"></i>
+            </div>
+            <ion-list ng-if="profileModel.courses.length > 0">
+		     <ion-item ng-if="cours.open != 0 || profileModel.owner" class="item item-thumbnail-left" ng-repeat="cours in profileModel.courses" type="item-text-wrap" href="#/tab/cours/{{cours.id}}">
+		         <img ng-src="data:image/jpeg;base64,{{cours.picture}}" onerror="this.src='img/common/defaultCours.png'">
+		         <div class="s-challenges-level">{{cours.levelMin}}</div>
+		         <h2 class="s-teams-title">{{cours.title}}</h2>
+		         <p class="s-teams-text">{{cours.about}}</p>
+		         <p class="s-teams-text"><i class="icon ion-ios-calendar-outline"></i> {{cours.timestamps | date: 'dd/MM/yyyy'}}</p> 
+		     </ion-item>
+		   </ion-list>
+        </div>
+        
     </div>
   </ion-content>
   

@@ -42,6 +42,6 @@ public interface CourseRepository extends JpaSpecificationExecutor<CourseEntity>
 	 * @param Keywords
 	 * @return
 	 */
-	@Query("FROM CourseEntity c where LOWER(c.title) LIKE  CONCAT('%',LOWER(:keywords),'%')")
+	@Query("FROM CourseEntity c where (LOWER(c.title) LIKE  CONCAT('%',LOWER(:keywords),'%')) AND (c.open != 0)")
 	List<CourseEntity> searchByKeywords(@Param("keywords") String Keywords, Pageable pageable);
 }
