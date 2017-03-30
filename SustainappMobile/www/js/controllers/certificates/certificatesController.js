@@ -1,7 +1,7 @@
 /**
- * Essai de controller de databinding
+ * Controller pour la page des cours
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 03/02/2017
+ * @since 29/03/2017
  * @version 1.0
  */
 angular.module('sustainapp.controllers')

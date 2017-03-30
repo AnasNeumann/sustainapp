@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
+import com.ca.sustainapp.responses.CourseResponse;
 import com.ca.sustainapp.responses.CoursesResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.CourseValidator;
@@ -96,7 +99,25 @@ public class CourseController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/course", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String getById(HttpServletRequest request) {
-		return null;
+		Optional<Long> coursId = StringsUtils.parseLongQuickly(request.getParameter("challenge"));
+		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		if(!coursId.isPresent() || !userId.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		CourseEntity cours = courseService.getById(coursId.get());
+		UserAccountEntity user = userService.getById(userId.get());
+		if(null == cours || null == user){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		return new CourseResponse()
+				.setCours(cours)
+				.setOwner(new LightProfileResponse(profileService.getById(cours.getCreatorId())))
+				.setIsOwner(cours.getCreatorId().equals(user.getProfile().getId()) || user.getIsAdmin())
+				.setAverageRank(calculateAverageRank(cours))
+				.setRank(getOwnRank(user.getProfile().getId(), cours))
+				.setTopics(loadAllTopics(cours, user.getProfile().getId()))
+				.setCode(1)
+				.buildJson();
 	}
 	
 	/**

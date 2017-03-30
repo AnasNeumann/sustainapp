@@ -93,10 +93,10 @@
         
         <!-- ALL BADGES -->
         <div class="s-common-greyPart s-profile-greyPart">
-            <h2 class="s-common-greyTitle" ng-click="profileModel.openBadges = !profileModel.openBadges">{{'profile.badges' | translate}}
+            <h3 class="s-common-greyTitle" ng-click="profileModel.openBadges = !profileModel.openBadges">{{'profile.badges' | translate}}
             <i class="icon ion-chevron-down s-common-chevron" ng-hide="profileModel.openBadges"></i>
             <i class="icon ion-chevron-up s-common-chevron" ng-show="profileModel.openBadges"></i>
-            </h2>
+            </h3>
         </div>
         <div class="padding" ng-show="profileModel.openBadges">       
 	        <div class="row">
@@ -136,10 +136,10 @@
         
         <!-- ALL COURSES -->
         <div class="s-common-greyPart s-profile-greyPart">
-            <h2 class="s-common-greyTitle" ng-click="profileModel.openCourses = !profileModel.openCourses">{{'profile.courses' | translate}}
+            <h3 class="s-common-greyTitle" ng-click="profileModel.openCourses = !profileModel.openCourses">{{'profile.courses' | translate}}
             <i class="icon ion-chevron-down s-common-chevron" ng-hide="profileModel.openCourses"></i>
             <i class="icon ion-chevron-up s-common-chevron" ng-show="profileModel.openCourses"></i>
-            </h2>
+            </h3>
         </div>
         <div ng-show="profileModel.openCourses">          
             <div class="s-profile-emptyCourses" ng-if="profileModel.courses.length == 0"> 

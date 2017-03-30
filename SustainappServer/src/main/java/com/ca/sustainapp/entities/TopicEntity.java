@@ -1,24 +1,16 @@
 package com.ca.sustainapp.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * TOPIC table mapping
@@ -55,10 +47,6 @@ public class TopicEntity extends GenericEntity implements Serializable {
 
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "topicId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<QuestionEntity> listQuestion = new ArrayList<QuestionEntity>();
 	
 	/**
 	 * @return the id
@@ -162,21 +150,6 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	 */
 	public TopicEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
-		return this;
-	}
-
-	/**
-	 * @return the listQuestion
-	 */
-	public List<QuestionEntity> getListQuestion() {
-		return listQuestion;
-	}
-
-	/**
-	 * @param listQuestion the listQuestion to set
-	 */
-	public TopicEntity setListQuestion(List<QuestionEntity> listQuestion) {
-		this.listQuestion = listQuestion;
 		return this;
 	}
 

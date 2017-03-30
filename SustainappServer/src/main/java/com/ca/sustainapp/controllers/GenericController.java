@@ -13,6 +13,8 @@ import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.services.CascadeDeleteService;
+import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.utils.StringsUtils;
 
 
@@ -26,7 +28,7 @@ import com.ca.sustainapp.utils.StringsUtils;
 public class GenericController {
 	
 	/**
-	 * Injection de dépendances
+	 * Injection de dépendances DAO
 	 */
 	@Autowired
 	protected UserAccountServiceDAO userService;
@@ -36,6 +38,14 @@ public class GenericController {
 	 */
 	@Autowired
 	protected EntityComparator compartor;
+	
+	/**
+	 * Business Services
+	 */
+	@Autowired
+	protected CascadeGetService getService;
+	@Autowired
+	protected CascadeDeleteService deleteService;
 	
 	/**
 	 * Creer une nouvelle session pour un utilisateur

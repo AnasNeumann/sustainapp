@@ -24,8 +24,6 @@ import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.responses.ParticipationResponse;
-import com.ca.sustainapp.services.CascadeDeleteService;
-import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.utils.ListUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 
@@ -50,14 +48,6 @@ public class GenericChallengeController extends GenericController {
 	protected ProfileServiceDAO profileService;
 	@Autowired
 	protected TeamServiceDAO teamService;
-	
-	/**
-	 * Business services
-	 */
-	@Autowired
-	protected CascadeGetService getService;
-	@Autowired
-	protected CascadeDeleteService deleteService;
 	
 	/**
 	 * Rechercher toutes les teams et le profil pour lesquels un user est membre ou owner

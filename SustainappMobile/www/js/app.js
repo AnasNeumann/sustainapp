@@ -113,7 +113,6 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    }
 	  }
     })
-    /*
     .state('tab.cours-one', {
 	  url: '/cours/:id',
 	  views: {
@@ -123,7 +122,6 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    }
 	  }
     })
-    */
    .state('tab.notifications', {
 	  url: '/notifications',
 	  views: {
