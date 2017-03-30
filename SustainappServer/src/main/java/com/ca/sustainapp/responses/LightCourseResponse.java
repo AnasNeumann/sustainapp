@@ -18,6 +18,7 @@ public class LightCourseResponse extends HttpRESTfullResponse {
 	private byte[] picture;
 	private Integer levelMin;
 	private Calendar timestamps;
+	private Integer open;
 	
 	/**
 	 * Constructor for Courses
@@ -30,6 +31,7 @@ public class LightCourseResponse extends HttpRESTfullResponse {
 		this.picture = cours.getPicture();
 		this.levelMin = cours.getLevelMin();
 		this.timestamps = cours.getTimestamps();
+		this.open = cours.getOpen();
 	}
 	
 	/**
@@ -122,4 +124,18 @@ public class LightCourseResponse extends HttpRESTfullResponse {
 		return this;
 	}
 
+	/**
+	 * @return the open
+	 */
+	public Integer getOpen() {
+		return open;
+	}
+
+	/**
+	 * @param open the open to set
+	 */
+	public LightCourseResponse setOpen(Integer open) {
+		this.open = open;
+		return this;
+	}
 }

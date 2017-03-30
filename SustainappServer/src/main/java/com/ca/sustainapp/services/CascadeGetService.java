@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.comparators.EntityComparator;
+import com.ca.sustainapp.criteria.CourseCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
+import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
+import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SearchResult;
@@ -32,6 +35,8 @@ public class CascadeGetService {
 	private ParticipationServiceDAO participationService;
 	@Autowired
 	private TeamRoleServiceDAO teamRoleService;
+	@Autowired
+	private CourseServiceDAO courseService;
 	
 	/**
 	 * Comparator
@@ -82,6 +87,34 @@ public class CascadeGetService {
 		List<TeamRoleEntity> finalResult = new ArrayList<TeamRoleEntity>();
 		do {
 			result = teamRoleService.searchByCriteres(criteria, startIndex, maxResults);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += pagination;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for courses
+	 * @param criteria
+	 * @return
+	 */
+	public List<CourseEntity> cascadeGetCourses(CourseCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		Long pagination = 100L;
+		Long maxResults = pagination;
+		SearchResult<CourseEntity> result = null;
+		List<CourseEntity> finalResult = new ArrayList<CourseEntity>();
+		do {
+			result = courseService.searchByCriteres(criteria, startIndex, maxResults);
 			if (null == totalResults && null != result) {
 				totalResults = result.getTotalResults();
 			}
