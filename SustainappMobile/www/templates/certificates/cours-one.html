@@ -62,6 +62,14 @@
                   <button class="s-common-btn" ng-click="updateCours()">{{'common.modify' | translate}}</button>
             </div>
         </div>
+        <div>
+	        <ion-item class="item item-avatar" type="item-text-wrap" href="#/tab/{{coursModel.owner.type}}/{{coursModel.owner.id}}">
+	            <img ng-src="data:image/jpeg;base64,{{coursModel.owner.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+	            <div class="s-teams-level">{{coursModel.owner.level}}</div>
+	            <h2 class="s-teams-title">{{coursModel.owner.denomination}}</h2>
+	            <p class="s-teams-text">{{'course.teacher' | translate}}</p>
+	        </ion-item>
+        </div>
         
         <!-- PARTIE CHAPITRES -->
         

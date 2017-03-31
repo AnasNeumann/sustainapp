@@ -114,5 +114,6 @@
     
     "course.about" :"A propos du cours",
     "course.new" :"Nouveau cours",
-    "course.add" :"Créer un nouveau cours"
+    "course.add" :"Créer un nouveau cours",
+    "course.teacher" : "est le professeur de ce cours"
 }

@@ -114,5 +114,6 @@
     
     "course.about" :"About this course",
     "course.new" :"New course",
-    "course.add" :"Create a new course"
+    "course.add" :"Create a new course",
+    "course.teacher" : "is the teacher of this course"
 }
