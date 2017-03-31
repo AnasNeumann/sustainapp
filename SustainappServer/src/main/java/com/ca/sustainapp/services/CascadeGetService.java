@@ -9,16 +9,19 @@ import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.criteria.CourseCriteria;
+import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
 import com.ca.sustainapp.dao.CourseServiceDAO;
+import com.ca.sustainapp.dao.PartServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
 import com.ca.sustainapp.dao.TopicServiceDAO;
 import com.ca.sustainapp.dao.TopicValidationServiceDAO;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.entities.TopicEntity;
@@ -47,12 +50,43 @@ public class CascadeGetService {
 	private TopicServiceDAO topicService;
 	@Autowired
 	private TopicValidationServiceDAO validationService;
+	@Autowired
+	private PartServiceDAO partService;
 	
 	/**
 	 * Comparator
 	 */
 	@Autowired
 	private EntityComparator compartor;
+	
+	
+	/**
+	 * Cascade get for part
+	 * @param criteria
+	 * @return
+	 */
+	public List<PartEntity> cascadeGetPart(PartCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		Long pagination = 100L;
+		Long maxResults = pagination;
+		SearchResult<PartEntity> result = null;
+		List<PartEntity> finalResult = new ArrayList<PartEntity>();
+		do {
+			result = partService.searchByCriteres(criteria, startIndex, maxResults);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += pagination;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
 	
 	/**
 	 * Cascade get for participation

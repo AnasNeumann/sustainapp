@@ -1,6 +1,9 @@
 package com.ca.sustainapp.controllers;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,11 +17,13 @@ import com.ca.sustainapp.dao.PartServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TopicServiceDAO;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.LightTopicResponse;
+import com.ca.sustainapp.utils.StringsUtils;
 
 /**
  * Generic controller for course management
@@ -114,4 +119,90 @@ public class GenericCourseController extends GenericController{
 	protected List<TopicValidationEntity> getAllTopicValidation(Long topicId){
 		return getService.cascadeGetValidation(new TopicValidationCriteria().setTopicId(topicId));
 	}
+	
+	/**
+	 * Verify all informations for a cours 
+	 * @param request
+	 */
+	protected CourseEntity getCoursIfOwner(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("cours"));
+		if(!id.isPresent()){
+			return null;
+		}
+		CourseEntity cours = courseService.getById(id.get());
+		if(!verifyCoursInformations(cours, request)){
+			return null;
+		}
+		return cours;
+	}
+	
+	/**
+	 * Verify all informations for a topic 
+	 * @param request
+	 */
+	protected TopicEntity getTopicIfOwner(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("topic"));
+		if(!id.isPresent()){
+			return null;
+		}
+		TopicEntity topic = topicService.getById(id.get());
+		if(!verifyTopicInformations(topic, request)){
+			return null;
+		}
+		return topic;
+		
+	}
+
+	/**
+	 * Verify all informations for a part 
+	 * @param request
+	 * @return
+	 */
+	protected PartEntity getPartIfOwner(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("part"));
+		if(!id.isPresent()){
+			return null;
+		}
+		PartEntity part = partService.getById(id.get());
+		if(null == part){
+			return null;
+		}
+		if(!verifyTopicInformations(topicService.getById(part.getTopicId()), request)){
+			return null;
+		}
+		return part;
+	}
+	
+	/**
+	 * Verifier si un topic peu être éditer
+	 * @param topic
+	 * @param request
+	 * @return
+	 */
+	protected Boolean verifyTopicInformations(TopicEntity topic, HttpServletRequest request){
+		if(null == topic){
+			return false;
+		}
+		CourseEntity cours = courseService.getById(topic.getCurseId());
+		return verifyCoursInformations(cours, request);
+	}
+
+	/**
+	 * Verifier si un cours peu être éditer
+	 * @param cours
+	 * @param request
+	 * @return
+	 */
+	protected Boolean verifyCoursInformations(CourseEntity cours, HttpServletRequest request){
+		if(null !=cours && super.getConnectedUser(request).getIsAdmin()){
+			return true;
+		}
+		if(null == cours || !cours.getCreatorId().equals(super.getConnectedUser(request).getProfile().getId())){
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
 }

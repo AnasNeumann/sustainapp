@@ -99,7 +99,7 @@ public class CourseController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/course", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String getById(HttpServletRequest request) {
-		Optional<Long> coursId = StringsUtils.parseLongQuickly(request.getParameter("challenge"));
+		Optional<Long> coursId = StringsUtils.parseLongQuickly(request.getParameter("cours"));
 		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("id"));
 		if(!coursId.isPresent() || !userId.isPresent()){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
@@ -137,7 +137,12 @@ public class CourseController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/course/picture", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String picture(HttpServletRequest request) {
-		return null;
+		CourseEntity cours = getCoursIfOwner(request);
+		if(null == cours){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		courseService.createOrUpdate(cours.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -147,7 +152,12 @@ public class CourseController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/course/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		CourseEntity cours = getCoursIfOwner(request);
+		if(null == cours){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		deleteService.cascadeDelete(cours);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
