@@ -64,7 +64,6 @@
         </div>
         <div ng-if="coursModel.isAdmin" class="s-cours-levelMin" ng-click="openLevelMin($event)">
             <span class="s-teams-text">{{'challenges.levelMin' | translate}}</span><span class="s-cours-levelMin-number">{{coursModel.cours.levelMin}}</span>
-            <span class="s-common-errors">{{coursModel.allErrors.levelMin | translate}}</span>
          </div>
         <ion-list>
 		    <ion-toggle ng-if="coursModel.isAdmin" ng-model="coursModel.open" ng-change="toogleOpen()" class="s-teams-text">{{'cours.open' | translate}}</ion-toggle>    

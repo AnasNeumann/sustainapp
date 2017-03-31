@@ -28,6 +28,7 @@ import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
+import com.ca.sustainapp.validators.CourseUpdateValidator;
 import com.ca.sustainapp.validators.CourseValidator;
 
 /**
@@ -45,6 +46,8 @@ public class CourseController extends GenericCourseController {
 	 */
 	@Autowired
 	private CourseValidator validator;
+	@Autowired
+	private CourseUpdateValidator updateValidator;
 	
 	/**
 	 * get all courses
@@ -127,7 +130,14 @@ public class CourseController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/course/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		String title = request.getParameter("title");
+		String about = request.getParameter("about");
+		CourseEntity cours = getCoursIfOwner(request);
+		if(null == cours || !updateValidator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setCode(0).setErrors(updateValidator.validate(request)).buildJson();
+		}
+		courseService.createOrUpdate(cours.setTitle(title).setAbout(about));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**

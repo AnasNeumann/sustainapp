@@ -112,6 +112,28 @@ angular.module('sustainapp.controllers')
 	}
 	
 	/**
+	 * Modification des informations d'un cours
+	 */
+	$scope.updateCours = function(){
+		var data = new FormData();
+		data.append("title", $scope.coursModel.title);
+		data.append("about", $scope.coursModel.about);
+		data.append("cours", $scope.coursModel.cours.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		coursService.update(data).success(function(result) {
+			if(result.code == 1){
+				$scope.coursModel.allErrors = [];	
+				$scope.coursModel.cours.title = $scope.coursModel.title;
+				$scope.coursModel.cours.about = $scope.coursModel.about;
+				$scope.coursModel.edit = false;
+	    	} else {
+	    		$scope.coursModel.allErrors = result.errors;
+	    	}
+		});
+	}
+	
+	/**
 	 * Modification de l'ouverture fermeture d'un cours
 	 */
 	$scope.toogleOpen = function(){

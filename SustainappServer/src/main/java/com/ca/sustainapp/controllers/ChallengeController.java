@@ -168,7 +168,7 @@ public class ChallengeController extends GenericChallengeController {
 		String about = request.getParameter("about");
 		ChallengeEntity challenge = verifyAllOwnerInformations(request);
 		if(null == challenge || !updateValidator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return new HttpRESTfullResponse().setCode(0).setErrors(updateValidator.validate(request)).buildJson();
 		}
 		challengeService.createOrUpdate(challenge.setName(name).setAbout(about));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
