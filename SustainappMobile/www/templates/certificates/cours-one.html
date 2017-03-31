@@ -58,10 +58,14 @@
                     <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
                     <input ng-model="coursModel.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
                     <span class="s-common-errors">{{coursModel.allErrors.about | translate}}</span>
-                  </label>
+                  </label>               
                   <button class="s-common-btn" ng-click="updateCours()">{{'common.modify' | translate}}</button>
             </div>
         </div>
+        <div ng-if="coursModel.isAdmin" class="s-cours-levelMin" ng-click="openLevelMin($event)">
+            <span class="s-teams-text">{{'challenges.levelMin' | translate}}</span><span class="s-cours-levelMin-number">{{coursModel.cours.levelMin}}</span>
+            <span class="s-common-errors">{{coursModel.allErrors.levelMin | translate}}</span>
+         </div>
         <ion-list>
 		    <ion-toggle ng-if="coursModel.isAdmin" ng-model="coursModel.open" ng-change="toogleOpen()" class="s-teams-text">{{'cours.open' | translate}}</ion-toggle>    
 	        <ion-item class="item item-avatar" type="item-text-wrap" href="#/tab/{{coursModel.owner.type}}/{{coursModel.owner.id}}">

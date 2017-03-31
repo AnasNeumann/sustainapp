@@ -405,3 +405,12 @@ ion-content {
 	height : 35px;
 	opacity : 0 !important;
 }
+
+
+/* Checkbox */
+.toggle-small input:checked + .track{
+	background-color: #28a754;
+}
+.toggle-small input:checked + .track .handle{
+	background-color: #2dbe60;
+}

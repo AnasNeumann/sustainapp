@@ -26,6 +26,9 @@ angular.module('sustainapp.services')
 		update : function(data) {
 			return $http.post(config.remoteServer+"/course/update", data, params);
 		},
+		level : function(data) {
+			return $http.post(config.remoteServer+"/course/level", data, params);
+		},
 		picture : function(data) {
 			return $http.post(config.remoteServer+"/course/picture", data, params);
 		},

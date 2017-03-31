@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+/**
+ * Le style de la page des cours
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 31/03/2017
+ * @version 1.0
+ */
+
+.s-cours-levelMin{
+	padding : 15px;
+	border-top : 1px solid #ddd;
+}
+
+.s-cours-levelMin-number {
+	display : inline-block; 
+    position: absolute;
+    right: 20px;
+    width : 22px;
+    height : 22px;
+    text-align :center;
+    border-radius : 3px;
+    border: 2px solid #2dbe60;
+    font-size : 22px;
+    padding-top : 1px;
+    color : #2dbe60;
+    font-family:  sustainapp-bold;
+}

@@ -133,7 +133,7 @@ angular.module('sustainapp.controllers')
 	 */
 	$scope.changeLevelMin = function(level){
 		$scope.popoverLevel.hide();
-		$scope.coursModel.levelMin = level
+		$scope.coursModel.levelMin = level;
 	}
 	
 	/**

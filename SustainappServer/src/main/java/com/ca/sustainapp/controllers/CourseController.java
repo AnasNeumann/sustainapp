@@ -131,6 +131,23 @@ public class CourseController extends GenericCourseController {
 	}
 	
 	/**
+	 * update a course level by id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/course/level", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String level(HttpServletRequest request) {
+		CourseEntity cours = getCoursIfOwner(request);
+		Optional<Integer> level = StringsUtils.parseIntegerQuietly(request.getParameter("level"));
+		if(null == cours || !level.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		courseService.createOrUpdate(cours.setLevelMin(level.get()));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	
+	/**
 	 * update a course picture 
 	 * @return
 	 */
