@@ -45,6 +45,7 @@ angular.module('sustainapp.controllers')
 				$scope.coursModel.displayPicture = "img/challenge/default.png";
 				$scope.coursModel.title = result.cours.title;
 				$scope.coursModel.about = result.cours.about;
+				$scope.coursModel.open = ($scope.coursModel.cours.open != 0);
 				if(null != result.cours.picture){
 					$scope.coursModel.displayPicture = "data:image/jpeg;base64,"+ result.cours.picture;
 				}
@@ -80,6 +81,17 @@ angular.module('sustainapp.controllers')
 			});
         }
         reader.readAsDataURL(input.files[0]);  
+	}
+	
+	/**
+	 * Modification de l'ouverture fermeture d'un cours
+	 */
+	$scope.toogleOpen = function(){
+		var data = new FormData();
+		data.append("cours", $scope.coursModel.cours.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		coursService.toogleOpen(data);
 	}
 	
 	/**

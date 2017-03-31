@@ -115,5 +115,8 @@
     "course.about" :"About this course",
     "course.new" :"New course",
     "course.add" :"Create a new course",
-    "course.teacher" : "is the teacher of this course"
+    "course.teacher" : "is the teacher of this course",
+    "course.chapters" : "Chapters",
+    "course.chapters.add" : "Add a chapter",
+    "cours.open" : "Publish this course to users ?"
 }

@@ -115,5 +115,8 @@
     "course.about" :"A propos du cours",
     "course.new" :"Nouveau cours",
     "course.add" :"Créer un nouveau cours",
-    "course.teacher" : "est le professeur de ce cours"
+    "course.teacher" : "est le professeur de ce cours",
+    "course.chapters" : "Chapitres",
+    "course.chapters.add" : "Ajouter un chapitre",
+    "cours.open" : "Publier ce cours aux utilisateurs ?"
 }

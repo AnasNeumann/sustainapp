@@ -62,17 +62,23 @@
                   <button class="s-common-btn" ng-click="updateCours()">{{'common.modify' | translate}}</button>
             </div>
         </div>
-        <div>
+        <ion-list>
+		    <ion-toggle ng-if="coursModel.isAdmin" ng-model="coursModel.open" ng-change="toogleOpen()" class="s-teams-text">{{'cours.open' | translate}}</ion-toggle>    
 	        <ion-item class="item item-avatar" type="item-text-wrap" href="#/tab/{{coursModel.owner.type}}/{{coursModel.owner.id}}">
 	            <img ng-src="data:image/jpeg;base64,{{coursModel.owner.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
 	            <div class="s-teams-level">{{coursModel.owner.level}}</div>
 	            <h2 class="s-teams-title">{{coursModel.owner.denomination}}</h2>
 	            <p class="s-teams-text">{{'course.teacher' | translate}}</p>
 	        </ion-item>
-        </div>
+        </ion-list>
         
         <!-- PARTIE CHAPITRES -->
-        
+        <div class="s-common-bluePart">
+            <h2 class="s-common-whiteTitle">{{'course.chapters' | translate}}</h2>
+        </div>
+        <div class="s-common-greyPart" ng-if="coursModel.isAdmin">
+            <h3 class="s-common-greyTitle" ng-click="topicModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
+        </div>
         
     </ion-content>
     

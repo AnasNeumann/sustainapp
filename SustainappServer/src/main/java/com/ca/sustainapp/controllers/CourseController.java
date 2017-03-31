@@ -167,7 +167,12 @@ public class CourseController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/course/open", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String toogleOpen(HttpServletRequest request) {
-		return null;
+		CourseEntity cours = getCoursIfOwner(request);
+		if(null == cours){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		courseService.createOrUpdate(cours.setOpen(cours.getOpen().equals(1) ? 0 : 1));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
 }
