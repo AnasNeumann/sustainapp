@@ -410,7 +410,9 @@ ion-content {
 /* Checkbox */
 .toggle-small input:checked + .track{
 	background-color: #28a754;
+	cursor : pointer;
 }
 .toggle-small input:checked + .track .handle{
 	background-color: #2dbe60;
+	cursor : pointer;
 }

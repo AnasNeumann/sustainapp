@@ -62,6 +62,7 @@
                   <button class="s-common-btn" ng-click="updateCours()">{{'common.modify' | translate}}</button>
             </div>
         </div>
+        <rating ng-model="rate" max="max" ng-click="test()"></rating>
         <div ng-if="coursModel.isAdmin" class="s-cours-levelMin" ng-click="openLevelMin($event)">
             <span class="s-teams-text">{{'challenges.levelMin' | translate}}</span><span class="s-cours-levelMin-number">{{coursModel.cours.levelMin}}</span>
          </div>

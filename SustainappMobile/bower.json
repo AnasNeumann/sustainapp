@@ -7,6 +7,7 @@
   "dependencies": {
     "ngCordova": "^0.1.27-alpha",
     "angular-translate": "^2.13.1",
-    "angular-translate-loader-static-files": "^2.13.1"
+    "angular-translate-loader-static-files": "^2.13.1",
+    "ionic-rating": "^0.3.0"
   }
 }

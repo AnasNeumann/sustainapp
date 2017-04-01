@@ -27,6 +27,8 @@ angular.module('sustainapp.controllers')
 		$scope.coursModel.pictureEdit = false;
 		$scope.coursModel.file  = null;
 		
+		$scope.max = 5;
+		
 		$scope.deleteType = true;
 		$scope.eltToDelete  = {};
 		
@@ -44,10 +46,14 @@ angular.module('sustainapp.controllers')
 			if(result.code == 1) {
 				$scope.coursModel.loaded = true;
 				$scope.coursModel.cours = result.cours;
+				$scope.title = result.cours.title;
 				$scope.coursModel.isAdmin = result.isOwner;
 				$scope.coursModel.owner = result.owner;
 				$scope.coursModel.averageRank = result.averageRank;
-				$scope.coursModel.rank = result.rank;
+				$scope.rank = 1;
+				if(null != result.rank){
+					$scope.rank = result.rank.score;
+				}				
 				$scope.coursModel.topics = result.topics;
 				$scope.coursModel.displayPicture = "img/challenge/default.png";
 				$scope.coursModel.title = result.cours.title;
