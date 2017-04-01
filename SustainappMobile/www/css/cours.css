@@ -26,3 +26,16 @@
     color : #2dbe60;
     font-family:  sustainapp-bold;
 }
+
+.s-cours-star{
+    color : #23d5fb;
+    font-size : 32px;
+    margin-right : 10px;
+    cursor : pointer;
+}
+
+.s-cours-starText{
+	position : relative;
+	top : -3px;
+	cursor : pointer;
+}

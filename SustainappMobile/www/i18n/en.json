@@ -118,5 +118,9 @@
     "course.teacher" : "is the teacher of this course",
     "course.chapters" : "Chapters",
     "course.chapters.add" : "Add a chapter",
-    "cours.open" : "Publish this course to users ?"
+    "cours.open" : "Publish this course to users ?",
+    "course.rank.this" : "Give a note to this course",
+    "course.rank.by" : "by",
+    "course.rank.total" : "people",
+    "course.rank.average" : "Rated"
 }

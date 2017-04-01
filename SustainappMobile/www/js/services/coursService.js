@@ -38,5 +38,8 @@ angular.module('sustainapp.services')
 		toogleOpen : function(data) {
 			return $http.post(config.remoteServer+"/course/open", data, params);
 		},
+		note : function(data) {
+			return $http.post(config.remoteServer+"/course/note", data, params);
+		}
 	};
 });

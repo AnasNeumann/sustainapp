@@ -27,7 +27,9 @@ angular.module('sustainapp.controllers')
 		$scope.coursModel.pictureEdit = false;
 		$scope.coursModel.file  = null;
 		
-		$scope.max = 5;
+	    $scope.rating = {};
+		$scope.rating.rate = 1;
+		$scope.rating.max = 5;
 		
 		$scope.deleteType = true;
 		$scope.eltToDelete  = {};
@@ -49,10 +51,10 @@ angular.module('sustainapp.controllers')
 				$scope.title = result.cours.title;
 				$scope.coursModel.isAdmin = result.isOwner;
 				$scope.coursModel.owner = result.owner;
-				$scope.coursModel.averageRank = result.averageRank;
-				$scope.rank = 1;
+				$scope.coursModel.averageRank = result.averageRank;				
+				$scope.coursModel.totalRank = $scope.coursModel.cours.listRank.length;
 				if(null != result.rank){
-					$scope.rank = result.rank.score;
+					$scope.rating.rate = result.rank.score;
 				}				
 				$scope.coursModel.topics = result.topics;
 				$scope.coursModel.displayPicture = "img/challenge/default.png";
@@ -65,6 +67,24 @@ angular.module('sustainapp.controllers')
 			}
 		});
 	};
+	
+	/**
+	 * Méthode de notation d'un cours
+	 */
+	$scope.doRank = function(){
+		$scope.modalRank.hide();
+		var data = new FormData();
+		data.append("score", $scope.rating.rate);
+		data.append("cours", $scope.coursModel.cours.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		coursService.note(data).success(function(result) {
+			if(result.code == 1){
+				$scope.coursModel.totalRank = result.total;
+				$scope.coursModel.averageRank = result.average;
+			}
+		});
+	}
 	
 	/**
 	 * fonction d'ouverture du menu de choix du type de challenge
@@ -95,6 +115,15 @@ angular.module('sustainapp.controllers')
 	   }).then(function(modal) {
 	     $scope.modal = modal;
 	   });
+     
+     /**
+      * Modal de note pour le cours
+      */
+      $ionicModal.fromTemplateUrl('templates/common/modalRank.html', {
+ 	     scope: $scope
+ 	   }).then(function(modal) {
+ 	     $scope.modalRank = modal;
+ 	   });
 	
 	/**
 	 * Modification de l'image du cours [desktop mode]

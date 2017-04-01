@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.dao.RankCourseServiceDAO;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
@@ -26,6 +28,7 @@ import com.ca.sustainapp.responses.CoursesResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.LightProfileResponse;
+import com.ca.sustainapp.responses.RankCoursResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.CourseUpdateValidator;
@@ -48,6 +51,9 @@ public class CourseController extends GenericCourseController {
 	private CourseValidator validator;
 	@Autowired
 	private CourseUpdateValidator updateValidator;
+	@Autowired
+	private RankCourseServiceDAO rankService;
+
 	
 	/**
 	 * get all courses
@@ -200,6 +206,38 @@ public class CourseController extends GenericCourseController {
 		}
 		courseService.createOrUpdate(cours.setOpen(cours.getOpen().equals(1) ? 0 : 1));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
+	 * note a courses
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/course/note", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String note(HttpServletRequest request) {
+		Optional<Long> idCours = StringsUtils.parseLongQuickly(request.getParameter("cours"));
+		Optional<Integer> score = StringsUtils.parseIntegerQuietly(request.getParameter("score"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(!idCours.isPresent() || !score.isPresent() || null == user){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		CourseEntity cours = courseService.getById(idCours.get());
+		if(null == cours){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		Integer total = cours.getListRank().size();
+		RankCourseEntity rank = super.getOwnRank(user.getProfile().getId(), cours);
+		if(null == rank){
+			total++;
+			rank = new RankCourseEntity()
+					.setCourseId(idCours.get())
+					.setProfilId(user.getProfile().getId())
+					.setScore(score.get())
+					.setTimestamps(GregorianCalendar.getInstance());
+		}
+		rank.setScore(score.get());
+		rankService.createOrUpdate(rank);
+		return new RankCoursResponse().setTotal(total).setAverage(super.calculateAverageRank(courseService.getById(idCours.get()))).setCode(1).buildJson();
 	}
 
 }

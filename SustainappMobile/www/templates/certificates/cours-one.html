@@ -58,11 +58,13 @@
                     <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
                     <input ng-model="coursModel.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
                     <span class="s-common-errors">{{coursModel.allErrors.about | translate}}</span>
-                  </label>               
+                  </label>
                   <button class="s-common-btn" ng-click="updateCours()">{{'common.modify' | translate}}</button>
             </div>
         </div>
-        <rating ng-model="rate" max="max" ng-click="test()"></rating>
+        <div class="padding" ng-click="modalRank.show()">
+            <i class="icon ion-star s-cours-star"></i><span class="s-cours-starText">{{'course.rank.average'| translate}} {{coursModel.averageRank}}/5, {{'course.rank.by'| translate}} {{coursModel.totalRank}} {{'course.rank.total'| translate}}</span>
+        </div>
         <div ng-if="coursModel.isAdmin" class="s-cours-levelMin" ng-click="openLevelMin($event)">
             <span class="s-teams-text">{{'challenges.levelMin' | translate}}</span><span class="s-cours-levelMin-number">{{coursModel.cours.levelMin}}</span>
          </div>
