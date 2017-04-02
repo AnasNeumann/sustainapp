@@ -17,6 +17,7 @@ public class TopicCriteria implements Serializable {
 	private String title;
 	private String content;
 	private Long curseId;
+	private Integer numero;
 	private Calendar timestamps;
 
 	/**
@@ -101,6 +102,22 @@ public class TopicCriteria implements Serializable {
 	@QueryParam("timestamps")
 	public TopicCriteria setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
+		return this;
+	}
+	
+	/**
+	 * @return the numero
+	 */
+	public Integer getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	@QueryParam("numero")
+	public TopicCriteria setNumero(Integer numero) {
+		this.numero = numero;
 		return this;
 	}
 

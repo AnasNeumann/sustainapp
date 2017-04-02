@@ -1,5 +1,6 @@
 package com.ca.sustainapp.controllers;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +90,7 @@ public class GenericCourseController extends GenericController{
 	protected List<LightTopicResponse> loadAllTopics(CourseEntity course, Long profileId){
 		List<LightTopicResponse> result = new SustainappList<LightTopicResponse>();
 		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(course.getId()));
+		Collections.sort(topics, super.comparatorByNumber);
 		for(TopicEntity topic : topics){
 			result.add(new LightTopicResponse().setTopic(topic).setDone(alreadyTopicValided(topic.getId(), profileId)));
 		}

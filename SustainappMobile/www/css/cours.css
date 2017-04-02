@@ -39,3 +39,25 @@
 	top : -3px;
 	cursor : pointer;
 }
+
+.s-cours-topicImageContainer{
+	position : relative;
+    height : 180px;
+    width : 100%;
+    background-color: #F0F0F0;
+    margin : auto;
+    margin-top : 25px;
+    border : 1px solid #E0E0E0;
+    color : #D0D0D0;
+    background-position : center;
+    background-repeat : no-repeat;
+    background-size : cover;
+    font-size : 100px;
+    padding-top : 40px;
+}
+
+.s-cours-topicPicture{
+	width : 100px;
+	display : block;
+	margin : auto;
+}

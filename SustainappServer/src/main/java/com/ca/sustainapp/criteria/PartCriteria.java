@@ -18,6 +18,7 @@ public class PartCriteria implements Serializable {
 	private String content;
 	private Integer type;
 	private Long topicId;
+	private Integer numero;
 	private Calendar timestamps;
 	
 	/**
@@ -113,6 +114,22 @@ public class PartCriteria implements Serializable {
 	@QueryParam("timestamps")
 	public PartCriteria setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
+		return this;
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public Integer getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	@QueryParam("numero")
+	public PartCriteria setNumero(Integer numero) {
+		this.numero = numero;
 		return this;
 	}
 }

@@ -82,10 +82,19 @@
         <div class="s-common-bluePart">
             <h2 class="s-common-whiteTitle">{{'course.chapters' | translate}}</h2>
         </div>
-        <div class="s-common-greyPart" ng-if="coursModel.isAdmin">
+        <div class="s-common-greyPart" ng-if="coursModel.isAdmin" ng-click="modalTopic.show()">
             <h3 class="s-common-greyTitle" ng-click="topicModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
         </div>
-        
+        <div class="s-teams-allResults">
+	       <ion-list>
+	          <ion-item class="item item-avatar" ng-repeat="elt in coursModel.topics" type="item-text-wrap" href="#/tab/topic/{{elt.topic.id}}">
+	            <img ng-if="true == elt.done" ng-src="img/courses/valid.png" />
+	            <img ng-if="false == elt.done" ng-src="img/courses/invalid.png" />
+	            <h2 class="s-teams-title">{{elt.topic.title}}</h2>
+	            <p class="s-teams-text">{{elt.topic.content}}</p>
+	          </ion-item>
+	       </ion-list>
+	   </div>
     </ion-content>
     
     <!-- Loading Part -->

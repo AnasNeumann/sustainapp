@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.ca.sustainapp.comparators.EntityComparator;
+import com.ca.sustainapp.comparators.NumerotableEntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
@@ -38,6 +39,8 @@ public class GenericController {
 	 */
 	@Autowired
 	protected EntityComparator compartor;
+	@Autowired
+	protected NumerotableEntityComparator comparatorByNumber;
 	
 	/**
 	 * Business Services

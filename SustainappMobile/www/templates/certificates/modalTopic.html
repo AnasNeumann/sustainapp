@@ -1,0 +1,47 @@
+<ion-modal-view  class="s-modal-views">
+   <ion-content>
+     <div class="s-modal-confirm">  
+     <div class="s-common-floatEdit" ng-click="modalTopic.hide()">
+         <i class="icon ion-close-round"></i>
+     </div>
+      <div class="s-cours-topicImageContainer" style="background-image: url({{coursModel.displayTopicFile}});">
+        <i ng-show="coursModel.emptyTopicFile" class="icon ion-image s-cours-topicPicture"></i>
+        <!-- Mobile view -->
+        <div class="s-common-camera" ng-if="_isNotMobile == false">
+            <div class="s-common-choosePictureToogle" ng-show="coursModel.editTopicFile" ng-click="coursModel.editTopicFile = false">
+               <i class="icon ion-close-round"></i>
+            </div>
+            <div class="s-common-choosePicture" ng-show="coursModel.editTopicFile" ng-click="chooseTopicFile(true)">
+               {{'common.takePicture' | translate}}
+            </div>
+            <div class="s-common-choosePicture" ng-show="coursModel.editTopicFile" ng-click="chooseTopicFile(false)">
+              {{'common.chooseFormGallery' | translate}}
+            </div>
+            <div class="s-common-choosePictureToogle s-common-22" ng-hide="coursModel.editTopicFile" ng-click="coursModel.editTopicFile = true">
+               <i class="icon ion-camera"></i>
+            </div>
+        </div>
+        <!-- Desktop view -->
+         <div class="s-common-camera" ng-if="_isNotMobile">
+             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                <i class="icon ion-camera"></i>
+                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopTopicFile(this)" />
+             </div>
+         </div>
+      </div>
+      <div class="padding">
+	      <label class="item item-input item-floating-label" > 
+	        <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
+	        <input ng-model="coursModel.topic.title" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+	        <span class="s-common-errors">{{coursModel.allTopicErrors.title | translate}}</span>
+	      </label>
+	      <label class="item item-input item-floating-label" > 
+	        <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+	        <input ng-model="coursModel.topic.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+	        <span class="s-common-errors">{{coursModel.allTopicErrors.about | translate}}</span>
+	      </label>
+	      <button class="s-common-btn" ng-click="createTopic()">{{'common.create' | translate}}</button>
+      </div>
+     </div>
+   </ion-content>
+</ion-modal-view>

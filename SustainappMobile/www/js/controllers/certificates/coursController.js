@@ -35,6 +35,15 @@ angular.module('sustainapp.controllers')
 		$scope.deleteType = true;
 		$scope.eltToDelete  = {};
 		
+		$scope.coursModel.topic = {};
+		$scope.coursModel.topic.title = "";
+		$scope.coursModel.topic.about = "";
+		$scope.coursModel.editTopicFile = false;
+		$scope.coursModel.emptyTopicFile = true;
+		$scope.coursModel.displayTopicFile = "";
+		$scope.coursModel.topicFile = null;
+		$scope.coursModel.allTopicErrors = [];
+		
 		$ionicPopover.fromTemplateUrl('templates/common/popover-level.html', {
 		    scope: $scope
 		  }).then(function(popover) {
@@ -125,6 +134,15 @@ angular.module('sustainapp.controllers')
  	   }).then(function(modal) {
  	     $scope.modalRank = modal;
  	   });
+      
+      /**
+       * Modal pour l'ajout d'un topic
+       */
+       $ionicModal.fromTemplateUrl('templates/certificates/modalTopic.html', {
+  	     scope: $scope
+  	   }).then(function(modal) {
+  	     $scope.modalTopic = modal;
+  	   });
 	
 	/**
 	 * Modification de l'image du cours [desktop mode]
@@ -252,6 +270,71 @@ angular.module('sustainapp.controllers')
 	var deleteTopic = function(){
 		// TODO 
 	}
-
+	
+	/**
+	 * Ajout d'une image pour un topic [mobile mode]
+	 */
+	$scope.chooseTopicFile = function(newFile){
+		fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {
+			$scope.coursModel.editTopicFile = false;
+			$scope.coursModel.emptyTopicFile = false;
+			$scope.coursModel.displayTopicFile = "data:image/jpeg;base64,"+imageData;
+			$scope.coursModel.topicFile = imageData;			
+		 }, function(err) {
+		 });
+	}
+	
+	/**
+	 * Ajout d'une image pour un topic [desktop mode]
+	 */
+	$scope.desktopTopicFile = function(input){
+		var reader = new FileReader();
+        reader.onload = function (e) {
+        	$scope.$apply(function () {
+        		$scope.coursModel.topicFile =  e.target.result.substring(e.target.result.indexOf(",")+1);
+        		$scope.coursModel.displayTopicFile = e.target.result;
+        		$scope.coursModel.emptyTopicFile = false;
+            });           	         	
+        }
+        reader.readAsDataURL(input.files[0]); 
+	}
+	
+	/**
+	 * Création d'un nouveau topic
+	 */
+	$scope.createTopic = function(){
+		var data = new FormData();
+		data.append("cours", $scope.coursModel.cours.id);
+		data.append("title", $scope.coursModel.topic.title);
+		data.append("about", $scope.coursModel.topic.about);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		if(null != $scope.coursModel.topicFile) {
+			data.append("file", $scope.coursModel.topicFile);
+		}
+		topicService.create(data).success(function(result) {
+			if(result.code == 1){								
+				var newTopic = {
+						"topic" : {
+							"id"    : result.id,
+							"title" : $scope.coursModel.topic.title,
+							"content" : $scope.coursModel.topic.about
+						},
+						"done" : false
+				};
+				$scope.coursModel.topics.push(newTopic);
+				$scope.coursModel.topic.title = "";
+				$scope.coursModel.topic.about = "";
+				$scope.coursModel.editTopicFile = false;
+				$scope.coursModel.emptyTopicFile = true;
+				$scope.coursModel.displayTopicFile = "";
+				$scope.coursModel.topicFile = null;
+				$scope.coursModel.allTopicErrors = [];
+				$scope.modalTopic.hide();
+	    	} else {
+	    		$scope.coursModel.allTopicErrors = result.errors;
+	    	}
+	    });
+	}
 	
 });
