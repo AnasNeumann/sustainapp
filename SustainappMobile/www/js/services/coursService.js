@@ -1,5 +1,5 @@
 /**
- * WS pour la gestion des challenges
+ * WS pour la gestion des cours
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 29/03/2017
  * @version 1.0

@@ -41,9 +41,6 @@ public class TopicEntity extends GenericEntity implements Serializable {
 		
 	@Column(name = "COURSE_ID")
 	private Long curseId;
-	
-	@Column(name = "DIFFICULTY")
-	private Integer difficulty;
 
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -120,21 +117,6 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	 */
 	public TopicEntity setCurseId(Long curseId) {
 		this.curseId = curseId;
-		return this;
-	}
-
-	/**
-	 * @return the difficulty
-	 */
-	public Integer getDifficulty() {
-		return difficulty;
-	}
-
-	/**
-	 * @param difficulty the difficulty to set
-	 */
-	public TopicEntity setDifficulty(Integer difficulty) {
-		this.difficulty = difficulty;
 		return this;
 	}
 

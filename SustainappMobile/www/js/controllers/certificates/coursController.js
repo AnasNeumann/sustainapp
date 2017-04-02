@@ -5,7 +5,8 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('coursController', function($scope, $ionicPopover, $stateParams, $state, $ionicModal, sessionService, coursService, fileService, listService, displayService) {
+	.controller('coursController', 
+			function($scope, $ionicPopover, $stateParams, $state, $ionicModal, sessionService, coursService, topicService, fileService, listService, displayService) {
 
 	/**
 	 * Entrée dans la page

@@ -17,7 +17,6 @@ public class TopicCriteria implements Serializable {
 	private String title;
 	private String content;
 	private Long curseId;
-	private Integer difficulty;
 	private Calendar timestamps;
 
 	/**
@@ -85,23 +84,6 @@ public class TopicCriteria implements Serializable {
 	@QueryParam("curseId")
 	public TopicCriteria setCurseId(Long curseId) {
 		this.curseId = curseId;
-		return this;
-	}
-
-	/**
-	 * @return the difficulty
-	 */
-	public Integer getDifficulty() {
-		return difficulty;
-	}
-
-	/**
-	 * @param difficulty
-	 *            the difficulty to set
-	 */
-	@QueryParam("difficulty")
-	public TopicCriteria setDifficulty(Integer difficulty) {
-		this.difficulty = difficulty;
 		return this;
 	}
 
