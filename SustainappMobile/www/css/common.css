@@ -218,6 +218,11 @@ ion-content {
 	cursor : pointer;
 }
 
+.s-common-chevron{
+	margin-left : 10px;
+	font-size : 16px;
+}
+
 .s-common-whiteTitle {
 	color: white;
 	font-family: sustainapp;
@@ -259,6 +264,17 @@ ion-content {
 
 .s-common-margin-top10 {
 	margin-top: 10px;
+}
+
+/**
+ * ===========================================
+ * STARS SYSTEM
+ * =========================================== 
+ */
+
+ ul.rating li i {
+    color : #23d5fb;
+    font-size : 35px;
 }
 
 /**
@@ -399,4 +415,15 @@ ion-content {
 	width : 35px;
 	height : 35px;
 	opacity : 0 !important;
+}
+
+
+/* Checkbox */
+.toggle-small input:checked + .track{
+	background-color: #28a754;
+	cursor : pointer;
+}
+.toggle-small input:checked + .track .handle{
+	background-color: #2dbe60;
+	cursor : pointer;
 }

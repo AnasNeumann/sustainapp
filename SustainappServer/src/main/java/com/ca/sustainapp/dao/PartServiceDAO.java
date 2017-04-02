@@ -11,33 +11,33 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.ca.sustainapp.criteria.CategoryCriteria;
-import com.ca.sustainapp.entities.CategoryEntity;
+import com.ca.sustainapp.criteria.PartCriteria;
+import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.repositories.CategoryRepository;
-import com.ca.sustainapp.specification.CategorySpecification;
+import com.ca.sustainapp.repositories.PartRepository;
+import com.ca.sustainapp.specification.PartSpecification;
 
 /**
- * data access object service for Category
+ * data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2107
+ * @since 29/03/2107
  * @verion 1.0
  */
-@Service("categoryService")
-public class CategoryServiceDAO extends GenericServiceDAO {
+@Service("partService")
+public class PartServiceDAO extends GenericServiceDAO {
 
 	/**
 	 * Le repository
 	 */
 	@Autowired
-	CategoryRepository repository;
+	PartRepository repository;
 	
 	/**
 	 * Accès un seul entity par son Id
 	 * @param id
 	 * @return
 	 */
-	public CategoryEntity getById(Long id){
+	public PartEntity getById(Long id){
 		if(null == id){
 			return null;
 		}
@@ -51,7 +51,7 @@ public class CategoryServiceDAO extends GenericServiceDAO {
 	 */
 	@Modifying
 	@Transactional
-	public Long createOrUpdate(CategoryEntity entity){
+	public Long createOrUpdate(PartEntity entity){
 		return repository.saveAndFlush(entity).getId();
 	}
 	
@@ -69,11 +69,11 @@ public class CategoryServiceDAO extends GenericServiceDAO {
 	}
 	
 	/**
-	 * get All 
+	 * get All
 	 * @return
 	 */
 	@Transactional
-	public List<CategoryEntity> getAll(){
+	public List<PartEntity> getAll(){ 
 		return repository.findAll();
 	}
 
@@ -85,13 +85,14 @@ public class CategoryServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public SearchResult<CategoryEntity> searchByCriteres(CategoryCriteria criteria, Long startIndex, Long maxResults) {		
-		Specification<CategoryEntity> spec = CategorySpecification.searchByCriteres(criteria);
+	public SearchResult<PartEntity> searchByCriteres(PartCriteria criteria, Long startIndex, Long maxResults) {		
+		Specification<PartEntity> spec = PartSpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<CategoryEntity> page = repository.findAll(spec, paginator);
+		Page<PartEntity> page = repository.findAll(spec, paginator);
 		
-		SearchResult<CategoryEntity> result = initSearchResult(startIndex, maxResults);
+		SearchResult<PartEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
+	
 }

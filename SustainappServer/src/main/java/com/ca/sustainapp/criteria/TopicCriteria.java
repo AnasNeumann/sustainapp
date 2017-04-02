@@ -7,7 +7,6 @@ import javax.ws.rs.QueryParam;
 
 /**
  * Criteria for research
- * 
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 30/01/2017
  * @version 1.0
@@ -17,11 +16,7 @@ public class TopicCriteria implements Serializable {
 	private Long id;
 	private String title;
 	private String content;
-	private String link;
 	private Long curseId;
-	private Integer difficulty;
-	private Integer childLevel;
-	private Long parentId;
 	private Calendar timestamps;
 
 	/**
@@ -76,23 +71,6 @@ public class TopicCriteria implements Serializable {
 	}
 
 	/**
-	 * @return the link
-	 */
-	public String getLink() {
-		return link;
-	}
-
-	/**
-	 * @param link
-	 *            the link to set
-	 */
-	@QueryParam("link")
-	public TopicCriteria setLink(String link) {
-		this.link = link;
-		return this;
-	}
-
-	/**
 	 * @return the curseId
 	 */
 	public Long getCurseId() {
@@ -106,57 +84,6 @@ public class TopicCriteria implements Serializable {
 	@QueryParam("curseId")
 	public TopicCriteria setCurseId(Long curseId) {
 		this.curseId = curseId;
-		return this;
-	}
-
-	/**
-	 * @return the difficulty
-	 */
-	public Integer getDifficulty() {
-		return difficulty;
-	}
-
-	/**
-	 * @param difficulty
-	 *            the difficulty to set
-	 */
-	@QueryParam("difficulty")
-	public TopicCriteria setDifficulty(Integer difficulty) {
-		this.difficulty = difficulty;
-		return this;
-	}
-
-	/**
-	 * @return the childLevel
-	 */
-	public Integer getChildLevel() {
-		return childLevel;
-	}
-
-	/**
-	 * @param childLevel
-	 *            the childLevel to set
-	 */
-	@QueryParam("childLevel")
-	public TopicCriteria setChildLevel(Integer childLevel) {
-		this.childLevel = childLevel;
-		return this;
-	}
-
-	/**
-	 * @return the parentId
-	 */
-	public Long getParentId() {
-		return parentId;
-	}
-
-	/**
-	 * @param parentId
-	 *            the parentId to set
-	 */
-	@QueryParam("parentId")
-	public TopicCriteria setParentId(Long parentId) {
-		this.parentId = parentId;
 		return this;
 	}
 

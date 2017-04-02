@@ -200,7 +200,7 @@ angular.module('sustainapp.controllers')
 	}
    
     /**
-	 * Suppression définitive d'un chalenge
+	 * Suppression définitive d'un chalenge ou d'une participation
 	 */
 	$scope.confirmDelete = function(){
 		$scope.modal.hide();

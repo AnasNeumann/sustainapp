@@ -22,6 +22,7 @@ angular.module('sustainapp.controllers')
 			$scope.title = "";
 			$scope.profileModel = {};
 			$scope.profileModel.profile = {};
+			$scope.profileModel.courses = [];
 			$scope.profileModel.coverEdit = false;
 			$scope.profileModel.avatarEdit = false;
 			$scope.profileModel.modeRead = true; 
@@ -31,24 +32,27 @@ angular.module('sustainapp.controllers')
 			$scope.profileModel.displayCover = null;
 			profileService.getById($stateParams.id).then(function(response){
 				if(response.data.code == 1) {
-					 response.data.profiles[0].bornDate = new Date(response.data.profiles[0].bornDate);
-					 $scope.title = response.data.profiles[0].firstName+" "+response.data.profiles[0].lastName;
-					 $scope.profileModel.profile = response.data.profiles[0];
-	    			 $scope.profileModel.profileTemp = response.data.profiles[0];
+					 response.data.profile.bornDate = new Date(response.data.profile.bornDate);
+					 $scope.title = response.data.profile.firstName+" "+response.data.profile.lastName;
+					 $scope.profileModel.profile = response.data.profile;
+	    			 $scope.profileModel.profileTemp = response.data.profile;
 	    			 $scope.profileModel.loaded = true;
+	    			 $scope.profileModel.courses = response.data.courses;
 		    		 $scope.profileModel.allErrors = [];
-		    		 if(null != response.data.profiles[0].avatar && "" != response.data.profiles[0].avatar){
-		    			 $scope.profileModel.displayAvatar = "data:image/jpeg;base64,"+ response.data.profiles[0].avatar;
-		    		 } 
-		    		 if(null != response.data.profiles[0].cover && "" != response.data.profiles[0].cover){
-		    			 $scope.profileModel.displayCover = "data:image/jpeg;base64,"+ response.data.profiles[0].cover;
+		    		 if(null != response.data.profile.avatar && "" != response.data.profile.avatar){
+		    			 $scope.profileModel.displayAvatar = "data:image/jpeg;base64,"+ response.data.profile.avatar;
 		    		 }
-		    		 if(response.data.profiles[0].id == sessionService.getObject('profile').id){
+		    		 if(null != response.data.profile.cover && "" != response.data.profile.cover){
+		    			 $scope.profileModel.displayCover = "data:image/jpeg;base64,"+ response.data.profile.cover;
+		    		 }
+		    		 if(response.data.profile.id == sessionService.getObject('profile').id){
 		    			 $scope.profileModel.owner = true;
 		    		 }
 	    		 }
 	     	  });
 	        $scope._isNotMobile = displayService.isNotMobile;
+	        $scope.profileModel.openCourses = true;
+	        $scope.profileModel.openBadges = true;
 	    };
 	    
 	    /**

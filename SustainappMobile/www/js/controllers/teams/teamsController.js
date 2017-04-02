@@ -99,7 +99,8 @@ angular.module('sustainapp.controllers')
 			$scope.teamsModel.load = false;
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 			if(result.code == 1 && result.teams.length >0) {
-				$scope.teamsModel.startIndex += result.teams.length;
+				//$scope.teamsModel.startIndex += result.teams.length;
+				$scope.teamsModel.startIndex += 1;
 				$scope.teamsModel.allTeams = listService.addWithoutDoublons($scope.teamsModel.allTeams, result.teams);
 			} else {
 				$scope.teamsModel.moreTeams = false;

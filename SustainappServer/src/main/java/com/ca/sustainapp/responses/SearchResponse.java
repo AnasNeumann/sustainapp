@@ -16,6 +16,7 @@ public class SearchResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private List<ProfileEntity> profiles = new SustainappList<ProfileEntity>();
 	private List<TeamEntity> teams = new SustainappList<TeamEntity>();
+	private List<LightCourseResponse> courses = new SustainappList<LightCourseResponse>();
 
 	/**
 	 * @return the profiles
@@ -49,4 +50,18 @@ public class SearchResponse extends HttpRESTfullResponse {
 		return this;
 	}
 
+	/**
+	 * @return the courses
+	 */
+	public List<LightCourseResponse> getCourses() {
+		return courses;
+	}
+
+	/**
+	 * @param courses the courses to set
+	 */
+	public SearchResponse setCourses(List<LightCourseResponse> courses) {
+		this.courses = courses;
+		return this;
+	}
 }

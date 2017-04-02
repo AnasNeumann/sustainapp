@@ -1,24 +1,16 @@
 package com.ca.sustainapp.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * TOPIC table mapping
@@ -46,32 +38,12 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "PICTURE")
 	private byte[] picture;
-	
-	@Column(name = "LINK")
-	private String link;
-	
+		
 	@Column(name = "COURSE_ID")
 	private Long curseId;
-	
-	@Column(name = "DIFFICULTY")
-	private Integer difficulty;
-	
-	@Column(name = "CHILD_LEVEL")
-	private Integer childLevel;
-	
-	@Column(name = "PARENT_ID")
-	private Long parentId;
 
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "parentId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<TopicEntity> listChild = new ArrayList<TopicEntity>();
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "topicId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<QuestionEntity> listQuestion = new ArrayList<QuestionEntity>();
 	
 	/**
 	 * @return the id
@@ -134,21 +106,6 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the link
-	 */
-	public String getLink() {
-		return link;
-	}
-
-	/**
-	 * @param link the link to set
-	 */
-	public TopicEntity setLink(String link) {
-		this.link = link;
-		return this;
-	}
-
-	/**
 	 * @return the curseId
 	 */
 	public Long getCurseId() {
@@ -164,51 +121,6 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the difficulty
-	 */
-	public Integer getDifficulty() {
-		return difficulty;
-	}
-
-	/**
-	 * @param difficulty the difficulty to set
-	 */
-	public TopicEntity setDifficulty(Integer difficulty) {
-		this.difficulty = difficulty;
-		return this;
-	}
-
-	/**
-	 * @return the childLevel
-	 */
-	public Integer getChildLevel() {
-		return childLevel;
-	}
-
-	/**
-	 * @param childLevel the childLevel to set
-	 */
-	public TopicEntity setChildLevel(Integer childLevel) {
-		this.childLevel = childLevel;
-		return this;
-	}
-
-	/**
-	 * @return the parentId
-	 */
-	public Long getParentId() {
-		return parentId;
-	}
-
-	/**
-	 * @param parentId the parentId to set
-	 */
-	public TopicEntity setParentId(Long parentId) {
-		this.parentId = parentId;
-		return this;
-	}
-
-	/**
 	 * @return the timestamps
 	 */
 	public Calendar getTimestamps() {
@@ -220,36 +132,6 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	 */
 	public TopicEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
-		return this;
-	}
-
-	/**
-	 * @return the listChild
-	 */
-	public List<TopicEntity> getListChild() {
-		return listChild;
-	}
-
-	/**
-	 * @param listChild the listChild to set
-	 */
-	public TopicEntity setListChild(List<TopicEntity> listChild) {
-		this.listChild = listChild;
-		return this;
-	}
-
-	/**
-	 * @return the listQuestion
-	 */
-	public List<QuestionEntity> getListQuestion() {
-		return listQuestion;
-	}
-
-	/**
-	 * @param listQuestion the listQuestion to set
-	 */
-	public TopicEntity setListQuestion(List<QuestionEntity> listQuestion) {
-		this.listQuestion = listQuestion;
 		return this;
 	}
 

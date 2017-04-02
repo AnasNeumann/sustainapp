@@ -23,14 +23,16 @@ angular.module('sustainapp.controllers')
 			searchService.search($scope.searchModel.query).then(function(response){
 				$scope.searchModel.empty = true;
 				if(response.data.code == 1) {
-					if(response.data.profiles.length > 0 || response.data.teams.length > 0){
+					if(response.data.profiles.length > 0 || response.data.teams.length > 0 || response.data.courses.length > 0){
 						$scope.searchModel.empty = false;
 					}
 					$scope.searchModel.teams = response.data.teams;
 					$scope.searchModel.profiles = response.data.profiles;
+					$scope.searchModel.courses = response.data.courses;
 				} else {
 					$scope.searchModel.teams = [];
 					$scope.searchModel.profiles = [];
+					$scope.searchModel.courses = [];
 				}
 			});
 		}

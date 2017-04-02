@@ -1,4 +1,6 @@
 {
+    "laval" : "Laval university",
+    
     "team" : "team",
     "profile" : "personal profile",
     
@@ -43,6 +45,8 @@
     "profile.bornDate" : "date of birth",
     "profile.yearsOld" : "years old",
     "profile.registeredSince" : "registered since",
+    "profile.badges" : "Badges",
+    "profile.courses" : "Courses",
     
     "login.login": "Login",
     "login.signin": "Sign in !",
@@ -106,5 +110,17 @@
     "challenge.participation.new" : "New participation",
     "challenge.votes" : "votes",
     "challenge.addedOn" : "Added on",
-    "challenge.haveVoted" : "people have voted"
+    "challenge.haveVoted" : "people have voted",
+    
+    "course.about" :"About this course",
+    "course.new" :"New course",
+    "course.add" :"Create a new course",
+    "course.teacher" : "is the teacher of this course",
+    "course.chapters" : "Chapters",
+    "course.chapters.add" : "Add a chapter",
+    "cours.open" : "Publish this course to users ?",
+    "course.rank.this" : "Give a note to this course",
+    "course.rank.by" : "by",
+    "course.rank.total" : "people",
+    "course.rank.average" : "Rated"
 }

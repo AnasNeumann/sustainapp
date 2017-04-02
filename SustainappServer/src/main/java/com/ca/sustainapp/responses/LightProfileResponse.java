@@ -6,7 +6,6 @@ import com.ca.sustainapp.entities.TeamEntity;
 
 /**
  * Json de réponse light d'un profile
- * 
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 23/03/2017
  * @version 1.0

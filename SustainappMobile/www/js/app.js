@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
@@ -110,6 +110,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    'tab-certificates': {
 	      templateUrl: 'templates/certificates/certificates-main.html',
 	      controller: 'certificatesController'
+	    }
+	  }
+    })
+    .state('tab.cours-one', {
+	  url: '/cours/:id',
+	  views: {
+	    'tab-certificates': {
+	      templateUrl: 'templates/certificates/cours-one.html',
+	      controller: 'coursController'
 	    }
 	  }
     })

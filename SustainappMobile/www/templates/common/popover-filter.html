@@ -8,7 +8,7 @@
          <img ng-src="img/challengetype/nothing.png" />
          <p class="s-teams-text s-challenges-type-item">{{'challenges.nothing' | translate}}</p>
       </ion-item>
-      <ion-item class="item item-avatar" ng-repeat="type in challengesModel.types" type="item-text-wrap" ng-click="changeFilter(type.name);">
+      <ion-item class="item item-avatar" ng-repeat="type in types" type="item-text-wrap" ng-click="changeFilter(type.name);">
          <img ng-src="img/challengetype/{{type.icon}}.png" />
          <p class="s-teams-text s-challenges-type-item">{{type.name | translate}}</p>
       </ion-item>

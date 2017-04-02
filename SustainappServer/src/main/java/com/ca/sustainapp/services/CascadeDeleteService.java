@@ -7,17 +7,30 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
+import com.ca.sustainapp.criteria.TopicCriteria;
+import com.ca.sustainapp.criteria.TopicValidationCriteria;
 import com.ca.sustainapp.entities.ChallengeEntity;
 import com.ca.sustainapp.entities.ChallengeVoteEntity;
+import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.TeamEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
+import com.ca.sustainapp.entities.TopicEntity;
+import com.ca.sustainapp.entities.TopicValidationEntity;
 import com.ca.sustainapp.repositories.ChallengeRepository;
 import com.ca.sustainapp.repositories.ChallengeVoteRepository;
+import com.ca.sustainapp.repositories.CourseRepository;
+import com.ca.sustainapp.repositories.PartRepository;
 import com.ca.sustainapp.repositories.ParticipationRepository;
+import com.ca.sustainapp.repositories.RankCourseRepository;
 import com.ca.sustainapp.repositories.TeamRepository;
 import com.ca.sustainapp.repositories.TeamRoleRepository;
+import com.ca.sustainapp.repositories.TopicRepository;
+import com.ca.sustainapp.repositories.TopicValidationRepository;
 
 /**
  * Service pour la suppression en cascade
@@ -41,12 +54,84 @@ public class CascadeDeleteService {
 	ChallengeVoteRepository voteRepository;
 	@Autowired
 	ParticipationRepository participationRepository;
-
+	@Autowired
+	CourseRepository coursRepository;
+	@Autowired
+	RankCourseRepository rankRepository;
+	@Autowired
+	TopicRepository topicRepository;
+	@Autowired
+	PartRepository partRepository;
+	@Autowired
+	TopicValidationRepository validationRepository;
+	
 	/**
 	 * les services
 	 */
 	@Autowired
 	CascadeGetService getService;
+	
+	/**
+	 * cascade delete a cours
+	 * @param cours
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(CourseEntity cours){
+		for(RankCourseEntity rank : cours.getListRank()){
+			cascadeDelete(rank);
+		}
+		for(TopicEntity topic : getService.cascadeGetTopic(new TopicCriteria().setCurseId(cours.getId()))){
+			cascadeDelete(topic);
+		}
+		coursRepository.delete(cours);
+	}
+	
+	/**
+	 * cascade delete a rank
+	 * @param rank
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(RankCourseEntity rank){
+		rankRepository.delete(rank);
+	}
+	
+	/**
+	 * cascade delete a topic
+	 * @param topic
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(TopicEntity topic){
+		for(TopicValidationEntity validation : getService.cascadeGetValidation(new TopicValidationCriteria().setTopicId(topic.getId()))){
+			cascadeDelete(validation);
+		}
+		for(PartEntity part : getService.cascadeGetPart(new PartCriteria().setTopicId(topic.getId()))){
+			cascadeDelete(part);
+		}
+		topicRepository.delete(topic);
+	}
+	
+	/**
+	 * cascade delete a part
+	 * @param part
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(PartEntity part){
+		partRepository.delete(part);
+	}
+	
+	/**
+	 * cascade delete a validation
+	 * @param validation
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(TopicValidationEntity validation){
+		validationRepository.delete(validation);
+	}
 	
 	/**
 	 * cascade delete a challenge

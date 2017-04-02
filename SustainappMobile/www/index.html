@@ -8,6 +8,7 @@
 
     <!-- CSS FILES -->
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">   
+    <link href="lib/ionic-rating/ionic-rating.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/menus.css" rel="stylesheet">
     <link href="css/login.css" rel="stylesheet">
@@ -19,6 +20,8 @@
     <link href="css/challenges.css" rel="stylesheet">
     <link href="css/administration.css" rel="stylesheet">
     <link href="css/participation.css" rel="stylesheet">
+    <link href="css/news.css" rel="stylesheet">
+    <link href="css/cours.css" rel="stylesheet">
     <link href="css/desktopview.css" rel="stylesheet">
  
     <!-- JS LIB FILES -->
@@ -27,6 +30,7 @@
     <script src="cordova.js"></script>
     <script src="lib/angular-translate/angular-translate.min.js"></script>
     <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="lib/ionic-rating/ionic-rating.min.js"></script>
 
     <!-- MAIN SETTINGS FILE -->
     <script src="js/app.js"></script>
@@ -39,7 +43,8 @@
     <script src="js/controllers/profileController.js"></script>
     <script src="js/controllers/notificationsController.js"></script>
     <script src="js/controllers/newsController.js"></script>
-    <script src="js/controllers/certificatesController.js"></script>
+    <script src="js/controllers/certificates/certificatesController.js"></script>
+    <script src="js/controllers/certificates/coursController.js"></script>
     <script src="js/controllers/challenges/challengesController.js"></script>
     <script src="js/controllers/challenges/challengeController.js"></script>
     <script src="js/controllers/reportController.js"></script>
@@ -59,6 +64,8 @@
     <script src="js/services/searchService.js"></script>
     <script src="js/services/challengeService.js"></script>
     <script src="js/services/participationService.js"></script>
+    <script src="js/services/coursService.js"></script>
+    <script src="js/services/topicService.js"></script>
     <script src="js/services/displayService.js"></script>
   </head>
   <body ng-app="sustainapp" ng-controller="mainController">

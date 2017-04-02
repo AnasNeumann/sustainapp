@@ -3,6 +3,8 @@ package com.ca.sustainapp.controllers;
 import javax.servlet.http.HttpServletRequest;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
+import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.LightCourseResponse;
 import com.ca.sustainapp.responses.SearchResponse;
 
 /**
@@ -33,6 +39,8 @@ public class SearchController extends GenericController {
 	private ProfileServiceDAO profileService;
 	@Autowired
 	private TeamServiceDAO teamService;
+	@Autowired
+	private CourseServiceDAO coursService;
 	
 	/**
 	 * search profiles and teams
@@ -48,8 +56,24 @@ public class SearchController extends GenericController {
 		return new SearchResponse()
 				.setProfiles(profileService.searchByFulName(query,5))
 				.setTeams(teamService.searchByKeywords(query, 5))
+				.setCourses(searchLightCourses(query, 5))
 				.setCode(1)
 				.buildJson();
+	}
+	
+	/**
+	 * Search courses by keyword
+	 * @param query
+	 * @param maxResult
+	 * @return
+	 */
+	private List<LightCourseResponse> searchLightCourses(String query, Integer maxResult){
+		List<CourseEntity> allCourses = coursService.searchByKeywords(query, maxResult);
+		List<LightCourseResponse> result = new SustainappList<LightCourseResponse>();
+		for(CourseEntity cours : allCourses){
+			result.add(new LightCourseResponse(cours));
+		}
+		return result;
 	}
 
 }

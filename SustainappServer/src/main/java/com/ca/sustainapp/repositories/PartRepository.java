@@ -7,30 +7,30 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.ca.sustainapp.entities.CategoryEntity;
+import com.ca.sustainapp.entities.PartEntity;
 
 /**
- * Repository for CategoryEntity
+ * Repository for PartEntity
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 29/03/2017
  * @version 1.0
  */
 @Repository
-public interface CategoryRepository  extends JpaSpecificationExecutor<CategoryEntity>, JpaRepository<CategoryEntity, Long> {
+public interface PartRepository extends JpaSpecificationExecutor<PartEntity>, JpaRepository<PartEntity, Long> {
 
 	/**
 	 * Count Entities by Id
 	 * @param id
 	 * @return total by id
 	 */
-	@Query("SELECT COUNT(*) FROM CategoryEntity AS c WHERE c.id = :id")
-	Integer countById(@Param("id") Long id); 
+	@Query("SELECT COUNT(*) FROM PartEntity AS p WHERE p.id = :id")
+	Integer countById(@Param("id") Long id);
 
 	/**
 	 * delete entities by id
 	 * @param id
 	 */
 	@Modifying
-	@Query("DELETE FROM CategoryEntity c WHERE c.id = :id")
+	@Query("DELETE FROM PartEntity p WHERE p.id = :id")
 	void delete(@Param("id") Long id);
 }

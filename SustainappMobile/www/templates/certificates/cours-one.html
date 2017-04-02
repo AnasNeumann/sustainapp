@@ -1,0 +1,96 @@
+<ion-view>  
+    <ion-nav-title ng-bind="title"></ion-nav-title>
+    
+    <!-- Cours loaded -->
+    <ion-content ng-show="coursModel.loaded">
+        
+        <!-- PARTIE INFORMATIONS -->
+        <div class="row">
+            <div class="col col-50">
+                <div class="s-team-containerAvatar">
+                    <div style="background-image: url({{coursModel.displayPicture}});" class="s-profile-avatar">
+                        <!-- Mobile view -->
+                        <div ng-if="coursModel.isAdmin && _isNotMobile == false" class="s-common-camera">
+                           <div class="s-common-choosePictureToogle" ng-show="coursModel.pictureEdit" ng-click="coursModel.pictureEdit = false">
+                              <i class="icon ion-close-round"></i>
+                           </div>
+                           <div class="s-common-choosePicture" ng-show="coursModel.pictureEdit" ng-click="picture(true)">
+                              {{'common.takePicture' | translate}}
+                           </div>
+                           <div class="s-common-choosePicture" ng-show="coursModel.pictureEdit" ng-click="picture(false)">
+                             {{'common.chooseFormGallery' | translate}}
+                           </div>
+                           <div class="s-common-choosePictureToogle s-common-22" ng-hide="coursModel.pictureEdit" ng-click="coursModel.pictureEdit = true">
+                              <i class="icon ion-camera"></i>
+                           </div>
+                       </div>
+                       <!-- Desktop view -->
+                       <div class="s-common-camera"ng-if="coursModel.isAdmin && _isNotMobile == true">
+                            <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                                <i class="icon ion-camera"></i>
+                                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopPicture(this)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-50" ng-hide="coursModel.edit">
+                  <div class="s-common-floatDelete" ng-click="confirmDeleteCours()" ng-if="coursModel.isAdmin" >
+                        <i class="icon ion-trash-a"></i>
+                  </div>
+                  <div class="s-common-floatEdit"  ng-click="coursModel.edit = true" ng-if="coursModel.isAdmin" >
+                        <i class="icon ion-edit"></i>
+                  </div>                
+                  <br />    
+                  <h2 class="s-team-title">{{coursModel.cours.title}}</h2>
+                  <p class="s-teams-text">{{coursModel.cours.about}}</p>                 
+            </div>
+            <div class="col col-50" ng-show="coursModel.edit">
+                  <div class="s-common-floatEdit"  ng-click="coursModel.edit = false" >
+                        <i class="icon ion-close-round"></i>
+                  </div>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
+                    <input ng-model="coursModel.title" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{coursModel.allErrors.title | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+                    <input ng-model="coursModel.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{coursModel.allErrors.about | translate}}</span>
+                  </label>
+                  <button class="s-common-btn" ng-click="updateCours()">{{'common.modify' | translate}}</button>
+            </div>
+        </div>
+        <div class="padding" ng-click="modalRank.show()">
+            <i class="icon ion-star s-cours-star"></i><span class="s-cours-starText">{{'course.rank.average'| translate}} {{coursModel.averageRank}}/5, {{'course.rank.by'| translate}} {{coursModel.totalRank}} {{'course.rank.total'| translate}}</span>
+        </div>
+        <div ng-if="coursModel.isAdmin" class="s-cours-levelMin" ng-click="openLevelMin($event)">
+            <span class="s-teams-text">{{'challenges.levelMin' | translate}}</span><span class="s-cours-levelMin-number">{{coursModel.cours.levelMin}}</span>
+         </div>
+        <ion-list>
+		    <ion-toggle ng-if="coursModel.isAdmin" ng-model="coursModel.open" ng-change="toogleOpen()" class="s-teams-text">{{'cours.open' | translate}}</ion-toggle>    
+	        <ion-item class="item item-avatar" type="item-text-wrap" href="#/tab/{{coursModel.owner.type}}/{{coursModel.owner.id}}">
+	            <img ng-src="data:image/jpeg;base64,{{coursModel.owner.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+	            <div class="s-teams-level">{{coursModel.owner.level}}</div>
+	            <h2 class="s-teams-title">{{coursModel.owner.denomination}}</h2>
+	            <p class="s-teams-text">{{'course.teacher' | translate}}</p>
+	        </ion-item>
+        </ion-list>
+        
+        <!-- PARTIE CHAPITRES -->
+        <div class="s-common-bluePart">
+            <h2 class="s-common-whiteTitle">{{'course.chapters' | translate}}</h2>
+        </div>
+        <div class="s-common-greyPart" ng-if="coursModel.isAdmin">
+            <h3 class="s-common-greyTitle" ng-click="topicModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
+        </div>
+        
+    </ion-content>
+    
+    <!-- Loading Part -->
+    <ion-content class="s-common-loading" ng-hide="coursModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+    </ion-content>
+</ion-view>
