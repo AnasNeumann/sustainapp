@@ -87,11 +87,14 @@
         </div>
         <div class="s-teams-allResults">
 	       <ion-list>
-	          <ion-item class="item item-avatar" ng-repeat="elt in coursModel.topics" type="item-text-wrap" href="#/tab/topic/{{elt.topic.id}}">
+	          <ion-item class="item-remove-animate item item-avatar" ng-repeat="elt in coursModel.topics" type="item-text-wrap" href="#/tab/topic/{{elt.topic.id}}">
 	            <img ng-if="true == elt.done" ng-src="img/courses/valid.png" />
 	            <img ng-if="false == elt.done" ng-src="img/courses/invalid.png" />
 	            <h2 class="s-teams-title">{{elt.topic.title}}</h2>
 	            <p class="s-teams-text">{{elt.topic.content}}</p>
+	            <ion-option-button ng-if="coursModel.isAdmin" class="button s-common-btnList" ng-click="confirmDeleteTopic(elt)">
+                    <i class="icon ion-close-circled"></i>
+                </ion-option-button>
 	          </ion-item>
 	       </ion-list>
 	   </div>

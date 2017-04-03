@@ -88,7 +88,18 @@ public class TopicController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/topic/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		TopicEntity topic = super.getTopicIfOwner(request);
+		if(null == topic){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(topic.getCurseId()));
+		for(TopicEntity t : topics){
+			if(t.getNumero() > topic.getNumero()){
+				topicService.createOrUpdate(t.setNumero(t.getNumero()-1));
+			}
+		}
+		deleteService.cascadeDelete(topic);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**

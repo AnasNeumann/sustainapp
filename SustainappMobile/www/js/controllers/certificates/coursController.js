@@ -230,9 +230,9 @@ angular.module('sustainapp.controllers')
    /**
     * demande de confirmation de la suppression d'un topic
     */
-    $scope.confirmDeleteTopic = function(topic){
+    $scope.confirmDeleteTopic = function(elt){
 	   $scope.deleteType = false;
-	   $scope.eltToDelete  = topic;
+	   $scope.eltToDelete  = elt;
 	   $scope.modal.show();
 	}
     
@@ -268,7 +268,12 @@ angular.module('sustainapp.controllers')
 	 * Suppression en base d'un topic
 	 */
 	var deleteTopic = function(){
-		// TODO 
+		$scope.coursModel.topics.splice($scope.coursModel.topics.indexOf($scope.eltToDelete), 1);
+		var data = new FormData();
+		data.append("topic", $scope.eltToDelete.topic.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		topicService.deleteById(data);
 	}
 	
 	/**
