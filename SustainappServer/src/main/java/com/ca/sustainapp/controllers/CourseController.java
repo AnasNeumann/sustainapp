@@ -125,6 +125,7 @@ public class CourseController extends GenericCourseController {
 				.setAverageRank(calculateAverageRank(cours))
 				.setRank(getOwnRank(user.getProfile().getId(), cours))
 				.setTopics(loadAllTopics(cours, user.getProfile().getId()))
+				.setHasLevel((user.getProfile().getLevel() >= cours.getLevelMin()) || user.getIsAdmin())
 				.setCode(1)
 				.buildJson();
 	}

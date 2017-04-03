@@ -86,3 +86,15 @@
     background-color: #E0E0E0;
     transition : all O.3s ease-in-out;
 }
+
+.s-cours-hasntLevel{
+	text-align: center;
+	color : #888;
+	font-size : 20px;
+}
+
+.s-cours-alert{
+	display:block;
+	font-size : 50px;
+	color : #ccc;
+}

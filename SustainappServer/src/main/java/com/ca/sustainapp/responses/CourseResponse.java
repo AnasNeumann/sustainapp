@@ -19,8 +19,24 @@ public class CourseResponse extends HttpRESTfullResponse {
 	private LightProfileResponse owner;
 	private Float averageRank;
 	private RankCourseEntity rank;
+	private Boolean hasLevel;
 	private List<LightTopicResponse> topics = new SustainappList<LightTopicResponse>();
 	
+	/**
+	 * @return the hasLevel
+	 */
+	public Boolean getHasLevel() {
+		return hasLevel;
+	}
+
+	/**
+	 * @param hasLevel the hasLevel to set
+	 */
+	public CourseResponse setHasLevel(Boolean hasLevel) {
+		this.hasLevel = hasLevel;
+		return this;
+	}
+
 	/**
 	 * @return the cours
 	 */

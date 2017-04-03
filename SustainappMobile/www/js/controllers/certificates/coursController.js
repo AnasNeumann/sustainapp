@@ -63,6 +63,7 @@ angular.module('sustainapp.controllers')
 				$scope.title = result.cours.title;
 				$scope.coursModel.isAdmin = result.isOwner;
 				$scope.coursModel.owner = result.owner;
+				$scope.coursModel.hasLevel = result.hasLevel;
 				$scope.coursModel.averageRank = result.averageRank;				
 				$scope.coursModel.totalRank = $scope.coursModel.cours.listRank.length;
 				if(null != result.rank){

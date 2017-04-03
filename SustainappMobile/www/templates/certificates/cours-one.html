@@ -90,7 +90,7 @@
             <h3 class="s-common-greyTitle" ng-click="coursModel.reorder = !coursModel.reorder"><i class="icon ion-navicon s-challenge-plus"></i> {{'course.chapters.drop' | translate}}</h3>
         </div>
         </div>
-        <div class="s-teams-allResults">
+        <div class="s-teams-allResults" ng-if="true == coursModel.hasLevel || true == coursModel.isAdmin">
 	       <ion-list show-reorder="coursModel.isAdmin && coursModel.reorder">
 	          <ion-item class="item-remove-animate item item-avatar" ng-repeat="elt in coursModel.topics" type="item-text-wrap" href="#/tab/topic/{{elt.topic.id}}">
 	            <img ng-if="true == elt.done" ng-src="img/courses/valid.png" />
@@ -103,6 +103,10 @@
                 </ion-option-button>
 	          </ion-item>
 	       </ion-list>
+	   </div>
+	   <div class="padding s-cours-hasntLevel" ng-if="false == coursModel.isAdmin && false==coursModel.hasLevel">
+	       <i class="icon ion-android-alert s-cours-alert"></i>
+	       <span>Vous n'avez pas le niveau nécéssaire pour suivre ce cours !</span>
 	   </div>
     </ion-content>
     
