@@ -3,6 +3,7 @@ package com.ca.sustainapp.controllers;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
@@ -17,11 +18,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.TopicEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.TopicResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.TopicValidator;
@@ -80,7 +85,24 @@ public class TopicController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/topic", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String getById(HttpServletRequest request) {
-		return null;
+		Optional<Long> topicId = StringsUtils.parseLongQuickly(request.getParameter("topic"));
+		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		if(!topicId.isPresent() || !userId.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		TopicEntity topic = topicService.getById(topicId.get());
+		UserAccountEntity user = userService.getById(userId.get());
+		if(null == topic || null == user){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(topicId.get()));
+		Collections.sort(parts, super.comparatorByNumber);
+		return new TopicResponse()
+				.setTopic(topic)
+				.setIsOwner(super.verifyTopicInformations(topic, user))
+				.setParts(parts)
+				.setCode(1)
+				.buildJson();
 	}
 	
 	/**

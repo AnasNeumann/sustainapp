@@ -22,6 +22,7 @@ import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.LightTopicResponse;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -132,7 +133,7 @@ public class GenericCourseController extends GenericController{
 			return null;
 		}
 		CourseEntity cours = courseService.getById(id.get());
-		if(!verifyCoursInformations(cours, request)){
+		if(!verifyCoursInformations(cours, super.getConnectedUser(request))){
 			return null;
 		}
 		return cours;
@@ -148,7 +149,7 @@ public class GenericCourseController extends GenericController{
 			return null;
 		}
 		TopicEntity topic = topicService.getById(id.get());
-		if(!verifyTopicInformations(topic, request)){
+		if(!verifyTopicInformations(topic, super.getConnectedUser(request))){
 			return null;
 		}
 		return topic;
@@ -169,7 +170,7 @@ public class GenericCourseController extends GenericController{
 		if(null == part){
 			return null;
 		}
-		if(!verifyTopicInformations(topicService.getById(part.getTopicId()), request)){
+		if(!verifyTopicInformations(topicService.getById(part.getTopicId()), super.getConnectedUser(request))){
 			return null;
 		}
 		return part;
@@ -181,12 +182,12 @@ public class GenericCourseController extends GenericController{
 	 * @param request
 	 * @return
 	 */
-	protected Boolean verifyTopicInformations(TopicEntity topic, HttpServletRequest request){
+	protected Boolean verifyTopicInformations(TopicEntity topic, UserAccountEntity user){
 		if(null == topic){
 			return false;
 		}
 		CourseEntity cours = courseService.getById(topic.getCurseId());
-		return verifyCoursInformations(cours, request);
+		return verifyCoursInformations(cours, user);
 	}
 
 	/**
@@ -195,11 +196,11 @@ public class GenericCourseController extends GenericController{
 	 * @param request
 	 * @return
 	 */
-	protected Boolean verifyCoursInformations(CourseEntity cours, HttpServletRequest request){
-		if(null !=cours && super.getConnectedUser(request).getIsAdmin()){
+	protected Boolean verifyCoursInformations(CourseEntity cours, UserAccountEntity user){
+		if(null !=cours && user.getIsAdmin()){
 			return true;
 		}
-		if(null == cours || !cours.getCreatorId().equals(super.getConnectedUser(request).getProfile().getId())){
+		if(null == cours || !cours.getCreatorId().equals(user.getProfile().getId())){
 			return false;
 		}
 		return true;

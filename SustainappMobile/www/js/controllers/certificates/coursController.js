@@ -121,7 +121,7 @@ angular.module('sustainapp.controllers')
 	}
 	
 	/**
-     * Modal de confirmation de la suppression d'un challenge
+     * Modal de confirmation de la suppression d'un cours ou topic
      */
      $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
 	     scope: $scope

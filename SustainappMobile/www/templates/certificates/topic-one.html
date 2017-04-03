@@ -1,0 +1,13 @@
+<ion-view>  
+    <ion-nav-title ng-bind="title"></ion-nav-title>
+    
+    <!-- Cours loaded -->
+    <ion-content ng-show="topicModel.loaded">
+    </ion-content>
+    
+    <!-- Loading Part -->
+    <ion-content class="s-common-loading" ng-hide="topicModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+    </ion-content>
+</ion-view>

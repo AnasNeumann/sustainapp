@@ -123,5 +123,6 @@
     "course.rank.this" : "Give a note to this course",
     "course.rank.by" : "by",
     "course.rank.total" : "people",
-    "course.rank.average" : "Rated"
+    "course.rank.average" : "Rated",
+    "course.level.hasnot" : "You don't have the necessary level to follow this course"
 }
