@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,7 @@ import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.utils.FilesUtils;
+import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.TopicValidator;
 
 /**
@@ -129,7 +131,48 @@ public class TopicController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/topic/drop", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String drop(HttpServletRequest request) {
-		return null;
+		TopicEntity topic = super.getTopicIfOwner(request);
+		Optional<Integer> toIndex = StringsUtils.parseIntegerQuietly(request.getParameter("position"));
+		if(null == topic || !toIndex.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(topic.getCurseId()));
+		if(toIndex.get() > topic.getNumero()){
+			avancer(topic, topics, toIndex.get());
+		}else if(toIndex.get() < topic.getNumero()){
+			reculer(topic, topics, toIndex.get());
+		}
+		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
+	 * Avancer un chaptire dans la liste
+	 * @param topic
+	 * @param topics
+	 * @param arrivee
+	 */
+	private void avancer(TopicEntity topic, List<TopicEntity> topics, Integer arrivee){
+		for(TopicEntity t : topics){
+			if(t.getNumero() <= arrivee && t.getNumero() > topic.getNumero()){
+				topicService.createOrUpdate(t.setNumero(t.getNumero()-1));
+			}
+		}
+		topicService.createOrUpdate(topic.setNumero(arrivee));
+	}
+	
+	/**
+	 * reculer un chapitre dans la liste
+	 * @param topic
+	 * @param topics
+	 * @param arrivee
+	 */
+	private void reculer(TopicEntity topic, List<TopicEntity> topics, Integer arrivee){
+		for(TopicEntity t : topics){
+			if(t.getNumero() >= arrivee && t.getNumero() < topic.getNumero()){
+				topicService.createOrUpdate(t.setNumero(t.getNumero()+1));
+			}
+		}
+		topicService.createOrUpdate(topic.setNumero(arrivee));
 	}
 	
 }

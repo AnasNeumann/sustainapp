@@ -35,6 +35,8 @@ angular.module('sustainapp.controllers')
 		$scope.deleteType = true;
 		$scope.eltToDelete  = {};
 		
+		$scope.coursModel.reorder = false;
+		
 		$scope.coursModel.topic = {};
 		$scope.coursModel.topic.title = "";
 		$scope.coursModel.topic.about = "";
@@ -341,5 +343,19 @@ angular.module('sustainapp.controllers')
 	    	}
 	    });
 	}
+	
+	/**
+	 * Reorder topics
+	 */
+	 $scope.moveTopic = function(elt, fromIndex, toIndex) {
+		 $scope.coursModel.topics.splice(fromIndex, 1);
+		 $scope.coursModel.topics.splice(toIndex, 0, elt);
+		 var data = new FormData();
+		 data.append("topic", elt.topic.id);
+		 data.append("position", toIndex);
+		 data.append("sessionId", sessionService.get('id'));
+		 data.append("sessionToken", sessionService.get('token'));
+		 topicService.drop(data);
+	  };
 	
 });
