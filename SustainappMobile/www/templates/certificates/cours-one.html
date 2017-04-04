@@ -91,7 +91,7 @@
         </div>
         </div>
         <div class="s-teams-allResults">
-	       <ion-list show-reorder="coursModel.isAdmin && coursModel.reorder" ng-show="coursModel.hasLevel || coursModel.isAdmin" scroll="false">
+	       <ion-list show-reorder="coursModel.isAdmin && coursModel.reorder" ng-show="coursModel.hasLevel || coursModel.isAdmin">
 	          <ion-item class="item-remove-animate item item-avatar" ng-repeat="elt in coursModel.topics" type="item-text-wrap" href="#/tab/topic/{{elt.topic.id}}">
 	            <img ng-if="true == elt.done" ng-src="img/courses/valid.png" />
 	            <img ng-if="false == elt.done" ng-src="img/courses/invalid.png" />

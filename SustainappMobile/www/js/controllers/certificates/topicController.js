@@ -64,5 +64,47 @@ angular.module('sustainapp.controllers')
 		   }).then(function(modal) {
 		     $scope.modal = modal;
 		   });
-	
+	   
+	     /**
+	      * Modification de la photo de fon [desktop mode]
+	      */
+	     $scope.desktopPicture = function(input){
+	    	 var reader = new FileReader();
+	         reader.onload = function (e) {
+	         	var data = new FormData();
+	 			data.append("file", e.target.result.substring(e.target.result.indexOf(",")+1));
+	 			data.append("topic", $scope.topicModel.topic.id);
+	 			data.append("sessionId", sessionService.get('id'));
+	 			data.append("sessionToken", sessionService.get('token'));
+	 			topicService.picture(data).success(function(result) {
+	 				if(result.code == 1){
+	 					$scope.topicModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
+	 					$scope.topicModel.displayPicture = e.target.result;
+	 				}
+	 			});
+	         }
+	         reader.readAsDataURL(input.files[0]);  
+	     }
+	     
+	     /**
+	      * Modification de la photo de fon [mobile mode]
+	      */
+	     $scope.picture = function(newFile){
+	    	 fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {			
+	 			var data = new FormData();
+	 			data.append("file", imageData);
+	 			data.append("topic", $scope.topicModel.topic.id);
+	 			data.append("sessionId", sessionService.get('id'));
+	 			data.append("sessionToken", sessionService.get('token'));
+	 			topicService.picture(data).success(function(result) {
+	 				if(result.code == 1){
+	 					$scope.topicModel.file = imageData;
+	 					$scope.topicModel.displayPicture = "data:image/jpeg;base64,"+imageData;
+	 					$scope.topicModel.pictureEdit = false;
+	 		    	}
+	 		    });
+	 		 }, function(err) {
+	 		 });
+	     }
+	     
 });

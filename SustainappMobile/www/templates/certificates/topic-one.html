@@ -3,6 +3,46 @@
     
     <!-- Cours loaded -->
     <ion-content ng-show="topicModel.loaded">
+        
+        <!-- HEADER [title, picture] -->
+	    <div class="s-topic-pictureContainer" style="background-image : url({{topicModel.displayPicture}});">
+	        
+	        <div class="s-topic-pictureBtn">
+		        <!-- Mobile view -->
+	            <div ng-if="topicModel.isOwner && _isNotMobile == false" class="s-common-camera">
+	               <div class="s-common-choosePictureToogle" ng-show="topicModel.pictureEdit" ng-click="topicModel.pictureEdit = false">
+	                  <i class="icon ion-close-round"></i>
+	               </div>
+	               <div class="s-common-choosePicture" ng-show="topicModel.pictureEdit" ng-click="picture(true)">
+	                  {{'common.takePicture' | translate}}
+	               </div>
+	               <div class="s-common-choosePicture" ng-show="topicModel.pictureEdit" ng-click="picture(false)">
+	                 {{'common.chooseFormGallery' | translate}}
+	               </div>
+	               <div class="s-common-choosePictureToogle s-common-22" ng-hide="topicModel.pictureEdit" ng-click="topicModel.pictureEdit = true">
+	                  <i class="icon ion-camera"></i>
+	               </div>
+	           </div>
+	           <!-- Desktop view -->
+	           <div class="s-common-camera"ng-if="topicModel.isOwner && _isNotMobile == true">
+	                <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+	                    <i class="icon ion-camera"></i>
+	                    <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopPicture(this)" />
+	                </div>
+	            </div>
+            </div>
+	        
+	        <div class="s-topic-titleContainer">
+	            <h3 class="s-common-whiteTitle">{{topicModel.topic.title}}</h3>
+	        </div>
+	    </div>
+	    <div class="s-topic-text">
+	       <div class="s-common-floatEdit"  ng-click="topicModel.edit = true" ng-if="topicModel.isOwner" >
+                 <i class="icon ion-edit"></i>
+           </div>
+	       {{topicModel.topic.content}}
+	    </div>
+    
     </ion-content>
     
     <!-- Loading Part -->

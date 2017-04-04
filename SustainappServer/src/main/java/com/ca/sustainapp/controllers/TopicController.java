@@ -143,7 +143,12 @@ public class TopicController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/topic/picture", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String picture(HttpServletRequest request) {
-		return null;
+		TopicEntity topic = getTopicIfOwner(request);
+		if(null == topic){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		topicService.createOrUpdate(topic.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
