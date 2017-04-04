@@ -133,7 +133,14 @@ public class TopicController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/topic/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		String title = request.getParameter("title");
+		String content = request.getParameter("about");
+		TopicEntity topic = super.getTopicIfOwner(request);
+		if(null == topic || !validator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+		}
+		topicService.createOrUpdate(topic.setTitle(title).setContent(content));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**

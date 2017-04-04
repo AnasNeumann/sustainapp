@@ -39,3 +39,22 @@
 	text-align:justify;
 	font-size : 20px;
 }
+
+.s-topic-about{
+	position : relative;
+	top : 10px;
+}
+
+.s-topic-return{
+	text-align : center;
+}
+.s-topic-return a {
+	color : #28a754;
+	font-size : 22px;
+    cursor : pointer;
+	text-decoration: none;
+}
+
+.s-topic-return a:active {
+    color : #2dbe60;
+}

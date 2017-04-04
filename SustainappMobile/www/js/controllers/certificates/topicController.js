@@ -84,7 +84,7 @@ angular.module('sustainapp.controllers')
 	 			});
 	         }
 	         reader.readAsDataURL(input.files[0]);  
-	     }
+	     };
 	     
 	     /**
 	      * Modification de la photo de fon [mobile mode]
@@ -105,6 +105,28 @@ angular.module('sustainapp.controllers')
 	 		    });
 	 		 }, function(err) {
 	 		 });
-	     }
+	     };
+	     
+	     /**
+	      * Update topic informations
+	      */
+	     $scope.updateTopic = function(){
+	    	var data = new FormData();
+ 			data.append("title", $scope.topicModel.title);
+ 			data.append("about", $scope.topicModel.content);
+ 			data.append("topic", $scope.topicModel.topic.id);
+ 			data.append("sessionId", sessionService.get('id'));
+ 			data.append("sessionToken", sessionService.get('token')); 
+ 			topicService.update(data).success(function(result) {
+ 				if(result.code == 1){
+ 					$scope.topicModel.topic.title = $scope.topicModel.title;
+ 					$scope.topicModel.topic.content = $scope.topicModel.content;
+ 					$scope.topicModel.allErrors = [];
+ 					$scope.topicModel.edit = false;
+ 		    	} else {
+ 		    		$scope.topicModel.allErrors = result.errors;
+ 		    	}
+ 		    });
+	     };
 	     
 });
