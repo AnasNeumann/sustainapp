@@ -2,7 +2,7 @@
     <ion-nav-title ng-bind="title"></ion-nav-title>
     
     <!-- Cours loaded -->
-    <ion-content ng-show="topicModel.loaded" >
+    <ion-content ng-show="topicModel.loaded" id="topicContent" >
         
         <!-- HEADER [title, picture] -->
 	    <div class="s-topic-pictureContainer" style="background-image : url({{topicModel.displayPicture}});">
@@ -119,11 +119,21 @@
 	         <!-- go to the quizz -->
 	         <button class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>
 	         <!-- return home bottom page -->
-	         <div class="s-topic-return" >
-	             <a href="#/tab/cours/{{topicModel.topic.curseId}}">
-	                 ---------<i class="icon ion-home"></i>---------<br />
-	                 <span>{{'topic.return' | translate}}</span>
-	             </a>
+	         <div class="row">
+			     <div class="col col-50">
+			         <div class="s-topic-return" >
+			             <a href="#/tab/cours/{{topicModel.topic.curseId}}">
+			                 <i class="icon ion-home"></i><br />
+			                 <span>{{'topic.return' | translate}}</span>
+			             </a>
+			         </div>
+			      </div>
+			      <div class="col col-50">
+                     <div class="s-topic-return s-topic-top" ng-click="scrollTop()">                         
+                             <i class="icon ion-arrow-up-a"></i><br />
+                             <span>{{'topic.up' | translate}}</span>
+                     </div>
+                  </div>
 	         </div>
 	     </div>           
     </ion-content>

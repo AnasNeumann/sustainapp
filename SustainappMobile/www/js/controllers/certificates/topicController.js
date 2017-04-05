@@ -252,11 +252,20 @@ angular.module('sustainapp.controllers')
 	 					$scope.partModel.pictureEdit = false;
 	 					$scope.partModel.file  = null;
 	 					$scope.partModel.displayPicture  = "";
-	 					$scope.partModel.emptyPicture  = true;
-	 					$ionicScrollDelegate.scrollBottom();
+	 					$scope.partModel.emptyPicture  = true;	 					
+	 					var scrollDiv = document.getElementById("topicContent");	 					
+	 					displayService.animatedScrollDown(scrollDiv, scrollDiv.scrollHeight, 1, 20);	 					
 	 				} else {
 	 		    		$scope.partModel.allErrors = result.errors;
 	 		    	}
 	 		    });
 	      };
+	      
+	      /**
+	       * Fonction de scroll vers le haut
+	       */
+	      $scope.scrollTop = function(){
+	    	  var scrollDiv = document.getElementById("topicContent");	 					
+			  displayService.animatedScrollUp(scrollDiv, 0, scrollDiv.scrollHeight, 25); 
+	      }
 });
