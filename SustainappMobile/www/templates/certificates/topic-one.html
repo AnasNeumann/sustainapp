@@ -60,6 +60,12 @@
         </div> 
         
 	    <div class="s-topic-text" ng-hide="topicModel.edit">
+	       <div class="s-common-floatEdit s-topic-seePreview"  ng-click="topicModel.isOwner = !topicModel.isOwner" ng-if="topicModel.isOwner && topicModel.isReallyOwner" >
+                 <i class="icon ion-eye-disabled"></i>
+           </div>
+           <div class="s-common-floatEdit s-topic-seePreview"  ng-click="topicModel.isOwner = !topicModel.isOwner" ng-if="false == topicModel.isOwner && topicModel.isReallyOwner" >
+                 <i class="icon ion-eye"></i>
+           </div>
 	       <div class="s-common-floatEdit"  ng-click="topicModel.edit = true" ng-if="topicModel.isOwner" >
                  <i class="icon ion-edit"></i>
            </div>
@@ -90,24 +96,74 @@
             
             <!-- Option n°1 : affichage d'une partie de texte -->
             <div ng-if="1 == part.type" class="s-part-displayTextDiv">
+	            <div class="s-part-topPart" ng-if="topicModel.isOwner" >
+	               <div class="s-part-topPart-one">
+	                   <i class="icon ion-edit"></i>
+	               </div>
+	               <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-up-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-down-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-trash-a s-part-ibig"></i>
+                   </div>
+	            </div>
 	            <h3 class="s-profile-name s-part-displayTextTitle">{{part.title}}</h3>
 	            <p class="s-part-displayText">{{part.content}}</p>
             </div>
             
             <!-- Option n°2 : affichage d'une image -->
             <div ng-if="2 == part.type" class="s-part-displayPictureDiv">
+                <div class="s-common-padding20 s-part-topPart" ng-if="topicModel.isOwner" >
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-up-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-down-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-trash-a s-part-ibig"></i>
+                   </div>
+                </div>
                 <img ng-src="data:image/jpeg;base64,{{part.document}}" width="100%" height="auto" />
                 <div class="s-part-displayDocumentTitle"><em>"{{part.title}}"</em></div>
             </div>
             
             <!-- Option n°3 : affichage d'une vidéo -->
             <div ng-if="3 == part.type" class="s-part-displayVideoDiv">
+                <div class="s-common-padding20 s-part-topPart" ng-if="topicModel.isOwner" >
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-up-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-down-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-trash-a s-part-ibig"></i>
+                   </div>
+                </div>
                 <iframe type='text/html' width='100%' height="380px" ng-src="{{part.content}}" frameborder='0' allowfullscreen="true"></iframe>   
                 <div class="s-part-displayDocumentTitle"><em>"{{part.title}}"</em></div>
             </div>
             
             <!-- Option n°4 : affichage d'un lien -->
             <div ng-if="4 == part.type" class="s-part-displayLinkDiv">
+                <div class="s-part-topPart" ng-if="topicModel.isOwner" >
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-edit"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-up-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-arrow-down-a s-part-ibig"></i>
+                   </div>
+                   <div class="s-part-topPart-one">
+                       <i class="icon ion-trash-a s-part-ibig"></i>
+                   </div>
+                </div>
                 <a href="{{part.content}}" class="s-part-displayLink" target='_blank'>
 	                <i class="icon ion-link placeholder-icon s-part-borderInput-icon"></i><span class="s-part-displayLink-visit">Visiter le lien :</span>{{part.content}}
                 </a>

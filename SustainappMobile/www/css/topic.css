@@ -118,6 +118,13 @@
 	cursor : pointer;
 }
 
+.s-topic-seePreview{
+	margin-left : 10px;
+	font-size : 30px;
+	position : relative;
+	top : -5px;
+}
+
 /**
  * =====================
  * LES PARTIES S-PART-**
@@ -206,4 +213,30 @@
     font-style: normal;
     color : #04b9df;
     margin-right : 5px;
+ }
+ 
+ .s-part-topPart{
+    text-align : right;
+    margin : 0px;
+ }
+ 
+ .s-part-topPart-one{
+    margin : 0px;
+    width : 30px;
+    height:30px;
+    display : inline-block;
+    opacity : 0.5;
+    color : #333;
+    cursor : pointer;
+    text-align : center;
+    padding-top : 6px;
+    font-size : 20px;
+ }
+ 
+ .s-part-topPart-one:active{
+    opacity : 0.9;
+ }
+ 
+ .s-part-ibig{
+    font-size : 22px;
  }

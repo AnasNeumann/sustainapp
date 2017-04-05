@@ -60,7 +60,8 @@ angular.module('sustainapp.controllers')
 					$scope.topicModel.loaded = true;
 					$scope.topicModel.topic = result.topic;
 					$scope.topicModel.parts = result.parts;
-					$scope.topicModel.isOwner = result.isOwner;
+					$scope.topicModel.isOwner = false;
+					$scope.topicModel.isReallyOwner = result.isOwner;
 					$scope.topicModel.title = result.topic.title;
 					$scope.title = result.topic.title;
 					$scope.topicModel.content = result.topic.content;
