@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('topicController', 
-			function($scope, $stateParams, $state, $ionicModal, sessionService, topicService, fileService, listService, partService, displayService) {
+			function($scope, $stateParams, $state, $ionicModal, $ionicScrollDelegate, sessionService, topicService, fileService, listService, partService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -222,9 +222,40 @@ angular.module('sustainapp.controllers')
 	 			partService.create(data).success(function(result) {
 	 				if(result.code == 1){
 	 					$scope.modalPart.hide();
-	 					$scope.topicModel.allErrors = [];
+	 					$scope.partModel.allErrors = [];
+	 					var newPart = {
+							"id"    : result.id,
+							"type"  : $scope.partModel.type
+	 					};
+	 					switch($scope.partModel.type) {
+		 		    	    case 1:
+		 		    	    	newPart.title =  $scope.partModel.title;
+		 		    	    	newPart.content =  $scope.partModel.content;
+		 		    	        break;
+		 		    	    case 2:
+		 		    	    	newPart.title =  $scope.partModel.title;
+		 		    	    	newPart.document =  $scope.partModel.file;		 		    	    	
+		 		    	        break;
+		 		    	    case 3:
+		 		    	    	newPart.title =  $scope.partModel.title;
+		 		    	    	newPart.content =  result.content;
+		 		    	        break;
+		 		    	    case 4:
+		 		    	    	newPart.content =  result.content;
+		 		    	        break;
+	 			    	}
+	 					$scope.topicModel.parts.push(newPart);
+	 					$scope.partModel.title = "";
+	 					$scope.partModel.link = "";
+	 					$scope.partModel.content = "";
+	 					$scope.partModel.video = "";
+	 					$scope.partModel.pictureEdit = false;
+	 					$scope.partModel.file  = null;
+	 					$scope.partModel.displayPicture  = "";
+	 					$scope.partModel.emptyPicture  = true;
+	 					$ionicScrollDelegate.scrollBottom();
 	 				} else {
-	 		    		$scope.topicModel.allErrors = result.errors;
+	 		    		$scope.partModel.allErrors = result.errors;
 	 		    	}
 	 		    });
 	      };

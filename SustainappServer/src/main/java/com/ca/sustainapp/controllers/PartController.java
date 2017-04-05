@@ -21,6 +21,7 @@ import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.PartResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.PartValidator;
@@ -81,7 +82,7 @@ public class PartController extends GenericCourseController {
 				break;
 		}
 		Long idPart = partService.createOrUpdate(part);
-		return new IdResponse().setId(idPart).setCode(1).buildJson();
+		return new PartResponse().setContent((part.getType() == 3 || part.getType() == 4)? part.getContent() : null).setId(idPart).setCode(1).buildJson();
 	}
 	
 	/**
