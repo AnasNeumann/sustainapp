@@ -256,7 +256,7 @@ angular.module('sustainapp.controllers')
 	 */
 	$scope.changeProfiles = function(profile){
 		$scope.popoverProfiles.hide();
-		$scope.challengeModel.selectedProfile = profile
+		$scope.challengeModel.selectedProfile = profile;
 	}
 	
 	/**

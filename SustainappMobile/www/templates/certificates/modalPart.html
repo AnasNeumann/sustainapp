@@ -1,0 +1,67 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+     <div class="s-modal-confirm">
+      <div class="s-common-floatEdit" ng-click="modalPart.hide()">
+            <i class="icon ion-close-round"></i>
+      </div>
+      
+      <h3 class="s-profile-name">{{'part.new' | translate}}</h3>
+      
+      <label ng-if="4 != partModel.type" class="item item-input item-floating-label" > 
+        <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
+        <input ng-model="partModel.title" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+        <span class="s-common-errors">{{partModel.allErrors.title | translate}}</span>
+      </label>
+      
+      <!-- Option n°4 : Ajouter un lien -->
+      <div ng-if="4 == partModel.type" class="list list-inset s-part-borderInput">
+          <label class="item item-input s-part-borderInput-label">
+		    <i class="icon ion-link placeholder-icon s-part-borderInput-icon"></i>
+		    <input ng-model="partModel.link" type="text" placeholder="{{'part.link' | translate}}" class="s-part-borderInput-input" />
+	     </label>
+	 </div>
+	 
+	 <!-- Option n°3 : Ajouter une Video -->
+     <div ng-if="3 == partModel.type" class="list list-inset s-part-borderInput">
+          <label class="item item-input s-part-borderInput-label">
+            <i class="icon ion-social-youtube placeholder-icon s-part-borderInput-icon"></i>
+            <input ng-model="partModel.video" type="text" placeholder="{{'part.video' | translate}}" class="s-part-borderInput-input" />
+         </label>
+     </div>
+     
+     <!-- Option n°2 : Ajouter une image -->
+     <div ng-if="2 == partModel.type" class="s-cours-topicImageContainer" style="background-image: url({{partModel.displayPicture}});">
+        <i ng-show="partModel.emptyPicture" class="icon ion-image s-cours-topicPicture"></i>
+        <!-- Mobile view -->
+        <div class="s-common-camera" ng-if="_isNotMobile == false">
+            <div class="s-common-choosePictureToogle" ng-show="partModel.pictureEdit" ng-click="partModel.pictureEdit = false">
+               <i class="icon ion-close-round"></i>
+            </div>
+            <div class="s-common-choosePicture" ng-show="partModel.pictureEdit" ng-click="choosePartFile(true)">
+               {{'common.takePicture' | translate}}
+            </div>
+            <div class="s-common-choosePicture" ng-show="partModel.pictureEdit" ng-click="choosePartFile(false)">
+              {{'common.chooseFormGallery' | translate}}
+            </div>
+            <div class="s-common-choosePictureToogle s-common-22" ng-hide="partModel.pictureEdit" ng-click="partModel.pictureEdit = true">
+               <i class="icon ion-camera"></i>
+            </div>
+        </div>
+        <!-- Desktop view -->
+         <div class="s-common-camera" ng-if="_isNotMobile">
+             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                <i class="icon ion-camera"></i>
+                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopPartFile(this)" />
+             </div>
+         </div>
+      </div>
+      
+      <!-- Option n°1 : Ajouter un paragraphe de texte -->
+      <div class="s-part-textareaDiv" ng-if="1 == partModel.type">
+        <textarea ng-model="partModel.content" rows="10" class="s-part-textarea" placeholder="{{'part.text' | translate}}..."></textarea>
+      </div>
+      
+      <button class="s-common-btn" ng-click="confirmDelete()">{{'common.create' | translate}}</button>
+     </div>
+   </ion-content>
+</ion-modal-view>

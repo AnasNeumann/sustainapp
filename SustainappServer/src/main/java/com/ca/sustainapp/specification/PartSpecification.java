@@ -65,6 +65,11 @@ public class PartSpecification {
 						Predicate p = cb.like(cb.lower(root.<String> get("content")), criteres.getContent().toLowerCase() + "%");
 						listeCond.add(p);
 					}
+					
+					if (null != criteres.getNumero()) {
+						Predicate p = cb.equal(root.<Integer> get("numero"), criteres.getNumero());
+						listeCond.add(p);
+					}
 
 					if (null != criteres.getTimestamps()) {
 						Predicate p = cb.equal(root.<Calendar> get("timestamps"), criteres.getTimestamps());

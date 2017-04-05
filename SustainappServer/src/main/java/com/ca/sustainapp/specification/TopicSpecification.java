@@ -51,6 +51,11 @@ public class TopicSpecification {
 						listeCond.add(p);
 					}
 					
+					if (null != criteres.getNumero()) {
+						Predicate p = cb.equal(root.<Integer> get("numero"), criteres.getNumero());
+						listeCond.add(p);
+					}
+					
 					if (null != criteres.getTitle()) {
 						Predicate p = cb.like(cb.lower(root.<String> get("title")), criteres.getTitle().toLowerCase() + "%");
 						listeCond.add(p);

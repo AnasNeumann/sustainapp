@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TOPIC")
 @SequenceGenerator(name = "topic_id_seq_generator", sequenceName = "topic_id_seq")
-public class TopicEntity extends GenericEntity implements Serializable {
+public class TopicEntity extends GenericNumerotableEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -41,6 +41,9 @@ public class TopicEntity extends GenericEntity implements Serializable {
 		
 	@Column(name = "COURSE_ID")
 	private Long curseId;
+	
+	@Column(name = "NUMERO")
+	private Integer numero;
 
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -132,6 +135,21 @@ public class TopicEntity extends GenericEntity implements Serializable {
 	 */
 	public TopicEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
+		return this;
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public Integer getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public TopicEntity setNumero(Integer numero) {
+		this.numero = numero;
 		return this;
 	}
 

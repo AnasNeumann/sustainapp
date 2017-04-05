@@ -1,0 +1,107 @@
+<ion-view>  
+    <ion-nav-title ng-bind="title"></ion-nav-title>
+    
+    <!-- Cours loaded -->
+    <ion-content ng-show="topicModel.loaded" >
+        
+        <!-- HEADER [title, picture] -->
+	    <div class="s-topic-pictureContainer" style="background-image : url({{topicModel.displayPicture}});">
+	        
+	        <div class="s-topic-pictureBtn">
+		        <!-- Mobile view -->
+	            <div ng-if="topicModel.isOwner && _isNotMobile == false" class="s-common-camera">
+	               <div class="s-common-choosePictureToogle" ng-show="topicModel.pictureEdit" ng-click="topicModel.pictureEdit = false">
+	                  <i class="icon ion-close-round"></i>
+	               </div>
+	               <div class="s-common-choosePicture" ng-show="topicModel.pictureEdit" ng-click="picture(true)">
+	                  {{'common.takePicture' | translate}}
+	               </div>
+	               <div class="s-common-choosePicture" ng-show="topicModel.pictureEdit" ng-click="picture(false)">
+	                 {{'common.chooseFormGallery' | translate}}
+	               </div>
+	               <div class="s-common-choosePictureToogle s-common-22" ng-hide="topicModel.pictureEdit" ng-click="topicModel.pictureEdit = true">
+	                  <i class="icon ion-camera"></i>
+	               </div>
+	           </div>
+	           <!-- Desktop view -->
+	           <div class="s-common-camera"ng-if="topicModel.isOwner && _isNotMobile == true">
+	                <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+	                    <i class="icon ion-camera"></i>
+	                    <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopPicture(this)" />
+	                </div>
+	            </div>
+            </div>
+	        
+	        <div class="s-topic-titleContainer">
+	            <h3 class="s-common-whiteTitle">{{topicModel.topic.title}}</h3>
+	        </div>
+	    </div>
+	    <!-- Partie ajout d'une nouvelle partie -->
+        <div ng-if="topicModel.isOwner">            
+            <div class="s-topic-partBtn row" ng-show="topicModel.blueMenu">
+                <div class="col col-25 s-topic-blueCol" ng-click="openPart(1)">
+                    <img class="s-topic-partImg" src="img/topic/text.png" />
+                </div>
+                <div class="col col-25 s-topic-blueCol" ng-click="openPart(2)">
+                    <img class="s-topic-partImg" src="img/topic/picture.png" />
+                </div>
+                <div class="col col-25 s-topic-blueCol" ng-click="openPart(3)">
+                    <img class="s-topic-partImg" src="img/topic/video.png" />
+                </div>
+                <div class="col col-25 s-topic-blueCol" ng-click="openPart(4)">
+                    <img class="s-topic-partImg" src="img/topic/link.png" />
+                </div>
+            </div>
+            <div class="s-topic-blueMenuBtn" ng-click="topicModel.blueMenu = !topicModel.blueMenu">
+               <i ng-hide="topicModel.blueMenu" class="icon ion-plus"></i>
+               <i ng-show="topicModel.blueMenu" ng-show="" class="icon ion-close-round"></i>
+            </div>
+        </div> 
+        
+	    <div class="s-topic-text" ng-hide="topicModel.edit">
+	       <div class="s-common-floatEdit"  ng-click="topicModel.edit = true" ng-if="topicModel.isOwner" >
+                 <i class="icon ion-edit"></i>
+           </div>
+           <div class="padding s-topic-about">
+	           {{topicModel.topic.content}}
+	       </div>
+	    </div>
+	    <div class="padding" ng-show="topicModel.edit">
+           <div class="s-common-floatEdit"  ng-click="topicModel.edit = false" ng-if="topicModel.isOwner" >
+                 <i class="icon ion-close-round"></i>
+           </div>
+           <label class="item item-input item-floating-label" >
+             <span class="input-label s-common-label">{{'common.title' | translate}}</span>
+             <input ng-model="topicModel.title" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+             <span class="s-common-errors">{{topicModel.allErrors.title | translate}}</span>
+           </label>
+           <label class="item item-input item-floating-label" >
+             <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+             <input ng-model="topicModel.content" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+             <span class="s-common-errors">{{topicModel.allErrors.about | translate}}</span>
+           </label>
+           <button class="s-common-lightBtn" ng-click="updateTopic()">{{'common.modify' | translate}}</button>
+        </div>
+
+		<div class="padding s-topic-quizPart">           
+	         <!-- go to the quizz -->
+	         <button class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>
+	         <!-- return home bottom page -->
+	         <div class="s-topic-return" >
+	             <a href="#/tab/cours/{{topicModel.topic.curseId}}">
+	                 ---------<i class="icon ion-home"></i>---------<br />
+	                 <span>{{'topic.return' | translate}}</span>
+	             </a>
+	         </div>
+	     </div>
+	     
+       
+             
+    </ion-content>
+    
+    <!-- Loading Part -->
+    <ion-content class="s-common-loading" ng-hide="topicModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+    </ion-content>
+</ion-view>

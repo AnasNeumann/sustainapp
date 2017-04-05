@@ -117,10 +117,20 @@
     "course.add" :"Create a new course",
     "course.teacher" : "is the teacher of this course",
     "course.chapters" : "Chapters",
-    "course.chapters.add" : "Add a chapter",
+    "course.chapters.add" : "Add",
+    "course.chapters.drop" : "Reorder",
     "cours.open" : "Publish this course to users ?",
     "course.rank.this" : "Give a note to this course",
     "course.rank.by" : "by",
     "course.rank.total" : "people",
-    "course.rank.average" : "Rated"
+    "course.rank.average" : "Rated",
+    "course.level.hasnot" : "You don't have the necessary level to follow this course",
+    
+    "topic.return" : "back to contents",
+    "topic.quizz.go" : "Do the quiz",
+    
+    "part.link" : "Paste here the wished URL",
+    "part.video" : "Paste here the video URL",
+    "part.text" : "Paragraph",
+    "part.new" : "New part"
 }

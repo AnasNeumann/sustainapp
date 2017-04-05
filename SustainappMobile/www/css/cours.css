@@ -39,3 +39,62 @@
 	top : -3px;
 	cursor : pointer;
 }
+
+.s-cours-topicImageContainer{
+	position : relative;
+    height : 180px;
+    width : 100%;
+    background-color: #F0F0F0;
+    margin : auto;
+    margin-top : 25px;
+    border : 1px solid #E0E0E0;
+    color : #D0D0D0;
+    background-position : center;
+    background-repeat : no-repeat;
+    background-size : cover;
+    font-size : 100px;
+    padding-top : 40px;
+}
+
+.s-cours-topicPicture{
+	width : 100px;
+	display : block;
+	margin : auto;
+}
+
+.s-cours-greyBtnContainer{
+    padding: 0px;
+    margin :0px;
+}
+
+.s-cours-greyBtn{
+    margin: 0px;
+    padding: 10px;
+    background-color: #F0F0F0;
+    height: 50px;
+    overflow: hidden;
+    text-align: center;
+    color: #888;
+    transition : all O.3s ease-in-out;
+}
+
+.s-cours-leftBtn{
+	border-right : 1px solid #D0D0D0;
+}
+
+.s-cours-greyBtn:active{
+    background-color: #E0E0E0;
+    transition : all O.3s ease-in-out;
+}
+
+.s-cours-hasntLevel{
+	text-align: center;
+	color : #888;
+	font-size : 20px;
+}
+
+.s-cours-alert{
+	display:block;
+	font-size : 50px;
+	color : #ccc;
+}

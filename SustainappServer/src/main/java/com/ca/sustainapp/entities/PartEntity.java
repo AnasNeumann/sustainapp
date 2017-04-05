@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PART")
 @SequenceGenerator(name = "part_id_seq_generator", sequenceName = "part_id_seq")
-public class PartEntity extends GenericEntity implements Serializable {
+public class PartEntity extends GenericNumerotableEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -44,6 +44,9 @@ public class PartEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "TOPIC_ID")
 	private Long topicId;
+	
+	@Column(name = "NUMERO")
+	private Integer numero;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -150,6 +153,21 @@ public class PartEntity extends GenericEntity implements Serializable {
 	 */
 	public PartEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
+		return this;
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public Integer getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public PartEntity setNumero(Integer numero) {
+		this.numero = numero;
 		return this;
 	}
 }

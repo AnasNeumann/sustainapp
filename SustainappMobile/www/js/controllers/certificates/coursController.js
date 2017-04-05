@@ -35,6 +35,17 @@ angular.module('sustainapp.controllers')
 		$scope.deleteType = true;
 		$scope.eltToDelete  = {};
 		
+		$scope.coursModel.reorder = false;
+		
+		$scope.coursModel.topic = {};
+		$scope.coursModel.topic.title = "";
+		$scope.coursModel.topic.about = "";
+		$scope.coursModel.editTopicFile = false;
+		$scope.coursModel.emptyTopicFile = true;
+		$scope.coursModel.displayTopicFile = "";
+		$scope.coursModel.topicFile = null;
+		$scope.coursModel.allTopicErrors = [];
+		
 		$ionicPopover.fromTemplateUrl('templates/common/popover-level.html', {
 		    scope: $scope
 		  }).then(function(popover) {
@@ -52,6 +63,7 @@ angular.module('sustainapp.controllers')
 				$scope.title = result.cours.title;
 				$scope.coursModel.isAdmin = result.isOwner;
 				$scope.coursModel.owner = result.owner;
+				$scope.coursModel.hasLevel = result.hasLevel;
 				$scope.coursModel.averageRank = result.averageRank;				
 				$scope.coursModel.totalRank = $scope.coursModel.cours.listRank.length;
 				if(null != result.rank){
@@ -109,7 +121,7 @@ angular.module('sustainapp.controllers')
 	}
 	
 	/**
-     * Modal de confirmation de la suppression d'un challenge
+     * Modal de confirmation de la suppression d'un cours ou topic
      */
      $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
 	     scope: $scope
@@ -125,6 +137,15 @@ angular.module('sustainapp.controllers')
  	   }).then(function(modal) {
  	     $scope.modalRank = modal;
  	   });
+      
+      /**
+       * Modal pour l'ajout d'un topic
+       */
+       $ionicModal.fromTemplateUrl('templates/certificates/modalTopic.html', {
+  	     scope: $scope
+  	   }).then(function(modal) {
+  	     $scope.modalTopic = modal;
+  	   });
 	
 	/**
 	 * Modification de l'image du cours [desktop mode]
@@ -212,9 +233,9 @@ angular.module('sustainapp.controllers')
    /**
     * demande de confirmation de la suppression d'un topic
     */
-    $scope.confirmDeleteTopic = function(topic){
+    $scope.confirmDeleteTopic = function(elt){
 	   $scope.deleteType = false;
-	   $scope.eltToDelete  = topic;
+	   $scope.eltToDelete  = elt;
 	   $scope.modal.show();
 	}
     
@@ -250,8 +271,92 @@ angular.module('sustainapp.controllers')
 	 * Suppression en base d'un topic
 	 */
 	var deleteTopic = function(){
-		// TODO 
+		$scope.coursModel.topics.splice($scope.coursModel.topics.indexOf($scope.eltToDelete), 1);
+		var data = new FormData();
+		data.append("topic", $scope.eltToDelete.topic.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		topicService.deleteById(data);
 	}
-
+	
+	/**
+	 * Ajout d'une image pour un topic [mobile mode]
+	 */
+	$scope.chooseTopicFile = function(newFile){
+		fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {
+			$scope.coursModel.editTopicFile = false;
+			$scope.coursModel.emptyTopicFile = false;
+			$scope.coursModel.displayTopicFile = "data:image/jpeg;base64,"+imageData;
+			$scope.coursModel.topicFile = imageData;			
+		 }, function(err) {
+		 });
+	}
+	
+	/**
+	 * Ajout d'une image pour un topic [desktop mode]
+	 */
+	$scope.desktopTopicFile = function(input){
+		var reader = new FileReader();
+        reader.onload = function (e) {
+        	$scope.$apply(function () {
+        		$scope.coursModel.topicFile =  e.target.result.substring(e.target.result.indexOf(",")+1);
+        		$scope.coursModel.displayTopicFile = e.target.result;
+        		$scope.coursModel.emptyTopicFile = false;
+            });           	         	
+        }
+        reader.readAsDataURL(input.files[0]); 
+	}
+	
+	/**
+	 * Création d'un nouveau topic
+	 */
+	$scope.createTopic = function(){
+		var data = new FormData();
+		data.append("cours", $scope.coursModel.cours.id);
+		data.append("title", $scope.coursModel.topic.title);
+		data.append("about", $scope.coursModel.topic.about);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		if(null != $scope.coursModel.topicFile) {
+			data.append("file", $scope.coursModel.topicFile);
+		}
+		topicService.create(data).success(function(result) {
+			if(result.code == 1){								
+				var newTopic = {
+						"topic" : {
+							"id"    : result.id,
+							"title" : $scope.coursModel.topic.title,
+							"content" : $scope.coursModel.topic.about
+						},
+						"done" : false
+				};
+				$scope.coursModel.topics.push(newTopic);
+				$scope.coursModel.topic.title = "";
+				$scope.coursModel.topic.about = "";
+				$scope.coursModel.editTopicFile = false;
+				$scope.coursModel.emptyTopicFile = true;
+				$scope.coursModel.displayTopicFile = "";
+				$scope.coursModel.topicFile = null;
+				$scope.coursModel.allTopicErrors = [];
+				$scope.modalTopic.hide();
+	    	} else {
+	    		$scope.coursModel.allTopicErrors = result.errors;
+	    	}
+	    });
+	}
+	
+	/**
+	 * Reorder topics
+	 */
+	 $scope.moveTopic = function(elt, fromIndex, toIndex) {
+		 $scope.coursModel.topics.splice(fromIndex, 1);
+		 $scope.coursModel.topics.splice(toIndex, 0, elt);
+		 var data = new FormData();
+		 data.append("topic", elt.topic.id);
+		 data.append("position", toIndex);
+		 data.append("sessionId", sessionService.get('id'));
+		 data.append("sessionToken", sessionService.get('token'));
+		 topicService.drop(data);
+	  };
 	
 });
