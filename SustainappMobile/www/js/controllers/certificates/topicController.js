@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('topicController', 
-			function($scope, $stateParams, $state, $ionicModal, sessionService, topicService, fileService, listService, displayService) {
+			function($scope, $stateParams, $state, $ionicModal, sessionService, topicService, fileService, listService, partService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -38,6 +38,20 @@ angular.module('sustainapp.controllers')
 			
 			$scope._isNotMobile = displayService.isNotMobile;
 			$scope.topicModel.allErrors = [];
+			
+			$scope.topicModel.blueMenu = false;
+			
+			$scope.partModel = {};
+			$scope.partModel.title = "";
+			$scope.partModel.link = "";
+			$scope.partModel.content = "";
+			$scope.partModel.video = "";
+			$scope.partModel.pictureEdit = false;
+			$scope.partModel.file  = null;
+			$scope.partModel.displayPicture  = "";
+			$scope.partModel.emptyPicture  = true;
+			$scope.partModel.type = 1;
+			$scope.partModel.allErrors = [];
 			
 			topicService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				var result = response.data;
@@ -129,4 +143,50 @@ angular.module('sustainapp.controllers')
  		    });
 	     };
 	     
+	     
+	     /**
+	      * Modal de confirmation de la suppression d'une partie
+	      */
+	     $ionicModal.fromTemplateUrl('templates/certificates/modalPart.html', {
+		     scope: $scope
+		   }).then(function(modal) {
+		     $scope.modalPart = modal;
+		   });
+	     
+	    /**
+	     * Fonction d'ouverture de la modal d'ajout d'une part
+	     */
+	     $scope.openPart = function(type){
+	    	 $scope.partModel.type = type;
+	    	 $scope.modalPart.show();
+	     };
+	     
+	     /**
+	      * Fonction de choix de l'image à ajouter [mobile mode]
+	      */
+	     $scope.choosePartFile = function(newFile){
+	    	 fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {	 			
+	 			$scope.partModel.pictureEdit = false;
+				$scope.partModel.file  = imageData;
+				$scope.partModel.displayPicture  = "data:image/jpeg;base64,"+imageData;
+				$scope.partModel.emptyPicture  = false;
+	 		 }, function(err) {
+	 		 });
+	     };
+	     
+	     /**
+	      * Fonction de choix de l'image à ajouter [desktop mode]
+	      */
+	     $scope.desktopPartFile = function(input){
+	    	 var reader = new FileReader();
+	         reader.onload = function (e) {
+	         	$scope.$apply(function () {
+	         		$scope.partModel.pictureEdit = false;
+					$scope.partModel.file  = e.target.result.substring(e.target.result.indexOf(",")+1);
+					$scope.partModel.displayPicture  = e.target.result;
+					$scope.partModel.emptyPicture  = false;
+	             });
+	         }
+	         reader.readAsDataURL(input.files[0]); 
+	     };
 });

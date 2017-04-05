@@ -6,6 +6,12 @@
  * @version 1.0
  */
  
+ /**
+  * ===================
+  * LE TOPIC S-TOPIC-**
+  * ===================
+  */
+ 
 .s-topic-pictureContainer{
 	width : 100%;
 	height : 160px;
@@ -47,6 +53,8 @@
 
 .s-topic-return{
 	text-align : center;
+	margin-top : 10px;
+	margin-bottom : 10px;
 }
 .s-topic-return a {
 	color : #28a754;
@@ -58,3 +66,98 @@
 .s-topic-return a:active {
     color : #2dbe60;
 }
+
+.s-topic-ribbon{
+	font-size : 27px;
+	position : relative;
+	top : 5px;
+	margin-right : 5px;
+}
+
+.s-topic-partBtn{
+	width : 100%;
+	height : 75px;
+	background-color : #23d5fb;
+	text-align : center;
+	overflow : hidden;
+	padding : 0px;	
+}
+
+.s-topic-partImg{
+	border-radius : 100%;
+	width : 55px;
+	height : auto;
+}
+
+.s-topic-blueMenuBtn {
+	background-color : #23d5fb;
+	color :white ;
+	text-align:center ;	
+	padding : 2px;
+	padding-top : 6px;
+	border-bottom-left-radius : 5px;
+	border-bottom-right-radius : 5px;
+	margin : 0px;
+	width : 25px;
+	position : relative;
+    left : 20px;
+    cursor : pointer;
+    font-size: 15px;
+}
+
+.s-topic-blueCol{
+    padding-top : 10px;	
+    cursor : pointer;
+}
+
+.s-topic-blueCol:active{
+	background-color : #04b9df;
+	cursor : pointer;
+}
+
+/**
+ * =====================
+ * LES PARTIES S-PART-**
+ * =====================
+ */
+ 
+ .s-part-modalSpace{
+    height : 25px;
+ }
+ 
+ .s-part-borderInput-label{
+    border : none;
+ }
+
+ .s-part-borderInput{
+    border : 1px solid #ccc !important;
+    font-size : 30px;
+ }
+ 
+ .s-part-borderInput-icon{
+    font-size : 30px;
+    position : relative;
+    top : 5px;
+    color : #04b9df;
+ }
+ 
+ .s-part-borderInput-input{
+    font-family: sustainapp;
+    font-size : 20px !important;
+ }
+ 
+ .s-part-textareaDiv{
+    padding : 10px;
+    border : 1px solid #ccc !important;
+    border-radius : 3px;
+    width : 100%;
+    overflow-x : hidden;
+    margin-top : 20px;
+ }
+ 
+ .s-part-textarea{
+    width : 100%;
+    font-family: sustainapp;
+    font-size : 20px !important;
+    border : none;
+ }
