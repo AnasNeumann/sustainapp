@@ -20,6 +20,9 @@ angular.module('sustainapp.services')
 		update : function(data) {
 			return $http.post(config.remoteServer+"/part/update", data, params);
 		},
+		move : function(data) {
+			return $http.post(config.remoteServer+"/part/move", data, params);
+		},
 		deleteById : function(data) {
 			return $http.post(config.remoteServer+"/part/delete", data, params);
 		}

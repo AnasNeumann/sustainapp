@@ -161,3 +161,45 @@
     font-size : 20px !important;
     border : none;
  }
+ 
+ .s-part-displayTextDiv{
+    text-align : justify;
+    padding-left : 20px;
+    padding-right : 20px;
+    margin-bottom : 10px;
+    margin-top : 10px;
+ }
+ 
+ .s-part-displayTextTitle{
+    color : #28a754;
+    font-size : 25px;
+ }
+ 
+ .s-part-displayText{
+    white-space: pre-wrap;
+ }
+ 
+ .s-part-displayDocumentTitle{
+    font-style: italic;
+    text-align: center;
+    margin : 5px;
+ }
+ 
+ .s-part-displayLinkDiv{
+    padding-left : 20px;
+    padding-right : 20px;
+    margin-bottom : 10px;
+ }
+ 
+ .s-part-displayLink,
+ .s-part-displayLink:active{
+    color : #333;
+    text-decoration: none;
+    font-style: italic;
+ }
+ 
+ .s-part-displayLink-visit{
+    font-style: normal;
+    color : #04b9df;
+    margin-right : 5px;
+ }

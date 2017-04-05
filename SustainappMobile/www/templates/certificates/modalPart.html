@@ -20,6 +20,7 @@
 		    <input ng-model="partModel.link" type="text" placeholder="{{'part.link' | translate}}" class="s-part-borderInput-input" />
 	     </label>
 	 </div>
+	 <span class="s-common-errors">{{partModel.allErrors.link | translate}}</span>
 	 
 	 <!-- Option n°3 : Ajouter une Video -->
      <div ng-if="3 == partModel.type" class="list list-inset s-part-borderInput">
@@ -28,6 +29,7 @@
             <input ng-model="partModel.video" type="text" placeholder="{{'part.video' | translate}}" class="s-part-borderInput-input" />
          </label>
      </div>
+     <span class="s-common-errors">{{partModel.allErrors.video | translate}}</span>
      
      <!-- Option n°2 : Ajouter une image -->
      <div ng-if="2 == partModel.type" class="s-cours-topicImageContainer" style="background-image: url({{partModel.displayPicture}});">
@@ -55,13 +57,15 @@
              </div>
          </div>
       </div>
+      <span class="s-common-errors">{{partModel.allErrors.file | translate}}</span>
       
       <!-- Option n°1 : Ajouter un paragraphe de texte -->
       <div class="s-part-textareaDiv" ng-if="1 == partModel.type">
         <textarea ng-model="partModel.content" rows="10" class="s-part-textarea" placeholder="{{'part.text' | translate}}..."></textarea>
       </div>
+      <span class="s-common-errors">{{partModel.allErrors.content | translate}}</span>
       
-      <button class="s-common-btn" ng-click="confirmDelete()">{{'common.create' | translate}}</button>
+      <button class="s-common-btn" ng-click="createPart()">{{'common.create' | translate}}</button>
      </div>
    </ion-content>
 </ion-modal-view>

@@ -25,7 +25,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 /**
  * ROUTING DE SUSTAINAPP
  */
-.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider, $sceDelegateProvider) {
   $stateProvider
   .state('tab', {
     url: '/tab',
@@ -141,6 +141,20 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	  }
   });
   $urlRouterProvider.otherwise('/tab/news');
+  
+	/**
+	 * Autoriser les urls provenant de ces sites web
+	 */
+	$sceDelegateProvider.resourceUrlWhitelist([
+		'self',
+		'https://www.youtube.com/embed/**'
+	]);
+
+	/**
+	 * Blacklister les urls provenants de ces sites web
+	 */
+	$sceDelegateProvider.resourceUrlBlacklist([
+	]);
   
   /**
    * SYSTEME DE TRADUCTION

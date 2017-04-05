@@ -36,6 +36,7 @@
 	            <h3 class="s-common-whiteTitle">{{topicModel.topic.title}}</h3>
 	        </div>
 	    </div>
+	    
 	    <!-- Partie ajout d'une nouvelle partie -->
         <div ng-if="topicModel.isOwner">            
             <div class="s-topic-partBtn row" ng-show="topicModel.blueMenu">
@@ -83,6 +84,37 @@
            <button class="s-common-lightBtn" ng-click="updateTopic()">{{'common.modify' | translate}}</button>
         </div>
 
+
+        <!-- ALL PARTS -->
+        <div ng-repeat="part in topicModel.parts">
+            
+            <!-- Option n°1 : affichage d'une partie de texte -->
+            <div ng-if="1 == part.type" class="s-part-displayTextDiv">
+	            <h3 class="s-profile-name s-part-displayTextTitle">{{part.title}}</h3>
+	            <p class="s-part-displayText">{{part.content}}</p>
+            </div>
+            
+            <!-- Option n°2 : affichage d'une image -->
+            <div ng-if="2 == part.type" class="s-part-displayPictureDiv">
+                <img ng-src="data:image/jpeg;base64,{{part.document}}" width="100%" height="auto" />
+                <div class="s-part-displayDocumentTitle"><em>"{{part.title}}"</em></div>
+            </div>
+            
+            <!-- Option n°3 : affichage d'une vidéo -->
+            <div ng-if="3 == part.type" class="s-part-displayVideoDiv">
+                <iframe type='text/html' width='100%' height="380px" ng-src="{{part.content}}" frameborder='0' allowfullscreen="true"></iframe>   
+                <div class="s-part-displayDocumentTitle"><em>"{{part.title}}"</em></div>
+            </div>
+            
+            <!-- Option n°4 : affichage d'un lien -->
+            <div ng-if="4 == part.type" class="s-part-displayLinkDiv">
+                <a href="{{part.content}}" class="s-part-displayLink" target='_blank'>
+	                <i class="icon ion-link placeholder-icon s-part-borderInput-icon"></i><span class="s-part-displayLink-visit">Visiter le lien :</span>{{part.content}}
+                </a>
+            </div>
+        </div>
+
+
 		<div class="padding s-topic-quizPart">           
 	         <!-- go to the quizz -->
 	         <button class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>
@@ -93,10 +125,7 @@
 	                 <span>{{'topic.return' | translate}}</span>
 	             </a>
 	         </div>
-	     </div>
-	     
-       
-             
+	     </div>           
     </ion-content>
     
     <!-- Loading Part -->

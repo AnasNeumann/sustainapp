@@ -35,6 +35,7 @@ angular.module('sustainapp.controllers')
 			$scope.topicModel.isOwner = false;
 			$scope.topicModel.title = "";
 			$scope.topicModel.content = "";
+			$scope.topicModel.parts = [];
 			
 			$scope._isNotMobile = displayService.isNotMobile;
 			$scope.topicModel.allErrors = [];
@@ -58,7 +59,7 @@ angular.module('sustainapp.controllers')
 				if(result.code == 1) {
 					$scope.topicModel.loaded = true;
 					$scope.topicModel.topic = result.topic;
-					$scope.topicModel.parts = result.part;
+					$scope.topicModel.parts = result.parts;
 					$scope.topicModel.isOwner = result.isOwner;
 					$scope.topicModel.title = result.topic.title;
 					$scope.title = result.topic.title;
@@ -80,7 +81,7 @@ angular.module('sustainapp.controllers')
 		   });
 	   
 	     /**
-	      * Modification de la photo de fon [desktop mode]
+	      * Modification de la photo de fond [desktop mode]
 	      */
 	     $scope.desktopPicture = function(input){
 	    	 var reader = new FileReader();
@@ -101,7 +102,7 @@ angular.module('sustainapp.controllers')
 	     };
 	     
 	     /**
-	      * Modification de la photo de fon [mobile mode]
+	      * Modification de la photo de fond [mobile mode]
 	      */
 	     $scope.picture = function(newFile){
 	    	 fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {			
@@ -189,4 +190,42 @@ angular.module('sustainapp.controllers')
 	         }
 	         reader.readAsDataURL(input.files[0]); 
 	     };
+	     
+	     /**
+	      * Fonction d'ajout d'une nouvelle partie au chapitre
+	      */
+	      $scope.createPart = function(){
+	    	  var data = new FormData();
+	    	  switch($scope.partModel.type) {
+	    	    case 1:
+	    	    	data.append("title", $scope.partModel.title);
+	    	    	data.append("content", $scope.partModel.content);
+	    	        break;
+	    	    case 2:
+	    	    	data.append("title", $scope.partModel.title);
+	    	    	if(null != $scope.partModel.file){
+	    	    		data.append("file", $scope.partModel.file);
+	    	    	}
+	    	        break;
+	    	    case 3:
+	    	    	data.append("title", $scope.partModel.title);
+	    	    	data.append("video", $scope.partModel.video);
+	    	        break;
+	    	    case 4:
+	    	    	data.append("link", $scope.partModel.link);
+	    	        break;
+		    	}
+	 			data.append("topic", $scope.topicModel.topic.id);
+	 			data.append("type", $scope.partModel.type);
+	 			data.append("sessionId", sessionService.get('id'));
+	 			data.append("sessionToken", sessionService.get('token'));
+	 			partService.create(data).success(function(result) {
+	 				if(result.code == 1){
+	 					$scope.modalPart.hide();
+	 					$scope.topicModel.allErrors = [];
+	 				} else {
+	 		    		$scope.topicModel.allErrors = result.errors;
+	 		    	}
+	 		    });
+	      };
 });
