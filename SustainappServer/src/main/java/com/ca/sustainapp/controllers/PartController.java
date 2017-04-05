@@ -20,7 +20,6 @@ import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
-import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.PartResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;

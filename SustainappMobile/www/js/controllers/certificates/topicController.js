@@ -53,6 +53,7 @@ angular.module('sustainapp.controllers')
 			$scope.partModel.emptyPicture  = true;
 			$scope.partModel.type = 1;
 			$scope.partModel.allErrors = [];
+			$scope.partModel.eltToDelete = {};
 			
 			topicService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				var result = response.data;
@@ -268,5 +269,45 @@ angular.module('sustainapp.controllers')
 	      $scope.scrollTop = function(){
 	    	  var scrollDiv = document.getElementById("topicContent");	 					
 			  displayService.animatedScrollUp(scrollDiv, 0, scrollDiv.scrollHeight, 25); 
+	      }
+	      
+	      /**
+	       * Fonction de demande de confirmation de la suppression
+	       */
+	      $scope.deletePart = function(elt){
+	    	  $scope.partModel.eltToDelete = elt;
+	    	  $scope.modal.show();
+	      }
+	      
+	      /**
+	       * Confirmation de la suppression d'une partie
+	       */
+	      $scope.confirmDelete = function(){
+	    	$scope.modal.hide();
+	    	$scope.topicModel.parts.splice($scope.topicModel.parts.indexOf($scope.partModel.eltToDelete), 1);
+	  		var data = new FormData();
+	  		data.append("part", $scope.partModel.eltToDelete.id);
+	  		data.append("sessionId", sessionService.get('id'));
+	  		data.append("sessionToken", sessionService.get('token'));
+	  		partService.deleteById(data);
+	      }
+	      
+	      /**
+	       * Fonction de déplacement vers le haut/bas d'un elt
+	       */
+	      $scope.movePart = function(elt, sens){
+	    	 var fromIndex = $scope.topicModel.parts.indexOf(elt);
+	    	 var toIndex = fromIndex + 1;
+	    	 if(true == sens){
+	    		 var toIndex = fromIndex - 1;
+	    	 }
+	    	 $scope.topicModel.parts.splice(fromIndex, 1);
+	    	 $scope.topicModel.parts.splice(toIndex, 0, elt);
+	 		 var data = new FormData();
+	  		 data.append("part", $scope.partModel.eltToDelete.id);
+	  		 data.append("sens", sens);
+	  		 data.append("sessionId", sessionService.get('id'));
+	  		 data.append("sessionToken", sessionService.get('token'));
+	  		 partService.move(data);
 	      }
 });

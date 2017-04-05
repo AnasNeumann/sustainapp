@@ -100,13 +100,13 @@
 	               <div class="s-part-topPart-one">
 	                   <i class="icon ion-edit"></i>
 	               </div>
-	               <div class="s-part-topPart-one">
+	               <div class="s-part-topPart-one" ng-click="movePart(part, true)">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="deletePart(part)">
                        <i class="icon ion-trash-a s-part-ibig"></i>
                    </div>
 	            </div>
@@ -117,13 +117,13 @@
             <!-- Option n°2 : affichage d'une image -->
             <div ng-if="2 == part.type" class="s-part-displayPictureDiv">
                 <div class="s-common-padding20 s-part-topPart" ng-if="topicModel.isOwner" >
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, true)">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="deletePart(part)" >
                        <i class="icon ion-trash-a s-part-ibig"></i>
                    </div>
                 </div>
@@ -134,13 +134,13 @@
             <!-- Option n°3 : affichage d'une vidéo -->
             <div ng-if="3 == part.type" class="s-part-displayVideoDiv">
                 <div class="s-common-padding20 s-part-topPart" ng-if="topicModel.isOwner" >
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, true)">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="deletePart(part)">
                        <i class="icon ion-trash-a s-part-ibig"></i>
                    </div>
                 </div>
@@ -154,13 +154,13 @@
                    <div class="s-part-topPart-one">
                        <i class="icon ion-edit"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, true)">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="deletePart(part)">
                        <i class="icon ion-trash-a s-part-ibig"></i>
                    </div>
                 </div>
