@@ -103,10 +103,10 @@
 	               <div class="s-part-topPart-one" ng-click="movePart(part, true)" ng-if="$index > 0">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)" ng-if="$index < topicModel.parts.length-1">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one" ng-click="deletePart(part)" ng-if="$index < topicModel.parts.length-1">
+                   <div class="s-part-topPart-one" ng-click="deletePart(part)" >
                        <i class="icon ion-trash-a s-part-ibig"></i>
                    </div>
 	            </div>
@@ -195,8 +195,9 @@
         </div>
        
 		<div class="padding s-topic-quizPart">           
-	         <!-- go to the quizz -->
-	         <button class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>
+	         <!-- go to the quizz or edit it -->
+	         <button ng-hide="topicModel.isOwner" class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>
+	         <button ng-show="topicModel.isOwner" class="s-common-lightBtn" ><i class="icon ion-edit s-topic-ribbon"></i> {{'topic.quizz.edit' | translate}} !</button>
 	         <!-- return home bottom page -->
 	         <div class="row">
 			     <div class="col col-50">
