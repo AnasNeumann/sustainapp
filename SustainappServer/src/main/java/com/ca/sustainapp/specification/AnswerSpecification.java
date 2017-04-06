@@ -55,11 +55,6 @@ public class AnswerSpecification {
 						Predicate p = cb.like(cb.lower(root.<String> get("message")), criteres.getMessage().toLowerCase() + "%");
 						listeCond.add(p);
 					}
-
-					if (null != criteres.getIsTrue()) {
-						Predicate p = cb.equal(root.<Boolean> get("isTrue"), criteres.getIsTrue());
-						listeCond.add(p);
-					}
 					
 					if (null != criteres.getTimestamps()) {
 						Predicate p = cb.equal(root.<Calendar> get("timestamps"), criteres.getTimestamps());
