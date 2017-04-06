@@ -95,7 +95,7 @@
         <div ng-repeat="part in topicModel.parts">
             
             <!-- Option n°1 : affichage d'une partie de texte -->
-            <div ng-if="1 == part.type" class="s-part-displayTextDiv">
+            <div ng-if="1 == part.type" class="s-part-displayTextDiv" ng-click="openModif(part)" ng-show="partModel.eltToEdit != part || !topicModel.isOwner">
 	            <div class="s-part-topPart" ng-if="topicModel.isOwner" >
 	               <div class="s-part-topPart-one">
 	                   <i class="icon ion-edit"></i>
@@ -112,7 +112,7 @@
 	            </div>
 	            <h3 class="s-profile-name s-part-displayTextTitle">{{part.title}}</h3>
 	            <p class="s-part-displayText">{{part.content}}</p>
-            </div>
+            </div>            
             
             <!-- Option n°2 : affichage d'une image -->
             <div ng-if="2 == part.type" class="s-part-displayPictureDiv">
@@ -149,9 +149,9 @@
             </div>
             
             <!-- Option n°4 : affichage d'un lien -->
-            <div ng-if="4 == part.type" class="s-part-displayLinkDiv">
+            <div ng-if="4 == part.type" class="s-part-displayLinkDiv" ng-show="partModel.eltToEdit != part || !topicModel.isOwner">
                 <div class="s-part-topPart" ng-if="topicModel.isOwner" >
-                   <div class="s-part-topPart-one">
+                   <div class="s-part-topPart-one" ng-click="openModif(part)">
                        <i class="icon ion-edit"></i>
                    </div>
                    <div class="s-part-topPart-one" ng-click="movePart(part, true)" ng-if="$index > 0">
@@ -168,9 +168,32 @@
                     <i class="icon ion-link placeholder-icon s-part-borderInput-icon"></i><span class="s-part-displayLink-visit">Visiter le lien :</span>{{part.content}}
                 </a>
             </div>
+
+            <!-- MODIFICATION D'UNE PARTIE -->
+            <div ng-show="partModel.eltToEdit == part && topicModel.isOwner" class="s-part-modifBtn">      
+                <div class="s-part-topPart" ng-if="topicModel.isOwner" >
+                   <div class="s-part-topPart-one" ng-click="closeModif(part)">
+                       <i class="icon ion-close"></i>
+                   </div>                   
+                </div>
+                <div ng-if="4 == part.type" class="list list-inset s-part-borderInput">
+                  <label class="item item-input s-part-borderInput-label">
+                    <i class="icon ion-link placeholder-icon s-part-borderInput-icon"></i>
+                    <input ng-model="partModel.contentEdit" type="text" placeholder="{{'part.link' | translate}}" class="s-part-borderInput-input" />
+                  </label>
+                </div>
+                <label ng-if="1 == part.type" class="item item-input item-floating-label" > 
+                  <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
+                  <input ng-model="partModel.titleEdit" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+                  <span class="s-common-errors">{{partModel.allErrors.title | translate}}</span>
+                </label>
+                <div ng-if="1 == part.type" class="s-part-textareaDiv">
+                  <textarea ng-model="partModel.contentEdit" rows="10" class="s-part-textarea" placeholder="{{'part.text' | translate}}..."></textarea>
+                </div>
+                <button class="s-common-btn" ng-click="modifyPart()">{{'common.modify' | translate}}</button>
+            </div>
         </div>
-
-
+       
 		<div class="padding s-topic-quizPart">           
 	         <!-- go to the quizz -->
 	         <button class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>

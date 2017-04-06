@@ -1,6 +1,7 @@
 package com.ca.sustainapp.controllers;
 
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -91,7 +92,18 @@ public class PartController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/part/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		PartEntity part = super.getPartIfOwner(request);
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		if(null == part || isEmpty(content)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		part.setContent(content);
+		if(part.getType().equals(1)){
+			part.setTitle(title);
+		}
+		partService.createOrUpdate(part);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**

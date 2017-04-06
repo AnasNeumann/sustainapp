@@ -54,6 +54,9 @@ angular.module('sustainapp.controllers')
 			$scope.partModel.type = 1;
 			$scope.partModel.allErrors = [];
 			$scope.partModel.eltToDelete = {};
+			$scope.partModel.eltToEdit = {};
+			$scope.partModel.contentEdit = "";
+	    	$scope.partModel.titleEdit = "";
 			
 			topicService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				var result = response.data;
@@ -327,4 +330,40 @@ angular.module('sustainapp.controllers')
 	    	  }	    	  
 	    	  return false;
 	      }
+	      
+	      /**
+	       * Fonction d'ouverture de la modification 
+	       */
+	      $scope.openModif = function(elt){
+	    	  $scope.partModel.eltToEdit = elt;
+	    	  $scope.partModel.contentEdit = elt.content;
+	    	  $scope.partModel.titleEdit = elt.title;
+	      }
+	      
+	      /**
+	       * Fonction de fermeture de la modification
+	       */
+	      $scope.closeModif = function(elt){
+	    	  $scope.partModel.eltToEdit = {};
+	      }
+	      
+	      /**
+	       * Fonction de modification en base d'une partie
+	       */
+	      $scope.modifyPart = function(){
+	    	  	var data = new FormData();
+	 			data.append("part", $scope.partModel.eltToEdit.id);
+	 			data.append("content",  $scope.partModel.contentEdit);
+	 			data.append("title", $scope.partModel.titleEdit);
+	 			data.append("sessionId", sessionService.get('id'));
+	 			data.append("sessionToken", sessionService.get('token'));
+	 			partService.update(data).success(function(result) {
+	 				if(result.code == 1){
+	 					$scope.partModel.eltToEdit.content = $scope.partModel.contentEdit;
+	 					$scope.partModel.eltToEdit.title = $scope.partModel.titleEdit;
+	 					$scope.partModel.eltToEdit = {};
+	 				}
+	 			});
+	      }
+	      
 });
