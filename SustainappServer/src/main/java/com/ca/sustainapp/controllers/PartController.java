@@ -101,7 +101,21 @@ public class PartController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/part/move", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String move(HttpServletRequest request) {
-		return null;
+		PartEntity part = super.getPartIfOwner(request);
+		Boolean sens = new Boolean(request.getParameter("sens"));
+		if(null == part){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		int i = 1;
+		if(!sens){
+			i = -1;
+		}
+		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(part.getTopicId()).setNumero(part.getNumero()-i));
+		for(PartEntity p : parts){
+			partService.createOrUpdate(p.setNumero(p.getNumero()+i));
+		}
+		partService.createOrUpdate(part.setNumero(part.getNumero()-i));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -111,7 +125,18 @@ public class PartController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/part/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		PartEntity part = super.getPartIfOwner(request);
+		if(null == part){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(part.getTopicId()));
+		for(PartEntity p : parts){
+			if(p.getNumero() > part.getNumero()){
+				partService.createOrUpdate(p.setNumero(p.getNumero()-1));
+			}
+		}
+		deleteService.cascadeDelete(part);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
 }

@@ -24,7 +24,7 @@
 	               </div>
 	           </div>
 	           <!-- Desktop view -->
-	           <div class="s-common-camera"ng-if="topicModel.isOwner && _isNotMobile == true">
+	           <div class="s-common-camera" ng-if="topicModel.isOwner && _isNotMobile == true">
 	                <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
 	                    <i class="icon ion-camera"></i>
 	                    <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopPicture(this)" />
@@ -100,13 +100,13 @@
 	               <div class="s-part-topPart-one">
 	                   <i class="icon ion-edit"></i>
 	               </div>
-	               <div class="s-part-topPart-one" ng-click="movePart(part, true)">
+	               <div class="s-part-topPart-one" ng-click="movePart(part, true)" ng-if="$index > 0">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
                    <div class="s-part-topPart-one" ng-click="movePart(part, false)">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one" ng-click="deletePart(part)">
+                   <div class="s-part-topPart-one" ng-click="deletePart(part)" ng-if="$index < topicModel.parts.length-1">
                        <i class="icon ion-trash-a s-part-ibig"></i>
                    </div>
 	            </div>
@@ -117,10 +117,10 @@
             <!-- Option n°2 : affichage d'une image -->
             <div ng-if="2 == part.type" class="s-part-displayPictureDiv">
                 <div class="s-common-padding20 s-part-topPart" ng-if="topicModel.isOwner" >
-                   <div class="s-part-topPart-one" ng-click="movePart(part, true)">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, true)" ng-if="$index > 0">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)" ng-if="$index < topicModel.parts.length-1">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
                    <div class="s-part-topPart-one" ng-click="deletePart(part)" >
@@ -134,10 +134,10 @@
             <!-- Option n°3 : affichage d'une vidéo -->
             <div ng-if="3 == part.type" class="s-part-displayVideoDiv">
                 <div class="s-common-padding20 s-part-topPart" ng-if="topicModel.isOwner" >
-                   <div class="s-part-topPart-one" ng-click="movePart(part, true)">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, true)" ng-if="$index > 0">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)" ng-if="$index < topicModel.parts.length-1">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
                    <div class="s-part-topPart-one" ng-click="deletePart(part)">
@@ -154,18 +154,18 @@
                    <div class="s-part-topPart-one">
                        <i class="icon ion-edit"></i>
                    </div>
-                   <div class="s-part-topPart-one" ng-click="movePart(part, true)">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, true)" ng-if="$index > 0">
                        <i class="icon ion-arrow-up-a s-part-ibig"></i>
                    </div>
-                   <div class="s-part-topPart-one" ng-click="movePart(part, false)">
+                   <div class="s-part-topPart-one" ng-click="movePart(part, false)" ng-if="$index < topicModel.parts.length-1">
                        <i class="icon ion-arrow-down-a s-part-ibig"></i>
                    </div>
                    <div class="s-part-topPart-one" ng-click="deletePart(part)">
                        <i class="icon ion-trash-a s-part-ibig"></i>
                    </div>
                 </div>
-                <a href="{{part.content}}" class="s-part-displayLink" target='_blank'>
-	                <i class="icon ion-link placeholder-icon s-part-borderInput-icon"></i><span class="s-part-displayLink-visit">Visiter le lien :</span>{{part.content}}
+                <a ng-click="openLink(part.content)" class="s-part-displayLink" >
+                    <i class="icon ion-link placeholder-icon s-part-borderInput-icon"></i><span class="s-part-displayLink-visit">Visiter le lien :</span>{{part.content}}
                 </a>
             </div>
         </div>

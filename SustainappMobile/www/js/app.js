@@ -25,7 +25,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 /**
  * ROUTING DE SUSTAINAPP
  */
-.config(function($stateProvider, $urlRouterProvider, $translateProvider, $sceDelegateProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider, $sceDelegateProvider, $cordovaInAppBrowserProvider) {
   $stateProvider
   .state('tab', {
     url: '/tab',
@@ -155,7 +155,19 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	 */
 	$sceDelegateProvider.resourceUrlBlacklist([
 	]);
-  
+	
+	/**
+	 * Permettre l'ouverture de liens externe
+	 */
+	 var defaultOptions = {
+		    location: 'no',
+		    clearcache: 'no',
+		    toolbar: 'no'
+		  };
+	 document.addEventListener("deviceready", function () {
+		    $cordovaInAppBrowserProvider.setDefaultOptions(options)	
+		  }, false);
+	 
   /**
    * SYSTEME DE TRADUCTION
    */

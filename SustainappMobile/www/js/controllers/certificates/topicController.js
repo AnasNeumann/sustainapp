@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('topicController', 
-			function($scope, $stateParams, $state, $ionicModal, $ionicScrollDelegate, sessionService, topicService, fileService, listService, partService, displayService) {
+			function($scope, $stateParams, $state, $ionicModal, $ionicScrollDelegate, $cordovaInAppBrowser, sessionService, topicService, fileService, listService, partService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -304,10 +304,27 @@ angular.module('sustainapp.controllers')
 	    	 $scope.topicModel.parts.splice(fromIndex, 1);
 	    	 $scope.topicModel.parts.splice(toIndex, 0, elt);
 	 		 var data = new FormData();
-	  		 data.append("part", $scope.partModel.eltToDelete.id);
+	  		 data.append("part", elt.id);
 	  		 data.append("sens", sens);
 	  		 data.append("sessionId", sessionService.get('id'));
 	  		 data.append("sessionToken", sessionService.get('token'));
 	  		 partService.move(data);
+	      }
+	      
+	      /**
+	       * Fonction d'ouverture d'un onglet externe
+	       */
+	      $scope.openLink = function(link){
+	    	  if(!$scope._isNotMobile){
+	    		  var options = {
+	    			      location: 'yes',
+	    			      clearcache: 'yes',
+	    			      toolbar: 'no'
+	    			    };
+	    		  $cordovaInAppBrowser.open(link, '_system', options); 
+	    	  }else{
+	    		  window.open(link, '_system', 'location=yes'); 
+	    	  }	    	  
+	    	  return false;
 	      }
 });
