@@ -1,24 +1,16 @@
 package com.ca.sustainapp.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * QUESTION table mapping
@@ -29,7 +21,7 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "QUESTION")
 @SequenceGenerator(name = "question_id_seq_generator", sequenceName = "question_id_seq")
-public class QuestionEntity extends GenericEntity implements Serializable {
+public class QuestionEntity extends GenericNumerotableEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -40,16 +32,21 @@ public class QuestionEntity extends GenericEntity implements Serializable {
 
 	@Column(name = "TOPIC_ID")
 	private Long topicId;
+	
+	@Column(name = "QUESTION_TYPE")
+	private Integer type;
+	
+	@Column(name = "NUMERO")
+	private Integer numero;
 
+	@Column(name = "PICTURE")
+	private byte[] picture;
+	
 	@Column(name = "MESSAGE")
 	private String message;
 
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionId", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.SELECT)
-	private List<AnswerEntity> listAnswer = new ArrayList<AnswerEntity>();
 
 	/**
 	 * @return the id
@@ -112,17 +109,47 @@ public class QuestionEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the listAnswer
+	 * @return the type
 	 */
-	public List<AnswerEntity> getListAnswer() {
-		return listAnswer;
+	public Integer getType() {
+		return type;
 	}
 
 	/**
-	 * @param listAnswer the listAnswer to set
+	 * @param type the type to set
 	 */
-	public QuestionEntity setListAnswer(List<AnswerEntity> listAnswer) {
-		this.listAnswer = listAnswer;
+	public QuestionEntity setType(Integer type) {
+		this.type = type;
+		return this;
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public Integer getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public QuestionEntity setNumero(Integer numero) {
+		this.numero = numero;
+		return this;
+	}
+
+	/**
+	 * @return the picture
+	 */
+	public byte[] getPicture() {
+		return picture;
+	}
+
+	/**
+	 * @param picture the picture to set
+	 */
+	public QuestionEntity setPicture(byte[] picture) {
+		this.picture = picture;
 		return this;
 	}
 }

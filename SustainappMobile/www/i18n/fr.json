@@ -128,6 +128,8 @@
     
     "topic.return" : "retour au sommaire",
     "topic.quizz.go" : "Passer le quiz",
+    "topic.quizz.edit" : "Editer le quiz",
+    "topic.up" : "monter",
     
     "part.link" : "Coller ici l'URL souhaitée",
     "part.video" : "Coller ici l'URL de la vidéo",

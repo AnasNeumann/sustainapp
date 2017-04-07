@@ -41,7 +41,7 @@
 
 .s-topic-text{
 	padding : 10px;
-	color : #666;
+	color : #444;
 	text-align:justify;
 	font-size : 20px;
 }
@@ -56,6 +56,8 @@
 	margin-top : 10px;
 	margin-bottom : 10px;
 }
+
+.s-topic-top,
 .s-topic-return a {
 	color : #28a754;
 	font-size : 22px;
@@ -63,6 +65,7 @@
 	text-decoration: none;
 }
 
+.s-topic-top:active,
 .s-topic-return a:active {
     color : #2dbe60;
 }
@@ -115,6 +118,14 @@
 	cursor : pointer;
 }
 
+.s-topic-seePreview{
+	margin-left : 10px;
+	font-size : 30px;
+	position : relative;
+	top : -5px;
+	margin-right : 3px;
+}
+
 /**
  * =====================
  * LES PARTIES S-PART-**
@@ -160,4 +171,81 @@
     font-family: sustainapp;
     font-size : 20px !important;
     border : none;
+ }
+ 
+ .s-part-displayTextDiv{
+    text-align : justify;
+    padding-left : 20px;
+    padding-right : 20px;
+    margin-bottom : 10px;
+    margin-top : 10px;
+    color : #444;
+ }
+ 
+ .s-part-displayTextTitle{
+    color : #28a754;
+    font-size : 25px;
+ }
+ 
+ .s-part-displayText{
+    white-space: pre-wrap;
+ }
+ 
+ .s-part-displayDocumentTitle{
+    font-style: italic;
+    text-align: center;
+    margin : 5px;
+ }
+ 
+ .s-part-displayLinkDiv{
+    padding-left : 20px;
+    padding-right : 20px;
+    margin-bottom : 10px;
+ }
+ 
+ .s-part-displayLink,
+ .s-part-displayLink:active{
+    color : #444;
+    text-decoration: none;
+    font-style: italic;
+ }
+ 
+ .s-part-displayLink-visit{
+    font-style: normal;
+    color : #04b9df;
+    margin-right : 5px;
+ }
+ 
+ .s-part-topPart{
+    text-align : right;
+    margin : 0px;
+ }
+ 
+ .s-part-topPart-one{
+    margin : 0px;
+    width : 30px;
+    height:30px;
+    display : inline-block;
+    opacity : 0.5;
+    color : #333;
+    cursor : pointer;
+    text-align : center;
+    padding-top : 6px;
+    font-size : 20px;
+ }
+ 
+ .s-part-topPart-one:active{
+    opacity : 0.9;
+ }
+ 
+ .s-part-ibig{
+    font-size : 22px;
+ }
+ 
+ .s-part-modifBtn{
+    margin : 0px;
+    margin-bottom : 10px;
+    padding : 0px;
+    padding-left: 20px;
+    padding-right : 20px;
  }

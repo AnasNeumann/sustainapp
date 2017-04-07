@@ -35,7 +35,28 @@ public class StringsUtils {
 	}
 	
 	/**
-	 * M�thode de parsing d'une url pour construire l'embed de youtube
+	 * Build a valid link
+	 * @param link
+	 * @return
+	 */
+	public static String buildLinkString(String link){
+		String result;
+		int startPosition = link.indexOf("www");
+		if (startPosition != -1) {
+			result = "http://" + link.substring(startPosition);
+		} else {
+			startPosition = link.indexOf("http");
+			if (startPosition != 0) {
+				result = "http://" + link;
+			} else {
+				result = link;
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Méthode de parsing d'une url pour construire l'embed de youtube
 	 * @param url
 	 * @return
 	 */

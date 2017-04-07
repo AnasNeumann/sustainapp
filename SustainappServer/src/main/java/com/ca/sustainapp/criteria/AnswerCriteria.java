@@ -16,7 +16,6 @@ public class AnswerCriteria implements Serializable {
 	private Long id;
 	private Long questionId;
 	private String message;
-	private Boolean isTrue;
 	private Calendar timestamps;
 	
 	/**
@@ -64,22 +63,6 @@ public class AnswerCriteria implements Serializable {
 	@QueryParam("message")
 	public AnswerCriteria setMessage(String message) {
 		this.message = message;
-		return this;
-	}
-	
-	/**
-	 * @return the isTrue
-	 */
-	public Boolean getIsTrue() {
-		return isTrue;
-	}
-	
-	/**
-	 * @param isTrue the isTrue to set
-	 */
-	@QueryParam("isTrue")
-	public AnswerCriteria setIsTrue(Boolean isTrue) {
-		this.isTrue = isTrue;
 		return this;
 	}
 	

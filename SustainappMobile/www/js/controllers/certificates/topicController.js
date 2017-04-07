@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('topicController', 
-			function($scope, $stateParams, $state, $ionicModal, sessionService, topicService, fileService, listService, partService, displayService) {
+			function($scope, $stateParams, $state, $ionicModal, $ionicScrollDelegate, $cordovaInAppBrowser, sessionService, topicService, fileService, listService, partService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -35,6 +35,7 @@ angular.module('sustainapp.controllers')
 			$scope.topicModel.isOwner = false;
 			$scope.topicModel.title = "";
 			$scope.topicModel.content = "";
+			$scope.topicModel.parts = [];
 			
 			$scope._isNotMobile = displayService.isNotMobile;
 			$scope.topicModel.allErrors = [];
@@ -52,14 +53,19 @@ angular.module('sustainapp.controllers')
 			$scope.partModel.emptyPicture  = true;
 			$scope.partModel.type = 1;
 			$scope.partModel.allErrors = [];
+			$scope.partModel.eltToDelete = {};
+			$scope.partModel.eltToEdit = {};
+			$scope.partModel.contentEdit = "";
+	    	$scope.partModel.titleEdit = "";
 			
 			topicService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				var result = response.data;
 				if(result.code == 1) {
 					$scope.topicModel.loaded = true;
 					$scope.topicModel.topic = result.topic;
-					$scope.topicModel.parts = result.part;
-					$scope.topicModel.isOwner = result.isOwner;
+					$scope.topicModel.parts = result.parts;
+					$scope.topicModel.isOwner = false;
+					$scope.topicModel.isReallyOwner = result.isOwner;
 					$scope.topicModel.title = result.topic.title;
 					$scope.title = result.topic.title;
 					$scope.topicModel.content = result.topic.content;
@@ -80,7 +86,7 @@ angular.module('sustainapp.controllers')
 		   });
 	   
 	     /**
-	      * Modification de la photo de fon [desktop mode]
+	      * Modification de la photo de fond [desktop mode]
 	      */
 	     $scope.desktopPicture = function(input){
 	    	 var reader = new FileReader();
@@ -101,7 +107,7 @@ angular.module('sustainapp.controllers')
 	     };
 	     
 	     /**
-	      * Modification de la photo de fon [mobile mode]
+	      * Modification de la photo de fond [mobile mode]
 	      */
 	     $scope.picture = function(newFile){
 	    	 fileService.getFile(newFile, 100, 700, 300, false).then(function(imageData) {			
@@ -189,4 +195,175 @@ angular.module('sustainapp.controllers')
 	         }
 	         reader.readAsDataURL(input.files[0]); 
 	     };
+	     
+	     /**
+	      * Fonction d'ajout d'une nouvelle partie au chapitre
+	      */
+	      $scope.createPart = function(){
+	    	  var data = new FormData();
+	    	  switch($scope.partModel.type) {
+	    	    case 1:
+	    	    	data.append("title", $scope.partModel.title);
+	    	    	data.append("content", $scope.partModel.content);
+	    	        break;
+	    	    case 2:
+	    	    	data.append("title", $scope.partModel.title);
+	    	    	if(null != $scope.partModel.file){
+	    	    		data.append("file", $scope.partModel.file);
+	    	    	}
+	    	        break;
+	    	    case 3:
+	    	    	data.append("title", $scope.partModel.title);
+	    	    	data.append("video", $scope.partModel.video);
+	    	        break;
+	    	    case 4:
+	    	    	data.append("link", $scope.partModel.link);
+	    	        break;
+		    	}
+	 			data.append("topic", $scope.topicModel.topic.id);
+	 			data.append("type", $scope.partModel.type);
+	 			data.append("sessionId", sessionService.get('id'));
+	 			data.append("sessionToken", sessionService.get('token'));
+	 			partService.create(data).success(function(result) {
+	 				if(result.code == 1){
+	 					$scope.modalPart.hide();
+	 					$scope.partModel.allErrors = [];
+	 					var newPart = {
+							"id"    : result.id,
+							"type"  : $scope.partModel.type
+	 					};
+	 					switch($scope.partModel.type) {
+		 		    	    case 1:
+		 		    	    	newPart.title =  $scope.partModel.title;
+		 		    	    	newPart.content =  $scope.partModel.content;
+		 		    	        break;
+		 		    	    case 2:
+		 		    	    	newPart.title =  $scope.partModel.title;
+		 		    	    	newPart.document =  $scope.partModel.file;		 		    	    	
+		 		    	        break;
+		 		    	    case 3:
+		 		    	    	newPart.title =  $scope.partModel.title;
+		 		    	    	newPart.content =  result.content;
+		 		    	        break;
+		 		    	    case 4:
+		 		    	    	newPart.content =  result.content;
+		 		    	        break;
+	 			    	}
+	 					$scope.topicModel.parts.push(newPart);
+	 					$scope.partModel.title = "";
+	 					$scope.partModel.link = "";
+	 					$scope.partModel.content = "";
+	 					$scope.partModel.video = "";
+	 					$scope.partModel.pictureEdit = false;
+	 					$scope.partModel.file  = null;
+	 					$scope.partModel.displayPicture  = "";
+	 					$scope.partModel.emptyPicture  = true;	 					
+	 					var scrollDiv = document.getElementById("topicContent");	 					
+	 					displayService.animatedScrollDown(scrollDiv, scrollDiv.scrollHeight, 1, 20);	 					
+	 				} else {
+	 		    		$scope.partModel.allErrors = result.errors;
+	 		    	}
+	 		    });
+	      };
+	      
+	      /**
+	       * Fonction de scroll vers le haut
+	       */
+	      $scope.scrollTop = function(){
+	    	  var scrollDiv = document.getElementById("topicContent");	 					
+			  displayService.animatedScrollUp(scrollDiv, 0, scrollDiv.scrollHeight, 25); 
+	      }
+	      
+	      /**
+	       * Fonction de demande de confirmation de la suppression
+	       */
+	      $scope.deletePart = function(elt){
+	    	  $scope.partModel.eltToDelete = elt;
+	    	  $scope.modal.show();
+	      }
+	      
+	      /**
+	       * Confirmation de la suppression d'une partie
+	       */
+	      $scope.confirmDelete = function(){
+	    	$scope.modal.hide();
+	    	$scope.topicModel.parts.splice($scope.topicModel.parts.indexOf($scope.partModel.eltToDelete), 1);
+	  		var data = new FormData();
+	  		data.append("part", $scope.partModel.eltToDelete.id);
+	  		data.append("sessionId", sessionService.get('id'));
+	  		data.append("sessionToken", sessionService.get('token'));
+	  		partService.deleteById(data);
+	      }
+	      
+	      /**
+	       * Fonction de déplacement vers le haut/bas d'un elt
+	       */
+	      $scope.movePart = function(elt, sens){
+	    	 var fromIndex = $scope.topicModel.parts.indexOf(elt);
+	    	 var toIndex = fromIndex + 1;
+	    	 if(true == sens){
+	    		 var toIndex = fromIndex - 1;
+	    	 }
+	    	 $scope.topicModel.parts.splice(fromIndex, 1);
+	    	 $scope.topicModel.parts.splice(toIndex, 0, elt);
+	 		 var data = new FormData();
+	  		 data.append("part", elt.id);
+	  		 data.append("sens", sens);
+	  		 data.append("sessionId", sessionService.get('id'));
+	  		 data.append("sessionToken", sessionService.get('token'));
+	  		 partService.move(data);
+	      }
+	      
+	      /**
+	       * Fonction d'ouverture d'un onglet externe
+	       */
+	      $scope.openLink = function(link){
+	    	  if(!$scope._isNotMobile){
+	    		  var options = {
+	    			      location: 'yes',
+	    			      clearcache: 'yes',
+	    			      toolbar: 'no'
+	    			    };
+	    		  $cordovaInAppBrowser.open(link, '_system', options); 
+	    	  }else{
+	    		  window.open(link, '_system', 'location=yes'); 
+	    	  }	    	  
+	    	  return false;
+	      }
+	      
+	      /**
+	       * Fonction d'ouverture de la modification 
+	       */
+	      $scope.openModif = function(elt){
+	    	  $scope.partModel.eltToEdit = elt;
+	    	  $scope.partModel.contentEdit = elt.content;
+	    	  $scope.partModel.titleEdit = elt.title;
+	      }
+	      
+	      /**
+	       * Fonction de fermeture de la modification
+	       */
+	      $scope.closeModif = function(elt){
+	    	  $scope.partModel.eltToEdit = {};
+	      }
+	      
+	      /**
+	       * Fonction de modification en base d'une partie
+	       */
+	      $scope.modifyPart = function(){
+	    	  	var data = new FormData();
+	 			data.append("part", $scope.partModel.eltToEdit.id);
+	 			data.append("content",  $scope.partModel.contentEdit);
+	 			data.append("title", $scope.partModel.titleEdit);
+	 			data.append("sessionId", sessionService.get('id'));
+	 			data.append("sessionToken", sessionService.get('token'));
+	 			partService.update(data).success(function(result) {
+	 				if(result.code == 1){
+	 					$scope.partModel.eltToEdit.content = $scope.partModel.contentEdit;
+	 					$scope.partModel.eltToEdit.title = $scope.partModel.titleEdit;
+	 					$scope.partModel.eltToEdit = {};
+	 				}
+	 			});
+	      }
+	      
 });
