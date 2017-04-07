@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.PartCriteria;
+import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.PartEntity;
@@ -101,6 +102,7 @@ public class TopicController extends GenericCourseController {
 				.setTopic(topic)
 				.setIsOwner(super.verifyTopicInformations(topic, user))
 				.setParts(parts)
+				.setHasQuiz(getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topic.getId())).size()>0)
 				.setCode(1)
 				.buildJson();
 	}

@@ -68,6 +68,7 @@ angular.module('sustainapp.controllers')
 					$scope.topicModel.isReallyOwner = result.isOwner;
 					$scope.topicModel.title = result.topic.title;
 					$scope.title = result.topic.title;
+					$scope.topicModel.hasQuiz = result.hasQuiz;
 					$scope.topicModel.content = result.topic.content;
 					if(null != result.topic.picture){
 						$scope.topicModel.displayPicture = "data:image/jpeg;base64,"+ result.topic.picture;

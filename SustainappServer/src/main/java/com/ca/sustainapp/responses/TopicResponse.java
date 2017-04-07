@@ -17,6 +17,7 @@ public class TopicResponse extends HttpRESTfullResponse {
 	private TopicEntity topic;
 	private Boolean isOwner;
 	private List<PartEntity> parts = new SustainappList<PartEntity>();
+	private Boolean hasQuiz;
 	
 	/**
 	 * @return the topic
@@ -60,6 +61,21 @@ public class TopicResponse extends HttpRESTfullResponse {
 	 */
 	public TopicResponse setParts(List<PartEntity> parts) {
 		this.parts = parts;
+		return this;
+	}
+
+	/**
+	 * @return the hasQuizz
+	 */
+	public Boolean getHasQuiz() {
+		return hasQuiz;
+	}
+
+	/**
+	 * @param hasQuizz the hasQuizz to set
+	 */
+	public TopicResponse setHasQuiz(Boolean hasQuiz) {
+		this.hasQuiz = hasQuiz;
 		return this;
 	}
 }
