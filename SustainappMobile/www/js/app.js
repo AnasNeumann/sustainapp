@@ -131,6 +131,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    }
 	  }
     })
+    .state('tab.questions', {
+	  url: '/questions/:id',
+	  views: {
+	    'tab-certificates': {
+	      templateUrl: 'templates/certificates/questions-main.html',
+	      controller: 'questionsController'
+	    }
+	  }
+    })
    .state('tab.notifications', {
 	  url: '/notifications',
 	  views: {

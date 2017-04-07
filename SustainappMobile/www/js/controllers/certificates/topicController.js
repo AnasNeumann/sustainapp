@@ -273,7 +273,7 @@ angular.module('sustainapp.controllers')
 	      $scope.scrollTop = function(){
 	    	  var scrollDiv = document.getElementById("topicContent");	 					
 			  displayService.animatedScrollUp(scrollDiv, 0, scrollDiv.scrollHeight, 25); 
-	      }
+	      };
 	      
 	      /**
 	       * Fonction de demande de confirmation de la suppression
@@ -281,7 +281,7 @@ angular.module('sustainapp.controllers')
 	      $scope.deletePart = function(elt){
 	    	  $scope.partModel.eltToDelete = elt;
 	    	  $scope.modal.show();
-	      }
+	      };
 	      
 	      /**
 	       * Confirmation de la suppression d'une partie
@@ -294,7 +294,7 @@ angular.module('sustainapp.controllers')
 	  		data.append("sessionId", sessionService.get('id'));
 	  		data.append("sessionToken", sessionService.get('token'));
 	  		partService.deleteById(data);
-	      }
+	      };
 	      
 	      /**
 	       * Fonction de déplacement vers le haut/bas d'un elt
@@ -313,7 +313,7 @@ angular.module('sustainapp.controllers')
 	  		 data.append("sessionId", sessionService.get('id'));
 	  		 data.append("sessionToken", sessionService.get('token'));
 	  		 partService.move(data);
-	      }
+	      };
 	      
 	      /**
 	       * Fonction d'ouverture d'un onglet externe
@@ -330,7 +330,7 @@ angular.module('sustainapp.controllers')
 	    		  window.open(link, '_system', 'location=yes'); 
 	    	  }	    	  
 	    	  return false;
-	      }
+	      };
 	      
 	      /**
 	       * Fonction d'ouverture de la modification 
@@ -346,7 +346,7 @@ angular.module('sustainapp.controllers')
 	       */
 	      $scope.closeModif = function(elt){
 	    	  $scope.partModel.eltToEdit = {};
-	      }
+	      };
 	      
 	      /**
 	       * Fonction de modification en base d'une partie
@@ -365,6 +365,19 @@ angular.module('sustainapp.controllers')
 	 					$scope.partModel.eltToEdit = {};
 	 				}
 	 			});
-	      }
+	      };
 	      
+	      /**
+	       * Fonction pour aller vers l'interface d'édition d'un quiz
+	       */
+	      $scope.editQuiz = function(){
+	    	  $state.go('tab.questions', { id : $stateParams.id});
+	      };
+	      
+	      /**
+	       * Fonction pour aller vers l'interface pour valider le quiz
+	       */
+	      $scope.goToQuiz = function(){
+	    	  // TODO
+	      };
 });
