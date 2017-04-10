@@ -1,0 +1,55 @@
+<ion-view>  
+    <ion-nav-title ng-bind="title"></ion-nav-title>
+    
+    <!-- Questions loaded -->
+    <ion-content ng-show="questionsModel.loaded" >
+         <div class="row">
+            <div class="col col-50">
+                <div class="s-topic-return" >
+                    <a href="#/tab/topic/{{questionsModel.topic}}">
+                        <i class="icon ion-arrow-return-left"></i><br />
+                        <span>{{'question.return' | translate}}</span>
+                    </a>
+                </div>
+             </div>
+             <div class="col col-50">
+                <div class="s-topic-return" >
+                    <a href="#/tab/cours/{{questionsModel.cours}}">
+                        <i class="icon ion-home"></i><br />
+                        <span>{{'topic.return' | translate}}</span>
+                    </a>
+                </div>
+             </div>
+         </div>
+         <div class="s-common-bluePart">
+            <h2 class="s-common-whiteTitle">{{'question.questions' | translate}}</h2>
+        </div>
+        <div class="row s-cours-greyBtnContainer">
+        <div class="col col-50 s-cours-greyBtn s-cours-leftBtn" ng-click="modalQuestion.show()">
+            <h3 class="s-common-greyTitle" ><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
+        </div>
+        <div class="col col-5 s-cours-greyBtn">
+            <h3 class="s-common-greyTitle" ng-click="questionsModel.reorder = !questionsModel.reorder"><i class="icon ion-navicon s-challenge-plus"></i> {{'course.chapters.drop' | translate}}</h3>
+        </div>
+        </div>
+        <div class="s-teams-allResults">
+           <ion-list show-reorder="questionsModel.reorder" >
+              <ion-item class="item-remove-animate item item-thumbnail-left" ng-repeat="question in questionsModel.questions" type="item-text-wrap" href="#/tab/question/{{elt.id}}">
+                <img ng-src="{{questionsModel.types[question.type].pictureURL}}" />
+                <h2 class="s-teams-title">{{question.message}}</h2>
+                <p class="s-teams-text">{{questionsModel.types[question.type].name | translate}}</p>
+                <ion-reorder-button class="ion-navicon" on-reorder="moveQuestion(question, $fromIndex, $toIndex)"></ion-reorder-button>
+                <ion-option-button class="button s-common-btnList" ng-click="confirmDeleteQuestion(question)">
+                    <i class="icon ion-close-circled"></i>
+                </ion-option-button>
+              </ion-item>
+           </ion-list>
+       </div>
+    </ion-content>
+    
+    <!-- Loading Part -->
+    <ion-content class="s-common-loading" ng-hide="questionsModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+    </ion-content>
+</ion-view>

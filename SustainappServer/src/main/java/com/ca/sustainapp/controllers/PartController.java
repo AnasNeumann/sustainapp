@@ -54,10 +54,7 @@ public class PartController extends GenericCourseController {
 			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
 		}
 		List<PartEntity> allParts = getService.cascadeGetPart(new PartCriteria().setTopicId(topic.getId()));
-		Integer numero = 0;
-		if(null != allParts){
-			numero+=allParts.size();
-		}
+		Integer numero = (null != allParts)? allParts.size() : 0;
 		PartEntity part = new PartEntity();
 		Optional<Integer> type = StringsUtils.parseIntegerQuietly(request.getParameter("type"));
 		part.setType(type.get())

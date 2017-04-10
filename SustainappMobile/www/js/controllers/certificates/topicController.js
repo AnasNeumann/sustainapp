@@ -57,8 +57,8 @@ angular.module('sustainapp.controllers')
 			$scope.partModel.eltToEdit = {};
 			$scope.partModel.contentEdit = "";
 	    	$scope.partModel.titleEdit = "";
-			
-			topicService.getById($stateParams.id, sessionService.get('id')).then(function(response){
+	    	
+	    	topicService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				var result = response.data;
 				if(result.code == 1) {
 					$scope.topicModel.loaded = true;

@@ -134,6 +134,18 @@
     "part.link" : "Coller ici l'URL souhaitée",
     "part.video" : "Coller ici l'URL de la vidéo",
     "part.text" : "Paragraphe",
-    "part.new" : "Nouvelle partie"
+    "part.new" : "Nouvelle partie",
+    
+    "question.questions" : "Questions",
+    "question.return" : "retour au chapitre",
+    "question.message" : "Votre question",
+    "question.types" : "Types de question",
+    "question.new" : "Nouvelle question",
+    "question.addPicture" : "Ajouter une image",
+    
+    "questionType.quiz" : "Vrai ou faux",
+    "questionType.selection" : "Selection d'image",
+    "questionType.classification" : "Classification",
+    "questionType.reorder" : "Réordonner"
 
 }

@@ -134,5 +134,17 @@
     "part.link" : "Paste here the wished URL",
     "part.video" : "Paste here the video URL",
     "part.text" : "Paragraph",
-    "part.new" : "New part"
+    "part.new" : "New part",
+    
+    "question.questions" : "Questions",
+    "question.return" : "back to the course",
+    "question.message" : "Your question",
+    "question.types" : "Types of question",
+    "question.new" : "New question",
+    "question.addPicture" : "Add a picture",
+    
+    "questionType.quiz" : "True ou false",
+    "questionType.selection" : "Picture selection",
+    "questionType.classification" : "Classification",
+    "questionType.reorder" : "Reorder"
 }
