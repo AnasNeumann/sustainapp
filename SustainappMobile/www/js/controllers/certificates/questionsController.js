@@ -184,4 +184,18 @@ angular.module('sustainapp.controllers')
 		questionService.deleteById(data);
 		$scope.eltToDelete = {};
 	}
+	
+	/**
+	 * fonction de déplacement drag&drop d'une question
+	 */
+	$scope.moveQuestion = function(question, fromIndex, toIndex){
+		$scope.questionsModel.questions.splice(fromIndex, 1);
+		$scope.questionsModel.questions.splice(toIndex, 0, question);
+		var data = new FormData();
+		data.append("question", question.id);
+		data.append("position", toIndex);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		questionService.drop(data);
+	}
 });

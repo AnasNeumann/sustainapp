@@ -121,7 +121,18 @@ public class QuestionController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/question/drop", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String drop(HttpServletRequest request) {
-		return null;
+		QuestionEntity question = super.getQuestionIfOwner(request);
+		Optional<Integer> toIndex = StringsUtils.parseIntegerQuietly(request.getParameter("position"));
+		if(null == question || !toIndex.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<QuestionEntity> questions = getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(question.getTopicId()));
+		if(toIndex.get() > question.getNumero()){
+			avancer(question, questions, toIndex.get());
+		}else if(toIndex.get() < question.getNumero()){
+			reculer(question, questions, toIndex.get());
+		}
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -152,6 +163,42 @@ public class QuestionController extends GenericCourseController {
 	@RequestMapping(value="/question/picture", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String picture(HttpServletRequest request) {
 		return null;
+	}
+	
+	/**
+	 * Avancer une question dans la liste
+	 * @param topic
+	 * @param topics
+	 * @param arrivee
+	 */
+	/**
+	 * 
+	 * @param question
+	 * @param questions
+	 * @param arrivee
+	 */
+	private void avancer(QuestionEntity question, List<QuestionEntity> questions, Integer arrivee){
+		for(QuestionEntity q : questions){
+			if(q.getNumero() <= arrivee && q.getNumero() > question.getNumero()){
+				questionService.createOrUpdate(q.setNumero(q.getNumero()-1));
+			}
+		}
+		questionService.createOrUpdate(question.setNumero(arrivee));
+	}
+	
+	/**
+	 * reculer une question dans la liste
+	 * @param question
+	 * @param questions
+	 * @param arrivee
+	 */
+	private void reculer(QuestionEntity question, List<QuestionEntity> questions, Integer arrivee){
+		for(QuestionEntity q : questions){
+			if(q.getNumero() >= arrivee && q.getNumero() < question.getNumero()){
+				questionService.createOrUpdate(q.setNumero(q.getNumero()+1));
+			}
+		}
+		questionService.createOrUpdate(question.setNumero(arrivee));
 	}
 	
 }
