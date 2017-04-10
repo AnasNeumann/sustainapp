@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
+import com.ca.sustainapp.criteria.AnswerCriteria;
 import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.entities.QuestionEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.QuestionResponse;
 import com.ca.sustainapp.responses.QuestionsResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -58,7 +61,7 @@ public class QuestionController extends GenericCourseController {
 		}
 		TopicEntity topic = topicService.getById(topicId.get());
 		UserAccountEntity user = userService.getById(userId.get());
-		if(null == topic || null == user){
+		if(null == topic || null == user || !super.verifyTopicInformations(topic, user)){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		} 
 		return new QuestionsResponse()
@@ -142,7 +145,24 @@ public class QuestionController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/question", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String getById(HttpServletRequest request) {
-		return null;
+		Optional<Long> questionId = StringsUtils.parseLongQuickly(request.getParameter("question"));
+		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		if(!questionId.isPresent() || !userId.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		QuestionEntity question = questionService.getById(questionId.get());
+		UserAccountEntity user = userService.getById(userId.get());
+		if(null == question || null == user || !super.verifyQuestionInformations(question, user)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		TopicEntity topic = topicService.getById(question.getTopicId());
+		return new QuestionResponse()
+				.setCourseId(topic.getCurseId())
+				.setAnswers(getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(questionId.get())))
+				.setCategories(getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(questionId.get())))
+				.setQuestion(question)
+				.setCode(1)
+				.buildJson();
 	}
 	
 	/**
