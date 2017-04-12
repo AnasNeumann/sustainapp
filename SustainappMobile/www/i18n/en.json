@@ -142,6 +142,10 @@
     "question.types" : "Types of question",
     "question.new" : "New question",
     "question.addPicture" : "Add a picture",
+    "question.categories" : "Categories",
+    "question.answers" : "Answers",
+    "question.categories.new" : "New category",
+    "question.answers.new" : "New answer",
     
     "questionType.quiz" : "True ou false",
     "questionType.selection" : "Picture selection",

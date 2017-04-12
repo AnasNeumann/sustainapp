@@ -1,6 +1,4 @@
-<ion-view>  
-    <ion-nav-title ng-bind="title"></ion-nav-title>
-    
+<ion-view view-title="Questions">     
     <!-- Questions loaded -->
     <ion-content ng-show="questionsModel.loaded" >
          <div class="row">
@@ -25,16 +23,16 @@
             <h2 class="s-common-whiteTitle">{{'question.questions' | translate}}</h2>
         </div>
         <div class="row s-cours-greyBtnContainer">
-        <div class="col col-50 s-cours-greyBtn s-cours-leftBtn" ng-click="modalQuestion.show()">
-            <h3 class="s-common-greyTitle" ><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
-        </div>
-        <div class="col col-5 s-cours-greyBtn">
-            <h3 class="s-common-greyTitle" ng-click="questionsModel.reorder = !questionsModel.reorder"><i class="icon ion-navicon s-challenge-plus"></i> {{'course.chapters.drop' | translate}}</h3>
-        </div>
+	        <div class="col col-50 s-cours-greyBtn s-cours-leftBtn" ng-click="modalQuestion.show()">
+	            <h3 class="s-common-greyTitle" ><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
+	        </div>
+	        <div class="col col-5 s-cours-greyBtn">
+	            <h3 class="s-common-greyTitle" ng-click="questionsModel.reorder = !questionsModel.reorder"><i class="icon ion-navicon s-challenge-plus"></i> {{'course.chapters.drop' | translate}}</h3>
+	        </div>
         </div>
         <div class="s-teams-allResults">
            <ion-list show-reorder="questionsModel.reorder" >
-              <ion-item class="item-remove-animate item item-thumbnail-left" ng-repeat="question in questionsModel.questions" type="item-text-wrap" href="#/tab/question/{{elt.id}}">
+              <ion-item class="item-remove-animate item item-thumbnail-left" ng-repeat="question in questionsModel.questions" type="item-text-wrap" href="#/tab/question/{{question.id}}">
                 <img ng-src="{{questionsModel.types[question.type].pictureURL}}" />
                 <h2 class="s-teams-title">{{question.message}}</h2>
                 <p class="s-teams-text">{{questionsModel.types[question.type].name | translate}}</p>

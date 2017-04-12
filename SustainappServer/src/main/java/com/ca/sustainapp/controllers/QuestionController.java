@@ -172,7 +172,12 @@ public class QuestionController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/question/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		QuestionEntity question = super.getQuestionIfOwner(request);
+		if(null == question || isEmpty(request.getParameter("message"))){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		questionService.createOrUpdate(question.setMessage(request.getParameter("message")));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -182,17 +187,16 @@ public class QuestionController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/question/picture", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String picture(HttpServletRequest request) {
-		return null;
+		QuestionEntity question = super.getQuestionIfOwner(request);
+		if(null == question || isEmpty(request.getParameter("file"))){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		questionService.createOrUpdate(question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
-	 * Avancer une question dans la liste
-	 * @param topic
-	 * @param topics
-	 * @param arrivee
-	 */
-	/**
-	 * 
+	 * Avancer une question dans la list
 	 * @param question
 	 * @param questions
 	 * @param arrivee

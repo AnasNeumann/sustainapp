@@ -19,7 +19,6 @@ angular.module('sustainapp.controllers')
 	 */
 	var loadQuestions = function(){
 		$scope.questionsModel = {};		
-		$scope.title = "...";
 		$scope.eltToDelete  = {};
 		
 		$scope.questionsModel.loaded = false;
