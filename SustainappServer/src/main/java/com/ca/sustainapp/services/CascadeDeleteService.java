@@ -7,25 +7,34 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
+import com.ca.sustainapp.criteria.AnswerCriteria;
 import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
+import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
+import com.ca.sustainapp.entities.AnswerCategoryEntity;
+import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.ChallengeEntity;
 import com.ca.sustainapp.entities.ChallengeVoteEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.QuestionEntity;
 import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.TeamEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
+import com.ca.sustainapp.repositories.AnswerCategoryRepository;
+import com.ca.sustainapp.repositories.AnswerRepository;
 import com.ca.sustainapp.repositories.ChallengeRepository;
 import com.ca.sustainapp.repositories.ChallengeVoteRepository;
 import com.ca.sustainapp.repositories.CourseRepository;
 import com.ca.sustainapp.repositories.PartRepository;
 import com.ca.sustainapp.repositories.ParticipationRepository;
+import com.ca.sustainapp.repositories.QuestionRepository;
 import com.ca.sustainapp.repositories.RankCourseRepository;
 import com.ca.sustainapp.repositories.TeamRepository;
 import com.ca.sustainapp.repositories.TeamRoleRepository;
@@ -64,7 +73,13 @@ public class CascadeDeleteService {
 	PartRepository partRepository;
 	@Autowired
 	TopicValidationRepository validationRepository;
-	
+	@Autowired
+	QuestionRepository questionRepository;
+	@Autowired
+	AnswerRepository answerRepository;
+	@Autowired
+	AnswerCategoryRepository answerCategoryRepository;
+
 	/**
 	 * les services
 	 */
@@ -109,6 +124,9 @@ public class CascadeDeleteService {
 		}
 		for(PartEntity part : getService.cascadeGetPart(new PartCriteria().setTopicId(topic.getId()))){
 			cascadeDelete(part);
+		}
+		for(QuestionEntity question : getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topic.getId()))){
+			cascadeDelete(question);
 		}
 		topicRepository.delete(topic);
 	}
@@ -163,6 +181,22 @@ public class CascadeDeleteService {
 	}
 	
 	/**
+	 * cascade delete a question
+	 * @param question
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(QuestionEntity question){
+		for(AnswerEntity answer : getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(question.getId()))){
+			cascadeDelete(answer);
+		}
+		for(AnswerCategoryEntity category : getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(question.getId()))){
+			cascadeDelete(category);
+		}
+		questionRepository.delete(question.getId());
+	}
+	
+	/**
 	 * cascade delete a participation
 	 * @param participation
 	 */
@@ -174,7 +208,7 @@ public class CascadeDeleteService {
 		}
 		participationRepository.delete(participation.getId());
 	}
-	
+
 	/**
 	 * cascade delete a vote
 	 * @param vote
@@ -187,12 +221,34 @@ public class CascadeDeleteService {
 
 	/**
 	 * cascade delete a teamRole
-	 * @param team
+	 * @param role
 	 */
 	@Modifying
 	@Transactional
 	public void cascadeDelete(TeamRoleEntity role){
 		roleRepository.delete(role.getId());
+	}
+	
+
+	/**
+	 * cascade delete a answer
+	 * @param answer
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(AnswerEntity answer){
+		answerRepository.delete(answer.getId());
+	}
+	
+
+	/**
+	 * cascade delete a answerCategory
+	 * @param answerCategory
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(AnswerCategoryEntity answerCategory){
+		answerCategoryRepository.delete(answerCategory.getId());
 	}
 
 }

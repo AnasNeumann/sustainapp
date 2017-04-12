@@ -7,23 +7,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.ca.sustainapp.entities.AnswerEntity;
+import com.ca.sustainapp.entities.AnswerCategoryEntity;
 
 /**
- * Repository for answer
+ * Repository for answer's categories
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 07/04/2017
  * @version 1.0
  */
 @Repository
-public interface AnswerRepository extends JpaSpecificationExecutor<AnswerEntity>, JpaRepository<AnswerEntity, Long> {
+public interface AnswerCategoryRepository extends JpaSpecificationExecutor<AnswerCategoryEntity>, JpaRepository<AnswerCategoryEntity, Long> {
 
 	/**
 	 * Count Entities by Id
 	 * @param id
 	 * @return total by id
 	 */
-	@Query("SELECT COUNT(*) FROM AnswerEntity AS a WHERE a.id = :id")
+	@Query("SELECT COUNT(*) FROM AnswerCategoryEntity AS a WHERE a.id = :id")
 	Integer countById(@Param("id") Long id); 
 
 	/**
@@ -31,6 +31,6 @@ public interface AnswerRepository extends JpaSpecificationExecutor<AnswerEntity>
 	 * @param id
 	 */
 	@Modifying
-	@Query("DELETE FROM AnswerEntity a WHERE a.id = :id")
+	@Query("DELETE FROM AnswerCategoryEntity a WHERE a.id = :id")
 	void delete(@Param("id") Long id);
 }

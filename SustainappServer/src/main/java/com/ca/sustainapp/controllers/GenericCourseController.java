@@ -12,13 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
+import com.ca.sustainapp.dao.AnswerCategoryServiceDAO;
+import com.ca.sustainapp.dao.AnswerServiceDAO;
 import com.ca.sustainapp.dao.ChallengeTypeServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.PartServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
+import com.ca.sustainapp.dao.QuestionServiceDAO;
 import com.ca.sustainapp.dao.TopicServiceDAO;
+import com.ca.sustainapp.entities.AnswerCategoryEntity;
+import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.PartEntity;
+import com.ca.sustainapp.entities.QuestionEntity;
 import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
@@ -50,6 +56,12 @@ public class GenericCourseController extends GenericController{
 	protected PartServiceDAO partService;
 	@Autowired
 	protected ChallengeTypeServiceDAO challengeTypeService;
+	@Autowired
+	protected QuestionServiceDAO questionService;
+	@Autowired
+	protected AnswerServiceDAO answerService;
+	@Autowired
+	protected AnswerCategoryServiceDAO answerCategoryService;
 	
 	/**
 	 * Calculate average rank of a course
@@ -124,6 +136,57 @@ public class GenericCourseController extends GenericController{
 	}
 	
 	/**
+	 * Verify all informations for a answer 
+	 * @param request
+	 * @return
+	 */
+	protected AnswerEntity getAnswerIfOwner(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("answer"));
+		if(!id.isPresent()){
+			return null;
+		}
+		AnswerEntity answer = answerService.getById(id.get());
+		if(!verifyAnswerInformations(answer, super.getConnectedUser(request))){
+			return null;
+		}
+		return answer;
+	}
+	
+	/**
+	 * Verify all informations for a categorie 
+	 * @param request
+	 * @return
+	 */
+	protected AnswerCategoryEntity getAnswerCategoryIfOwner(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("categorie"));
+		if(!id.isPresent()){
+			return null;
+		}
+		AnswerCategoryEntity categorie = answerCategoryService.getById(id.get());
+		if(!verifyCategorieInformations(categorie, super.getConnectedUser(request))){
+			return null;
+		}
+		return categorie;
+	}
+	
+	/**
+	 * Verify all informations for a question 
+	 * @param request
+	 * @return
+	 */
+	protected QuestionEntity getQuestionIfOwner(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("question"));
+		if(!id.isPresent()){
+			return null;
+		}
+		QuestionEntity question = questionService.getById(id.get());
+		if(!verifyQuestionInformations(question, super.getConnectedUser(request))){
+			return null;
+		}
+		return question;
+	}
+	
+	/**
 	 * Verify all informations for a cours 
 	 * @param request
 	 */
@@ -155,7 +218,46 @@ public class GenericCourseController extends GenericController{
 		return topic;
 		
 	}
-
+	
+	/**
+	 * Verifier si une reponse peu être éditée
+	 * @param answer
+	 * @param user
+	 * @return
+	 */
+	protected Boolean verifyAnswerInformations(AnswerEntity answer, UserAccountEntity user){
+		if(null == answer){
+			return false;
+		}
+		return(verifyQuestionInformations(questionService.getById(answer.getQuestionId()), user));
+	}
+	
+	/**
+	 * Verifier si une catégorie peu être éditée
+	 * @param categorie
+	 * @param user
+	 * @return
+	 */
+	protected Boolean verifyCategorieInformations(AnswerCategoryEntity categorie, UserAccountEntity user){
+		if(null == categorie){
+			return false;
+		}
+		return(verifyQuestionInformations(questionService.getById(categorie.getQuestionId()), user));
+	}
+	
+	/**
+	 * Verifier si une question peu être éditée
+	 * @param question
+	 * @param user
+	 * @return
+	 */
+	protected Boolean verifyQuestionInformations(QuestionEntity question, UserAccountEntity user){
+		if(null == question){
+			return false;
+		}
+		return(verifyTopicInformations(topicService.getById(question.getTopicId()), user));
+	}
+	
 	/**
 	 * Verify all informations for a part 
 	 * @param request
@@ -177,7 +279,7 @@ public class GenericCourseController extends GenericController{
 	}
 	
 	/**
-	 * Verifier si un topic peu être éditer
+	 * Verifier si un topic peu être édité
 	 * @param topic
 	 * @param request
 	 * @return
@@ -191,7 +293,7 @@ public class GenericCourseController extends GenericController{
 	}
 
 	/**
-	 * Verifier si un cours peu être éditer
+	 * Verifier si un cours peu être édité
 	 * @param cours
 	 * @param request
 	 * @return
@@ -204,8 +306,6 @@ public class GenericCourseController extends GenericController{
 			return false;
 		}
 		return true;
-	}
-	
-	
+	}	
 	
 }

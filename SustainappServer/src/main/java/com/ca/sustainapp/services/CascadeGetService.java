@@ -8,21 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.comparators.EntityComparator;
+import com.ca.sustainapp.comparators.NumerotableEntityComparator;
+import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
+import com.ca.sustainapp.criteria.AnswerCriteria;
 import com.ca.sustainapp.criteria.CourseCriteria;
 import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
+import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
+import com.ca.sustainapp.dao.AnswerCategoryServiceDAO;
+import com.ca.sustainapp.dao.AnswerServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.PartServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
+import com.ca.sustainapp.dao.QuestionServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
 import com.ca.sustainapp.dao.TopicServiceDAO;
 import com.ca.sustainapp.dao.TopicValidationServiceDAO;
+import com.ca.sustainapp.entities.AnswerCategoryEntity;
+import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.QuestionEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
@@ -52,13 +62,26 @@ public class CascadeGetService {
 	private TopicValidationServiceDAO validationService;
 	@Autowired
 	private PartServiceDAO partService;
+	@Autowired
+	private QuestionServiceDAO questionService;
+	@Autowired
+	private AnswerServiceDAO answerService;
+	@Autowired
+	private AnswerCategoryServiceDAO answerCategoryService;
 	
 	/**
 	 * Comparator
 	 */
 	@Autowired
 	private EntityComparator compartor;
+	@Autowired
+	private NumerotableEntityComparator numerotableComparator;
 	
+	
+	/**
+	 * Les constantes
+	 */
+	private Long PAGINATION = 100L;
 	
 	/**
 	 * Cascade get for part
@@ -69,12 +92,10 @@ public class CascadeGetService {
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
-		Long pagination = 100L;
-		Long maxResults = pagination;
 		SearchResult<PartEntity> result = null;
 		List<PartEntity> finalResult = new ArrayList<PartEntity>();
 		do {
-			result = partService.searchByCriteres(criteria, startIndex, maxResults);
+			result = partService.searchByCriteres(criteria, startIndex, PAGINATION);
 			if (null == totalResults && null != result) {
 				totalResults = result.getTotalResults();
 			}
@@ -82,9 +103,9 @@ public class CascadeGetService {
 				finalResult.addAll(result.getResults());
 			}
 			startIndex++;
-			incrementsEntries += pagination;
+			incrementsEntries += PAGINATION;
 		} while (incrementsEntries < totalResults);
-		Collections.sort(finalResult, compartor);
+		Collections.sort(finalResult, numerotableComparator);
 		return finalResult;
 	}
 	
@@ -97,12 +118,10 @@ public class CascadeGetService {
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
-		Long pagination = 100L;
-		Long maxResults = pagination;
 		SearchResult<ParticipationEntity> result = null;
 		List<ParticipationEntity> finalResult = new ArrayList<ParticipationEntity>();
 		do {
-			result = participationService.searchByCriteres(criteria, startIndex, maxResults);
+			result = participationService.searchByCriteres(criteria, startIndex, PAGINATION);
 			if (null == totalResults && null != result) {
 				totalResults = result.getTotalResults();
 			}
@@ -110,7 +129,7 @@ public class CascadeGetService {
 				finalResult.addAll(result.getResults());
 			}
 			startIndex++;
-			incrementsEntries += pagination;
+			incrementsEntries += PAGINATION;
 		} while (incrementsEntries < totalResults);
 		Collections.sort(finalResult, compartor);
 		return finalResult;
@@ -125,8 +144,7 @@ public class CascadeGetService {
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
-		Long pagination = 100L;
-		Long maxResults = pagination;
+		Long maxResults = PAGINATION;
 		SearchResult<TeamRoleEntity> result = null;
 		List<TeamRoleEntity> finalResult = new ArrayList<TeamRoleEntity>();
 		do {
@@ -138,7 +156,7 @@ public class CascadeGetService {
 				finalResult.addAll(result.getResults());
 			}
 			startIndex++;
-			incrementsEntries += pagination;
+			incrementsEntries += PAGINATION;
 		} while (incrementsEntries < totalResults);
 		Collections.sort(finalResult, compartor);
 		return finalResult;
@@ -153,12 +171,10 @@ public class CascadeGetService {
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
-		Long pagination = 100L;
-		Long maxResults = pagination;
 		SearchResult<CourseEntity> result = null;
 		List<CourseEntity> finalResult = new ArrayList<CourseEntity>();
 		do {
-			result = courseService.searchByCriteres(criteria, startIndex, maxResults);
+			result = courseService.searchByCriteres(criteria, startIndex, PAGINATION);
 			if (null == totalResults && null != result) {
 				totalResults = result.getTotalResults();
 			}
@@ -166,7 +182,7 @@ public class CascadeGetService {
 				finalResult.addAll(result.getResults());
 			}
 			startIndex++;
-			incrementsEntries += pagination;
+			incrementsEntries += PAGINATION;
 		} while (incrementsEntries < totalResults);
 		Collections.sort(finalResult, compartor);
 		return finalResult;
@@ -181,12 +197,10 @@ public class CascadeGetService {
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
-		Long pagination = 100L;
-		Long maxResults = pagination;
 		SearchResult<TopicEntity> result = null;
 		List<TopicEntity> finalResult = new ArrayList<TopicEntity>();
 		do {
-			result = topicService.searchByCriteres(criteria, startIndex, maxResults);
+			result = topicService.searchByCriteres(criteria, startIndex, PAGINATION);
 			if (null == totalResults && null != result) {
 				totalResults = result.getTotalResults();
 			}
@@ -194,9 +208,9 @@ public class CascadeGetService {
 				finalResult.addAll(result.getResults());
 			}
 			startIndex++;
-			incrementsEntries += pagination;
+			incrementsEntries += PAGINATION;
 		} while (incrementsEntries < totalResults);
-		Collections.sort(finalResult, compartor);
+		Collections.sort(finalResult, numerotableComparator);
 		return finalResult;
 	}
 	
@@ -209,12 +223,10 @@ public class CascadeGetService {
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
-		Long pagination = 100L;
-		Long maxResults = pagination;
 		SearchResult<TopicValidationEntity> result = null;
 		List<TopicValidationEntity> finalResult = new ArrayList<TopicValidationEntity>();
 		do {
-			result = validationService.searchByCriteres(criteria, startIndex, maxResults);
+			result = validationService.searchByCriteres(criteria, startIndex, PAGINATION);
 			if (null == totalResults && null != result) {
 				totalResults = result.getTotalResults();
 			}
@@ -222,9 +234,87 @@ public class CascadeGetService {
 				finalResult.addAll(result.getResults());
 			}
 			startIndex++;
-			incrementsEntries += pagination;
+			incrementsEntries += PAGINATION;
 		} while (incrementsEntries < totalResults);
 		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for question
+	 * @param criteria
+	 * @return
+	 */
+	public List<QuestionEntity> cascadeGetQuestion(QuestionCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<QuestionEntity> result = null;
+		List<QuestionEntity> finalResult = new ArrayList<QuestionEntity>();
+		do {
+			result = questionService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, numerotableComparator);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for answer
+	 * @param criteria
+	 * @return
+	 */
+	public List<AnswerEntity> cascadeGetAnswer(AnswerCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<AnswerEntity> result = null;
+		List<AnswerEntity> finalResult = new ArrayList<AnswerEntity>();
+		do {
+			result = answerService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, numerotableComparator);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for answerCategory
+	 * @param criteria
+	 * @return
+	 */
+	public List<AnswerCategoryEntity> cascadeGetAnswerCateogry(AnswerCategoryCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<AnswerCategoryEntity> result = null;
+		List<AnswerCategoryEntity> finalResult = new ArrayList<AnswerCategoryEntity>();
+		do {
+			result = answerCategoryService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, numerotableComparator);
 		return finalResult;
 	}
 	

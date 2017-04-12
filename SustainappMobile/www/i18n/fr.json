@@ -134,6 +134,22 @@
     "part.link" : "Coller ici l'URL souhaitée",
     "part.video" : "Coller ici l'URL de la vidéo",
     "part.text" : "Paragraphe",
-    "part.new" : "Nouvelle partie"
+    "part.new" : "Nouvelle partie",
+    
+    "question.questions" : "Questions",
+    "question.return" : "retour au chapitre",
+    "question.message" : "Votre question",
+    "question.types" : "Types de question",
+    "question.new" : "Nouvelle question",
+    "question.addPicture" : "Ajouter une image",
+    "question.categories" : "Catégories",
+    "question.answers" : "Réponses",
+    "question.categories.new" : "Nouvelle catégorie",
+    "question.answers.new" : "Nouvelle réponse",
+    
+    "questionType.quiz" : "Vrai ou faux",
+    "questionType.selection" : "Selection d'image",
+    "questionType.classification" : "Classification",
+    "questionType.reorder" : "Réordonner"
 
 }

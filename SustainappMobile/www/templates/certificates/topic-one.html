@@ -196,8 +196,8 @@
        
 		<div class="padding s-topic-quizPart">           
 	         <!-- go to the quizz or edit it -->
-	         <button ng-hide="topicModel.isOwner" class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>
-	         <button ng-show="topicModel.isOwner" class="s-common-lightBtn" ><i class="icon ion-edit s-topic-ribbon"></i> {{'topic.quizz.edit' | translate}} !</button>
+	         <button ng-click="goToQuiz()" ng-hide="topicModel.isOwner" ng-if="topicModel.hasQuiz" class="s-common-lightBtn" ><i class="icon ion-ribbon-b s-topic-ribbon"></i> {{'topic.quizz.go' | translate}} !</button>
+	         <button ng-click="editQuiz()" ng-show="topicModel.isOwner" class="s-common-lightBtn" ><i class="icon ion-edit s-topic-ribbon"></i> {{'topic.quizz.edit' | translate}} !</button>
 	         <!-- return home bottom page -->
 	         <div class="row">
 			     <div class="col col-50">

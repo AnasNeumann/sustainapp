@@ -1,0 +1,13 @@
+<ion-popover-view>
+  <ion-header-bar>
+    <h3 class="s-challenges-title">{{'question.types' | translate}}</h3>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item class="item item-thumbnail-left" ng-repeat="type in questionsModel.types" type="item-text-wrap" ng-click="changeQuestionType(type);">
+         <img ng-src="{{type.pictureURL}}" />
+         <p class="s-teams-text s-challenges-type-item s-question-type">{{type.name | translate}}</p>
+      </ion-item>
+    </ion-list> 
+  </ion-content>
+</ion-popover-view>

@@ -1,0 +1,55 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+     <div class="s-modal-confirm">
+      <div class="s-common-floatEdit" ng-click="modalQuestion.hide()">
+            <i class="icon ion-close-round"></i>
+      </div>
+      <h3 class="s-profile-name">{{'question.new' | translate}}</h3>
+      <label ng-if="4 != partModel.type" class="item item-input item-floating-label" > 
+        <span class="input-label s-common-label">{{'question.message' | translate}} ?</span> 
+        <input ng-model="questionsModel.message" type="text" placeholder="{{'question.message' | translate}} ?" class="s-common-input">
+        <span class="s-common-errors">{{questionsModel.allErrors.message | translate}}</span>
+      </label>
+      <div class="s-questions-listType"> 
+      <ion-list >
+	     <ion-item class="item item-thumbnail-left" type="item-text-wrap" ng-click="openTypes($event)">
+	        <img ng-src="{{questionsModel.type.pictureURL}}" />
+	        <p class="s-teams-text s-challenges-type-item s-question-type">{{questionsModel.type.name | translate}}</p>
+	     </ion-item>
+	  </ion-list>
+	  </div>
+      <div>
+          <label class="checkbox s-common-checkbox-label">
+              <ion-checkbox class="s-common-checkbox" ng-model="questionsModel.hasPicture">{{'question.addPicture' | translate}}</ion-checkbox>
+          </label>
+      </div>
+      <div class="s-cours-topicImageContainer s-questions-pictureContainer" ng-show="questionsModel.hasPicture" style="background-image: url({{questionsModel.displayPicture}});">
+        <i ng-show="questionsModel.emptyPicture" class="icon ion-image s-cours-topicPicture"></i>
+        <!-- Mobile view -->
+        <div class="s-common-camera" ng-if="_isNotMobile == false">
+            <div class="s-common-choosePictureToogle" ng-show="questionsModel.pictureEdit" ng-click="questionsModel.pictureEdit = false">
+               <i class="icon ion-close-round"></i>
+            </div>
+            <div class="s-common-choosePicture" ng-show="questionsModel.pictureEdit" ng-click="chooseFile(true)">
+               {{'common.takePicture' | translate}}
+            </div>
+            <div class="s-common-choosePicture" ng-show="questionsModel.pictureEdit" ng-click="chooseFile(false)">
+              {{'common.chooseFormGallery' | translate}}
+            </div>
+            <div class="s-common-choosePictureToogle s-common-22" ng-hide="questionsModel.pictureEdit" ng-click="questionsModel.pictureEdit = true">
+               <i class="icon ion-camera"></i>
+            </div>
+        </div>
+        <!-- Desktop view -->
+         <div class="s-common-camera" ng-if="_isNotMobile">
+             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                <i class="icon ion-camera"></i>
+                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopFile(this)" />
+             </div>
+         </div>
+      </div>
+      <span class="s-common-errors">{{questionsModel.allErrors.file | translate}}</span>
+      <button class="s-common-btn" ng-click="addQuestion()">{{'common.create' | translate}}</button>
+     </div>
+   </ion-content>
+</ion-modal-view>

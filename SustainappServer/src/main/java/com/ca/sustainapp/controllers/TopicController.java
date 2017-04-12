@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.PartCriteria;
+import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.PartEntity;
@@ -61,10 +62,7 @@ public class TopicController extends GenericCourseController {
 			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
 		}
 		List<TopicEntity> allTopics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(cours.getId()));
-		Integer numero = 0;
-		if(null != allTopics){
-			numero+=allTopics.size();
-		}
+		Integer numero = (null != allTopics)? allTopics.size() : 0;
 		TopicEntity topic = new TopicEntity()
 				.setTitle(title)
 				.setCurseId(cours.getId())
@@ -101,6 +99,7 @@ public class TopicController extends GenericCourseController {
 				.setTopic(topic)
 				.setIsOwner(super.verifyTopicInformations(topic, user))
 				.setParts(parts)
+				.setHasQuiz(getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topic.getId())).size()>0)
 				.setCode(1)
 				.buildJson();
 	}

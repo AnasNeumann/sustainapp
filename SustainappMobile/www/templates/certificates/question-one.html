@@ -1,0 +1,109 @@
+<ion-view view-title="Questions">     
+    <!-- Question loaded -->
+    <ion-content ng-show="questionModel.loaded" >
+        <div class="row">
+            <div class="col col-50">
+                <div class="s-topic-return" >
+                    <a href="#/tab/questions/{{questionModel.question.topicId}}">
+                        <i class="icon ion-arrow-return-left"></i><br />
+                        <span>{{'question.return' | translate}}</span>
+                    </a>
+                </div>
+             </div>
+             <div class="col col-50">
+                <div class="s-topic-return" >
+                    <a href="#/tab/cours/{{questionModel.cours}}">
+                        <i class="icon ion-home"></i><br />
+                        <span>{{'topic.return' | translate}}</span>
+                    </a>
+                </div>
+             </div>
+         </div>
+         
+         <!-- QUESTION'S PICTURE -->
+         <div class="s-cours-topicImageContainer s-questions-pictureContainer" ng-show="questionModel.question.picture != null" style="background-image: url({{questionModel.displayPicture}});">
+	        <!-- Mobile view -->
+	        <div class="s-common-camera" ng-if="_isNotMobile == false">
+	            <div class="s-common-choosePictureToogle" ng-show="questionModel.pictureEdit" ng-click="questionModel.pictureEdit = false">
+	               <i class="icon ion-close-round"></i>
+	            </div>
+	            <div class="s-common-choosePicture" ng-show="questionModel.pictureEdit" ng-click="chooseFile(true)">
+	               {{'common.takePicture' | translate}}
+	            </div>
+	            <div class="s-common-choosePicture" ng-show="questionModel.pictureEdit" ng-click="chooseFile(false)">
+	              {{'common.chooseFormGallery' | translate}}
+	            </div>
+	            <div class="s-common-choosePictureToogle s-common-22" ng-hide="questionModel.pictureEdit" ng-click="questionModel.pictureEdit = true">
+	               <i class="icon ion-camera"></i>
+	            </div>
+	        </div>
+	        <!-- Desktop view -->
+	         <div class="s-common-camera" ng-if="_isNotMobile">
+	             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+	                <i class="icon ion-camera"></i>
+	                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopFile(this)" />
+	             </div>
+	         </div>
+	      </div>
+         
+         <!-- QUESTION'S INFORMATIONS -->
+         <div class="row s-common-padding20">
+	         <div class="col col-100" ng-hide="questionModel.edit">
+	            <div class="s-common-floatEdit"  ng-click="questionModel.edit = true">
+	                  <i class="icon ion-edit"></i>
+	            </div>
+	            <h2 class="s-team-title">{{questionModel.question.message}}</h2>
+	         </div>
+	         <div class="col col-100" ng-show="questionModel.edit">
+	              <div class="s-common-floatEdit"  ng-click="questionModel.edit = false" >
+	                    <i class="icon ion-close-round"></i>
+	              </div>
+	              <label class="item item-input item-floating-label" > 
+	                <span class="input-label s-common-label">{{'question.message' | translate}}</span> 
+	                <input ng-model="questionModel.message" type="text" placeholder="{{'question.message' | translate}}" class="s-common-input">
+	                <span class="s-common-errors">{{questionModel.allErrors.message | translate}}</span>
+	              </label>
+	              <button class="s-common-btn" ng-click="updateQuestion()">{{'common.modify' | translate}}</button>
+	         </div>
+         </div>
+         
+         <!-- ALL CATEGORIES -->
+         <div ng-if="questionModel.question.type == 2">
+	         <div class="s-common-bluePart">
+	            <h2 class="s-common-whiteTitle">{{'question.categories' | translate}} (max {{questionModel.maxCategories}})</h2>
+	         </div>
+	         <div class="row s-cours-greyBtnContainer">
+		         <div class="col col-50 s-cours-greyBtn s-cours-leftBtn" ng-click="modalCategory.show()" ng-if="questionModel.categories.length < questionModel.maxCategories">
+		            <h3 class="s-common-greyTitle" ><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
+		         </div>
+		         <div class="col col-5 s-cours-greyBtn">
+		            <h3 class="s-common-greyTitle" ng-click="questionModel.reorderCategory = !questionModel.reorderCategory"><i class="icon ion-navicon s-challenge-plus"></i> {{'course.chapters.drop' | translate}}</h3>
+		         </div>
+	         </div>
+	         <div class="s-teams-allResults">
+	         </div>
+         </div>
+         
+         <!-- ALL CATEGORIES -->
+         <div class="s-common-bluePart">
+            <h2 class="s-common-whiteTitle">{{'question.answers' | translate}} (max {{questionModel.maxAnswer}})</h2>
+         </div>
+         <div class="row s-cours-greyBtnContainer">
+             <div class="col col-50 s-cours-greyBtn s-cours-leftBtn" ng-click="modalAnswer.show()" ng-if="questionModel.answers.length < questionModel.maxAnswer">
+                <h3 class="s-common-greyTitle" ><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'course.chapters.add' | translate}}</h3>
+             </div>
+             <div class="col col-5 s-cours-greyBtn">
+                <h3 class="s-common-greyTitle" ng-click="questionModel.reorderAnswer = !questionModel.reorderAnswer"><i class="icon ion-navicon s-challenge-plus"></i> {{'course.chapters.drop' | translate}}</h3>
+             </div>
+         </div>
+         <div class="s-teams-allResults">
+         </div>
+         
+    </ion-content>
+    
+    <!-- Loading Part -->
+    <ion-content class="s-common-loading" ng-hide="questionModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+    </ion-content>
+</ion-view>
