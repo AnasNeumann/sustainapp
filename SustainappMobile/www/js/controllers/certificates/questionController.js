@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('questionController', function($scope, $ionicPopover, $state, $stateParams, $ionicModal, questionTypeService, sessionService, questionService, fileService, displayService) {
+.controller('questionController', function($scope, $ionicPopover, $state, $stateParams, $ionicModal, questionTypeService, sessionService, answerService, questionService, answerCategoryService, fileService, displayService) {
 	
 	/**
 	 * Entrée dans la page

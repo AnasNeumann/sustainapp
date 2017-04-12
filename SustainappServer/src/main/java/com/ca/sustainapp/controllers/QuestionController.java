@@ -49,6 +49,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * get all a questions of a topic
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -73,6 +74,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * create a new question
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -98,6 +100,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * delete a question
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -119,6 +122,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * drop a question
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -140,6 +144,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * get a question by id
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -182,6 +187,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * modify a question's picture
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
