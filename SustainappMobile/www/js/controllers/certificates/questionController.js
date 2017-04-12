@@ -114,4 +114,117 @@ angular.module('sustainapp.controllers')
 		});
 	};
 	
+	/**
+     * Modal de confirmation de la suppression d'une réponse ou catégory
+     */
+     $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
+	     scope: $scope
+	   }).then(function(modal) {
+	     $scope.modal = modal;
+	   });
+     
+     /**
+      * Modal d'ajout d'une réponse
+      */
+      $ionicModal.fromTemplateUrl('templates/certificates/modalAnswer.html', {
+ 	     scope: $scope
+ 	   }).then(function(modal) {
+ 	     $scope.modalAnswer = modal;
+ 	   });
+      
+      /**
+       * Modal d'ajout d'une catégorie
+       */
+       $ionicModal.fromTemplateUrl('templates/certificates/modalCategory.html', {
+  	     scope: $scope
+  	   }).then(function(modal) {
+  	     $scope.modalCategory = modal;
+  	   });
+	
+	/**
+	 * Popover pour le choix d'une catégorie
+	 */
+	$ionicPopover.fromTemplateUrl('templates/certificates/popover-category.html', {
+	    scope: $scope
+	  }).then(function(popover) {
+	    $scope.popoverCategory = popover;
+	  });
+	
+	/**
+	 * Ouverture de la modale de supression avec choix du type
+	 */
+	$scope.openDeleteModal = function(type, elt){
+		$scope.eltToDelete  = elt;
+		$scope.typeToDelete = type;
+		modal.show();
+	};
+	
+	/**
+	 * Validation de la suppression et redirection
+	 */
+	$scope.confirmDelete = function(type){
+		modal.hide();
+		if(true == $scope.typeToDelete){
+			deleteCategory();
+		}else{
+			deleteAnswer();
+		}
+	};
+	
+	/**
+	 * Ajout d'une catégorie
+	 */
+	$scope.addCategory = function(){
+		
+	};
+	
+	/**
+	 * Suppression d'une catégorie
+	 */
+	$scope.deleteCategory = function(){
+		$scope.eltToDelete  = {};
+	};
+	
+	/**
+	 * Déplacement d'une catégorie
+	 */
+	$scope.dropCategory = function(){
+		
+	};
+	
+	/**
+	 * Ajout d'une réponse
+	 */
+	$scope.addAnswer = function(){
+		
+	};
+	
+	/**
+	 * Suppression d'une réponse
+	 */
+	$scope.deleteAnswer = function(){
+		$scope.eltToDelete  = {};
+	};
+	
+	/**
+	 * Déplacement d'une réponse
+	 */
+	$scope.dropAnswer = function(){
+		
+	};
+	
+	/**
+	 * Choix d'une image pour une réponse [mobile mode]
+	 */
+	$scope.chooseAnswerFile = function(newFile){
+		
+	};
+	
+	/**
+	 * Choix d'une image pour une réponse [desktop mode]
+	 */
+	$scope.desktopAnswerFile = function(input){
+		
+	};
+	
 });

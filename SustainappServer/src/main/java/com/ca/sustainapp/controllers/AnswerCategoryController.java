@@ -1,5 +1,9 @@
 package com.ca.sustainapp.controllers;
 
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
+import com.ca.sustainapp.entities.AnswerCategoryEntity;
+import com.ca.sustainapp.entities.QuestionEntity;
+import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.AnswerValidator;
 
 /**
@@ -36,7 +46,18 @@ public class AnswerCategoryController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/category", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String create(HttpServletRequest request) {
-		return null;
+		QuestionEntity question = super.getQuestionIfOwner(request);
+		if(null == question){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(question.getId()));
+		Integer numero = (null != categories)? categories.size() : 0;
+		AnswerCategoryEntity category = new AnswerCategoryEntity()
+				.setName(request.getParameter("message"))
+				.setNumero(numero)
+				.setQuestionId(question.getId())
+				.setTimestamps(GregorianCalendar.getInstance());
+		return new IdResponse().setId(answerCategoryService.createOrUpdate(category)).setCode(1).buildJson();
 	}
 	
 	/**
@@ -47,7 +68,18 @@ public class AnswerCategoryController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/category/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		AnswerCategoryEntity category = super.getAnswerCategoryIfOwner(request);
+		if(null == category){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
+		for(AnswerCategoryEntity c : categories){
+			if(c.getNumero() > category.getNumero()){
+				answerCategoryService.createOrUpdate(c.setNumero(c.getNumero()-1));
+			}
+		}
+		deleteService.cascadeDelete(category);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -58,6 +90,47 @@ public class AnswerCategoryController extends GenericCourseController {
 	@ResponseBody
 	@RequestMapping(value="/category/drop", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String drop(HttpServletRequest request) {
-		return null;
+		AnswerCategoryEntity category = super.getAnswerCategoryIfOwner(request);
+		Optional<Integer> toIndex = StringsUtils.parseIntegerQuietly(request.getParameter("position"));
+		if(null == category || !toIndex.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
+		if(toIndex.get() > category.getNumero()){
+			avancer(category, categories, toIndex.get());
+		}else if(toIndex.get() < category.getNumero()){
+			reculer(category, categories, toIndex.get());
+		}
+		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
+	 * Avancer une answerCategory dans la list
+	 * @param answerCategory
+	 * @param answerCategories
+	 * @param arrivee
+	 */
+	private void avancer(AnswerCategoryEntity answerCategory, List<AnswerCategoryEntity> answerCategories, Integer arrivee){
+		for(AnswerCategoryEntity a : answerCategories){
+			if(a.getNumero() <= arrivee && a.getNumero() > answerCategory.getNumero()){
+				answerCategoryService.createOrUpdate(a.setNumero(a.getNumero()-1));
+			}
+		}
+		answerCategoryService.createOrUpdate(answerCategory.setNumero(arrivee));
+	}
+	
+	/**
+	 * reculer une answerCategory dans la liste
+	 * @param answerCategory
+	 * @param answerCategories
+	 * @param arrivee
+	 */
+	private void reculer(AnswerCategoryEntity answerCategory, List<AnswerCategoryEntity> answerCategories, Integer arrivee){
+		for(AnswerCategoryEntity a : answerCategories){
+			if(a.getNumero() >= arrivee && a.getNumero() < answerCategory.getNumero()){
+				answerCategoryService.createOrUpdate(a.setNumero(a.getNumero()+1));
+			}
+		}
+		answerCategoryService.createOrUpdate(answerCategory.setNumero(arrivee));
 	}
 }
