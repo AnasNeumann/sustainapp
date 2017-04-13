@@ -1,0 +1,12 @@
+<ion-popover-view>
+  <ion-header-bar>
+    <h3 class="s-challenges-title">{{'question.types' | translate}}</h3>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item class="item" ng-repeat="category in questionModel.categories" type="item-text-wrap" ng-click="changeCategory(category);">
+         <h2 class="s-teams-title">{{category.name}}</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-popover-view>

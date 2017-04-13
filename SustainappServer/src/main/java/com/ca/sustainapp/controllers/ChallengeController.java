@@ -102,7 +102,7 @@ public class ChallengeController extends GenericChallengeController {
 				.setTimestamps(GregorianCalendar.getInstance())
 				.setCreatorId(super.getConnectedUser(request).getProfile().getId());
 		if(!isEmpty(request.getParameter("file"))){
-			challenge.setIcon(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			challenge.setIcon(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idChallenge = challengeService.createOrUpdate(challenge);
 		return new IdResponse().setId(idChallenge).setCode(1).buildJson();
@@ -153,7 +153,7 @@ public class ChallengeController extends GenericChallengeController {
 		if(null == challenge){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		challengeService.createOrUpdate(challenge.setIcon(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		challengeService.createOrUpdate(challenge.setIcon(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	

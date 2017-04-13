@@ -49,6 +49,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * get all a questions of a topic
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -73,6 +74,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * create a new question
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -91,13 +93,14 @@ public class QuestionController extends GenericCourseController {
 				.setTopicId(topic.getId())
 				.setTimestamps(GregorianCalendar.getInstance());
 		if(!isEmpty(request.getParameter("file"))){
-			question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		return new IdResponse().setId(questionService.createOrUpdate(question)).setCode(1).buildJson();
 	}
 	
 	/**
 	 * delete a question
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -119,6 +122,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * drop a question
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -140,6 +144,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * get a question by id
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -182,6 +187,7 @@ public class QuestionController extends GenericCourseController {
 	
 	/**
 	 * modify a question's picture
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -191,7 +197,7 @@ public class QuestionController extends GenericCourseController {
 		if(null == question || isEmpty(request.getParameter("file"))){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		questionService.createOrUpdate(question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		questionService.createOrUpdate(question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	

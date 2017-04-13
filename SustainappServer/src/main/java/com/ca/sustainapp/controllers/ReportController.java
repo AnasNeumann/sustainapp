@@ -58,7 +58,7 @@ public class ReportController extends GenericController {
 			return new HttpRESTfullResponse().setCode(0).setErrors(reportValidator.validate(request)).buildJson();
 		}
 		ReportEntity report = new ReportEntity()
-				.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG))
+				.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG))
 				.setMessage(request.getParameter("message"))
 				.setTimestamps(GregorianCalendar.getInstance())
 				.setDocumentType(FilesUtils.FORMAT_JPG)

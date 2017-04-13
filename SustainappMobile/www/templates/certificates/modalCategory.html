@@ -1,0 +1,16 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+     <div class="s-modal-confirm">
+      <div class="s-common-floatEdit" ng-click="modalCategory.hide()">
+            <i class="icon ion-close-round"></i>
+      </div>
+      <h3 class="s-profile-name">{{'question.categories.new' | translate}}</h3>
+      <label class="item item-input item-floating-label" > 
+        <span class="input-label s-common-label">{{'teams.name' | translate}}</span> 
+        <input ng-model="categorieModel.message" type="text" placeholder="{{'teams.name' | translate}}" class="s-common-input">
+        <span class="s-common-errors">{{categorieModel.allErrors.message | translate}}</span>
+      </label>
+      <button class="s-common-btn" ng-click="addCategory()">{{'common.create' | translate}}</button>
+     </div>
+   </ion-content>
+</ion-modal-view>

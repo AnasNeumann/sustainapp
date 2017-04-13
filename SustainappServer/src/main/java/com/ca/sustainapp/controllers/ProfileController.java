@@ -106,7 +106,7 @@ public class ProfileController extends GenericController {
 		if(null == user || null == user.getProfile() || isEmpty(request.getParameter("file"))){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		user.getProfile().setCover(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+		user.getProfile().setCover(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		profileService.createOrUpdate(user.getProfile());
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
@@ -122,7 +122,7 @@ public class ProfileController extends GenericController {
 		if(null == user || null == user.getProfile() || isEmpty(request.getParameter("file"))){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		user.getProfile().setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+		user.getProfile().setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		profileService.createOrUpdate(user.getProfile());
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}

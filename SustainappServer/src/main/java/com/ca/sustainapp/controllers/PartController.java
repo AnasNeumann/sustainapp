@@ -67,7 +67,7 @@ public class PartController extends GenericCourseController {
 					.setTitle(request.getParameter("title"));
 				break;
 			case 2:
-				part.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG))
+				part.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG))
 					.setTitle(request.getParameter("title"));
 				break;
 			case 3:

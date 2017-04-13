@@ -76,7 +76,7 @@ public class ParticipationController extends GenericChallengeController {
 				.setChallengeId(StringsUtils.parseLongQuickly(request.getParameter("challenge")).get())
 				.setTargetId(StringsUtils.parseLongQuickly(request.getParameter("targetId")).get());
 		if(!isEmpty(request.getParameter("file"))){
-			participation.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			participation.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idParticipation = participationService.createOrUpdate(participation);
 		return new IdResponse().setId(idParticipation).setCode(1).buildJson();

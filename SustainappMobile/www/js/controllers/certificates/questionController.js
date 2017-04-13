@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('questionController', function($scope, $ionicPopover, $state, $stateParams, $ionicModal, questionTypeService, sessionService, questionService, fileService, displayService) {
+.controller('questionController', function($scope, $ionicPopover, $state, $stateParams, $ionicModal, questionTypeService, sessionService, answerService, questionService, answerCategoryService, fileService, displayService) {
 	
 	/**
 	 * Entrée dans la page
@@ -32,6 +32,20 @@ angular.module('sustainapp.controllers')
 		$scope.questionModel.picture = null;		
 		$scope.questionModel.pictureEdit = false;
 		
+		$scope.answerModel = {};
+		$scope.answerModel.message = "";
+		$scope.answerModel.data = "";
+		$scope.answerModel.selected = false;
+		$scope.answerModel.displayPicture = ""; 
+		$scope.answerModel.picture = null;		
+		$scope.answerModel.pictureEdit = false;
+		$scope.answerModel.emptyFile = true;
+		$scope.answerModel.allErrors = [];
+		
+		$scope.categorieModel = {};
+		$scope.categorieModel.message = "";
+		$scope.answerModel.allErrors = [];
+		
 		$scope._isNotMobile = displayService.isNotMobile;
 		
 		questionService.getById($stateParams.id, sessionService.get('id')).then(function(response){
@@ -44,7 +58,7 @@ angular.module('sustainapp.controllers')
 				if(null != result.question.picture){
 					$scope.questionModel.displayPicture = "data:image/jpeg;base64,"+result.question.picture; 
 					$scope.questionModel.picture =  result.question.picture;
-				}				
+				}
 				$scope.questionModel.answers = result.answers;
 				$scope.questionModel.categories = result.categories;
 				$scope.questionModel.maxCategories = 3;
@@ -52,7 +66,7 @@ angular.module('sustainapp.controllers')
 			}
 		});
 	}
-	
+
 	/**
 	 * Modifier l'image d'une question [mobile mode]
 	 */
@@ -73,8 +87,7 @@ angular.module('sustainapp.controllers')
 		 }, function(err) {
 		 });
 	};
-	
-	
+
 	/**
 	 * Modifier l'image d'une question [desktop mode]
 	 */
@@ -96,7 +109,7 @@ angular.module('sustainapp.controllers')
         }
         reader.readAsDataURL(input.files[0]);  
 	};
-	
+
 	/**
 	 * Modifier les informations d'une question
 	 */
@@ -113,5 +126,242 @@ angular.module('sustainapp.controllers')
 			}
 		});
 	};
+
+	/**
+     * Modal de confirmation de la suppression d'une réponse ou catégory
+     */
+     $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
+	     scope: $scope
+	   }).then(function(modal) {
+	     $scope.modal = modal;
+	   });
+
+     /**
+      * Modal d'ajout d'une réponse
+      */
+      $ionicModal.fromTemplateUrl('templates/certificates/modalAnswer.html', {
+ 	     scope: $scope
+ 	   }).then(function(modal) {
+ 	     $scope.modalAnswer = modal;
+ 	   });
+
+      /**
+       * Modal d'ajout d'une catégorie
+       */
+       $ionicModal.fromTemplateUrl('templates/certificates/modalCategory.html', {
+  	     scope: $scope
+  	   }).then(function(modal) {
+  	     $scope.modalCategory = modal;
+  	   });
+
+	/**
+	 * Popover pour le choix d'une catégorie
+	 */
+	$ionicPopover.fromTemplateUrl('templates/certificates/popover-category.html', {
+	    scope: $scope
+	  }).then(function(popover) {
+	    $scope.popoverCategory = popover;
+	  });
+
+	/**
+	 * Ouverture de la modale de supression avec choix du type
+	 */
+	$scope.openDeleteModal = function(type, elt){
+		$scope.eltToDelete  = elt;
+		$scope.typeToDelete = type;
+		$scope.modal.show();
+	};
+
+	/**
+	 * Validation de la suppression et redirection
+	 */
+	$scope.confirmDelete = function(type){
+		$scope.modal.hide();
+		if(true == $scope.typeToDelete){
+			$scope.deleteCategory();
+		}else{
+			$scope.deleteAnswer();
+		}
+	};
 	
+	/**
+	 * Ajout d'une catégorie
+	 */
+	$scope.addCategory = function(){
+		var data = new FormData();
+		data.append("question", $stateParams.id);
+		data.append("message", $scope.categorieModel.message);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		answerCategoryService.create(data).success(function(result) {
+			if(result.code == 1){
+				var categorie = {
+						"id"    : result.id,
+						"name" : $scope.categorieModel.message,						
+				};
+				$scope.questionModel.categories.push(categorie);
+				$scope.categorieModel.message = "";				
+				$scope.categorieModel.allErrors = [];
+				$scope.modalCategory.hide();
+	    	} else {
+	    		$scope.categorieModel.allErrors = result.errors;
+	    	}
+	    });
+	};
+	
+	/**
+	 * Suppression d'une catégorie
+	 */
+	$scope.deleteCategory = function(){
+		$scope.questionModel.categories.splice($scope.questionModel.categories.indexOf($scope.eltToDelete), 1);
+		var data = new FormData();
+		data.append("categorie", $scope.eltToDelete.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		answerCategoryService.deleteById(data);
+		$scope.eltToDelete  = {};
+	};
+	
+	/**
+	 * Déplacement d'une catégorie
+	 */
+	$scope.dropCategory = function(elt, fromIndex, toIndex){
+		$scope.questionModel.categories.splice(fromIndex, 1);
+		$scope.questionModel.categories.splice(toIndex, 0, elt);
+		var data = new FormData();
+		data.append("categorie", elt.id);
+		data.append("position", toIndex);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		answerCategoryService.drop(data);
+	};
+	
+	/**
+	 * Ajout d'une réponse
+	 */
+	$scope.addAnswer = function(){
+		var data = new FormData();
+		data.append("question", $stateParams.id);
+		data.append("message", $scope.answerModel.message);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		if(null != $scope.answerModel.picture && ($scope.questionModel.question.type == 1 || $scope.questionModel.question.type == 3)) {
+			data.append("file", $scope.answerModel.picture);
+		}
+		if($scope.questionModel.question.type == 1 || $scope.questionModel.question.type == 0){
+			$scope.answerModel.data = $scope.answerModel.selected;
+		}
+		data.append("data", $scope.answerModel.data);
+		answerService.create(data).success(function(result) {
+			if(result.code == 1){
+				var answer = {
+						"id"    : result.id,
+						"message" : $scope.answerModel.message,
+						"picture" : $scope.answerModel.picture,
+						"data" : $scope.answerModel.data,
+				};
+				$scope.questionModel.answers.push(answer);
+				$scope.answerModel.allErrors = [];
+				$scope.modalAnswer.hide();
+				$scope.answerModel.message = "";
+				$scope.answerModel.data = "";
+				$scope.answerModel.selected = false;
+				$scope.answerModel.displayPicture = ""; 
+				$scope.answerModel.picture = null;		
+				$scope.answerModel.pictureEdit = false;
+				$scope.answerModel.emptyFile = true;				
+	    	} else {
+	    		$scope.answerModel.allErrors = result.errors;
+	    	}
+	    });
+	};
+	
+	/**
+	 * Suppression d'une réponse
+	 */
+	$scope.deleteAnswer = function(){
+		$scope.questionModel.answers.splice($scope.questionModel.answers.indexOf($scope.eltToDelete), 1);
+		var data = new FormData();
+		data.append("answer", $scope.eltToDelete.id);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		answerService.deleteById(data);
+		$scope.eltToDelete  = {};
+	};
+	
+	/**
+	 * Déplacement d'une réponse
+	 */
+	$scope.dropAnswer = function(elt, fromIndex, toIndex){
+		$scope.questionModel.answers.splice(fromIndex, 1);
+		$scope.questionModel.answers.splice(toIndex, 0, elt);
+		var data = new FormData();
+		data.append("answer", elt.id);
+		data.append("position", toIndex);
+		data.append("sessionId", sessionService.get('id'));
+		data.append("sessionToken", sessionService.get('token'));
+		answerService.drop(data);
+	};
+	
+	/**
+	 * Choix d'une image pour une réponse [mobile mode]
+	 */
+	$scope.chooseAnswerFile = function(newFile){
+		fileService.getFile(newFile, 100, 600, 600, true).then(function(imageData) {
+			$scope.answerModel.displayPicture = "data:image/jpeg;base64,"+imageData; 
+			$scope.answerModel.picture = imageData;		
+			$scope.answerModel.pictureEdit = false;
+			$scope.answerModel.emptyFile = false;
+		 }, function(err) {
+		 });
+	};
+
+	/**
+	 * Choix d'une image pour une réponse [desktop mode]
+	 */
+	$scope.desktopAnswerFile = function(input){
+		var reader = new FileReader();
+        reader.onload = function (e) {
+        	$scope.$apply(function () {       		
+        		$scope.answerModel.emptyFile = false;       		
+        		$scope.answerModel.displayPicture = e.target.result;
+        		$scope.answerModel.picture = e.target.result.substring(e.target.result.indexOf(",")+1);		
+        		$scope.answerModel.pictureEdit = false;
+            });           	         	
+        }
+        reader.readAsDataURL(input.files[0]);
+	};
+
+	/**
+	 * Ouvrir la modale de création d'une nouvelle réponse
+	 */
+	$scope.openAnswerModal = function(){
+		if(2 == $scope.questionModel.question.type && 0 < $scope.questionModel.categories.length){
+			$scope.answerModel.data = $scope.questionModel.categories[0].name;
+		}
+		$scope.modalAnswer.show();
+	}
+	
+	/**
+	 * Ouverture du choix d'une catégorie
+	 */
+	$scope.openCategories = function($event){
+		 $scope.popoverCategory.show($event);
+	}
+	
+	/**
+	 * Confirmation du choix d'une catégorie
+	 */
+	$scope.changeCategory = function(elt){
+		$scope.answerModel.data = elt.name;
+		$scope.popoverCategory.hide();
+	}
+	
+	/**
+ 	  * fix freeze screen
+ 	  */
+ 	 $scope.$on('modal.hidden', function() {
+ 		 $scope.popoverCategory.hide();
+ 	 }); 
+
 });
