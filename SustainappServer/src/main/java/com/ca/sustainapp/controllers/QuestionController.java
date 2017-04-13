@@ -93,7 +93,7 @@ public class QuestionController extends GenericCourseController {
 				.setTopicId(topic.getId())
 				.setTimestamps(GregorianCalendar.getInstance());
 		if(!isEmpty(request.getParameter("file"))){
-			question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		return new IdResponse().setId(questionService.createOrUpdate(question)).setCode(1).buildJson();
 	}
@@ -197,7 +197,7 @@ public class QuestionController extends GenericCourseController {
 		if(null == question || isEmpty(request.getParameter("file"))){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		questionService.createOrUpdate(question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		questionService.createOrUpdate(question.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	

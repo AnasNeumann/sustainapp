@@ -95,7 +95,7 @@ public class CourseController extends GenericCourseController {
 				.setTimestamps(GregorianCalendar.getInstance())
 				.setType(challengeTypeService.getById(StringsUtils.parseLongQuickly(request.getParameter("type")).get()));
 		if(!isEmpty(request.getParameter("file"))){
-			course.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			course.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idCours = courseService.createOrUpdate(course);
 		return new IdResponse().setId(idCours).setCode(1).buildJson();
@@ -175,7 +175,7 @@ public class CourseController extends GenericCourseController {
 		if(null == cours){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		courseService.createOrUpdate(cours.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		courseService.createOrUpdate(cours.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	

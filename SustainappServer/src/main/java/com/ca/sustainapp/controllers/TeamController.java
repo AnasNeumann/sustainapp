@@ -77,7 +77,7 @@ public class TeamController extends GenericController {
 				.setLevel(0)
 				.setTimestamps(GregorianCalendar.getInstance());
 		if(!isEmpty(request.getParameter("file"))){
-			team.setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			team.setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idTeam = teamService.createOrUpdate(team);
 		TeamRoleEntity role = new TeamRoleEntity()
@@ -161,7 +161,7 @@ public class TeamController extends GenericController {
 		if(null == team){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		teamService.createOrUpdate(team.setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		teamService.createOrUpdate(team.setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 

@@ -63,7 +63,7 @@ public class AnswerController extends GenericCourseController {
 				.setQuestionId(question.getId())
 				.setTimestamps(GregorianCalendar.getInstance());
 		if(!isEmpty(request.getParameter("file"))){
-			answer.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			answer.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		return new IdResponse().setId(answerService.createOrUpdate(answer)).setCode(1).buildJson();
 	}

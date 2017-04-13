@@ -70,7 +70,7 @@ public class TopicController extends GenericCourseController {
 				.setNumero(numero)
 				.setTimestamps(GregorianCalendar.getInstance());
 		if(!isEmpty(request.getParameter("file"))){
-			topic.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG));
+			topic.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idTopic = topicService.createOrUpdate(topic);
 		return new IdResponse().setId(idTopic).setCode(1).buildJson();
@@ -153,7 +153,7 @@ public class TopicController extends GenericCourseController {
 		if(null == topic){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		topicService.createOrUpdate(topic.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_JPG)));
+		topicService.createOrUpdate(topic.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
