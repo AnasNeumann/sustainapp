@@ -7,5 +7,41 @@
 angular.module('sustainapp.controllers')
 .controller('quizController',
 		function($scope, $stateParams, $ionicModal, $state, sessionService, quizService, displayService) {
+
+		/**
+		 * Entrée dans la page
+		 */
+		$scope.$on('$ionicView.beforeEnter', function() {
+			loadQuiz();
+		});
+		
+		/**
+		 * Chargement de toutes les informations du quiz
+		 */
+		var loadQuiz = function(){
+			
+			// Le quiz
+			$scope.quizModel = {};
+			$scope.quizModel.loaded = false;
+			$scope.quizModel.questions = [];
+			$scope.quizModel.responses = [];
+			$scope.quizModel.topic = $stateParams.id;
+			$scope.currentPosition = 0;
+			$scope.currentQuestion = {};
+			
+			// la validation du quiz
+			$scope.reponseModel = {};
+			$scope.reponseModel.loaded = false;
+			
+			quizService.getById($stateParams.id).then(function(response){
+				var result = response.data;
+				if(result.code == 1) {					
+					$scope.quizModel.questions = result.questions;
+					$scope.currentQuestion = result.questions[0];
+					$scope.progressBarSize  = Math.floor(100/result.questions.length);
+					$scope.quizModel.loaded = true;
+				}
+			});
+		};
 	
 });

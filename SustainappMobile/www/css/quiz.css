@@ -5,3 +5,50 @@
  * @since 13/04/2017
  * @version 1.0
  */
+
+.s-quiz-progressContainer{
+	margin-top : 10px;
+	border-bottom : 1px solid #ccc;
+}
+
+.s-quiz-return{
+	position : relative;
+	top : -5px;
+}
+
+.s-quiz-progressBar{
+    border-left : 1px solid #04c9f2 ;
+    padding : 0px;
+    height : 40px;
+}
+
+.s-quiz-progressCase{
+    overflow : hidden;
+    padding : 0px;
+	display: inline-block;
+	margin : 0px;
+}
+
+.s-quiz-progressCase-active{
+	height : 40px;
+	width : 100%;
+    background-color: #23d5fb;
+    border-top : 1px solid #04c9f2;
+    border-bottom : 1px solid #04c9f2;
+    border-right : 1px solid #04c9f2 ;
+}
+
+.s-quiz-progressCase-inactive{
+	height : 40px;
+	width : 100%;
+	background-color: #F0F0F0;
+	border-top : 1px solid #ccc;
+    border-bottom : 1px solid #ccc;
+    border-right : 1px solid #ccc;
+}
+
+.s-quiz-zone{
+	min-height : 280px;
+	background-color: #F0F0F0;
+	border-bottom : 1px solid #ccc;
+}

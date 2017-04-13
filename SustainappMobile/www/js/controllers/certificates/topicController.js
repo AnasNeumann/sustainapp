@@ -12,8 +12,8 @@ angular.module('sustainapp.controllers')
 		 * Entrée dans la page
 		 */
 		$scope.$on('$ionicView.beforeEnter', function() {
-				loadTopic();
-	        });
+			loadTopic();
+        });
 		
 		/**
 		 * Chargement des informations du topic

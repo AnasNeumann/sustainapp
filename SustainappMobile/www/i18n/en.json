@@ -152,5 +152,7 @@
     "questionType.quiz" : "True ou false",
     "questionType.selection" : "Picture selection",
     "questionType.classification" : "Classification",
-    "questionType.reorder" : "Reorder"
+    "questionType.reorder" : "Reorder",
+    
+    "quiz.next" : "Next"
 }

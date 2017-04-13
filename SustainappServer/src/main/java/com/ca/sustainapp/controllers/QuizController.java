@@ -1,5 +1,8 @@
 package com.ca.sustainapp.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
+import com.ca.sustainapp.criteria.AnswerCriteria;
+import com.ca.sustainapp.criteria.QuestionCriteria;
+import com.ca.sustainapp.entities.AnswerEntity;
+import com.ca.sustainapp.entities.QuestionEntity;
+import com.ca.sustainapp.pojo.SustainappList;
+import com.ca.sustainapp.responses.AnswerResponse;
+import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.QuestionQuizResponse;
+import com.ca.sustainapp.responses.QuizResponse;
+import com.ca.sustainapp.utils.StringsUtils;
 
 /**
  * Restfull controller for quiz validation
@@ -18,7 +32,7 @@ import com.ca.sustainapp.boot.SustainappConstantes;
  */
 @CrossOrigin
 @RestController
-public class QuizController {
+public class QuizController extends GenericCourseController {
 
 	/**
 	 * Récuperer le quiz d'un topic
@@ -28,7 +42,14 @@ public class QuizController {
 	@ResponseBody
 	@RequestMapping(value="/quiz", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String getQuiz(HttpServletRequest request) {
-		return null;
+		Optional<Long> topic = StringsUtils.parseLongQuickly(request.getParameter("topic"));
+		if(!topic.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		return new QuizResponse()
+				.setQuestions(getAllTopicQuestions(topic.get()))
+				.setCode(1)
+				.buildJson();
 	}
 
 	/**
@@ -41,4 +62,33 @@ public class QuizController {
     public String validateQuiz(HttpServletRequest request) {
 		return null;
 	}	
+	
+	/**
+	 * getAll questions of a topic
+	 * @param id
+	 * @return
+	 */
+	List<QuestionQuizResponse> getAllTopicQuestions(Long id){
+		List<QuestionQuizResponse> result = new SustainappList<QuestionQuizResponse>();
+		for(QuestionEntity question : getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(id))){
+			QuestionQuizResponse response = new QuestionQuizResponse(question)
+					.setCategories(getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(question.getId())))
+					.setAnswers(getAllQuestionAnswers(question.getId()));
+				result.add(response);
+		}
+		return result;
+	}
+	
+	/**
+	 * getAll answers of a question
+	 * @param id
+	 * @return
+	 */
+	List<AnswerResponse> getAllQuestionAnswers(Long id){
+		List<AnswerResponse> result = new SustainappList<AnswerResponse>();
+		for(AnswerEntity answer : getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(id))){
+				result.add(new AnswerResponse(answer));
+		}
+		return result;
+	}
 }

@@ -8,7 +8,6 @@ import com.ca.sustainapp.pojo.SustainappList;
 
 /**
  * Json de réponse pour l'affichage d'un challenge
- * 
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @since 21/03/2017
  * @version 1.0

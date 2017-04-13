@@ -152,6 +152,8 @@
     "questionType.quiz" : "Vrai ou faux",
     "questionType.selection" : "Selection d'image",
     "questionType.classification" : "Classification",
-    "questionType.reorder" : "Réordonner"
+    "questionType.reorder" : "Réordonner",
+    
+    "quiz.next" : "Suivant"
 
 }
