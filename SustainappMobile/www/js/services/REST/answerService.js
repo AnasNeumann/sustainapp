@@ -21,7 +21,7 @@ angular.module('sustainapp.services')
 			return $http.post(config.remoteServer+"/answer/delete", data, params);
 		},
 		drop : function(data) {
-			return $http.post(config.remoteServer+"/anwser/drop", data, params);
+			return $http.post(config.remoteServer+"/answer/drop", data, params);
 		}
 	};
 });

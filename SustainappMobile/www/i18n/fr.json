@@ -146,6 +146,8 @@
     "question.answers" : "Réponses",
     "question.categories.new" : "Nouvelle catégorie",
     "question.answers.new" : "Nouvelle réponse",
+    "question.answers.selected" : "Cette réponse doit-elle être séléctionnée ?",
+    "question.answers.name" : "La réponse",
     
     "questionType.quiz" : "Vrai ou faux",
     "questionType.selection" : "Selection d'image",

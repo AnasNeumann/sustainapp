@@ -1,0 +1,62 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+     <div class="s-modal-confirm">
+      <div class="s-common-floatEdit" ng-click="modalAnswer.hide()">
+            <i class="icon ion-close-round"></i>
+      </div>
+      <h3 class="s-profile-name">{{'question.answers.new' | translate}}</h3>
+      
+      <!-- I. Answer's picture -->
+      <div class="s-questions-anwserPicture" ng-if="1 == questionModel.question.type || 3 == questionModel.question.type" style="background-image: url({{answerModel.displayPicture}});">
+        <i ng-show="answerModel.emptyFile" class="icon ion-image s-cours-topicPicture"></i>
+        <!-- Mobile view -->
+        <div class="s-common-camera" ng-if="_isNotMobile == false">
+            <div class="s-common-choosePictureToogle" ng-show="answerModel.pictureEdit" ng-click="answerModel.pictureEdit = false">
+               <i class="icon ion-close-round"></i>
+            </div>
+            <div class="s-common-choosePicture" ng-show="answerModel.pictureEdit" ng-click="chooseAnswerFile(true)">
+               {{'common.takePicture' | translate}}
+            </div>
+            <div class="s-common-choosePicture" ng-show="answerModel.pictureEdit" ng-click="chooseAnswerFile(false)">
+              {{'common.chooseFormGallery' | translate}}
+            </div>
+            <div class="s-common-choosePictureToogle s-common-22" ng-hide="answerModel.pictureEdit" ng-click="answerModel.pictureEdit = true">
+               <i class="icon ion-camera"></i>
+            </div>
+        </div>
+        <!-- Desktop view -->
+         <div class="s-common-camera" ng-if="_isNotMobile">
+             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                <i class="icon ion-camera"></i>
+                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopAnswerFile(this)" />
+             </div>
+         </div>
+      </div>
+      
+      <!-- II. Answer's text -->
+      <label class="item item-input item-floating-label" ng-if="0 == questionModel.question.type || 2 == questionModel.question.type" >
+        <span class="input-label s-common-label">{{'question.answers.name' | translate}}</span> 
+        <input ng-model="answerModel.message" type="text" placeholder="{{'question.answers.name' | translate}}" class="s-common-input">
+        <span class="s-common-errors">{{answerModel.allErrors.message | translate}}</span>
+      </label>
+      
+      <!-- III. Answer must be selected or not -->
+      <div ng-if="0 == questionModel.question.type || 1 == questionModel.question.type">
+          <label class="checkbox s-common-checkbox-label">
+              <ion-checkbox class="s-common-checkbox" ng-model="answerModel.selected">{{'question.answers.selected' | translate}}</ion-checkbox>
+          </label>
+      </div>
+      
+      <!-- IV. Answer's category -->
+      <div class="s-questions-listType"  ng-if="2 == questionModel.question.type"> 
+	      <ion-list >
+	         <ion-item class="item" type="item-text-wrap" ng-click="openCategories($event)">
+	           <h2 class="s-teams-title">{{answerModel.data}}</h2>
+	         </ion-item>
+	      </ion-list>
+      </div>
+    
+      <button class="s-common-btn" ng-click="addAnswer()">{{'common.create' | translate}}</button>
+     </div>
+   </ion-content>
+</ion-modal-view>

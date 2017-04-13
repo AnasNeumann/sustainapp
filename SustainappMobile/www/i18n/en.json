@@ -146,6 +146,8 @@
     "question.answers" : "Answers",
     "question.categories.new" : "New category",
     "question.answers.new" : "New answer",
+    "question.answers.selected" : "This answer should be selected",
+    "question.answers.name" : "The answer",
     
     "questionType.quiz" : "True ou false",
     "questionType.selection" : "Picture selection",
