@@ -149,6 +149,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    }
 	  }
     })
+    .state('tab.quiz', {
+	  url: '/quiz/:id',
+	  views: {
+	    'tab-certificates': {
+	      templateUrl: 'templates/quiz/quiz-one.html',
+	      controller: 'quizController'
+	    }
+	  }
+    })
     .state('tab.notifications', {
 	  url: '/notifications',
 	  views: {

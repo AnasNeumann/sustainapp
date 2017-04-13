@@ -40,6 +40,5 @@ public class QuizController {
 	@RequestMapping(value="/quiz", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String validateQuiz(HttpServletRequest request) {
 		return null;
-	}
-	
+	}	
 }
