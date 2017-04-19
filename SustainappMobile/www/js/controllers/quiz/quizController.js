@@ -35,7 +35,7 @@ angular.module('sustainapp.controllers')
 			
 			quizService.getById($stateParams.id).then(function(response){
 				var result = response.data;
-				if(result.code == 1) {					
+				if(result.code == 1) {		
 					$scope.quizModel.questions = result.questions;
 					$scope.currentQuestion = result.questions[0];
 					$scope.progressBarSize  = Math.floor(100/result.questions.length);
@@ -43,5 +43,19 @@ angular.module('sustainapp.controllers')
 				}
 			});
 		};
-	
+		
+		/**
+		 * Validation d'une question et passage à la suivante
+		 */
+		$scope.validateAnswer = function(currentQuestion){
+			if(null != $scope.quizModel.questions[$scope.currentPosition + 1]){				
+				angular.forEach(currentQuestion.answers, function(answer, key) {
+					// TODO ajout de la validation dans le tableau de réponses
+				});
+				$scope.currentPosition = $scope.currentPosition + 1;
+				$scope.currentQuestion = $scope.quizModel.questions[$scope.currentPosition];				
+			}else{
+				//TODO ENVOI EN BASE
+			}
+		};
 });

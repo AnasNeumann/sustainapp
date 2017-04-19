@@ -17,6 +17,7 @@ public class AnswerResponse extends HttpRESTfullResponse {
 	private Integer numero;
 	private byte[] picture;
 	private Calendar timestamps;
+	private String data;
 	
 	/**
 	 * Constructeur à partir de l'entity
@@ -28,6 +29,7 @@ public class AnswerResponse extends HttpRESTfullResponse {
 		this.numero = entity.getNumero();
 		this.picture = entity.getPicture();
 		this.timestamps = entity.getTimestamps();
+		this.data = null;
 	}
 	
 	/**
@@ -104,4 +106,20 @@ public class AnswerResponse extends HttpRESTfullResponse {
 		this.timestamps = timestamps;
 		return this;
 	}
+
+	/**
+	 * @return the data
+	 */
+	public String getData() {
+		return data;
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public AnswerResponse setData(String data) {
+		this.data = data;
+		return this;
+	}
+	
 }

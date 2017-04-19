@@ -8,7 +8,6 @@
 
 .s-quiz-progressContainer{
 	margin-top : 10px;
-	border-bottom : 1px solid #ccc;
 }
 
 .s-quiz-return{
@@ -48,7 +47,56 @@
 }
 
 .s-quiz-zone{
-	min-height : 280px;
-	background-color: #F0F0F0;
+	width : 100% !important;
+	overflow : hidden;
+	word-wrap : break-word;
+	padding : 0px;
+}
+
+.s-quiz-questionContainer{
+	text-align : center;
+    background-color: white;
+    border-bottom : 1px solid #ccc;
+}
+
+.s-quiz-question{
+	font-size: 22px;
+	padding-top : 10px;
+	font-family: sustainapp;
+	margin : 0px;
+	margin-bottom : 15px;
+    color : #04c9f2;
+}
+
+.s-quiz-questionPicture {
+	width : 100%;
+	height : auto;
+	margin : 0px;
+}
+
+.s-quiz-checkbox-label{
+    margin : 0px;
+    padding  : 0px;
+    width: 100%;
+}
+
+.s-quiz-checkbox-container{
+	background-color : #F0F0F0;
+    padding  : 0px;
+    border-bottom : 1px solid #ccc;
+}
+
+.s-quiz-selectionContainer {
+	padding : 7px;
+	padding-bottom : 2px;
 	border-bottom : 1px solid #ccc;
+	border-right : 1px solid #ccc;
+	width : 50% !important;
+	display : inline-block;
+	background-color : #F0F0F0;
+	cursor : pointer;
+}
+
+.s-quiz-selected{
+	background-color : #23d5fb;
 }

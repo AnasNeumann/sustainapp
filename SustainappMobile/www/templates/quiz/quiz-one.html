@@ -30,6 +30,10 @@
        
        <!-- QUIZZ ZONE -->
        <div class="s-quiz-zone">
+           <div class="s-quiz-questionContainer">
+            <img ng-if="null != currentQuestion.picture" src="data:image/jpeg;base64,{{currentQuestion.picture}}" class="s-quiz-questionPicture"/>
+            <h3 class="s-quiz-question">{{currentQuestion.message}}</h3>
+           </div>
            <div ng-if="0 == currentQuestion.type" ng-include src="'templates/quiz/quiz-qcm.html'"></div>
            <div ng-if="1 == currentQuestion.type" ng-include src="'templates/quiz/quiz-selection.html'"></div>
            <div ng-if="2 == currentQuestion.type" ng-include src="'templates/quiz/quiz-classification.html'"></div>
@@ -41,7 +45,7 @@
             <div class="col col-25">
             </div>
             <div class="col col-50">
-                <button class="s-common-btn" ng-click="validateAnswer()">{{'quiz.next' | translate}}</button>
+                <button class="s-common-btn" ng-click="validateAnswer(currentQuestion)">{{'quiz.next' | translate}}</button>
             </div>
        </div>       
     </ion-content>
