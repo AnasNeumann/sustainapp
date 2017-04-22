@@ -44,6 +44,13 @@ angular.module('sustainapp.services')
 		 },
 		 animatedScrollUp : function(elt, maxValue, i, speed){
 			 animatedScrollUp(elt, maxValue, i, speed);
+		 },
+		 enableScroll : function(id, value){
+			 if(value){
+				 document.getElementById(id).style.overflow = "auto";
+			 }else{
+				 document.getElementById(id).style.overflow = "hidden";
+			 }			
 		 }
 	};
 });

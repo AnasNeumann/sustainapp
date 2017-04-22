@@ -27,7 +27,7 @@ angular.module('sustainapp.controllers')
 			$scope.quizModel.responses = [];
 			$scope.quizModel.topic = $stateParams.id;
 			$scope.currentPosition = 0;
-			$scope.currentQuestion = {};
+			$scope.currentQuestion = {};							
 			
 			// la validation du quiz
 			$scope.reponseModel = {};
@@ -39,9 +39,16 @@ angular.module('sustainapp.controllers')
 					$scope.quizModel.questions = result.questions;
 					$scope.currentQuestion = result.questions[0];
 					$scope.progressBarSize  = Math.floor(100/result.questions.length);
-					$scope.quizModel.loaded = true;
+					$scope.quizModel.loaded = true;					
 				}
 			});
+		};
+		
+		/**
+		 * Fonction d'activation/desactivation du scrolling
+		 */
+		$scope.enableScroll = function(value){
+			displayService.enableScroll("quizContent", value);
 		};
 		
 		/**
@@ -58,4 +65,18 @@ angular.module('sustainapp.controllers')
 				//TODO ENVOI EN BASE
 			}
 		};
+		
+		/**
+		 * Drag&Drop pour les questions de type classification
+		 */
+		$scope.onClassificationComplete = function(answer, event, cat){
+			answer.data = cat.id;
+		};
+		
+		/**
+		 * Drag&Drop pour les questions de type reorder
+		 */
+		$scope.onReorderComplete = function(answer, event, number){
+			answer.data = number;
+		}
 });

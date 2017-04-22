@@ -1,7 +1,7 @@
-<ion-view view-title="QUIZ !">   
+<ion-view view-title="Quiz !">   
     <!-- QUIZ LOADED -->
-    <ion-content ng-show="quizModel.loaded" >
-       
+    <ion-content ng-show="quizModel.loaded" id="quizContent">
+
        <!-- PROGRESS BAR -->
        <div class="row s-quiz-progressContainer">
            <div class="col col-10">
@@ -47,7 +47,8 @@
             <div class="col col-50">
                 <button class="s-common-btn" ng-click="validateAnswer(currentQuestion)">{{'quiz.next' | translate}}</button>
             </div>
-       </div>       
+       </div>
+   
     </ion-content>
     
     <!-- Loading Part -->
