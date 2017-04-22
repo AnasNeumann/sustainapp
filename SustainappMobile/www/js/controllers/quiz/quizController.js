@@ -28,6 +28,7 @@ angular.module('sustainapp.controllers')
 			$scope.quizModel.topic = $stateParams.id;
 			$scope.currentPosition = 0;
 			$scope.currentQuestion = {};							
+			$scope.btnTxt = "quiz.next";
 			
 			// la validation du quiz
 			$scope.reponseModel = {};
@@ -55,14 +56,28 @@ angular.module('sustainapp.controllers')
 		 * Validation d'une question et passage à la suivante
 		 */
 		$scope.validateAnswer = function(currentQuestion){
+			var newAnswer = "";
+			angular.forEach(currentQuestion.answers, function(answer, key) {
+				newAnswer+=answer.data+"/";
+			});
+			$scope.quizModel.responses.push(newAnswer);
 			if(null != $scope.quizModel.questions[$scope.currentPosition + 1]){				
-				angular.forEach(currentQuestion.answers, function(answer, key) {
-					// TODO ajout de la validation dans le tableau de réponses
-				});
+				if(null == $scope.quizModel.questions[$scope.currentPosition + 2]){
+					$scope.btnTxt = "quiz.validate";
+				}
 				$scope.currentPosition = $scope.currentPosition + 1;
 				$scope.currentQuestion = $scope.quizModel.questions[$scope.currentPosition];				
 			}else{
-				//TODO ENVOI EN BASE
+				var data = new FormData();
+				data.append("quiz", $stateParams.id);
+				data.append("answers", $scope.quizModel.responses);
+				data.append("sessionId", sessionService.get('id'));
+				data.append("sessionToken", sessionService.get('token'));
+				quizService.validateQuiz(data).success(function(result) {
+					if(result.code == 1){
+						
+					}
+				});
 			}
 		};
 		

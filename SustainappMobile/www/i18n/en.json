@@ -154,5 +154,6 @@
     "questionType.classification" : "Classification",
     "questionType.reorder" : "Reorder",
     
-    "quiz.next" : "Next"
+    "quiz.next" : "Next",
+    "quiz.validate" : "Validate"
 }
