@@ -1,0 +1,90 @@
+<ion-view view-title="Quiz !">   
+    
+    <!-- QUIZ LOADED -->
+    <ion-content ng-show="quizModel.loaded" id="quizContent">
+   
+	    <div ng-if="false == reponseModel.loaded">
+	
+	       <!-- PROGRESS BAR -->
+	       <div class="row s-quiz-progressContainer">
+	           <div class="col col-10">
+	               <div class="s-topic-return s-quiz-return" >
+	                   <a href="#/tab/topic/{{quizModel.topic}}">
+	                       <i class="icon ion-arrow-return-left"></i><br />
+	                   </a>
+	               </div>
+	           </div>
+		       <div class="col col-80 s-quiz-progressBar">
+			       <div class="s-quiz-progressCase" ng-repeat="case in quizModel.questions" style="width:{{progressBarSize}}%;">
+			          <div class="s-quiz-progressCase-active" ng-if="case.numero <= currentPosition">
+			          </div>
+			          <div class="s-quiz-progressCase-inactive" ng-if="case.numero > currentPosition">
+			          </div>
+			       </div>
+		       </div>
+		       <div class="col col-10">
+			       <div class="s-topic-return s-quiz-return" >
+			           <a>
+			              <i class="icon ion-ribbon-a"></i><br />
+			           </a>
+			       </div>
+		       </div>
+	       </div>
+	       
+	       <!-- QUIZZ ZONE -->
+	       <div class="s-quiz-zone">
+	           <div class="s-quiz-questionContainer">
+	            <img ng-if="null != currentQuestion.picture" src="data:image/jpeg;base64,{{currentQuestion.picture}}" class="s-quiz-questionPicture"/>
+	            <h3 class="s-quiz-question">{{currentQuestion.message}}</h3>
+	           </div>
+	           <div ng-if="0 == currentQuestion.type" ng-include src="'templates/quiz/quiz-qcm.html'"></div>
+	           <div ng-if="1 == currentQuestion.type" ng-include src="'templates/quiz/quiz-selection.html'"></div>
+	           <div ng-if="2 == currentQuestion.type" ng-include src="'templates/quiz/quiz-classification.html'"></div>
+	           <div ng-if="3 == currentQuestion.type" ng-include src="'templates/quiz/quiz-reorder.html'"></div> 
+	       </div>
+	       
+	       <!-- VALIDER LA REPONSE -->
+	       <div class="row">
+	            <div class="col col-25">
+	            </div>
+	            <div class="col col-50">
+	                <button class="s-common-btn" ng-click="validateAnswer(currentQuestion)">{{btnTxt | translate}}</button>
+	            </div>
+	       </div>   
+	    </div>
+    
+	   <!-- VALIDATION LOADED -->
+	   <div ng-if="true == reponseModel.loaded">
+	        <div class="s-quiz-validationImg-container">
+	           <img ng-if="reponseModel.allTrue" ng-src="img/courses/valid.png" class="s-quiz-validationImg"/>
+	           <img ng-if="false == reponseModel.allTrue" ng-src="img/courses/error.png" class="s-quiz-validationImg"/>
+	        </div>
+	        <div class="s-quiz-validationText">
+	            <p ng-if="reponseModel.allTrue">
+	                {{'quiz.true' | translate}}
+	            </p>
+	            <p ng-if="false == reponseModel.allTrue">
+	                {{'quiz.false' | translate}}
+	                <span ng-repeat="elt in reponseModel.eachQuestions">{{elt}}</span>
+	                !
+	            </p>
+	        </div>
+	        <div class="row">
+	            <div class="col col-100">
+	               <div class="s-topic-return">
+	                   <a href="#/tab/topic/{{quizModel.topic}}">
+	                       <i class="icon ion-arrow-return-left"></i>
+	                       <span>{{'question.return' | translate}}</span>
+	                   </a>
+	               </div>
+	           </div>
+	       </div>
+       </div>
+    </ion-content>
+    
+    <!-- Loading Part -->
+    <ion-content class="s-common-loading" ng-if="false == quizModel.loaded && false == reponseModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+    </ion-content>
+</ion-view>

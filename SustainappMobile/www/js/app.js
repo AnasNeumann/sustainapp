@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating', 'ngDraggable'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
@@ -146,6 +146,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    'tab-certificates': {
 	      templateUrl: 'templates/certificates/question-one.html',
 	      controller: 'questionController'
+	    }
+	  }
+    })
+    .state('tab.quiz', {
+	  url: '/quiz/:id',
+	  views: {
+	    'tab-certificates': {
+	      templateUrl: 'templates/quiz/quiz-one.html',
+	      controller: 'quizController'
 	    }
 	  }
     })

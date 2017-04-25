@@ -1,0 +1,17 @@
+<div class="padding s-quiz-dragContainer">
+    <div ng-drag-start="enableScroll(false)" ng-drag-stop="enableScroll(true)" ng-repeat="answer in currentQuestion.answers" ng-if="null == answer.data" class="s-quiz-dragText" ng-drag="true" ng-drag-data="answer" ng-center-anchor="true">
+        {{answer.message}}
+    </div>
+</div>
+<div class="row s-quiz-dropContainer">
+    <div ng-repeat="cat in currentQuestion.categories" ng-class="{'col-100': currentQuestion.categories.length==1, 'col-50': currentQuestion.categories.length==2,'col-33': currentQuestion.categories.length==3, 'col' : true, 's-quiz-one' : true}" >
+        <div class="s-quiz-dropTitle">
+            {{cat.name}}
+        </div>
+        <div class="s-quiz-dropContent" ng-drop="true" ng-drop-success="onClassificationComplete($data,$event, cat)">
+            <div ng-drag-start="enableScroll(false)" ng-drag-stop="enableScroll(true)" ng-repeat="answer in currentQuestion.answers" ng-if="cat.name == answer.data" class="s-quiz-dragText" ng-drag="true" ng-drag-data="answer" ng-center-anchor="true">
+		        {{answer.message}}
+		    </div>
+        </div>
+    </div>
+</div>

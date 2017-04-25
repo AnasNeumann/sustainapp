@@ -152,5 +152,10 @@
     "questionType.quiz" : "True ou false",
     "questionType.selection" : "Picture selection",
     "questionType.classification" : "Classification",
-    "questionType.reorder" : "Reorder"
+    "questionType.reorder" : "Reorder",
+    
+    "quiz.next" : "Next",
+    "quiz.validate" : "Validate",
+    "quiz.true" : "Congratulations! You have validated this chapter without errors!", 
+    "quiz.false": "Sorry, you failed to answer questions "
 }

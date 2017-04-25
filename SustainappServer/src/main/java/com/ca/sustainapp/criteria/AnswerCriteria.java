@@ -17,6 +17,7 @@ public class AnswerCriteria implements Serializable {
 	private Long questionId;
 	private String message;
 	private Calendar timestamps;
+	private String data;
 	
 	/**
 	 * @return the id
@@ -81,4 +82,22 @@ public class AnswerCriteria implements Serializable {
 		this.timestamps = timestamps;
 		return this;
 	}
+
+	/**
+	 * @return the data
+	 */
+	public String getData() {
+		return data;
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	@QueryParam("data")
+	public AnswerCriteria setData(String data) {
+		this.data = data;
+		return this;
+	}
+	
+	
 }

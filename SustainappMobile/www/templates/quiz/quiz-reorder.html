@@ -1,0 +1,19 @@
+<div class="s-quiz-reorderContainer">
+<div class="s-quiz-reorderZone">
+    <div class="s-quiz-reorderDrop s-quiz-reorder1" ng-if="currentQuestion.answers.length>=1" ng-drop="true" ng-drop-success="onReorderComplete($data,$event, 0)">
+        <div ng-drag-start="enableScroll(false)" ng-drag-stop="enableScroll(true)" ng-repeat="answer in currentQuestion.answers" ng-if="0 == answer.data" ng-drag="true" ng-drag-data="answer" ng-center-anchor="true" class="s-quiz-reorderDrop s-quiz-reorderDrag s-quiz-reorderFixed" style="background-image: url('data:image/jpeg;base64,{{answer.picture}}')"></div>
+    </div>
+    <div class="s-quiz-reorderDrop s-quiz-reorder2" ng-if="currentQuestion.answers.length>=2" ng-drop="true" ng-drop-success="onReorderComplete($data,$event, 1)">
+        <div ng-drag-start="enableScroll(false)" ng-drag-stop="enableScroll(true)"" ng-repeat="answer in currentQuestion.answers" ng-if="1 == answer.data" ng-drag="true" ng-drag-data="answer" ng-center-anchor="true" class="s-quiz-reorderDrop s-quiz-reorderDrag s-quiz-reorderFixed" style="background-image: url('data:image/jpeg;base64,{{answer.picture}}')"></div>
+    </div>
+    <div class="s-quiz-reorderDrop s-quiz-reorder3" ng-if="currentQuestion.answers.length>=3" ng-drop="true" ng-drop-success="onReorderComplete($data,$event, 2)">
+        <div ng-drag-start="enableScroll(false)" ng-drag-stop="enableScroll(true)" ng-repeat="answer in currentQuestion.answers" ng-if="2 == answer.data" ng-drag="true" ng-drag-data="answer" ng-center-anchor="true" class="s-quiz-reorderDrop s-quiz-reorderDrag s-quiz-reorderFixed" style="background-image: url('data:image/jpeg;base64,{{answer.picture}}')"></div>
+    </div>
+    <div class="s-quiz-reorderDrop s-quiz-reorder4" ng-if="currentQuestion.answers.length>=4" ng-drop="true" ng-drop-success="onReorderComplete($data,$event, 3)">
+        <div ng-drag-start="enableScroll(false)" ng-drag-stop="enableScroll(true)" ng-repeat="answer in currentQuestion.answers" ng-if="3 == answer.data" ng-drag="true" ng-drag-data="answer" ng-center-anchor="true" class="s-quiz-reorderDrop s-quiz-reorderDrag s-quiz-reorderFixed" style="background-image: url('data:image/jpeg;base64,{{answer.picture}}')"></div>
+    </div>
+</div>
+<div class="s-quiz-reorderZone">
+    <div ng-drag-start="enableScroll(false)" ng-drag-stop="enableScroll(true)" ng-repeat="answer in currentQuestion.answers" ng-if="null == answer.data" ng-drag="true" ng-drag-data="answer" ng-center-anchor="true" class="s-quiz-reorderDrop s-quiz-reorderDrag" style="background-image: url('data:image/jpeg;base64,{{answer.picture}}')"></div>
+</div>
+</div>

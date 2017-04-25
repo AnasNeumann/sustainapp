@@ -12,8 +12,8 @@ angular.module('sustainapp.controllers')
 		 * Entrée dans la page
 		 */
 		$scope.$on('$ionicView.beforeEnter', function() {
-				loadTopic();
-	        });
+			loadTopic();
+        });
 		
 		/**
 		 * Chargement des informations du topic
@@ -378,6 +378,6 @@ angular.module('sustainapp.controllers')
 	       * Fonction pour aller vers l'interface pour valider le quiz
 	       */
 	      $scope.goToQuiz = function(){
-	    	  // TODO
+	    	  $state.go('tab.quiz', { id : $stateParams.id});
 	      };
 });

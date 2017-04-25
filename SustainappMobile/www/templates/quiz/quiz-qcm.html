@@ -1,0 +1,5 @@
+<div ng-repeat="answer in currentQuestion.answers" class="s-quiz-checkbox-container">
+    <label class="checkbox s-common-checkbox-label s-quiz-checkbox-label">
+        <ion-checkbox class="s-common-checkbox" ng-model="answer.data">{{answer.message}}</ion-checkbox>
+    </label>
+</div>

@@ -68,7 +68,7 @@ public class CascadeGetService {
 	private AnswerServiceDAO answerService;
 	@Autowired
 	private AnswerCategoryServiceDAO answerCategoryService;
-	
+
 	/**
 	 * Comparator
 	 */
