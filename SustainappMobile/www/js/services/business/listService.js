@@ -42,14 +42,13 @@ angular.module('sustainapp.services')
 				  * Mettre en liste en désordre aléatoirement
 				  */
 				 randomize : function(array) {
-				    var result = array;
-				 	for (var i = result.length - 1; i > 0; i--) {
+				 	for (var i = array.length - 1; i > 0; i--) {
 				        var j = Math.floor(Math.random() * (i + 1));
-				        var temp = result[i];
-				        result[i] = result[j];
-				        result[j] = temp;
+				        var temp = array[i];
+				        array[i] = array[j];
+				        array[j] = temp;
 				    }
-				    return result;
+				    return array;
 				},		
 				
 				/**
@@ -57,6 +56,7 @@ angular.module('sustainapp.services')
 				 */
 				reorder : function(array){
 					array.sort(function(a,b) {return (a.numero > b.numero) ? 1 : ((b.numero > a.numero) ? -1 : 0);});
+					return array;
 				}
 			 };
 		 });

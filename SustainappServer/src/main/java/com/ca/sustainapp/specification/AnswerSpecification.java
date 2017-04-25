@@ -56,6 +56,11 @@ public class AnswerSpecification {
 						listeCond.add(p);
 					}
 					
+					if (null != criteres.getData()) {
+						Predicate p = cb.like(cb.lower(root.<String> get("data")), criteres.getData().toLowerCase());
+						listeCond.add(p);
+					}
+					
 					if (null != criteres.getTimestamps()) {
 						Predicate p = cb.equal(root.<Calendar> get("timestamps"), criteres.getTimestamps());
 						listeCond.add(p);

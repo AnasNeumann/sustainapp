@@ -1,11 +1,13 @@
 package com.ca.sustainapp.controllers;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,8 +18,11 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
 import com.ca.sustainapp.criteria.AnswerCriteria;
 import com.ca.sustainapp.criteria.QuestionCriteria;
+import com.ca.sustainapp.criteria.TopicValidationCriteria;
+import com.ca.sustainapp.dao.TopicValidationServiceDAO;
 import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.QuestionEntity;
+import com.ca.sustainapp.entities.TopicValidationEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.AnswerResponse;
@@ -37,6 +42,12 @@ import com.ca.sustainapp.utils.StringsUtils;
 @RestController
 public class QuizController extends GenericCourseController {
 
+	/**
+	 * Injection de dépendances
+	 */
+	@Autowired
+	private TopicValidationServiceDAO service;
+	
 	/**
 	 * Récuperer le quiz d'un topic
 	 * @param request
@@ -77,6 +88,10 @@ public class QuizController extends GenericCourseController {
 				eachQuestions.add(validateQuestion(answers[i].split("/"), question));
 			}
 			i++;
+		}
+		List<TopicValidationEntity> validations = getService.cascadeGetValidation(new TopicValidationCriteria().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()));
+		if(!eachQuestions.contains(false) && validations.isEmpty()){
+			service.createOrUpdate(new TopicValidationEntity().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()).setTimestamps(GregorianCalendar.getInstance()));
 		}
 		return new ValidationResponse()
 				.setAllTrue(!eachQuestions.contains(false))

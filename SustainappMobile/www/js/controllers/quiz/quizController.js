@@ -32,6 +32,8 @@ angular.module('sustainapp.controllers')
 			// la validation du quiz
 			$scope.reponseModel = {};
 			$scope.reponseModel.loaded = false;
+			$scope.reponseModel.allTrue = false;
+			$scope.reponseModel.eachQuestions = [];
 			
 			// création d'un random order
 			$scope.random = function() {
@@ -61,6 +63,7 @@ angular.module('sustainapp.controllers')
 		 */
 		$scope.validateAnswer = function(currentQuestion){
 			var newAnswer = "";
+			listService.reorder(currentQuestion.answers);
 			angular.forEach(currentQuestion.answers, function(answer, key) {
 				if(null != answer.data){
 					newAnswer+=answer.data+"/";
@@ -78,8 +81,8 @@ angular.module('sustainapp.controllers')
 				if($scope.currentQuestion.type == 3){
 					listService.randomize($scope.currentQuestion.answers);
 				}
-			}else{
-				alert($scope.quizModel.responses);
+			}else{				
+				$scope.quizModel.loaded = false;
 				var data = new FormData();
 				data.append("quiz", $stateParams.id);
 				data.append("answers", $scope.quizModel.responses);
@@ -87,12 +90,22 @@ angular.module('sustainapp.controllers')
 				data.append("sessionToken", sessionService.get('token'));
 				quizService.validateQuiz(data).success(function(result) {
 					if(result.code == 1){
-						console.log(result);
-						if(result.allTrue){
-							
-						} else {
-													
-						}
+						$scope.quizModel.loaded = true;
+						$scope.reponseModel.loaded = true;
+						$scope.reponseModel.allTrue = result.allTrue;
+						var i = 1;
+						var first = true;
+						angular.forEach(result.eachQuestions, function(validation, key) {
+							if(false == validation){
+								if(!first){
+									$scope.reponseModel.eachQuestions.push(", "+i);
+								}else{
+									first = false;
+									$scope.reponseModel.eachQuestions.push(i);
+								}								
+							}
+							i++;
+						});
 					}
 				});
 			}
@@ -102,7 +115,7 @@ angular.module('sustainapp.controllers')
 		 * Drag&Drop pour les questions de type classification
 		 */
 		$scope.onClassificationComplete = function(answer, event, cat){
-			answer.data = cat.id;
+			answer.data = cat.name;
 		};
 		
 		/**

@@ -208,6 +208,19 @@ public class CascadeDeleteService {
 		}
 		participationRepository.delete(participation.getId());
 	}
+	
+	/**
+	 * cascade delete a answerCategory
+	 * @param answerCategory
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(AnswerCategoryEntity answerCategory){
+		for(AnswerEntity answer : getService.cascadeGetAnswer(new AnswerCriteria().setData(answerCategory.getName()))){
+			cascadeDelete(answer);
+		}
+		answerCategoryRepository.delete(answerCategory.getId());
+	}
 
 	/**
 	 * cascade delete a vote
@@ -238,17 +251,6 @@ public class CascadeDeleteService {
 	@Transactional
 	public void cascadeDelete(AnswerEntity answer){
 		answerRepository.delete(answer.getId());
-	}
-	
-
-	/**
-	 * cascade delete a answerCategory
-	 * @param answerCategory
-	 */
-	@Modifying
-	@Transactional
-	public void cascadeDelete(AnswerCategoryEntity answerCategory){
-		answerCategoryRepository.delete(answerCategory.getId());
 	}
 
 }
