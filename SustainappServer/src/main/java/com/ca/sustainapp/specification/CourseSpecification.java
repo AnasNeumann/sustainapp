@@ -56,6 +56,11 @@ public class CourseSpecification {
 						listeCond.add(p);
 					}
 					
+					if (null != criteres.getLanguage()) {
+						Predicate p = cb.like(cb.lower(root.<String> get("language")), criteres.getLanguage().toLowerCase() + "%");
+						listeCond.add(p);
+					}
+					
 					if (null != criteres.getAbout()) {
 						Predicate p = cb.like(cb.lower(root.<String> get("about")), criteres.getAbout().toLowerCase() + "%");
 						listeCond.add(p);

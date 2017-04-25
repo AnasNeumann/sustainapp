@@ -18,6 +18,7 @@ public class CourseCriteria implements Serializable {
 	private String title;
 	private String about;
 	private Long creatorId;
+	private String language;
 	private Calendar timestamps;
 
 	/**
@@ -85,6 +86,22 @@ public class CourseCriteria implements Serializable {
 	@QueryParam("creatorId")
 	public CourseCriteria setCreatorId(Long creatorId) {
 		this.creatorId = creatorId;
+		return this;
+	}
+
+	/**
+	 * @return the language
+	 */
+	public String getLanguage() {
+		return language;
+	}
+
+	/**
+	 * @param language the language to set
+	 */
+	@QueryParam("language")
+	public CourseCriteria setLanguage(String language) {
+		this.language = language;
 		return this;
 	}
 

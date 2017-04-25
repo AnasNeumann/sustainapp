@@ -62,6 +62,9 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	@Column(name = "CREATOR_ID")
 	private Long creatorId;
 	
+	@Column(name = "LANGUAGE")
+	private String language;
+	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
 	
@@ -81,6 +84,21 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	 */
 	public CourseEntity setId(Long id) {
 		this.id = id;
+		return this;
+	}
+	
+	/**
+	 * @return the language
+	 */
+	public String getLanguage() {
+		return language;
+	}
+
+	/**
+	 * @param language the language to set
+	 */
+	public CourseEntity setLanguage(String language) {
+		this.language = language;
 		return this;
 	}
 
