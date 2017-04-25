@@ -65,6 +65,9 @@ public class AnswerController extends GenericCourseController {
 		if(!isEmpty(request.getParameter("file"))){
 			answer.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
+		if(answer.getData().isEmpty()){
+			answer.setData(answer.getNumero().toString());
+		}
 		return new IdResponse().setId(answerService.createOrUpdate(answer)).setCode(1).buildJson();
 	}
 	

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hamcrest.core.StringStartsWith;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -77,6 +76,7 @@ public class QuizController extends GenericCourseController {
 			if(null != answers[i]){
 				eachQuestions.add(validateQuestion(answers[i].split("/"), question));
 			}
+			i++;
 		}
 		return new ValidationResponse()
 				.setAllTrue(!eachQuestions.contains(false))
@@ -92,10 +92,16 @@ public class QuizController extends GenericCourseController {
 	 * @return
 	 */
 	private boolean validateQuestion(String[] answers, QuestionEntity question){
-		// TODO validation
-		return false;
+		int i = 0;
+		for(AnswerEntity answer : getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(question.getId()))){
+			if(!answer.getData().equals(answers[i])){
+				return false;
+			}
+			i++;
+		}
+		return true;
 	}
-	
+
 	/**
 	 * getAll questions of a topic
 	 * @param id

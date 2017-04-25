@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('quizController',
-		function($scope, $stateParams, $ionicModal, $state, sessionService, quizService, displayService) {
+		function($scope, $stateParams, $ionicModal, $state, sessionService, quizService, displayService, listService) {
 
 		/**
 		 * Entrée dans la page
@@ -18,8 +18,7 @@ angular.module('sustainapp.controllers')
 		/**
 		 * Chargement de toutes les informations du quiz
 		 */
-		var loadQuiz = function(){
-			
+		var loadQuiz = function(){			
 			// Le quiz
 			$scope.quizModel = {};
 			$scope.quizModel.loaded = false;
@@ -33,6 +32,11 @@ angular.module('sustainapp.controllers')
 			// la validation du quiz
 			$scope.reponseModel = {};
 			$scope.reponseModel.loaded = false;
+			
+			// création d'un random order
+			$scope.random = function() {
+		        return 0.5 - Math.random();
+		    };
 			
 			quizService.getById($stateParams.id).then(function(response){
 				var result = response.data;
@@ -58,7 +62,11 @@ angular.module('sustainapp.controllers')
 		$scope.validateAnswer = function(currentQuestion){
 			var newAnswer = "";
 			angular.forEach(currentQuestion.answers, function(answer, key) {
-				newAnswer+=answer.data+"/";
+				if(null != answer.data){
+					newAnswer+=answer.data+"/";
+				}else{
+					newAnswer+="false/";
+				}				
 			});
 			$scope.quizModel.responses.push(newAnswer);
 			if(null != $scope.quizModel.questions[$scope.currentPosition + 1]){				
@@ -66,8 +74,12 @@ angular.module('sustainapp.controllers')
 					$scope.btnTxt = "quiz.validate";
 				}
 				$scope.currentPosition = $scope.currentPosition + 1;
-				$scope.currentQuestion = $scope.quizModel.questions[$scope.currentPosition];				
+				$scope.currentQuestion = $scope.quizModel.questions[$scope.currentPosition];
+				if($scope.currentQuestion.type == 3){
+					listService.randomize($scope.currentQuestion.answers);
+				}
 			}else{
+				alert($scope.quizModel.responses);
 				var data = new FormData();
 				data.append("quiz", $stateParams.id);
 				data.append("answers", $scope.quizModel.responses);
@@ -75,7 +87,12 @@ angular.module('sustainapp.controllers')
 				data.append("sessionToken", sessionService.get('token'));
 				quizService.validateQuiz(data).success(function(result) {
 					if(result.code == 1){
-						
+						console.log(result);
+						if(result.allTrue){
+							
+						} else {
+													
+						}
 					}
 				});
 			}
