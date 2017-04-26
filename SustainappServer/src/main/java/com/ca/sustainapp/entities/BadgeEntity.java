@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
-
 /**
  * BADGE table mapping
  * 
@@ -36,14 +34,11 @@ public class BadgeEntity extends GenericEntity implements Serializable {
 	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "SCORE")
-	private Integer score;
-
-	@Column(name = "ICON_ON")
-	private String iconOn;
+	@Column(name = "ICON")
+	private String icon;
 	
-	@Column(name = "ICON_OFF")
-	private String iconOff;
+	@Column(name = "ABOUT")
+	private String about;
 
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -81,22 +76,6 @@ public class BadgeEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the score
-	 */
-	public Integer getScore() {
-		return score;
-	}
-
-	/**
-	 * @param score
-	 *            the score to set
-	 */
-	public BadgeEntity setScore(Integer score) {
-		this.score = score;
-		return this;
-	}
-
-	/**
 	 * @return the timestamps
 	 */
 	public Calendar getTimestamps() {
@@ -113,32 +92,32 @@ public class BadgeEntity extends GenericEntity implements Serializable {
 	}
 
 	/**
-	 * @return the iconOn
+	 * @return the icon
 	 */
-	public String getIconOn() {
-		return iconOn;
+	public String getIcon() {
+		return icon;
 	}
 
 	/**
-	 * @param iconOn the iconOn to set
+	 * @param icon the icon to set
 	 */
-	public BadgeEntity setIconOn(String iconOn) {
-		this.iconOn = iconOn;
+	public BadgeEntity setIcon(String icon) {
+		this.icon = icon;
 		return this;
 	}
 
 	/**
-	 * @return the iconOff
+	 * @return the about
 	 */
-	public String getIconOff() {
-		return iconOff;
+	public String getAbout() {
+		return about;
 	}
 
 	/**
-	 * @param iconOff the iconOff to set
+	 * @param about the about to set
 	 */
-	public BadgeEntity setIconOff(String iconOff) {
-		this.iconOff = iconOff;
+	public BadgeEntity setAbout(String about) {
+		this.about = about;
 		return this;
 	}
 }

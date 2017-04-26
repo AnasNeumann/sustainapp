@@ -46,11 +46,11 @@ public class BadgeSpecification {
 						listeCond.add(p);
 					}
 
-					if (null != criteres.getScore()) {
-						Predicate p = cb.equal(root.<Integer> get("score"), criteres.getScore());
+					if (null != criteres.getAbout()) {
+						Predicate p = cb.like(cb.lower(root.<String> get("about")), criteres.getAbout().toLowerCase() + "%");
 						listeCond.add(p);
 					}
-
+					
 					if (null != criteres.getName()) {
 						Predicate p = cb.like(cb.lower(root.<String> get("name")), criteres.getName().toLowerCase() + "%");
 						listeCond.add(p);

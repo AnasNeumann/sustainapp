@@ -16,7 +16,7 @@ public class BadgeCriteria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
-	private Integer score;
+	private String about;
 	private Calendar timestamps;
 
 	/**
@@ -54,19 +54,18 @@ public class BadgeCriteria implements Serializable {
 	}
 
 	/**
-	 * @return the score
+	 * @return the about
 	 */
-	public Integer getScore() {
-		return score;
+	public String getAbout() {
+		return about;
 	}
 
 	/**
-	 * @param score
-	 *            the score to set
+	 * @param about the about to set
 	 */
-	@QueryParam("score")
-	public BadgeCriteria setScore(Integer score) {
-		this.score = score;
+	@QueryParam("about")
+	public BadgeCriteria setAbout(String about) {
+		this.about = about;
 		return this;
 	}
 
