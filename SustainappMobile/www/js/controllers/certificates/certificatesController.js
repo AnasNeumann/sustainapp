@@ -21,6 +21,7 @@ angular.module('sustainapp.controllers')
 		$scope.coursModel = {};
 		$scope.coursModel.loaded = false;
 		$scope.coursModel.filter = "";
+		$scope.coursModel.langue = "";
 		
 		$scope.coursModel.moreCours = true;
 		$scope.coursModel.startIndex = 0;
@@ -56,6 +57,31 @@ angular.module('sustainapp.controllers')
 		  }).then(function(popover) {
 		    $scope.popoverFilter = popover;
 		  });
+		$ionicPopover.fromTemplateUrl('templates/certificates/popover-langues.html', {
+		    scope: $scope
+		  }).then(function(popover) {
+		    $scope.popoverLanguages = popover;
+		  });
+		$ionicPopover.fromTemplateUrl('templates/certificates/popover-chooseLangues.html', {
+		    scope: $scope
+		  }).then(function(popover) {
+		    $scope.popoverChooseLanguages = popover;
+		  });
+		
+		/**
+		 * Chargement des langues
+		 */
+		$scope.languages = [
+			{
+				'code' : 'fr',
+				'name' : 'filter.fr'
+			},
+			{
+				'code' : 'en',
+				'name' : 'filter.en'
+			}
+		];
+		$scope.currentLangue = $scope.languages[0];
 		
 		/**
 		 * Chargement des types
@@ -90,9 +116,22 @@ angular.module('sustainapp.controllers')
 		});
 	}
 	
+	/**
+	 * Ouverture du menu de choix de la langue du nouveau cours
+	 */
+	$scope.openChooseLangues = function($event){
+		$scope.popoverChooseLanguages.show($event);
+	}
 	
 	/**
-	 * fonction d'ouverture du menu de choix du filtre
+	 * fonction d'ouverture du menu de choix du filtre de langues
+	 */
+	$scope.openLanguages = function($event){
+		$scope.popoverLanguages.show($event);
+	}
+	
+	/**
+	 * fonction d'ouverture du menu de choix du filtre de types
 	 */
 	$scope.openFilter = function($event){
 		$scope.popoverFilter.show($event);
@@ -129,11 +168,27 @@ angular.module('sustainapp.controllers')
 	}
 	
 	/**
+	 * Fonction de changement de filtre de langue
+	 */
+	$scope.changeLangue = function(filter){
+		$scope.popoverLanguages.hide();
+		$scope.coursModel.langue = filter;
+	}
+
+	/**
 	 * fonction de changement du level minimum
 	 */
 	$scope.changeLevelMin = function(level){
 		$scope.popoverLevel.hide();
 		$scope.coursModel.levelMin = level;
+	}
+	
+	/**
+	 * Choix d'une langue pour le nouveau cours
+	 */
+	$scope.changeNewLangue = function(langue){
+		$scope.popoverChooseLanguages.hide();
+		$scope.currentLangue = langue;
 	}
 	
 	/**
@@ -148,6 +203,7 @@ angular.module('sustainapp.controllers')
 		data.append("about", $scope.coursModel.about);
 		data.append("levelMin", $scope.coursModel.levelMin);
 		data.append("type", $scope.coursModel.type.id);
+		data.append("langue", $scope.currentLangue.code);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
 		coursService.create(data).success(function(result) {

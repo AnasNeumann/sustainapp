@@ -91,6 +91,7 @@ public class CourseController extends GenericCourseController {
 				.setLevelMin(StringsUtils.parseIntegerQuietly(request.getParameter("levelMin")).get())
 				.setCreatorId(super.getConnectedUser(request).getProfile().getId())
 				.setOpen(0)
+				.setLanguage(!request.getParameter("langue").isEmpty() ? request.getParameter("langue") : "en")
 				.setTitle(request.getParameter("title"))
 				.setTimestamps(GregorianCalendar.getInstance())
 				.setType(challengeTypeService.getById(StringsUtils.parseLongQuickly(request.getParameter("type")).get()));

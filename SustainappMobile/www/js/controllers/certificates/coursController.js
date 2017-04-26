@@ -70,7 +70,7 @@ angular.module('sustainapp.controllers')
 					$scope.rating.rate = result.rank.score;
 				}				
 				$scope.coursModel.topics = result.topics;
-				$scope.coursModel.displayPicture = "img/challenge/default.png";
+				$scope.coursModel.displayPicture = "img/common/defaultCours.png";
 				$scope.coursModel.title = result.cours.title;
 				$scope.coursModel.about = result.cours.about;
 				$scope.coursModel.open = ($scope.coursModel.cours.open != 0);

@@ -157,5 +157,10 @@
     "quiz.next" : "Next",
     "quiz.validate" : "Validate",
     "quiz.true" : "Congratulations! You have validated this chapter without errors!", 
-    "quiz.false": "Sorry, you failed to answer questions "
+    "quiz.false": "Sorry, you failed to answer questions ",
+    
+    "filter.type" : "Categories",
+    "filter.languages" : "Languages",
+    "filter.fr" : "French",
+    "filter.en" : "English"
 }

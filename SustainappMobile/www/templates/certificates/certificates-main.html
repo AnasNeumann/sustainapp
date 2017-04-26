@@ -64,6 +64,14 @@
           </div>
       </div>
       <div class="row">
+          <div class="col col-100 s-challenges-types" ng-click="openChooseLangues($event)">
+            <p>
+              <img src="img/languages/{{currentLangue.code}}.png" class="s-challenges-type-icon"/>
+              <span class="s-challenges-types-name">{{currentLangue.name | translate}}</span>
+            </p>
+          </div>
+      </div>
+      <div class="row">
           <div class="col col-100 s-challenges-levelMin" ng-click="openLevelMin($event)">
              <span class="s-challenges-levelMin-number">{{coursModel.levelMin}}</span>{{'challenges.levelMin' | translate}}
              <span class="s-common-errors">{{coursModel.allErrors.levelMin | translate}}</span>
@@ -75,13 +83,18 @@
        </div>
     </div>
     
-    <!-- ALL COURSES -->
-   <div class="s-common-greyPart">
-       <h2 class="s-common-greyTitle" ng-click="openFilter($event)">{{'challenges.filter' | translate}}</h2>
-   </div>
+   <!-- ALL COURSES -->
+   <div class="row s-cours-greyBtnContainer">
+	   <div class="col col-50 s-cours-greyBtn s-cours-leftBtn" ng-click="openFilter($event)">
+	       <h3 class="s-common-greyTitle" >{{'filter.type' | translate}}</h3>
+	   </div>
+	   <div class="col col-5 s-cours-greyBtn" ng-click="openLanguages($event)">
+	       <h3 class="s-common-greyTitle">{{'filter.languages' | translate}}</h3>
+	   </div>
+   </div>   
    <div class="s-teams-allResults">
        <ion-list>
-          <ion-item ng-if="coursModel.filter =='' || coursModel.filter == cours.type.name" class="item item-thumbnail-left" ng-repeat="cours in coursModel.allCours" type="item-text-wrap" href="#/tab/cours/{{cours.id}}">
+          <ion-item ng-if="(coursModel.filter =='' || coursModel.filter == cours.type.name) && (coursModel.langue =='' || coursModel.langue == cours.language)" class="item item-thumbnail-left" ng-repeat="cours in coursModel.allCours" type="item-text-wrap" href="#/tab/cours/{{cours.id}}">
             <img ng-src="data:image/jpeg;base64,{{cours.picture}}" onerror="this.src='img/common/defaultCours.png'" />
             <div class="s-challenges-level">{{cours.levelMin}}</div>
             <h2 class="s-teams-title">{{cours.title}}</h2>
