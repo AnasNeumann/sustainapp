@@ -7,7 +7,7 @@
  */
 
 .s-challenges-levelMin {
-	margin-top : 40px;
+	margin-top : 20px;
 	cursor : pointer;
 	padding-left : 67px;
 }
@@ -29,6 +29,7 @@
 
 .s-challenges-types {
     margin-top : 15px;
+    margin-bottom : 15px;
     cursor : pointer;
     padding-left : 67px;
 }

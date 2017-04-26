@@ -1,0 +1,13 @@
+<ion-popover-view>
+  <ion-header-bar>
+    <h3 class="s-challenges-title">{{'filter.languages' | translate}}</h3>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item class="item item-avatar" ng-repeat="langue in languages" type="item-text-wrap" ng-click="changeNewLangue(langue);">
+         <img ng-src="img/languages/{{langue.code}}.png" />
+         <p class="s-teams-text s-challenges-type-item">{{langue.name | translate}}</p>
+      </ion-item>
+    </ion-list> 
+  </ion-content>
+</ion-popover-view>

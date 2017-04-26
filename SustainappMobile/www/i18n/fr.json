@@ -157,6 +157,11 @@
     "quiz.next" : "Suivant",
     "quiz.validate" : "Valider",
     "quiz.true" : "Bravo ! Vous avez validé ce chapitre sans erreurs.", 
-    "quiz.false": "Désolé, vous avez échoué les questions : "
+    "quiz.false": "Désolé, vous avez échoué les questions : ",
+    
+    "filter.type" : "Catégories",
+    "filter.languages" : "Langues",
+    "filter.fr" : "Français",
+    "filter.en" : "Anglais"
 
 }
