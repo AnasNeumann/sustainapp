@@ -53,6 +53,14 @@
     color : #333;
  }
  
+ .s-profile-badgeContainer{
+    width : 33%;
+    display : inline-block;
+    margin-bottom : 7px;
+    margin-top : 7px;
+    cursor : pointer;
+ }
+ 
  .s-profile-badge{
     width : 70px;
     height : 70px;
@@ -69,4 +77,30 @@
     text-align : center;
     color : #D0D0D0;
     margin : 15px;
+ }
+ 
+ .s-profil-badge-GreyPart{
+    background-color : #23d5fb;
+    padding : 4px;
+ }
+ 
+ .s-profil-badge-WhiteBorder{
+    border : 2px solid #FFFFFF;
+    padding : 4px;   
+ }
+ 
+ .s-profil-badge-WhitePart{
+    background-color : white;
+    padding : 5px;
+     padding-top : 10px;
+ }
+ 
+ .s-profile-badgeName{
+    font-family: sustainapp;
+    margin : auto;
+    color : #2dbe60;
+ }
+ 
+ .s-profil-badgeModal{
+    margin-top : 25px;
  }

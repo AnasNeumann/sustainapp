@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('profileController', 
-			function($scope, $stateParams, $filter, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService, displayService) {
+			function($scope, $stateParams, $filter, $ionicModal, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -23,6 +23,7 @@ angular.module('sustainapp.controllers')
 			$scope.profileModel = {};
 			$scope.profileModel.profile = {};
 			$scope.profileModel.courses = [];
+			$scope.profileModel.badges = [];
 			$scope.profileModel.coverEdit = false;
 			$scope.profileModel.avatarEdit = false;
 			$scope.profileModel.modeRead = true; 
@@ -30,6 +31,7 @@ angular.module('sustainapp.controllers')
 			$scope.profileModel.owner = false;
 			$scope.profileModel.displayAvatar = "img/common/defaultAvatarMin.png";
 			$scope.profileModel.displayCover = null;
+			$scope.currentBadge = {};
 			profileService.getById($stateParams.id).then(function(response){
 				if(response.data.code == 1) {
 					 response.data.profile.bornDate = new Date(response.data.profile.bornDate);
@@ -37,6 +39,7 @@ angular.module('sustainapp.controllers')
 					 $scope.profileModel.profile = response.data.profile;
 	    			 $scope.profileModel.profileTemp = response.data.profile;
 	    			 $scope.profileModel.loaded = true;
+	    			 $scope.profileModel.badges = response.data.badges;
 	    			 $scope.profileModel.courses = response.data.courses;
 		    		 $scope.profileModel.allErrors = [];
 		    		 if(null != response.data.profile.avatar && "" != response.data.profile.avatar){
@@ -156,6 +159,23 @@ angular.module('sustainapp.controllers')
 				});       	         	
             }
             reader.readAsDataURL(input.files[0]);  
+	    }
+	    
+	    /**
+	     * Modal d'information sur un badge
+	     */
+	    $ionicModal.fromTemplateUrl('templates/profile/modalBadge.html', {
+	 	     scope: $scope
+	 	   }).then(function(modal) {
+	 	     $scope.modalBadge = modal;
+	 	   });
+	    
+	    /**
+	     * Ouverture de la modale
+	     */
+	    $scope.openBadge = function(badge){
+	    	$scope.currentBadge  = badge;
+	    	$scope.modalBadge.show();
 	    }
 
 	});

@@ -1,0 +1,20 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+       <div class="s-profil-badge-GreyPart">                
+        <div class="s-profil-badge-WhiteBorder">
+            <div class="s-profil-badge-WhitePart">
+               <div class="s-common-floatEdit" ng-click="modalBadge.hide()">
+		       <i class="icon ion-close-round"></i>
+		    </div>
+                <div class="s-profil-badgeModal s-common-center">
+	               <img src="img/badges/{{currentBadge.badge.icon}}.png" class="s-profile-badge" />
+	               <h2 class="s-profile-badgeName">{{currentBadge.badge.name | translate}}</h2>            
+	           </div>
+	           <div class="padding">
+	               <p>{{currentBadge.badge.about | translate}}</p>
+	           </div>
+            </div>
+        </div>
+       </div>
+   </ion-content>
+</ion-modal-view>
