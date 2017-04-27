@@ -21,3 +21,12 @@
 	width : auto;
 	margin : auto;
 }
+
+.s-news-whiteTitle{
+	position : relative;
+	top : -100px;
+	color : white;
+	font-family: sustainapp;
+	left : -55px;
+    font-size : 35px;
+}
