@@ -14,6 +14,7 @@ import com.ca.sustainapp.comparators.NumerotableEntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.services.BadgeService;
 import com.ca.sustainapp.services.CascadeDeleteService;
 import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -49,6 +50,8 @@ public class GenericController {
 	protected CascadeGetService getService;
 	@Autowired
 	protected CascadeDeleteService deleteService;
+	@Autowired
+	protected BadgeService badgeService;
 	
 	/**
 	 * Creer une nouvelle session pour un utilisateur

@@ -44,10 +44,10 @@ import com.ca.sustainapp.repositories.TopicValidationRepository;
 /**
  * Service pour la suppression en cascade
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 23/02/2107
+ * @since 23/02/2017
  * @verion 1.0
  */
-@Service("deleteService")
+@Service("deleteBusinessService")
 public class CascadeDeleteService {
 
 	/**

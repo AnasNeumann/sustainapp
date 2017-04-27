@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.dao.ReportServiceDAO;
+import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.ReportEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.utils.FilesUtils;
@@ -57,14 +58,16 @@ public class ReportController extends GenericController {
 		if(!isConnected(request) || !reportValidator.validate(request).isEmpty()){
 			return new HttpRESTfullResponse().setCode(0).setErrors(reportValidator.validate(request)).buildJson();
 		}
+		ProfileEntity profile = super.getConnectedUser(request).getProfile();
 		ReportEntity report = new ReportEntity()
 				.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG))
 				.setMessage(request.getParameter("message"))
 				.setTimestamps(GregorianCalendar.getInstance())
 				.setDocumentType(FilesUtils.FORMAT_JPG)
-				.setProfilId(super.getConnectedUser(request).getProfile().getId())
+				.setProfilId(profile.getId())
 				.setState(0);
 		reportService.createOrUpdate(report);
+		badgeService.superhero(profile);
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	

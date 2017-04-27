@@ -16,6 +16,7 @@ import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
 import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
 import com.ca.sustainapp.criteria.QuestionCriteria;
+import com.ca.sustainapp.criteria.ReportCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
@@ -26,6 +27,7 @@ import com.ca.sustainapp.dao.PartServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.dao.ProfilBadgeServiceDAO;
 import com.ca.sustainapp.dao.QuestionServiceDAO;
+import com.ca.sustainapp.dao.ReportServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
 import com.ca.sustainapp.dao.TopicServiceDAO;
 import com.ca.sustainapp.dao.TopicValidationServiceDAO;
@@ -36,6 +38,7 @@ import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.ProfilBadgeEntity;
 import com.ca.sustainapp.entities.QuestionEntity;
+import com.ca.sustainapp.entities.ReportEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
@@ -44,10 +47,10 @@ import com.ca.sustainapp.pojo.SearchResult;
 /**
  * Service pour la récupération des liaison sans utiliser hibernate
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 21/03/2107
+ * @since 21/03/2017
  * @verion 1.0
  */
-@Service("getService")
+@Service("getBusinessService")
 public class CascadeGetService {
 
 	/**
@@ -73,6 +76,8 @@ public class CascadeGetService {
 	private AnswerCategoryServiceDAO answerCategoryService;
 	@Autowired
 	private ProfilBadgeServiceDAO profilBadgeService;
+	@Autowired
+	private ReportServiceDAO reportService;
 	
 	/**
 	 * Comparator
@@ -101,6 +106,32 @@ public class CascadeGetService {
 		List<ProfilBadgeEntity> finalResult = new ArrayList<ProfilBadgeEntity>();
 		do {
 			result = profilBadgeService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for report
+	 * @param criteria
+	 * @return
+	 */
+	public List<ReportEntity> cascadeGetReport(ReportCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<ReportEntity> result = null;
+		List<ReportEntity> finalResult = new ArrayList<ReportEntity>();
+		do {
+			result = reportService.searchByCriteres(criteria, startIndex, PAGINATION);
 			if (null == totalResults && null != result) {
 				totalResults = result.getTotalResults();
 			}
