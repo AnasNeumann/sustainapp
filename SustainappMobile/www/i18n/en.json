@@ -20,6 +20,7 @@
     "common.to" : "to",
     "common.about" : "About", 
     "common.title" : "Title",
+    "comon.newspaper" : "Newspaper",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
