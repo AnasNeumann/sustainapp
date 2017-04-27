@@ -286,13 +286,14 @@ angular.module('sustainapp.controllers')
 				$scope.challengeModel.allErrors = [];
 				var participation = {
 						"participation" : {
+							"id" : result.id,
 							"title" : $scope.challengeModel.participation.title,
 							"about" : $scope.challengeModel.participation.about,
 							"document" : $scope.challengeModel.participationFile,
 							"timestamps" : "now"
 						},
+						"nbrVotes" : 0,
 						"isOwner" : true,
-						"alreadyVoted" : false,
 						"owner" : $scope.challengeModel.selectedProfile
 				};
 				$scope.challengeModel.participations = listService.addOnTop($scope.challengeModel.participations, participation);
