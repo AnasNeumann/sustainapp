@@ -225,7 +225,7 @@ public class TeamController extends GenericController {
 					return true;
 				}
 				break;
-			case SustainappConstantes.TEAMROLE_REQUEST_OR_ACCEPT :
+			case SustainappConstantes.TEAMROLE_REQUEST_OR_ACCEPT :			
 				if(user.getProfile().getId().equals(profile.getId()) && null == currentRole){
 					roleService.createOrUpdate(new TeamRoleEntity()
 							.setProfilId(profile.getId())
@@ -233,9 +233,10 @@ public class TeamController extends GenericController {
 							.setTeamId(team.getId())
 							.setTimestamps(GregorianCalendar.getInstance()));
 					return true;
-				} else if(isOwnerTeam(team, user.getProfile()) && null != currentRole){
+				} else if(isOwnerTeam(team, user.getProfile()) && null != currentRole){					
 					roleService.createOrUpdate(currentRole
 							.setRole(SustainappConstantes.TEAMROLE_MEMBER));
+					badgeService.capitaine(user.getProfile());
 					return true;
 				}
 				break;

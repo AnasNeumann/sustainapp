@@ -120,6 +120,7 @@ public class ParticipationController extends GenericChallengeController {
 		ChallengeEntity challenge = challengeService.getById(participation.getChallengeId());
 		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challenge.getId()));
 		ChallengeVoteEntity currentVote = searchVote(participations, idProfile);
+		badgeService.handleVoteParticipation(idParticipation.get());
 		if(null == currentVote){
 			currentVote = new ChallengeVoteEntity()
 					.setParticipationId(idParticipation.get())

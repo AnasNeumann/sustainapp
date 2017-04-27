@@ -6,19 +6,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.CourseCriteria;
+import com.ca.sustainapp.criteria.ParticipationCriteria;
 import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
 import com.ca.sustainapp.criteria.ReportCriteria;
+import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
 import com.ca.sustainapp.dao.BadgeServiceDAO;
+import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.dao.ProfilBadgeServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.BadgeEntity;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.ProfilBadgeEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.RankCourseEntity;
+import com.ca.sustainapp.entities.TeamEntity;
+import com.ca.sustainapp.entities.TeamRoleEntity;
 
 /**
  * Service pour la création des badges
@@ -42,6 +49,8 @@ public class BadgeService {
 	private CascadeGetService getService;
 	@Autowired
 	private BadgeServiceDAO badgeService;
+	@Autowired
+	private ParticipationServiceDAO participationService;
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge superhero
@@ -93,6 +102,11 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean capitaine(ProfileEntity profil){
+		for(TeamRoleEntity role : getService.cascadeGetTeamRole(new TeamRoleCriteria().setProfilId(profil.getId()).setRole(SustainappConstantes.TEAMROLE_ADMIN))){
+			if(getService.cascadeGetTeamRole(new TeamRoleCriteria().setTeamId(role.getTeamId()).setRole(SustainappConstantes.TEAMROLE_MEMBER)).size() >= 2){
+				return addByCode(profil, "capitaine");
+			}
+		}
 		return false;
 	}
 
@@ -101,8 +115,8 @@ public class BadgeService {
 	 * => Avoir reçu au moins 10 votes dans les challenges
 	 * @param idProfil
 	 */
-	public boolean missionary(ProfileEntity profil){
-		return false;
+	private boolean missionary(ProfileEntity profil){
+		return addByCode(profil, "missionary");
 	}
 	
 	/**
@@ -129,6 +143,42 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean walker(ProfileEntity profil){
+		return false;
+	}
+	
+	/**
+	 * Modification du niveau de l'équipe en fonction du nombre de vote qu'elle a reçue
+	 * @param team
+	 * @param total
+	 * @return
+	 */
+	private void teamLevel(TeamEntity team, int total){
+		int level = total/10;
+		if(level > 9){
+			level = 9;
+		}
+		teamService.createOrUpdate(team.setLevel(level));
+	}
+	
+	/**
+	 * Verification si l'on peut prendre un level ou pas
+	 * @param idParticipation
+	 * @return
+	 */
+	public boolean handleVoteParticipation(Long idParticipation){
+		ParticipationEntity participation = participationService.getById(idParticipation);
+		int total = 0;
+		for(ParticipationEntity p : getService.cascadeGetParticipations(new ParticipationCriteria().setTargetId(participation.getTargetId()).setTargetType(participation.getTargetType()))){
+			total += p.getVotes().size();
+		}
+		if(participation.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
+			if(total >=10){
+				return missionary(profileService.getById(participation.getTargetId()));
+			}
+			return false;
+		} else {
+			teamLevel(teamService.getById(participation.getTargetId()), total);
+		}
 		return false;
 	}
 	
