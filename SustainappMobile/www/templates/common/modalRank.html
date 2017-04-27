@@ -1,15 +1,19 @@
 <ion-modal-view  class="s-modal-views">     
    <ion-content class="padding">
-     <div class="s-modal-confirm">
-      <div class="s-common-floatEdit" ng-click="modalRank.hide()">
-            <i class="icon ion-close-round"></i>
-      </div>
-      <p>
-        {{'course.rank.this' | translate}}
-      </p>
-      <p class="s-modal-center">
-        <rating ng-model="rating.rate" max="rating.max" ng-click="doRank()"></rating>
-      </p>
+     <div class="s-profil-badge-GreyPart">                
+        <div class="s-profil-badge-WhiteBorder">
+            <div class="s-profil-badge-WhitePart">
+		      <div class="s-common-floatEdit" ng-click="modalRank.hide()">
+		            <i class="icon ion-close-round"></i>
+		      </div>
+		      <p>
+		        {{'course.rank.this' | translate}}
+		      </p>
+		      <p class="s-modal-center">
+		        <rating ng-model="rating.rate" max="rating.max" ng-click="doRank()"></rating>
+		      </p>
+	       </div>
+	    </div>
      </div>
    </ion-content>
 </ion-modal-view>
