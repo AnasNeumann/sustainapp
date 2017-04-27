@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ca.sustainapp.criteria.CourseCriteria;
 import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
 import com.ca.sustainapp.criteria.ReportCriteria;
+import com.ca.sustainapp.criteria.TopicValidationCriteria;
 import com.ca.sustainapp.dao.BadgeServiceDAO;
 import com.ca.sustainapp.dao.ProfilBadgeServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
@@ -44,6 +45,7 @@ public class BadgeService {
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge superhero
+	 * => avoir réalisé au moins 10 signalements
 	 * @param idProfil
 	 */
 	public boolean superhero(ProfileEntity profil){
@@ -55,6 +57,7 @@ public class BadgeService {
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge teacher
+	 * => Avoir au moins 10 notes superieurs à 3 sur ses cours
 	 * @param profil
 	 */
 	public boolean teacher(ProfileEntity profil){
@@ -74,14 +77,19 @@ public class BadgeService {
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge graduate
+	 * => Avoir validé au moins 10 chapitres
 	 * @param idProfil
 	 */
 	public boolean graduate(ProfileEntity profil){
+		if(getService.cascadeGetValidation(new TopicValidationCriteria().setProfilId(profil.getId())).size() >= 10){
+			return addByCode(profil, "graduate");
+		}
 		return false;
 	}
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge capitaine
+	 * => Posséder une équipe d'au moins 2 membres en plus du capitaine
 	 * @param idProfil
 	 */
 	public boolean capitaine(ProfileEntity profil){
@@ -90,6 +98,7 @@ public class BadgeService {
 
 	/**
 	 * Verifier si le profil peut obtenir le badge missionary
+	 * => Avoir reçu au moins 10 votes dans les challenges
 	 * @param idProfil
 	 */
 	public boolean missionary(ProfileEntity profil){
@@ -98,6 +107,7 @@ public class BadgeService {
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge star
+	 * => Apparaitre dans le leaderboard
 	 * @param idProfil
 	 */
 	public boolean star(ProfileEntity profil){
@@ -106,6 +116,7 @@ public class BadgeService {
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge journalist
+	 * => Avoir publié au moins 10 articles dans le journal d'actualités
 	 * @param idProfil
 	 */
 	public boolean journalist(ProfileEntity profil){
@@ -114,6 +125,7 @@ public class BadgeService {
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge walker
+	 * => Avoir validé ses objectifs de marche
 	 * @param idProfil
 	 */
 	public boolean walker(ProfileEntity profil){
