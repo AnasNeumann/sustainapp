@@ -87,7 +87,6 @@ public class CascadeGetService {
 	@Autowired
 	private NumerotableEntityComparator numerotableComparator;
 	
-	
 	/**
 	 * Les constantes
 	 */

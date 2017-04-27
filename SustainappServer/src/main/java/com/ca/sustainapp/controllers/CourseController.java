@@ -239,6 +239,7 @@ public class CourseController extends GenericCourseController {
 		}
 		rank.setScore(score.get());
 		rankService.createOrUpdate(rank);
+		badgeService.teacher(profileService.getById(cours.getCreatorId()));
 		return new RankCoursResponse().setTotal(total).setAverage(super.calculateAverageRank(courseService.getById(idCours.get()))).setCode(1).buildJson();
 	}
 

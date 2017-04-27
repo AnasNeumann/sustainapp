@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ca.sustainapp.criteria.CourseCriteria;
 import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
 import com.ca.sustainapp.criteria.ReportCriteria;
 import com.ca.sustainapp.dao.BadgeServiceDAO;
@@ -13,8 +14,10 @@ import com.ca.sustainapp.dao.ProfilBadgeServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.BadgeEntity;
+import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.ProfilBadgeEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.entities.RankCourseEntity;
 
 /**
  * Service pour la création des badges
@@ -52,9 +55,20 @@ public class BadgeService {
 	
 	/**
 	 * Verifier si le profil peut obtenir le badge teacher
-	 * @param idProfil
+	 * @param profil
 	 */
-	public boolean teacher(Long idProfil){
+	public boolean teacher(ProfileEntity profil){
+		int votes = 0;
+		for(CourseEntity cours : getService.cascadeGetCourses(new CourseCriteria().setCreatorId(profil.getId()))){
+			for(RankCourseEntity rank : cours.getListRank()){
+				if(rank.getScore() >= 3){
+					votes++;
+				}
+			}
+		}
+		if(votes >= 10){
+			return addByCode(profil, "teacher");
+		}
 		return false;
 	}
 	
@@ -62,7 +76,7 @@ public class BadgeService {
 	 * Verifier si le profil peut obtenir le badge graduate
 	 * @param idProfil
 	 */
-	public boolean graduate(Long idProfil){
+	public boolean graduate(ProfileEntity profil){
 		return false;
 	}
 	
@@ -70,7 +84,7 @@ public class BadgeService {
 	 * Verifier si le profil peut obtenir le badge capitaine
 	 * @param idProfil
 	 */
-	public boolean capitaine(Long idProfil){
+	public boolean capitaine(ProfileEntity profil){
 		return false;
 	}
 
@@ -78,7 +92,7 @@ public class BadgeService {
 	 * Verifier si le profil peut obtenir le badge missionary
 	 * @param idProfil
 	 */
-	public boolean missionary(Long idProfil){
+	public boolean missionary(ProfileEntity profil){
 		return false;
 	}
 	
@@ -86,7 +100,7 @@ public class BadgeService {
 	 * Verifier si le profil peut obtenir le badge star
 	 * @param idProfil
 	 */
-	public boolean star(Long idProfil){
+	public boolean star(ProfileEntity profil){
 		return false;
 	}
 	
@@ -94,7 +108,7 @@ public class BadgeService {
 	 * Verifier si le profil peut obtenir le badge journalist
 	 * @param idProfil
 	 */
-	public boolean journalist(Long idProfil){
+	public boolean journalist(ProfileEntity profil){
 		return false;
 	}
 	
@@ -102,15 +116,7 @@ public class BadgeService {
 	 * Verifier si le profil peut obtenir le badge walker
 	 * @param idProfil
 	 */
-	public boolean walker(Long idProfil){
-		return false;
-	}
-	
-	/**
-	 * verifier si la team peu augmenter de niveau
-	 * @param idTeam
-	 */
-	public boolean teamLevel(Long idTeam){
+	public boolean walker(ProfileEntity profil){
 		return false;
 	}
 	
