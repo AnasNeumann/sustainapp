@@ -80,15 +80,5 @@ public class ReportController extends GenericController {
     public String update(HttpServletRequest request) {
 		return null;
 	}
-	
-	/**
-	 * delete a report by id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/report", method = RequestMethod.DELETE, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
-		return null;
-	}
-	
+
 }
