@@ -12,6 +12,7 @@ angular.module('sustainapp.controllers')
 		 */	
 		var initLoginModel = function(){
 			$scope.title = "...";
+			$scope.nbrNotification = 2;
 			$scope.loginModel = {};
 			$scope.loginModel.mail = "";
 			$scope.loginModel.password = "";
