@@ -99,39 +99,10 @@
             </h3>
         </div>
         <div class="padding" ng-show="profileModel.openBadges">       
-	        <div class="row">
-	            <div class="col col-30 s-common-center" >
-	                <img src="img/badges/graduate.png" class="s-profile-badge" />
-	            </div>
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/teacher.png" class="s-profile-badge" />
-	            </div>
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/superhero.png" class="s-profile-badge" />
-	            </div>
-	       </div>
-	       <div class="row">
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/reader.png" class="s-profile-badge" />
-	            </div>
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/journalist.png" class="s-profile-badge" />
-	            </div>
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/capitaine.png" class="s-profile-badge" />
-	            </div>
-	        </div>
-	        <div class="row">
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/walker.png" class="s-profile-badge" />
-	            </div>
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/star.png" class="s-profile-badge" />
-	            </div>
-	            <div class="col col-30 s-common-center">
-	                <img src="img/badges/missionary.png" class="s-profile-badge" />
-	            </div>
-	        </div>
+           <div class="s-profile-badgeContainer s-common-center" ng-repeat="elt in profileModel.badges" ng-click="openBadge(elt)">
+               <img ng-if="true == elt.on" src="img/badges/{{elt.badge.icon}}.png" class="s-profile-badge" />
+               <img ng-if="false == elt.on" src="img/badges/{{elt.badge.icon}}_off.png" class="s-profile-badge" />               
+           </div>
         </div>
         
         <!-- ALL COURSES -->

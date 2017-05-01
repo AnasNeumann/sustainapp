@@ -2,7 +2,6 @@ package com.ca.sustainapp.responses;
 
 import java.util.List;
 
-import com.ca.sustainapp.entities.BadgeEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 
@@ -15,7 +14,7 @@ import com.ca.sustainapp.pojo.SustainappList;
 public class ProfileResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private ProfileEntity profile;
-	private List<BadgeEntity> badges = new SustainappList<BadgeEntity>();
+	private List<BadgeResponse> badges = new SustainappList<BadgeResponse>();
 	private List<LightCourseResponse> courses = new SustainappList<LightCourseResponse>();
 	
 	/**
@@ -36,14 +35,14 @@ public class ProfileResponse extends HttpRESTfullResponse {
 	/**
 	 * @return the badges
 	 */
-	public List<BadgeEntity> getBadges() {
+	public List<BadgeResponse> getBadges() {
 		return badges;
 	}
 	
 	/**
 	 * @param badges the badges to set
 	 */
-	public ProfileResponse setBadges(List<BadgeEntity> badges) {
+	public ProfileResponse setBadges(List<BadgeResponse> badges) {
 		this.badges = badges;
 		return this;
 	}

@@ -21,3 +21,78 @@
 	width : auto;
 	margin : auto;
 }
+
+.s-news-whiteTitle{
+	position : relative;
+	top : -100px;
+	color : white;
+	font-family: sustainapp;
+	left : -55px;
+    font-size : 35px;
+}
+
+.s-news-greyPart{
+    width: 100%;
+    margin: 0px;
+    padding: 10px;
+    background-color: #F0F0F0;
+    height: 50px;
+    overflow: hidden;
+    text-align: center;
+    color: #888;
+    border-bottom : 1px solid #ccc;
+}
+
+.s-news-leaderContainer{
+	padding : 0px;
+	margin : 0px;
+	height : 70px;
+}
+
+.s-news-blueContainer{
+	background-color : #23d5fb;
+	padding : 10px;
+	width : 70px;
+    height : 70px;
+    position : relative;
+    top : -70px;
+}
+
+.s-news-index{
+	width : 50px;
+	height : 50px;
+}
+
+.s-news-courses-rightPart{
+	border-bottom : 1px solid #ccc;
+	width:100%;
+	height : 70px;	
+	padding : 10px;
+	padding-left : 80px;
+	background-color : white;
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out; 
+    overflow : hidden;
+    cursor : pointer;
+}
+
+.s-news-courses-rightPart:active{
+	background-color : #F0F0F0;
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.s-news-courses-author,
+.s-news-courses-title{
+    text-decoration: none;
+}
+
+.s-news-courses-title{
+    color : #111;
+    font-size:20px;
+}
+
+.s-news-courses-author{
+	color : #888;
+	font-size : 18px;
+}

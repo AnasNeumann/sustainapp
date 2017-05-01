@@ -19,6 +19,7 @@
 .s-participation-img{
 	width : 100%;
 	height : auto;
+	display : block;
 }
 
 .s-participation-txt{

@@ -19,10 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.CourseCriteria;
+import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
+import com.ca.sustainapp.dao.BadgeServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
+import com.ca.sustainapp.entities.BadgeEntity;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.ProfilBadgeEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.responses.BadgeResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
 import com.ca.sustainapp.responses.ProfileResponse;
@@ -50,7 +55,9 @@ public class ProfileController extends GenericController {
 	@Autowired
 	private ProfileValidator profileValidator;
 	@Autowired
-	private CascadeGetService getService;
+	private CascadeGetService getService;	
+	@Autowired
+	private BadgeServiceDAO badgeService;
 	
 	/**
 	 * get a profile by id
@@ -67,7 +74,12 @@ public class ProfileController extends GenericController {
 		if(null == profile){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		return new ProfileResponse().setProfile(profile).setCourses(getAllProfileCourses(id.get())).setCode(1).buildJson();
+		return new ProfileResponse()
+				.setProfile(profile)
+				.setCourses(getAllProfileCourses(id.get()))
+				.setBadges(getAllProfileBadge(id.get()))
+				.setCode(1)
+				.buildJson();
 	}
 	
 	/**
@@ -139,6 +151,26 @@ public class ProfileController extends GenericController {
 			for(CourseEntity course : courses){
 				result.add(new LightCourseResponse(course));
 			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Get all badges linked to the profile
+	 * @param id
+	 * @return
+	 */
+	private List<BadgeResponse> getAllProfileBadge(Long id){
+		List<BadgeResponse> result = new ArrayList<BadgeResponse>();
+		List<ProfilBadgeEntity> listBadge = getService.cascadeGetProfilBadge(new ProfilBadgeCriteria().setProfilId(id));
+		for(BadgeEntity badge : badgeService.getAll()){
+			boolean on = false;
+			for(ProfilBadgeEntity link : listBadge){
+				if(link.getBadge().getId().equals(badge.getId())){
+					on = true;
+				}
+			}
+			result.add(new BadgeResponse().setBadge(badge).setOn(on));			
 		}
 		return result;
 	}

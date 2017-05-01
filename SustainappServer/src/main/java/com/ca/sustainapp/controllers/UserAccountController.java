@@ -65,6 +65,7 @@ public class UserAccountController extends GenericController {
 				.setUserId(idUser)
 				.setFirstName(request.getParameter("firstName"))
 				.setLastName(request.getParameter("lastName"))
+				.setLevel(0)
 				.setTimestamps(GregorianCalendar.getInstance());
 		profile.setId(profilService.createOrUpdate(profile));
 		response.setCode(1);

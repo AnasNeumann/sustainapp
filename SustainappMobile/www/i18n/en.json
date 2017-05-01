@@ -20,6 +20,7 @@
     "common.to" : "to",
     "common.about" : "About", 
     "common.title" : "Title",
+    "comon.newspaper" : "Newspaper",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
@@ -162,5 +163,28 @@
     "filter.type" : "Categories",
     "filter.languages" : "Languages",
     "filter.fr" : "French",
-    "filter.en" : "English"
+    "filter.en" : "English",
+    
+    "badges.teacher.name" : "Teacher",
+    "badges.superhero.name" : "Super Hero",
+    "badges.graduate.name" : "Student",
+    "badges.capitaine.name" : "Captain",
+    "badges.missionary.name" : "Missionary",
+    "badges.star.name" : "Super Star",
+    "badges.journalist.name" : "Journalist",
+    "badges.walker.name" : "Walker",
+    
+    "badges.teacher.about" : "Receive more than 10 good ratings on your courses",
+    "badges.superhero.about" : "Detect and reporte more than 10 ecological problems",
+    "badges.graduate.about" : "Validate more than 10 chapters of ecology",
+    "badges.capitaine.about" : "Manage a team with at least 2 members",
+    "badges.missionary.about" : "Receive more than 10 votes on your participation in challenges",
+    "badges.star.about" : "Be highlighted in the newspaper",
+    "badges.journalist.about" : "Write more than 10 articles in the newspaper",
+    "badges.walker.about" : "Validate your walking objectives",
+    
+    "newspaper.courses" : "Best courses",
+    "newspaper.participations" : "Best achievements",
+    "newspaper.writtenBy" : "Written by",
+    "newspaper.createdBy" : "Created by"
 }

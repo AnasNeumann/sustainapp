@@ -19,7 +19,8 @@
     "common.from" : "Du",
     "common.to" : "au",
     "common.about" : "A propos", 
-    "common.title" : "Titre", 
+    "common.title" : "Titre",
+    "comon.newspaper" : "Journal",
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
@@ -162,6 +163,28 @@
     "filter.type" : "Catégories",
     "filter.languages" : "Langues",
     "filter.fr" : "Français",
-    "filter.en" : "Anglais"
-
+    "filter.en" : "Anglais",
+    
+    "badges.teacher.name" : "Professeur",
+    "badges.superhero.name" : "Super Hero",
+    "badges.graduate.name" : "Etudiant",
+    "badges.capitaine.name" : "Capitaine",
+    "badges.missionary.name" : "Missionnaire",
+    "badges.star.name" : "Super Star",
+    "badges.journalist.name" : "Journaliste",
+    "badges.walker.name" : "Baladeur",
+    
+    "badges.teacher.about" : "Recevoir plus de 10 notes au dessus de 3 étoiles sur vos cours",
+    "badges.superhero.about" : "Avoir détecté et signalé plus de 10 problèmes d'écologie",
+    "badges.graduate.about" : "Avoir validé plus de 10 chapitres d'écologie",
+    "badges.capitaine.about" : "Avoir géré une équipe comportant au moins 2 membres",
+    "badges.missionary.about" : "Avoir reçu plus de 10 votes sur vos participations dans les challenges",
+    "badges.star.about" : "Avoir été mis en avant dans le journal d'actualités",
+    "badges.journalist.about" : "Avoir rédigé plus de 10 articles dans le journal d'actualités",
+    "badges.walker.about" : "Avoir validé vos objectifs de marche à pied",
+    
+    "newspaper.courses" : "Meilleurs cours",
+    "newspaper.participations" : "Meilleurs réalisations",
+    "newspaper.writtenBy" : "Écrit par",
+    "newspaper.createdBy" : "Crée par"
 }

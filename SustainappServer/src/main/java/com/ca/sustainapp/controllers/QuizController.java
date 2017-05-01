@@ -92,6 +92,7 @@ public class QuizController extends GenericCourseController {
 		List<TopicValidationEntity> validations = getService.cascadeGetValidation(new TopicValidationCriteria().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()));
 		if(!eachQuestions.contains(false) && validations.isEmpty()){
 			service.createOrUpdate(new TopicValidationEntity().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()).setTimestamps(GregorianCalendar.getInstance()));
+			badgeService.graduate(user.getProfile());
 		}
 		return new ValidationResponse()
 				.setAllTrue(!eachQuestions.contains(false))
