@@ -22,6 +22,7 @@ import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.responses.LeaderCoursResponse;
 import com.ca.sustainapp.responses.LeaderParticipationResponse;
 import com.ca.sustainapp.responses.LightProfileResponse;
@@ -83,10 +84,12 @@ public class NewspaperController extends GenericController {
 		int i=0;
 		for(CourseEntity cours : courses){
 			if(cours.getOpen().equals(1) && i<3){
+				ProfileEntity profil = profilService.getById(courses.get(i).getCreatorId());
+				badgeService.star(profil);
 				result.add(new LeaderCoursResponse()
 						.setName(courses.get(i).getTitle())
 						.setLink("cours/"+courses.get(i).getId())
-						.setOwner(new LightProfileResponse(profilService.getById(courses.get(i).getCreatorId())))
+						.setOwner(new LightProfileResponse(profil))
 						);
 				 i++;
 				 if(i >= 3){
@@ -107,6 +110,9 @@ public class NewspaperController extends GenericController {
 		Collections.sort(participations, participationComparator);
 		for(int i=0; i<3; i++){
 			ParticipationEntity p = participations.get(i);
+			if(p.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
+				badgeService.star(profilService.getById(p.getTargetId()));
+			}
 			result.add(new LeaderParticipationResponse()
 					.setDocument(p.getDocument())
 					.setTitle(p.getTitle())

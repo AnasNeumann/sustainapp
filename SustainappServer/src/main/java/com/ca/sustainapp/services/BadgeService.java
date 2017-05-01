@@ -125,7 +125,7 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean star(ProfileEntity profil){
-		return false;
+		return addByCode(profil, "star");
 	}
 	
 	/**
