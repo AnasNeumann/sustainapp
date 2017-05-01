@@ -181,5 +181,10 @@
     "badges.missionary.about" : "Receive more than 10 votes on your participation in challenges",
     "badges.star.about" : "Be highlighted in the newspaper",
     "badges.journalist.about" : "Write more than 10 articles in the newspaper",
-    "badges.walker.about" : "Validate your walking objectives"
+    "badges.walker.about" : "Validate your walking objectives",
+    
+    "newspaper.courses" : "Best courses",
+    "newspaper.participations" : "Best achievements",
+    "newspaper.writtenBy" : "Written by",
+    "newspaper.createdBy" : "Created by"
 }

@@ -11,7 +11,23 @@ public class LeaderParticipationResponse extends HttpRESTfullResponse {
 	private LightProfileResponse owner;
 	private byte[] document;
 	private String link;
-	
+	private String title;
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title the title to set
+	 */
+	public LeaderParticipationResponse setTitle(String title) {
+		this.title = title;
+		return this;
+	}
+
 	/**
 	 * @return the owner
 	 */

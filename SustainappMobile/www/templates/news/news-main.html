@@ -1,9 +1,48 @@
 <ion-view view-title="{{'viewTitle.news' | translate }}">
-  <ion-content >
-    <div class="s-news-bluePart ">
+  <!-- Newspaper loaded -->
+  <ion-content ng-show="newsModel.loaded">
+    <div class="s-news-bluePart">
         <img src="img/news/cloud.png" class="s-news-img"/>
         <h2 class="s-news-whiteTitle">{{'comon.newspaper' | translate}}</h2>
     </div>
     
+    <!-- 3 leader courses -->
+    <div class="s-news-greyPart">
+        <h2 class="s-common-greyTitle" >{{'newspaper.courses' | translate}}</h2>
+    </div>
+    <div class="s-news-leaderContainer" ng-repeat="cours in newsModel.courses">       	       
+        <div class="s-news-courses-rightPart">
+           <a class="s-news-courses-title" href="#/tab/{{cours.link}}">{{cours.name}}</a><br />
+           <a class="s-news-courses-author" href="#/tab/{{cours.link}}">{{'newspaper.writtenBy' | translate}} : {{cours.owner.denomination}}</a>
+        </div>	
+        <div class="s-news-blueContainer">
+            <img ng-src="img/news/{{$index +1}}.png" class="s-news-index" />
+        </div>                
+    </div>
+    
+    <!-- 3 leader participations -->
+    <div class="s-news-greyPart">
+        <h2 class="s-common-greyTitle" >{{'newspaper.participations' | translate}}</h2>
+    </div>
+    <div ng-repeat="participation in newsModel.participations">
+	    <a href="#/tab/{{participation.link}}">
+	       <img ng-src="data:image/jpeg;base64,{{participation.document}}" ng-if="participation.document != null" class="s-participation-img" width="100%" height="auto" />
+	    </a>
+	    <div class="s-news-leaderContainer" >                
+	        <div class="s-news-courses-rightPart">
+	           <a class="s-news-courses-title" href="#/tab/{{participation.link}}">{{participation.title}}</a><br />
+	           <a class="s-news-courses-author" href="#/tab/{{participation.link}}">{{'newspaper.createdBy' | translate}} : {{participation.owner.denomination}}</a>
+	        </div>  
+	        <div class="s-news-blueContainer">
+	            <img ng-src="img/news/{{$index +1}}.png" class="s-news-index" />
+	        </div>                
+	    </div>
+    </div>
+  </ion-content>
+  
+  <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="newsModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
   </ion-content>
 </ion-view>

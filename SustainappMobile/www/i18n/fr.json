@@ -181,5 +181,10 @@
     "badges.missionary.about" : "Avoir reçu plus de 10 votes sur vos participations dans les challenges",
     "badges.star.about" : "Avoir été mis en avant dans le journal d'actualités",
     "badges.journalist.about" : "Avoir rédigé plus de 10 articles dans le journal d'actualités",
-    "badges.walker.about" : "Avoir validé vos objectifs de marche à pied"
+    "badges.walker.about" : "Avoir validé vos objectifs de marche à pied",
+    
+    "newspaper.courses" : "Meilleurs cours",
+    "newspaper.participations" : "Meilleurs réalisations",
+    "newspaper.writtenBy" : "Écrit par",
+    "newspaper.createdBy" : "Crée par"
 }

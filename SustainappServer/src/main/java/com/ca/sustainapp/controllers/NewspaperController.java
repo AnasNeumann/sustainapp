@@ -1,9 +1,12 @@
 package com.ca.sustainapp.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,8 +14,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.comparators.CoursComparator;
+import com.ca.sustainapp.comparators.ParticipationComparator;
+import com.ca.sustainapp.dao.CourseServiceDAO;
+import com.ca.sustainapp.dao.ParticipationServiceDAO;
+import com.ca.sustainapp.dao.ProfileServiceDAO;
+import com.ca.sustainapp.dao.TeamServiceDAO;
+import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.responses.LeaderCoursResponse;
 import com.ca.sustainapp.responses.LeaderParticipationResponse;
+import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.responses.NewspaperResponse;
 
 /**
@@ -26,9 +38,24 @@ import com.ca.sustainapp.responses.NewspaperResponse;
 public class NewspaperController extends GenericController {
 
 	/**
-	 * Injection de dépendances
+	 * Comparators
 	 */
+	@Autowired
+	private CoursComparator coursComparator;
+	@Autowired
+	private ParticipationComparator participationComparator;
 	
+	/**
+	 * Services
+	 */
+	@Autowired
+	private CourseServiceDAO coursService;
+	@Autowired
+	private ProfileServiceDAO profilService;
+	@Autowired
+	private ParticipationServiceDAO participationService;
+	@Autowired
+	private TeamServiceDAO teamService;
 	
 	/**
 	 * Recevoir toutes les informations pour l'affichage du newspaper
@@ -50,7 +77,24 @@ public class NewspaperController extends GenericController {
 	 * @return
 	 */
 	private List<LeaderCoursResponse> getLeaderCourses(){
-		return null;
+		List<LeaderCoursResponse> result = new ArrayList<LeaderCoursResponse>();
+		List<CourseEntity> courses = coursService.getAll();
+		Collections.sort(courses, coursComparator);
+		int i=0;
+		for(CourseEntity cours : courses){
+			if(cours.getOpen().equals(1) && i<3){
+				result.add(new LeaderCoursResponse()
+						.setName(courses.get(i).getTitle())
+						.setLink("cours/"+courses.get(i).getId())
+						.setOwner(new LightProfileResponse(profilService.getById(courses.get(i).getCreatorId())))
+						);
+				 i++;
+				 if(i >= 3){
+					 break;
+				 }
+			}
+		}
+		return result;
 	}
 	
 	/**
@@ -58,7 +102,21 @@ public class NewspaperController extends GenericController {
 	 * @return
 	 */
 	private List<LeaderParticipationResponse> getLeaderParticipations(){
-		return null;
+		List<LeaderParticipationResponse> result = new ArrayList<LeaderParticipationResponse>();
+		List<ParticipationEntity> participations = participationService.getAll();
+		Collections.sort(participations, participationComparator);
+		for(int i=0; i<3; i++){
+			ParticipationEntity p = participations.get(i);
+			result.add(new LeaderParticipationResponse()
+					.setDocument(p.getDocument())
+					.setTitle(p.getTitle())
+					.setLink("challenges/"+p.getChallengeId())
+					.setOwner(p.getTargetType().equals(SustainappConstantes.TARGET_PROFILE) ? 
+							new LightProfileResponse(profilService.getById(p.getTargetId()))
+							: new LightProfileResponse(teamService.getById(p.getTargetId())))
+					);
+		}
+		return result;
 	}
 	
 }
