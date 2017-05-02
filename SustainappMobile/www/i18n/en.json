@@ -186,5 +186,12 @@
     "newspaper.courses" : "Best courses",
     "newspaper.participations" : "Best achievements",
     "newspaper.writtenBy" : "Written by",
-    "newspaper.createdBy" : "Created by"
+    "newspaper.createdBy" : "Created by",
+    
+    "notification.vote" : "You received a vote on",
+    "notification.rank" : "You received a note on",
+    "notification.badge" : "You have won a new badge in your profile!",
+    "notification.participate" : "took part in the challenge",
+    "notification.request" : "asked to join the team",
+    "notification.accept" : "You have been added to the team"
 }

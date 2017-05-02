@@ -72,4 +72,22 @@ public class SustainappConstantes {
 	public final static String BADGE_READER = "reader";
 	public final static String BADGE_WALKER = "walker";
 	public final static String BADGE_LEADER = "capitaine";
+	
+	/**
+	 * Type de lien pour une notification
+	 */
+	public final static Integer NOTIFICATION_LINKTYPE_PARTICIPATION = 1;
+	public final static Integer NOTIFICATION_LINKTYPE_CHALLENGE = 2;
+	public final static Integer NOTIFICATION_LINKTYPE_TEAM = 3;
+	public final static Integer NOTIFICATION_LINKTYPE_PROFILE = 4;
+	
+	/**
+	 * Code de messages possibles pour les notifications
+	 */
+	public final static String NOTIFICATION_MESSAGE_VOTE = "notification.vote";
+	public final static String NOTIFICATION_MESSAGE_RANK = "notification.rank";
+	public final static String NOTIFICATION_MESSAGE_BADGE = "notification.badge";
+	public final static String NOTIFICATION_MESSAGE_PARTICIPATE = "notification.participate";
+	public final static String NOTIFICATION_MESSAGE_REQUEST = "notification.request";
+	public final static String NOTIFICATION_MESSAGE_ACCEPT = "notification.accept";
 }
