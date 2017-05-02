@@ -16,7 +16,7 @@ public class NotificationCriteria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String message;
-	private Integer linkType;
+	private Integer creatorType;
 	private Long linkId;
 	private Integer state;
 	private Long creatorId;
@@ -58,19 +58,19 @@ public class NotificationCriteria implements Serializable {
 	}
 
 	/**
-	 * @return the linkType
+	 * @return the creatorType
 	 */
-	public Integer getLinkType() {
-		return linkType;
+	public Integer getCreatorType() {
+		return creatorType;
 	}
 
 	/**
-	 * @param linkType
-	 *            the linkType to set
+	 * @param creatorType
+	 *            the creatorType to set
 	 */
-	@QueryParam("linkType")
-	public NotificationCriteria setLinkType(Integer linkType) {
-		this.linkType = linkType;
+	@QueryParam("creatorType")
+	public NotificationCriteria setCreatorType(Integer creatorType) {
+		this.creatorType = creatorType;
 		return this;
 	}
 

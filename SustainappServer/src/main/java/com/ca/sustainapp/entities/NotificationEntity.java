@@ -33,9 +33,6 @@ public class NotificationEntity extends GenericEntity implements Serializable {
 	@Column(name = "MESSAGE")
 	private String message;
 	
-	@Column(name = "LINK_TYPE")
-	private Integer linkType;
-	
 	@Column(name = "LINK_ID")
 	private Long linkId;
 	
@@ -44,6 +41,9 @@ public class NotificationEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "CREATOR_ID")
 	private Long creatorId;
+	
+	@Column(name = "CREATOR_TYPE")
+	private Integer creatorType;
 	
 	@Column(name = "PROFILE_ID")
 	private Long profilId;
@@ -78,21 +78,6 @@ public class NotificationEntity extends GenericEntity implements Serializable {
 	 */
 	public NotificationEntity setMessage(String message) {
 		this.message = message;
-		return this;
-	}
-
-	/**
-	 * @return the linkType
-	 */
-	public Integer getLinkType() {
-		return linkType;
-	}
-
-	/**
-	 * @param linkType the linkType to set
-	 */
-	public NotificationEntity setLinkType(Integer linkType) {
-		this.linkType = linkType;
 		return this;
 	}
 
@@ -168,6 +153,21 @@ public class NotificationEntity extends GenericEntity implements Serializable {
 	 */
 	public NotificationEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
+		return this;
+	}
+
+	/**
+	 * @return the creatorType
+	 */
+	public Integer getCreatorType() {
+		return creatorType;
+	}
+
+	/**
+	 * @param creatorType the creatorType to set
+	 */
+	public NotificationEntity setCreatorType(Integer creatorType) {
+		this.creatorType = creatorType;
 		return this;
 	}
 }

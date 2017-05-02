@@ -60,8 +60,8 @@ public class NotificationSpecification {
 						listeCond.add(p);
 					}
 					
-					if (null != criteres.getLinkType()) {
-						Predicate p = cb.equal(root.<Long> get("linkType"), criteres.getLinkType());
+					if (null != criteres.getCreatorType()) {
+						Predicate p = cb.equal(root.<Integer> get("creatorType"), criteres.getCreatorType());
 						listeCond.add(p);
 					}
 					

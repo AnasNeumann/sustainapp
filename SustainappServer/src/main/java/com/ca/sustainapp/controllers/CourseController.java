@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.dao.RankCourseServiceDAO;
 import com.ca.sustainapp.entities.CourseEntity;
-import com.ca.sustainapp.entities.NotificationEntity;
 import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
@@ -238,7 +237,7 @@ public class CourseController extends GenericCourseController {
 					.setScore(score.get())
 					.setTimestamps(GregorianCalendar.getInstance());
 		}
-
+		notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_RANK, cours.getCreatorId(), user.getProfile().getId(), cours.getId());
 		rank.setScore(score.get());
 		rankService.createOrUpdate(rank);
 		badgeService.teacher(profileService.getById(cours.getCreatorId()));

@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
+import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.dao.ChallengeVoteServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.entities.ChallengeEntity;
 import com.ca.sustainapp.entities.ChallengeVoteEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.ProfileEntity;
+import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
@@ -68,17 +71,20 @@ public class ParticipationController extends GenericChallengeController {
 		if(!isConnected(request) || !validator.validate(request).isEmpty()){
 			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
 		}
+		Long idChallenge = StringsUtils.parseLongQuickly(request.getParameter("challenge")).get();
+		Long creatorId = StringsUtils.parseLongQuickly(request.getParameter("targetId")).get();
 		ParticipationEntity participation = new ParticipationEntity()
 				.setAbout(request.getParameter("about"))
 				.setTitle(request.getParameter("title"))
 				.setTimestamps(GregorianCalendar.getInstance())
 				.setTargetType(request.getParameter("targetType"))
-				.setChallengeId(StringsUtils.parseLongQuickly(request.getParameter("challenge")).get())
-				.setTargetId(StringsUtils.parseLongQuickly(request.getParameter("targetId")).get());
+				.setChallengeId(idChallenge)
+				.setTargetId(creatorId);
 		if(!isEmpty(request.getParameter("file"))){
 			participation.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idParticipation = participationService.createOrUpdate(participation);
+		notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_PARTICIPATE, challengeService.getById(idChallenge).getCreatorId(), creatorId, idChallenge, request.getParameter("targetType").equals(SustainappConstantes.TARGET_PROFILE)? 0 : 1);
 		return new IdResponse().setId(idParticipation).setCode(1).buildJson();
 	}
 	
@@ -127,12 +133,14 @@ public class ParticipationController extends GenericChallengeController {
 					.setProfilId(idProfile)
 					.setTimestamps(GregorianCalendar.getInstance());
 			voteService.createOrUpdate(currentVote);
+			notifyVote(idProfile, participation);
 		} else {
 			if(currentVote.getParticipationId().equals(idParticipation.get())){
 				deleteService.cascadeDelete(currentVote);
 			} else {
 				currentVote.setParticipationId(idParticipation.get()).setTimestamps(GregorianCalendar.getInstance());
 				voteService.createOrUpdate(currentVote);
+				notifyVote(idProfile, participation);
 			}
 		}
 		return new HttpRESTfullResponse().setCode(1).buildJson();
@@ -161,6 +169,24 @@ public class ParticipationController extends GenericChallengeController {
 					.setProfile(new LightProfileResponse(profileService.getById(vote.getProfilId()))));
 		}
 		return new VotesResponse().setVotes(votes).setCode(1).buildJson();
+	}
+	
+	/**
+	 * Notifier le(s) proriétaire d'une participation qu'elle a reçue un vote
+	 * @param creatorId
+	 * @param participation
+	 */
+	private void notifyVote(Long creatorId, ParticipationEntity participation){
+		if(participation.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
+			notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, participation.getTargetId(), creatorId, participation.getChallengeId());
+		}else{
+			List<TeamRoleEntity> roles = getService.cascadeGetTeamRole(new TeamRoleCriteria().setTeamId(participation.getTargetId()));
+			for(TeamRoleEntity role : roles){
+				if(role.getRole().equals(SustainappConstantes.TEAMROLE_MEMBER) || role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN)){
+					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, role.getProfilId(), creatorId, participation.getChallengeId());
+				}
+			}			
+		}
 	}
 	
 }

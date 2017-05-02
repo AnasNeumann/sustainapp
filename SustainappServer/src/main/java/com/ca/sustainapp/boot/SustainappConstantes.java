@@ -74,6 +74,12 @@ public class SustainappConstantes {
 	public final static String BADGE_LEADER = "capitaine";
 	
 	/**
+	 * Type de lien pour une notification
+	 */
+	public final static Integer NOTIFICATION_CREATORTYPE_PROFILE = 0;
+	public final static Integer NOTIFICATION_CREATORTYPE_TEAM = 1;
+	
+	/**
 	 * Code de messages possibles pour les notifications
 	 */
 	public final static String NOTIFICATION_MESSAGE_VOTE = "notification.vote";
