@@ -25,7 +25,6 @@ import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.entities.ChallengeEntity;
 import com.ca.sustainapp.entities.ChallengeVoteEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
-import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
@@ -178,12 +177,12 @@ public class ParticipationController extends GenericChallengeController {
 	 */
 	private void notifyVote(Long creatorId, ParticipationEntity participation){
 		if(participation.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
-			notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, participation.getTargetId(), creatorId, participation.getChallengeId());
+			notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, participation.getTargetId(), creatorId, participation.getId());
 		}else{
 			List<TeamRoleEntity> roles = getService.cascadeGetTeamRole(new TeamRoleCriteria().setTeamId(participation.getTargetId()));
 			for(TeamRoleEntity role : roles){
 				if(role.getRole().equals(SustainappConstantes.TEAMROLE_MEMBER) || role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN)){
-					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, role.getProfilId(), creatorId, participation.getChallengeId());
+					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, role.getProfilId(), creatorId, participation.getId());
 				}
 			}			
 		}

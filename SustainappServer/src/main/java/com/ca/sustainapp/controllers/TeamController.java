@@ -238,7 +238,7 @@ public class TeamController extends GenericController {
 					roleService.createOrUpdate(currentRole
 							.setRole(SustainappConstantes.TEAMROLE_MEMBER));
 					badgeService.capitaine(user.getProfile());
-					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_REQUEST, profile.getId(), user.getProfile().getId(), team.getId());
+					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_ACCEPT, profile.getId(), user.getProfile().getId(), team.getId());
 					return true;
 				}
 				break;

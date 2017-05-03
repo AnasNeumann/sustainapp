@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+/**
+ * Le style de la page des notifications
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 03/05/2017
+ * @version 1.0
+ */
+
+.s-notification-read a{
+    background-color: #F0F0F0 !important;
+}

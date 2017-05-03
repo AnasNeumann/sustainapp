@@ -193,5 +193,12 @@
     "notification.badge" : "You have won a new badge in your profile!",
     "notification.participate" : "took part in the challenge",
     "notification.request" : "asked to join the team",
-    "notification.accept" : "You have been added to the team"
+    "notification.accept" : "You have been added to the team",
+    
+    "notification.vote.title" : "New vote",
+    "notification.rank.title" : "New note",
+    "notification.badge.title" : "New badge",
+    "notification.participate.title" : "New participation",
+    "notification.request.title" : "New request",
+    "notification.accept.title" : "Request accepted"
 }

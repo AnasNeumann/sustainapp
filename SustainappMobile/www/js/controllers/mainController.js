@@ -27,7 +27,15 @@ angular.module('sustainapp.controllers')
 			}
 		};
 		initLoginModel();
-			
+		
+		/**
+		 * Fonction d'annulation des nouvelles notifications
+		 */
+		$scope.getNotifications = function(){
+			$state.go('tab.notifications');
+			$scope.nbrNotification = 0;
+		};
+		
 		/**
 		 * fonction d'inscription
 		 */

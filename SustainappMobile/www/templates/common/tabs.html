@@ -12,7 +12,7 @@
     <ion-nav-view name="tab-certificates"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab icon-off="ion-ios-bell" icon-on="ion-ios-bell" href="#/tab/notifications" badge="nbrNotification!=0 ? nbrNotification : null" >
+  <ion-tab ng-click="getNotifications()" icon-off="ion-ios-bell" icon-on="ion-ios-bell" href="#/tab/notifications" badge="nbrNotification" >
     <ion-nav-view name="tab-notifications" ></ion-nav-view>
   </ion-tab>
   
