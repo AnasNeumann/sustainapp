@@ -51,7 +51,9 @@ public class BadgeService {
 	private BadgeServiceDAO badgeService;
 	@Autowired
 	private ParticipationServiceDAO participationService;
-	
+	@Autowired
+	protected NotificationService notificationService;
+
 	/**
 	 * Verifier si le profil peut obtenir le badge superhero
 	 * => avoir réalisé au moins 10 signalements
@@ -214,6 +216,7 @@ public class BadgeService {
 				.setTimestamps(GregorianCalendar.getInstance());
 		linkService.createOrUpdate(newLink);
 		profileService.createOrUpdate(profil.setLevel(profil.getLevel()+1));
+		notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_BADGE, profil.getId(), profil.getId(), profil.getId());
 		return true;
 	}
 	

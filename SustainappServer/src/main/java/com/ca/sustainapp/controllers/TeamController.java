@@ -232,11 +232,13 @@ public class TeamController extends GenericController {
 							.setRole(SustainappConstantes.TEAMROLE_REQUEST)
 							.setTeamId(team.getId())
 							.setTimestamps(GregorianCalendar.getInstance()));
+					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_REQUEST, getTeamAdmin(team), profile.getId(), team.getId());
 					return true;
 				} else if(isOwnerTeam(team, user.getProfile()) && null != currentRole){					
 					roleService.createOrUpdate(currentRole
 							.setRole(SustainappConstantes.TEAMROLE_MEMBER));
 					badgeService.capitaine(user.getProfile());
+					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_ACCEPT, profile.getId(), user.getProfile().getId(), team.getId());
 					return true;
 				}
 				break;
@@ -259,6 +261,20 @@ public class TeamController extends GenericController {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Get the owner of a team
+	 * @param team
+	 * @return
+	 */
+	private Long getTeamAdmin(TeamEntity team){
+		for(TeamRoleEntity role : team.getListRole()){
+			if(role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN)){
+				return role.getProfilId();
+			}
+		}
+		return null;
 	}
 	
 	/**

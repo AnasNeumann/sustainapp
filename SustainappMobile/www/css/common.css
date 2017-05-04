@@ -266,6 +266,12 @@ ion-content {
 	margin-top: 10px;
 }
 
+.badge{
+    background-color: #23d5fb !important;
+    opacity : 1 !important;	
+    border : 1px solid #04bbe1;
+}
+
 /**
  * ===========================================
  * STARS SYSTEM

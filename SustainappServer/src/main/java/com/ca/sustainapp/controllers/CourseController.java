@@ -237,6 +237,7 @@ public class CourseController extends GenericCourseController {
 					.setScore(score.get())
 					.setTimestamps(GregorianCalendar.getInstance());
 		}
+		notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_RANK, cours.getCreatorId(), user.getProfile().getId(), cours.getId());
 		rank.setScore(score.get());
 		rankService.createOrUpdate(rank);
 		badgeService.teacher(profileService.getById(cours.getCreatorId()));

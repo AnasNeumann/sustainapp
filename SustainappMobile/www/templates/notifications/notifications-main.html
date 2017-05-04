@@ -1,4 +1,20 @@
 <ion-view view-title="{{'viewTitle.notifications' | translate }}">
-  <ion-content>
+  <!-- Notifications Loaded -->
+  <ion-content ng-show="notificationsModel.loaded">
+     <div class="s-teams-allResults">
+        <ion-list>
+          <ion-item ng-class="{'s-notification-read': (2 == notification.state), 'item-avatar' : true}" ng-repeat="notification in notificationsModel.notifications" type="item-text-wrap" ng-click="read(notification)" href="#/tab/{{notification.link}}">
+              <img ng-src="img/notification/{{notification.message}}.png" >
+              <h2 class="s-teams-title">{{notification.creator}} {{notification.message | translate}} {{notification.target}}</h2>
+              <p class="s-teams-text">{{notification.timestamps | date: 'dd/MM/yyyy'}}</p>
+          </ion-item>
+        </ion-list> 
+    </div>
+  </ion-content>
+
+  <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="notificationsModel.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
   </ion-content>
 </ion-view>
