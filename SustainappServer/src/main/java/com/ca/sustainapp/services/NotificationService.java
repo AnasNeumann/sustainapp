@@ -7,7 +7,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
-import com.ca.sustainapp.controllers.NotificationController;
 import com.ca.sustainapp.dao.ChallengeServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.NotificationServiceDAO;
@@ -82,7 +81,7 @@ public class NotificationService {
 				.setState(0)	
 				.setTimestamps(GregorianCalendar.getInstance());
 		notification.setId(notificationService.createOrUpdate(notification));
-		sendWebSocket(build(notification));	
+		sendWebSocket(notification);	
 		return notification;
 	}
 	
@@ -90,9 +89,10 @@ public class NotificationService {
 	 * Methode permettant d'appeler la méthode de websocket pour envoyer la notification
 	 * @param notification
 	 */
-	private void sendWebSocket(NotificationResponse notification){
+	private void sendWebSocket(NotificationEntity entity){
+		NotificationResponse notification = build(entity);
 		if(null != notification){
-			template.convertAndSend("/websocket/notification", notification);
+			template.convertAndSend("/queue/notification-"+entity.getProfilId(), notification);
 		}
 	}
 	

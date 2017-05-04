@@ -96,7 +96,7 @@ public class NotificationController extends GenericController{
 		}
 		notificationServiceDAO.createOrUpdate(notification.setState(2));
 		return new HttpRESTfullResponse().setCode(1).buildJson();
-	}
+	}	
 
 	/**
 	 * Envoyer une nouvelle notification
@@ -105,8 +105,9 @@ public class NotificationController extends GenericController{
 	 * @return
 	 */
 	@MessageMapping("/notification")
-    @SendTo("/websocket/notification")
+	@SendTo("/queue/notification")
 	public String send(String notification){
+		System.out.println("ESSAI------------------------------------------------------------------------------------------");
 		return notification;
 	}
 	

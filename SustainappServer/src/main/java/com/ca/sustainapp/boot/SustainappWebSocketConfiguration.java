@@ -22,8 +22,9 @@ public class SustainappWebSocketConfiguration extends AbstractWebSocketMessageBr
 	 */
 	@Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/websocket");
+        config.enableSimpleBroker("/queue");
         config.setApplicationDestinationPrefixes("/app");
+        config.setUserDestinationPrefix("/user");
     }
 
 	/**
