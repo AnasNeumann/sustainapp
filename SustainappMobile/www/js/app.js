@@ -14,12 +14,11 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
-    if(null != window.plugin){ // uniquement sur mobile
+    if(null != window.plugin){ // uniquement sur mobile => Gestion des notifications locales
 	    window.plugin.notification.local.onadd = function (id, state, json) {
 	        var notification = {
 	            id: id,
