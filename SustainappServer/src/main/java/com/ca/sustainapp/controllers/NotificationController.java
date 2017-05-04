@@ -99,16 +99,15 @@ public class NotificationController extends GenericController{
 	}
 
 	/**
-	 * Recevoir une nouvelle notification
+	 * Envoyer une nouvelle notification
 	 * => via STOMP Temps réel / websockets
 	 * @param request
 	 * @return
 	 */
 	@MessageMapping("/notification")
     @SendTo("/websocket/notification")
-	public NotificationResponse send(NotificationEntity notification){
-		NotificationResponse result = notificationService.build(notification);
-		return result;
+	public String send(String notification){
+		return notification;
 	}
 	
 }

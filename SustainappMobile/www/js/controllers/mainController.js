@@ -31,23 +31,26 @@ angular.module('sustainapp.controllers')
 		/**
 		 * Initialisation de la réception de websockets
 		 */
-		var initWebSocket = function(){
+		var initWebSocket = function(){			
 			$scope.notifications = [];
+			$scope.newNotifications = {};
 			$stomp.connect(config.remoteServer+'/sustainapp-websocket', {}).then(function (frame) {
                 var subscription = $stomp.subscribe('/websocket/notification', function (payload, headers, res){
-                        $scope.notifications = payload;          
-                        $scope.$apply($scope.notifications);
+                	    $scope.newNotifications = payload;               		         
+                        $scope.$apply($scope.newNotifications);
                 });
-                //$stomp.send('/app/notification', '');
 			});
 		};
 		initWebSocket();
 		
 		/**
-		 * Reception d'une notification
+		 * Reception et affichage d'une nouvelle notification
 		 */
-		$scope.$watch('notifications', function() {
-			$scope.nbrNotification = $scope.notifications.length;
+		$scope.$watch('newNotifications', function() {			
+			if(null != $scope.newNotifications.message){
+				$scope.notifications.push($scope.newNotifications); 
+				$scope.nbrNotification = $scope.notifications.length;
+			}
 			console.log($scope.notifications);
 	    });
 		
@@ -55,8 +58,9 @@ angular.module('sustainapp.controllers')
 		 * Fonction d'annulation des nouvelles notifications
 		 */
 		$scope.getNotifications = function(){
-			$state.go('tab.notifications');
+			$scope.notifications = [];
 			$scope.nbrNotification = 0;
+			$state.go('tab.notifications');		
 		};
 		
 		/**

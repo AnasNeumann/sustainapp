@@ -52,8 +52,6 @@ public class NotificationService {
 	 */
 	@Autowired
     private SimpMessagingTemplate template;
-	@Autowired
-	private NotificationController notificationController;
 	
 	/**
 	 * Créer une notification en base de données sans préciser le type de profil qui crée
@@ -84,9 +82,18 @@ public class NotificationService {
 				.setState(0)	
 				.setTimestamps(GregorianCalendar.getInstance());
 		notification.setId(notificationService.createOrUpdate(notification));
-		//notificationController.send(notification);
-		template.convertAndSend("/topic/myscores", notification); // envoi websocket de la nouvelle notification
+		sendWebSocket(build(notification));	
 		return notification;
+	}
+	
+	/**
+	 * Methode permettant d'appeler la méthode de websocket pour envoyer la notification
+	 * @param notification
+	 */
+	private void sendWebSocket(NotificationResponse notification){
+		if(null != notification){
+			template.convertAndSend("/websocket/notification", notification);
+		}
 	}
 	
 	/**
