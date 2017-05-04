@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating', 'ngDraggable'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating', 'ngDraggable', 'ngStomp'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
@@ -19,16 +19,18 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
-    window.plugin.notification.local.onadd = function (id, state, json) {
-        var notification = {
-            id: id,
-            state: state,
-            json: json
-        };
-        $timeout(function() {
-            $rootScope.$broadcast("$cordovaLocalNotification:added", notification);
-        });
-    };
+    if(null != window.plugin){ // uniquement sur mobile
+	    window.plugin.notification.local.onadd = function (id, state, json) {
+	        var notification = {
+	            id: id,
+	            state: state,
+	            json: json
+	        };
+	        $timeout(function() {
+	            $rootScope.$broadcast("$cordovaLocalNotification:added", notification);
+	        });
+	    };
+    }
   });
 })
 

@@ -5,14 +5,14 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('mainController', function($scope, $state, sessionService, userService) {
+	.controller('mainController', function($scope, $state, $stomp, sessionService, userService, config) {
 		
 		/**
 		 * Initialisation du model
-		 */	
+		 */
 		var initLoginModel = function(){
 			$scope.title = "...";
-			$scope.nbrNotification = 2;
+			$scope.nbrNotification = 0;
 			$scope.loginModel = {};
 			$scope.loginModel.mail = "";
 			$scope.loginModel.password = "";
@@ -20,13 +20,36 @@ angular.module('sustainapp.controllers')
 			$scope.loginModel.lastName = "";
 			$scope.loginModel.isConnected = false;
 			$scope.loginModel.modeLogin = true;
-			$scope.loginModel.allErrors = [];
+			$scope.loginModel.allErrors = [];			
 			if(null != sessionService.get('mail') && null != sessionService.get('password')){
 				$scope.loginModel.mail = sessionService.get('mail');
 				$scope.loginModel.password = sessionService.get('password');
 			}
 		};
 		initLoginModel();
+		
+		/**
+		 * Initialisation de la réception de websockets
+		 */
+		var initWebSocket = function(){
+			$scope.notifications = [];
+			$stomp.connect(config.remoteServer+'/sustainapp-websocket', {}).then(function (frame) {
+                var subscription = $stomp.subscribe('/websocket/notification', function (payload, headers, res){
+                        $scope.notifications = payload;          
+                        $scope.$apply($scope.notifications);
+                });
+                //$stomp.send('/app/notification', '');
+			});
+		};
+		initWebSocket();
+		
+		/**
+		 * Reception d'une notification
+		 */
+		$scope.$watch('notifications', function() {
+			$scope.nbrNotification = $scope.notifications.length;
+			console.log($scope.notifications);
+	    });
 		
 		/**
 		 * Fonction d'annulation des nouvelles notifications

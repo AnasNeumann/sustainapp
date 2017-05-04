@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,8 +62,11 @@ public class NotificationController extends GenericController{
 				if(entity.getState().equals(0)){
 					notificationServiceDAO.createOrUpdate(entity.setState(1));
 				}
-				notifications.add(notificationService.build(entity));				
-				maxResult--;
+				NotificationResponse notification  = notificationService.build(entity);
+				if(null != notification){
+					notifications.add(notification);				
+					maxResult--;
+				}			
 			}else{
 				notificationServiceDAO.delete(entity.getId());
 			}
@@ -94,14 +99,16 @@ public class NotificationController extends GenericController{
 	}
 
 	/**
-	 * Récuperer les notifications qui sont a reçue(0)
+	 * Recevoir une nouvelle notification
+	 * => via STOMP Temps réel / websockets
 	 * @param request
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value="/notification", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-	public String getUnread(HttpServletRequest request){
-		return null;
+	@MessageMapping("/notification")
+    @SendTo("/websocket/notification")
+	public NotificationResponse send(NotificationEntity notification){
+		NotificationResponse result = notificationService.build(notification);
+		return result;
 	}
 	
 }

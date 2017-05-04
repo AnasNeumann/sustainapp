@@ -3,15 +3,19 @@ package com.ca.sustainapp.services;
 import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.controllers.NotificationController;
 import com.ca.sustainapp.dao.ChallengeServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.NotificationServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
+import com.ca.sustainapp.entities.ChallengeEntity;
+import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.NotificationEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
@@ -44,14 +48,22 @@ public class NotificationService {
 	protected ChallengeServiceDAO challengeService;
 	
 	/**
+	 * Pour l'envoi en websocket de la nouvelle notification
+	 */
+	@Autowired
+    private SimpMessagingTemplate template;
+	@Autowired
+	private NotificationController notificationController;
+	
+	/**
 	 * Créer une notification en base de données sans préciser le type de profil qui crée
 	 * @param code
 	 * @param profilId
 	 * @param creatorId
 	 * @param linkId
 	 */
-	public void create(String code, Long profilId, Long creatorId, Long linkId){
-		create(code, profilId, creatorId, linkId, SustainappConstantes.NOTIFICATION_CREATORTYPE_PROFILE);
+	public NotificationEntity create(String code, Long profilId, Long creatorId, Long linkId){
+		return create(code, profilId, creatorId, linkId, SustainappConstantes.NOTIFICATION_CREATORTYPE_PROFILE);
 	}
 	
 	/**
@@ -62,16 +74,19 @@ public class NotificationService {
 	 * @param linkId
 	 * @param creatorType
 	 */
-	public void create(String code, Long profilId, Long creatorId, Long linkId, Integer creatorType){
-		notificationService.createOrUpdate(
-				new NotificationEntity()
-					.setCreatorId(creatorId)
-					.setProfilId(profilId)
-					.setMessage(code)
-					.setCreatorType(creatorType)
-					.setLinkId(linkId)
-					.setState(0)	
-					.setTimestamps(GregorianCalendar.getInstance()));
+	public NotificationEntity create(String code, Long profilId, Long creatorId, Long linkId, Integer creatorType){
+		NotificationEntity notification = new NotificationEntity()
+				.setCreatorId(creatorId)
+				.setProfilId(profilId)
+				.setMessage(code)
+				.setCreatorType(creatorType)
+				.setLinkId(linkId)
+				.setState(0)	
+				.setTimestamps(GregorianCalendar.getInstance());
+		notification.setId(notificationService.createOrUpdate(notification));
+		//notificationController.send(notification);
+		template.convertAndSend("/topic/myscores", notification); // envoi websocket de la nouvelle notification
+		return notification;
 	}
 	
 	/**
@@ -85,25 +100,49 @@ public class NotificationService {
 		switch(entity.getMessage()){
 			case SustainappConstantes.NOTIFICATION_MESSAGE_PARTICIPATE :
 				needCreator = true;
-				notification.setTarget(challengeService.getById(entity.getLinkId()).getName());
+				ChallengeEntity challenge = challengeService.getById(entity.getLinkId());
+				if(null == challenge){
+					notificationService.delete(notification.getId());
+					return null;
+				}
+				notification.setTarget(challenge.getName());
 				notification.setLink("challenges/"+entity.getLinkId());
 				break;
 			case SustainappConstantes.NOTIFICATION_MESSAGE_RANK : 
-				notification.setTarget(coursService.getById(entity.getLinkId()).getTitle());
+				CourseEntity cours =coursService.getById(entity.getLinkId());
+				if(null == cours){
+					notificationService.delete(notification.getId());
+					return null;
+				}
+				notification.setTarget(cours.getTitle());
 				notification.setLink("cours/"+entity.getLinkId());
 				break;
 			case SustainappConstantes.NOTIFICATION_MESSAGE_VOTE : 
 				ParticipationEntity participation = participationService.getById(entity.getLinkId());
+				if(null == participation){
+					notificationService.delete(notification.getId());
+					return null;
+				}
 				notification.setTarget(participation.getTitle());
 				notification.setLink("challenges/"+participation.getChallengeId());
 				break;
 			case SustainappConstantes.NOTIFICATION_MESSAGE_ACCEPT :
-				notification.setTarget(teamService.getById(entity.getLinkId()).getName());
+				TeamEntity team = teamService.getById(entity.getLinkId());
+				if(null == team){
+					notificationService.delete(notification.getId());
+					return null;
+				}
+				notification.setTarget(team.getName());
 				notification.setLink("team/"+entity.getLinkId());
 				break;
 			case SustainappConstantes.NOTIFICATION_MESSAGE_REQUEST :
 				needCreator = true;
-				notification.setTarget(teamService.getById(entity.getLinkId()).getName());
+				TeamEntity team1 = teamService.getById(entity.getLinkId());
+				if(null == team1){
+					notificationService.delete(notification.getId());
+					return null;
+				}
+				notification.setTarget(team1.getName());
 				notification.setLink("team/"+entity.getLinkId());
 				break;			
 			case SustainappConstantes.NOTIFICATION_MESSAGE_BADGE:
@@ -114,10 +153,18 @@ public class NotificationService {
 		if(needCreator){
 			if(entity.getCreatorType().equals(SustainappConstantes.NOTIFICATION_CREATORTYPE_PROFILE)){
 				ProfileEntity creator = profilService.getById(entity.getCreatorId());
+				if(null == creator){
+					notificationService.delete(notification.getId());
+					return null;
+				}
 				notification.setCreator(creator.getFirstName()+" "+creator.getLastName());
 			}else{
-				TeamEntity team = teamService.getById(entity.getCreatorId());
-				notification.setCreator(team.getName());
+				TeamEntity team2 = teamService.getById(entity.getCreatorId());
+				if(null == team2){
+					notificationService.delete(notification.getId());
+					return null;
+				}
+				notification.setCreator(team2.getName());
 			}
 		}else{
 			notification.setCreator("");

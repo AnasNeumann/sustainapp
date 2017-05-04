@@ -1,11 +1,6 @@
 <ion-view view-title="{{'viewTitle.notifications' | translate }}">
-  
   <!-- Notifications Loaded -->
   <ion-content ng-show="notificationsModel.loaded">
-    <!-- 
-        <button class="button" ng-click="add()">Add notification</button>
-        <button class="button" ng-click="isScheduled()">Is Scheduled</button>
-     -->
      <div class="s-teams-allResults">
         <ion-list>
           <ion-item ng-class="{'s-notification-read': (2 == notification.state), 'item-avatar' : true}" ng-repeat="notification in notificationsModel.notifications" type="item-text-wrap" ng-click="read(notification)" href="#/tab/{{notification.link}}">
@@ -16,8 +11,7 @@
         </ion-list> 
     </div>
   </ion-content>
-  
-  
+
   <!-- Loading Part -->
   <ion-content class="s-common-loading" ng-hide="notificationsModel.loaded">
         <ion-spinner icon="dots"></ion-spinner>

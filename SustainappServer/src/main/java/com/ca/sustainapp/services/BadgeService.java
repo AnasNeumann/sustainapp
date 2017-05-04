@@ -53,7 +53,7 @@ public class BadgeService {
 	private ParticipationServiceDAO participationService;
 	@Autowired
 	protected NotificationService notificationService;
-	
+
 	/**
 	 * Verifier si le profil peut obtenir le badge superhero
 	 * => avoir réalisé au moins 10 signalements
