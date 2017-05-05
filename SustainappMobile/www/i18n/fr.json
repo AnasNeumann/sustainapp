@@ -81,10 +81,8 @@
     
     "report.message" : "Votre demande a bien été prise en compte et sera traitée dans les plus brefs delais",
     
-    "administration.challengeTypes" : "Gestion des types de challenges",
-    "administration.categories" : "Gestion des categories de cours",
-    "administration.transport" : "Gestion des moyens de transport",
-    "administration.challengeTypes.title" : "Types de challenges",
+    "administration.signal" : "Gestion des signalements",
+    "administration.data" : "Accès aux données",
     
     "challengetype.building" : "eco-construction",
     "challengetype.design" : "eco-desgin",

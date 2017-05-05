@@ -81,10 +81,8 @@
     
     "report.message" : "Your request has been received and will be processed as soon as possible",
     
-    "administration.challengeTypes" : "Manage challenge types",
-    "administration.categories" : "Manage courses categories",
-    "administration.transport" : "Manage means of transport",
-    "administration.challengeTypes.title" : "Challenge types",
+    "administration.signal" : "Manage reports",
+    "administration.data" : "Data access",
     
     "challengetype.building" : "eco-builing",
     "challengetype.design" : "eco-desgin",

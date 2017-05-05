@@ -52,6 +52,24 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
+  .state('tab.administration-reports', {
+    url: '/administration/reports',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/reports.html',
+        controller: 'reportsController'
+      }
+    }
+  })
+  .state('tab.administration-data', {
+    url: '/administration/data',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/data.html',
+        controller: 'dataController'
+      }
+    }
+  })
   .state('tab.teams', {
     url: '/team/all',
     views: {
@@ -204,7 +222,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 		  };
 	 document.addEventListener("deviceready", function () {
 		    $cordovaInAppBrowserProvider.setDefaultOptions(options)	
-		  }, false);
+     }, false);
 	 
   /**
    * SYSTEME DE TRADUCTION
