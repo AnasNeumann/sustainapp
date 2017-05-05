@@ -39,16 +39,6 @@ public class ReportController extends GenericController {
 	private ReportValidator reportValidator;
 	
 	/**
-	 * get all reports
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/report", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getAll(HttpServletRequest request) {
-		return null;
-	}
-	
-	/**
 	 * create a new report
 	 * @return
 	 */
@@ -69,6 +59,16 @@ public class ReportController extends GenericController {
 		reportService.createOrUpdate(report);
 		badgeService.superhero(profile);
 		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
+	 * get all reports
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/report", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+    public String getAll(HttpServletRequest request) {
+		return null;
 	}
 	
 	/**

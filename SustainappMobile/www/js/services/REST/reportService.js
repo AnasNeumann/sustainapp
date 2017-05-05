@@ -22,9 +22,6 @@ angular.module('sustainapp.services')
 		},
 		update : function(data) {
 			return $http.put(config.remoteServer+"/report", data, params);
-		},
-		deleteById : function(data) {
-			return $http.delete(config.remoteServer+"/report", data, params);
 		}
 	};
 });
