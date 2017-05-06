@@ -1,6 +1,12 @@
 <ion-view view-title="{{'viewTitle.notifications' | translate }}">
   <!-- Notifications Loaded -->
   <ion-content ng-show="notificationsModel.loaded">
+     
+     <!-- EMPTY RESULTS -->
+     <div class="s-search-empty" ng-if="0 == notificationsModel.notifications.length">
+         <i class="icon ion-ios-bell-outline"></i>
+     </div>
+     
      <div class="s-teams-allResults">
         <ion-list>
           <ion-item ng-class="{'s-notification-read': (2 == notification.state), 'item-avatar' : true}" ng-repeat="notification in notificationsModel.notifications" type="item-text-wrap" ng-click="read(notification)" href="#/tab/{{notification.link}}">

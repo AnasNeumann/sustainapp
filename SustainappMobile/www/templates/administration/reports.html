@@ -1,5 +1,11 @@
 <ion-view view-title="{{'sideMenu.administration' | translate }}">
     <ion-content>
+       
+        <!-- EMPTY RESULTS -->
+	    <div class="s-search-empty" ng-if="0 == reportModel.reports.length">
+	        <i class="icon ion-checkmark-circled"></i>
+	    </div>
+       
         <!-- ALL REPORTS -->
         <div class="s-participation-all">
             <div ng-repeat="report in reportModel.reports" class="s-participation-one">
