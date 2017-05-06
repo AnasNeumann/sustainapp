@@ -9,7 +9,7 @@
     </div>
     
     <!-- ALL TEAMS -->
-    <div class="s-search-type" ng-hide="searchModel.empty">
+    <div class="s-search-type" ng-if="false == searchModel.empty && searchModel.teams.length >0" >
       <i class="icon ion-person-stalker"></i>
       {{'sideMenu.teams' | translate}}
     </div>
@@ -23,7 +23,7 @@
    </ion-list>
    
    <!-- ALL PROFILES -->
-   <div class="s-search-type" ng-hide="searchModel.empty">
+   <div class="s-search-type" ng-if="false == searchModel.empty && searchModel.profiles.length >0">
        <i class="icon ion-person"></i>
       {{'common.profiles' | translate}}
    </div>
@@ -37,7 +37,7 @@
    </ion-list>
    
    <!-- ALL COURSES -->
-   <div class="s-search-type" ng-hide="searchModel.empty">
+   <div class="s-search-type" ng-if="false == searchModel.empty && searchModel.courses.length >0">
        <i class="icon ion-university"></i>
       {{'viewTitle.certificates' | translate}}
    </div>
