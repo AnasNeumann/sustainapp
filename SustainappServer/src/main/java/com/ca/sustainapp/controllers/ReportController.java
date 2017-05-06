@@ -99,7 +99,13 @@ public class ReportController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/report/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		Optional<Long> reportId = StringsUtils.parseLongQuickly(request.getParameter("report"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(!reportId.isPresent() || null == user || !user.getIsAdmin()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		reportService.createOrUpdate(reportService.getById(reportId.get()).setState(1));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
 }

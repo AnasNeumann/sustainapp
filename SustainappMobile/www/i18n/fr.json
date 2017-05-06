@@ -21,6 +21,7 @@
     "common.about" : "A propos", 
     "common.title" : "Titre",
     "comon.newspaper" : "Journal",
+    "common.done" : "Terminé",
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",

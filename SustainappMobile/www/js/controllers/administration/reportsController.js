@@ -21,7 +21,6 @@ angular.module('sustainapp.controllers')
 			$scope.reportModel = {};
 			$scope.reportModel.moreReports = true;
 			$scope.reportModel.startIndex = 0;
-			$scope.reportModel.eltToValidate = {};
 			$scope.reportModel.reports = [];
 			$scope.getMoreReports();
 		};
@@ -46,5 +45,17 @@ angular.module('sustainapp.controllers')
 				}
 		    });
 		};
-	
+		
+		/**
+		 * Considérer un signalement comme étant traité
+		 */
+		$scope.done = function(report){
+			$scope.reportModel.reports.splice($scope.reportModel.reports.indexOf(report), 1);
+			var data = new FormData();
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			data.append("report", report.id);
+			reportService.update(data);
+		};
+
 	});

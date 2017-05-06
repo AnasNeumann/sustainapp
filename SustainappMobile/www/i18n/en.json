@@ -21,6 +21,7 @@
     "common.about" : "About", 
     "common.title" : "Title",
     "comon.newspaper" : "Newspaper",
+    "common.done" : "Done",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
