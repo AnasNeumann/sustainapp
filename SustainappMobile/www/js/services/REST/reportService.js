@@ -14,14 +14,14 @@ angular.module('sustainapp.services')
 	        transformRequest: angular.identity
 	 };
 	 return {
-		getAll : function() {
-			return $http.get(config.remoteServer+"/report");
+		getAll : function(data) {
+			return $http.post(config.remoteServer+"/report/all", data, params);
 		},
 		create : function(data) {
 			return $http.post(config.remoteServer+"/report", data, params);
 		},
 		update : function(data) {
-			return $http.put(config.remoteServer+"/report", data, params);
+			return $http.post(config.remoteServer+"/report/update", data, params);
 		}
 	};
 });
