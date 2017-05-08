@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating', 'ngDraggable', 'ngStomp'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating', 'ngDraggable', 'ngStomp', 'chart.js'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
