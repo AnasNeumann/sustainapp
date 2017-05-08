@@ -84,6 +84,11 @@
     
     "administration.signal" : "Gestion des signalements",
     "administration.data" : "Accès aux données",
+    "administration.special" : "Traitements spéciaux",
+    "administration.courses" : "Données sur les cours",
+    "administration.research" : "Données sur les recherches",
+    "administration.challenges" : "Données sur les challenges",
+    "administration.profiles" : "Données sur les profils",
     
     "challengetype.building" : "eco-construction",
     "challengetype.design" : "eco-desgin",

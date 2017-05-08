@@ -84,6 +84,11 @@
     
     "administration.signal" : "Manage reports",
     "administration.data" : "Data access",
+    "administration.special" : "Special treatments",
+    "administration.courses" : "Courses informations",
+    "administration.research" : "Research informations",
+    "administration.challenges" : "Challenges informations",
+    "administration.profiles" : "Profiles informations",
     
     "challengetype.building" : "eco-builing",
     "challengetype.design" : "eco-desgin",

@@ -61,12 +61,39 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
-  .state('tab.administration-data', {
-    url: '/administration/data',
+  .state('tab.administration-courses', {
+    url: '/administration/courses',
     views: {
       'tab-news': {
-        templateUrl: 'templates/administration/data.html',
-        controller: 'dataController'
+        templateUrl: 'templates/administration/courses.html',
+        controller: 'coursesDataController'
+      }
+    }
+  })
+  .state('tab.administration-challenges', {
+    url: '/administration/challenges',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/challenges.html',
+        controller: 'challengesDataController'
+      }
+    }
+  })
+  .state('tab.administration-research', {
+    url: '/administration/research',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/research.html',
+        controller: 'researchDataController'
+      }
+    }
+  })
+  .state('tab.administration-profiles', {
+    url: '/administration/profiles',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/profiles.html',
+        controller: 'profilesDataController'
       }
     }
   })

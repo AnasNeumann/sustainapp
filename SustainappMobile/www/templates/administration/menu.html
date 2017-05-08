@@ -1,11 +1,26 @@
 <ion-view view-title="{{'sideMenu.administration' | translate }}">
     <ion-content>
         <ion-list>
+              <div class="s-news-greyPart">
+                 <h2 class="s-common-greyTitle" ><i class="icon ion-android-alert s-admin-icon"></i> {{'administration.special' | translate}}</h2>
+              </div>
               <ion-item type="item-text-wrap" href="#/tab/administration/reports">                 
-                  <h2 class="s-admin-item"><i class="icon ion-android-alert s-admin-icon"></i> {{'administration.signal' | translate}}</h2>
+                  <h2 class="s-admin-item">{{'administration.signal' | translate}}</h2>
               </ion-item>
-              <ion-item type="item-text-wrap" href="#/tab/administration/data">
-                  <h2 class="s-admin-item"><i class="icon ion-pie-graph s-admin-icon"></i> {{'administration.data' | translate}}</h2>
+              <div class="s-news-greyPart">
+		         <h2 class="s-common-greyTitle" ><i class="icon ion-pie-graph s-admin-icon"></i>  {{'administration.data' | translate}}</h2>
+		      </div>
+              <ion-item type="item-text-wrap" href="#/tab/administration/courses">
+                  <h2 class="s-admin-item">{{'administration.courses' | translate}}</h2>
+              </ion-item>
+              <ion-item type="item-text-wrap" href="#/tab/administration/research">
+                  <h2 class="s-admin-item">{{'administration.research' | translate}}</h2>
+              </ion-item>
+              <ion-item type="item-text-wrap" href="#/tab/administration/challenges">
+                  <h2 class="s-admin-item">{{'administration.challenges' | translate}}</h2>
+              </ion-item>
+              <ion-item type="item-text-wrap" href="#/tab/administration/profiles">
+                  <h2 class="s-admin-item">{{'administration.profiles' | translate}}</h2>
               </ion-item>
             </ion-list> 
     </ion-content>
