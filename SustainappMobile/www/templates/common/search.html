@@ -14,7 +14,7 @@
       {{'sideMenu.teams' | translate}}
     </div>
     <ion-list>
-     <ion-item class="item-avatar" ng-repeat="team in searchModel.teams" type="item-text-wrap" href="#/tab/team/{{team.id}}" menu-toggle="right">
+     <ion-item class="item-avatar" ng-repeat="team in searchModel.teams" type="item-text-wrap" href="#/tab/team/{{team.id}}" menu-toggle="right" ng-click="save()">
          <img ng-src="data:image/jpeg;base64,{{team.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
          <div class="s-teams-level">{{team.level}}</div>
          <h2 class="s-teams-title">{{team.name}}</h2>
@@ -28,7 +28,7 @@
       {{'common.profiles' | translate}}
    </div>
    <ion-list>
-     <ion-item class="item-avatar" ng-repeat="profil in searchModel.profiles" type="item-text-wrap" href="#/tab/profile/{{profil.id}}" menu-toggle="right">
+     <ion-item class="item-avatar" ng-repeat="profil in searchModel.profiles" type="item-text-wrap" href="#/tab/profile/{{profil.id}}" menu-toggle="right" ng-click="save()">
          <img ng-src="data:image/jpeg;base64,{{profil.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
          <div class="s-teams-level">{{profil.level}}</div>
          <h2 class="s-teams-title">{{profil.firstName}} {{profil.lastName}}</h2>
@@ -42,7 +42,7 @@
       {{'viewTitle.certificates' | translate}}
    </div>
    <ion-list>
-     <ion-item class="item item-thumbnail-left" ng-repeat="cours in searchModel.courses" type="item-text-wrap" href="#/tab/cours/{{cours.id}}" menu-toggle="right">
+     <ion-item class="item item-thumbnail-left" ng-repeat="cours in searchModel.courses" type="item-text-wrap" href="#/tab/cours/{{cours.id}}" menu-toggle="right" ng-click="save()">
          <img ng-src="data:image/jpeg;base64,{{cours.picture}}" onerror="this.src='img/common/defaultCours.png'">
          <div class="s-challenges-level">{{cours.levelMin}}</div>
          <h2 class="s-teams-title">{{cours.title}}</h2>

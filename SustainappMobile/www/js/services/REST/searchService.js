@@ -6,9 +6,19 @@
  */
 angular.module('sustainapp.services')
  .factory('searchService', function($http, config) {
+	 var params = {
+			withCredentials: true,
+	        headers: {
+	        	'Content-Type': undefined
+            },
+	        transformRequest: angular.identity
+	 };
 	 return {
 		search : function(query) {
 			return $http.get(config.remoteServer+"/search?query="+query);
+		},
+		save : function(data) {
+			return $http.post(config.remoteServer+"/search/save", data, params);
 		}
 	};
 });

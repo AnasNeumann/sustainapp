@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('searchController', function($scope, searchService) {
+	.controller('searchController', function($scope, searchService, sessionService) {
 		
 		/**
 		 * Initialisation du model
@@ -13,6 +13,7 @@ angular.module('sustainapp.controllers')
 		var initPage = function(){
 			$scope.searchModel = {};
 			$scope.searchModel.empty = true;
+			$scope.searchModel.flag = false;
 		};
 		initPage();
 		
@@ -22,6 +23,9 @@ angular.module('sustainapp.controllers')
 		$scope.search = function(){
 			searchService.search($scope.searchModel.query).then(function(response){
 				$scope.searchModel.empty = true;
+				if($scope.searchModel.query.length >= 4){
+					$scope.searchModel.flag = true;
+				}
 				if(response.data.code == 1) {
 					if(response.data.profiles.length > 0 || response.data.teams.length > 0 || response.data.courses.length > 0){
 						$scope.searchModel.empty = false;
@@ -35,6 +39,20 @@ angular.module('sustainapp.controllers')
 					$scope.searchModel.courses = [];
 				}
 			});
+		};
+		
+		/**
+		 * Fonction de sauvegarde de la recherche en base
+		 */
+		$scope.save = function(){
+			if(true == $scope.searchModel.flag){
+				$scope.searchModel.flag = false;
+				var data = new FormData();
+				data.append("query", $scope.searchModel.query);
+				data.append("sessionId", sessionService.get('id'));
+				data.append("sessionToken", sessionService.get('token'));
+				searchService.save(data);
+			}
 		}
 		
 	});

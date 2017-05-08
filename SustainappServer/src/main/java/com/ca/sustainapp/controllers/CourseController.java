@@ -119,6 +119,7 @@ public class CourseController extends GenericCourseController {
 		if(null == cours || null == user){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
+		courseService.createOrUpdate(cours.setViews(cours.getViews()+1));
 		return new CourseResponse()
 				.setCours(cours)
 				.setOwner(new LightProfileResponse(profileService.getById(cours.getCreatorId())))
