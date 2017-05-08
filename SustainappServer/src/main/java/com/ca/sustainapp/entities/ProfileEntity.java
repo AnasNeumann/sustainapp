@@ -15,7 +15,7 @@ import javax.persistence.Table;
 /**
  * PROFILE table mapping
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 24/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 @Entity

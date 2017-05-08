@@ -11,21 +11,21 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.ca.sustainapp.criteria.TeamCriteria;
-import com.ca.sustainapp.entities.TeamEntity;
+import com.ca.sustainapp.criteria.ResearchCriteria;
+import com.ca.sustainapp.entities.ResearchEntity;
 
 /**
  * specification for database research
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 08/05/2017
  * @version 1.0
  */
-public class TeamSpecification {
+public class ResearchSpecification {
 
 	/**
 	 * private constructor
 	 */
-	private TeamSpecification(){
+	private ResearchSpecification(){
 		
 	}
 	
@@ -33,12 +33,12 @@ public class TeamSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<TeamEntity>
+	 * @return Specification<ResearchEntity>
 	 */
-	public static Specification<TeamEntity> searchByCriteres(final TeamCriteria criteres) {
-		return new Specification<TeamEntity>() {
+	public static Specification<ResearchEntity> searchByCriteres(final ResearchCriteria criteres) {
+		return new Specification<ResearchEntity>() {
 			@Override
-			public Predicate toPredicate(Root<TeamEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+			public Predicate toPredicate(Root<ResearchEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> listeCond = new ArrayList<Predicate>();
 				if (null != criteres) {
 					if (null != criteres.getId()) {
@@ -46,16 +46,15 @@ public class TeamSpecification {
 						listeCond.add(p);
 					}
 
-					if (null != criteres.getLevel()) {
-						Predicate p = cb.equal(root.<Integer> get("level"), criteres.getLevel());
+					if (null != criteres.getProfilId()) {
+						Predicate p = cb.equal(root.<Long> get("profilId"), criteres.getProfilId());
 						listeCond.add(p);
 					}
 
-					if (null != criteres.getName()) {
-						Predicate p = cb.like(cb.lower(root.<String> get("name")), criteres.getName().toLowerCase() + "%");
+					if (null != criteres.getQuery()) {
+						Predicate p = cb.like(cb.lower(root.<String> get("query")), criteres.getQuery().toLowerCase() + "%");
 						listeCond.add(p);
-					}
-					
+					}					
 					
 					if (null != criteres.getTimestamps()) {
 						Predicate p = cb.equal(root.<Calendar> get("timestamps"), criteres.getTimestamps());
@@ -69,4 +68,5 @@ public class TeamSpecification {
 			}
 		};
 	}
+	
 }

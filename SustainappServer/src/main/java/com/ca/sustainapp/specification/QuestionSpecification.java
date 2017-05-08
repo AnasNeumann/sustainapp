@@ -27,7 +27,7 @@ public class QuestionSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<QuestionEntity>
 	 */
 	public static Specification<QuestionEntity> searchByCriteres(final QuestionCriteria criteres) {
 		return new Specification<QuestionEntity>() {

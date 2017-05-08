@@ -33,7 +33,7 @@ public class TeamRoleSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<TeamRoleEntity>
 	 */
 	public static Specification<TeamRoleEntity> searchByCriteres(final TeamRoleCriteria criteres) {
 		return new Specification<TeamRoleEntity>() {

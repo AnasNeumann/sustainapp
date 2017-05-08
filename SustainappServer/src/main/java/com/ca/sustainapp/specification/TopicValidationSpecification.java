@@ -33,7 +33,7 @@ public class TopicValidationSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<TopicValidationEntity>
 	 */
 	public static Specification<TopicValidationEntity> searchByCriteres(final TopicValidationCriteria criteres) {
 		return new Specification<TopicValidationEntity>() {

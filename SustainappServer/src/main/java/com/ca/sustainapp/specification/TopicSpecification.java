@@ -33,7 +33,7 @@ public class TopicSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<TopicEntity>
 	 */
 	public static Specification<TopicEntity> searchByCriteres(final TopicCriteria criteres) {
 		return new Specification<TopicEntity>() {

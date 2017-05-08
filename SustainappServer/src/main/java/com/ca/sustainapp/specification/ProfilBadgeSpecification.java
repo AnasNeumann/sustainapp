@@ -33,7 +33,7 @@ public class ProfilBadgeSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ProfilBadgeEntity>
 	 */
 	public static Specification<ProfilBadgeEntity> searchByCriteres(final ProfilBadgeCriteria criteres) {
 		return new Specification<ProfilBadgeEntity>() {

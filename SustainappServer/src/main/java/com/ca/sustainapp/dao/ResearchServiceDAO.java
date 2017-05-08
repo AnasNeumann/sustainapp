@@ -11,33 +11,33 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.ca.sustainapp.criteria.ReportCriteria;
-import com.ca.sustainapp.entities.ReportEntity;
+import com.ca.sustainapp.criteria.ResearchCriteria;
+import com.ca.sustainapp.entities.ResearchEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.repositories.ReportRepository;
-import com.ca.sustainapp.specification.ReportSpecification;
+import com.ca.sustainapp.repositories.ResearchRepository;
+import com.ca.sustainapp.specification.ResearchSpecification;
 
 /**
  * data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2107
+ * @since 08/05/2107
  * @verion 1.0
  */
-@Service("reportService")
-public class ReportServiceDAO extends GenericServiceDAO {
+@Service("researchService")
+public class ResearchServiceDAO extends GenericServiceDAO {
 	
 	/**
 	 * Le repository
 	 */
 	@Autowired
-	ReportRepository repository;
+	ResearchRepository repository;
 	
 	/**
 	 * Accès un seul entity par son Id
 	 * @param id
 	 * @return
 	 */
-	public ReportEntity getById(Long id){
+	public ResearchEntity getById(Long id){
 		if(null == id){
 			return null;
 		}
@@ -51,7 +51,7 @@ public class ReportServiceDAO extends GenericServiceDAO {
 	 */
 	@Modifying
 	@Transactional
-	public Long createOrUpdate(ReportEntity entity){
+	public Long createOrUpdate(ResearchEntity entity){
 		return repository.saveAndFlush(entity).getId();
 	}
 	
@@ -73,8 +73,8 @@ public class ReportServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<ReportEntity> getAll(){
-		return repository.findAll();
+	public List<ResearchEntity> getAll(){
+		return  repository.findAll();
 	}
 
 	/**
@@ -85,14 +85,13 @@ public class ReportServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public SearchResult<ReportEntity> searchByCriteres(ReportCriteria criteria, Long startIndex, Long maxResults) {		
-		Specification<ReportEntity> spec = ReportSpecification.searchByCriteres(criteria);
+	public SearchResult<ResearchEntity> searchByCriteres(ResearchCriteria criteria, Long startIndex, Long maxResults) {		
+		Specification<ResearchEntity> spec = ResearchSpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<ReportEntity> page = repository.findAll(spec, paginator);
+		Page<ResearchEntity> page = repository.findAll(spec, paginator);
 		
-		SearchResult<ReportEntity> result = initSearchResult(startIndex, maxResults);
+		SearchResult<ResearchEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
-
 }

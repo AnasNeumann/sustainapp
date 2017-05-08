@@ -32,7 +32,7 @@ public class NotificationSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ResearchEntity>
 	 */
 	public static Specification<NotificationEntity> searchByCriteres(final NotificationCriteria criteres) {
 		return new Specification<NotificationEntity>() {

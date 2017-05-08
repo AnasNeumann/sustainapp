@@ -33,7 +33,7 @@ public class ReportSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ReportEntity>
 	 */
 	public static Specification<ReportEntity> searchByCriteres(final ReportCriteria criteres) {
 		return new Specification<ReportEntity>() {

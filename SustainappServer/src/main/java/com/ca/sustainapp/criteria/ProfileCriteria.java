@@ -8,7 +8,7 @@ import javax.ws.rs.QueryParam;
 /**
  * Criteria for research
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 25/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 public class ProfileCriteria implements Serializable {
