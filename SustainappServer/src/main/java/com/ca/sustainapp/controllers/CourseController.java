@@ -119,10 +119,14 @@ public class CourseController extends GenericCourseController {
 		if(null == cours || null == user){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
+		boolean isOwner = cours.getCreatorId().equals(user.getProfile().getId()) || user.getIsAdmin();
+		if(!isOwner){
+			courseService.createOrUpdate(cours.setViews(cours.getViews()+1));
+		}
 		return new CourseResponse()
 				.setCours(cours)
 				.setOwner(new LightProfileResponse(profileService.getById(cours.getCreatorId())))
-				.setIsOwner(cours.getCreatorId().equals(user.getProfile().getId()) || user.getIsAdmin())
+				.setIsOwner(isOwner)
 				.setAverageRank(calculateAverageRank(cours))
 				.setRank(getOwnRank(user.getProfile().getId(), cours))
 				.setTopics(loadAllTopics(cours, user.getProfile().getId()))

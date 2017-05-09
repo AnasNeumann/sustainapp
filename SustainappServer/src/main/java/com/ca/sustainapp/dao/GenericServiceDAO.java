@@ -5,7 +5,7 @@ import com.ca.sustainapp.pojo.SearchResult;
 /**
  * generic mother class for data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 25/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 public class GenericServiceDAO {

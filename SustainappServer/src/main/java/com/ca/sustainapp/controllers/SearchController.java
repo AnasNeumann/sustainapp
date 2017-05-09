@@ -3,6 +3,7 @@ package com.ca.sustainapp.controllers;
 import javax.servlet.http.HttpServletRequest;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
+import com.ca.sustainapp.dao.ResearchServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.CourseEntity;
+import com.ca.sustainapp.entities.ResearchEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
@@ -41,6 +45,9 @@ public class SearchController extends GenericController {
 	private TeamServiceDAO teamService;
 	@Autowired
 	private CourseServiceDAO coursService;
+	@Autowired
+	private ResearchServiceDAO searchService;
+	
 	
 	/**
 	 * search profiles and teams
@@ -60,6 +67,27 @@ public class SearchController extends GenericController {
 				.setCode(1)
 				.buildJson();
 	}
+
+	/**
+	 * save a research into database
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/search/save", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	private String save(HttpServletRequest request){
+		UserAccountEntity user = super.getConnectedUser(request);
+		String query = request.getParameter("query");
+		if(isEmpty(query) || null == user){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		searchService.createOrUpdate(
+				new ResearchEntity()
+					.setProfilId(user.getProfile().getId())
+					.setQuery(query)
+					.setTimestamps(GregorianCalendar.getInstance())
+				);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
 	
 	/**
 	 * Search courses by keyword
@@ -75,5 +103,4 @@ public class SearchController extends GenericController {
 		}
 		return result;
 	}
-
 }

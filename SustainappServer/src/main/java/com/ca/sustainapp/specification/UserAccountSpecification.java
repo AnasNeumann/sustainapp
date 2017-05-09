@@ -16,7 +16,7 @@ import com.ca.sustainapp.entities.UserAccountEntity;
 /**
  * specification for database research
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 25/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 public class UserAccountSpecification {
@@ -32,7 +32,7 @@ public class UserAccountSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<UserAccountEntity>
 	 */
 	public static Specification<UserAccountEntity> searchByCriteres(final UserAccountCriteria criteres) {
 		return new Specification<UserAccountEntity>() {

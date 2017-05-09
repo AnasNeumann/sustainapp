@@ -25,7 +25,7 @@ import org.hibernate.annotations.FetchMode;
 /**
  * COURSE table mapping
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 29/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 @Entity
@@ -51,6 +51,9 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	
 	@Column(name = "OPEN")
 	private Integer open;
+	
+	@Column(name = "VIEWS")
+	private Integer views;
 	
 	@Column(name = "PICTURE")
 	private byte[] picture;
@@ -234,6 +237,21 @@ public class CourseEntity extends GenericEntity implements Serializable {
 	 */
 	public CourseEntity setOpen(Integer open) {
 		this.open = open;
+		return this;
+	}
+
+	/**
+	 * @return the views
+	 */
+	public Integer getViews() {
+		return views;
+	}
+
+	/**
+	 * @param views the views to set
+	 */
+	public CourseEntity setViews(Integer views) {
+		this.views = views;
 		return this;
 	}
 }

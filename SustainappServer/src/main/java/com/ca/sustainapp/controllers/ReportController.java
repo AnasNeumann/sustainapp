@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import java.util.GregorianCalendar;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,11 +14,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.ReportCriteria;
+import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.ReportServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.ReportEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.LightProfileResponse;
+import com.ca.sustainapp.responses.ReportResponse;
+import com.ca.sustainapp.responses.ReportsResponse;
 import com.ca.sustainapp.utils.FilesUtils;
+import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.ReportValidator;
 
 /**
@@ -36,17 +45,9 @@ public class ReportController extends GenericController {
 	@Autowired
 	private ReportServiceDAO reportService;
 	@Autowired
+	private ProfileServiceDAO profileService;
+	@Autowired
 	private ReportValidator reportValidator;
-	
-	/**
-	 * get all reports
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/report", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getAll(HttpServletRequest request) {
-		return null;
-	}
 	
 	/**
 	 * create a new report
@@ -63,7 +64,7 @@ public class ReportController extends GenericController {
 				.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG))
 				.setMessage(request.getParameter("message"))
 				.setTimestamps(GregorianCalendar.getInstance())
-				.setDocumentType(FilesUtils.FORMAT_JPG)
+				.setDocumentType(FilesUtils.FORMAT_PNG)
 				.setProfilId(profile.getId())
 				.setState(0);
 		reportService.createOrUpdate(report);
@@ -72,13 +73,39 @@ public class ReportController extends GenericController {
 	}
 	
 	/**
+	 * get all reports
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/report/all", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String getAll(HttpServletRequest request) {
+		Optional<Long> startIndex = StringsUtils.parseLongQuickly(request.getParameter("startIndex"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(!startIndex.isPresent() || null == user || !user.getIsAdmin()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		SearchResult<ReportEntity> listResult = reportService.searchByCriteres(new ReportCriteria().setState(0), startIndex.get(), 5L);
+		ReportsResponse response = new ReportsResponse();
+		for(ReportEntity entity : listResult.getResults()){
+			response.getReports().add(new ReportResponse(entity).setOwner(new LightProfileResponse(profileService.getById(entity.getProfilId()))));
+		}
+		return response.setCode(1).buildJson();
+	}
+	
+	/**
 	 * update a report by id
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/report", method = RequestMethod.PUT, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/report/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		Optional<Long> reportId = StringsUtils.parseLongQuickly(request.getParameter("report"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(!reportId.isPresent() || null == user || !user.getIsAdmin()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		reportService.createOrUpdate(reportService.getById(reportId.get()).setState(1));
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
 }

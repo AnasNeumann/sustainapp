@@ -21,6 +21,7 @@
     "common.about" : "About", 
     "common.title" : "Title",
     "comon.newspaper" : "Newspaper",
+    "common.done" : "Done",
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
@@ -81,10 +82,26 @@
     
     "report.message" : "Your request has been received and will be processed as soon as possible",
     
-    "administration.challengeTypes" : "Manage challenge types",
-    "administration.categories" : "Manage courses categories",
-    "administration.transport" : "Manage means of transport",
-    "administration.challengeTypes.title" : "Challenge types",
+    "administration.signal" : "Manage reports",
+    "administration.data" : "Data access",
+    "administration.special" : "Special treatments",
+    "administration.courses" : "Courses informations",
+    "administration.research" : "Research informations",
+    "administration.challenges" : "Challenges informations",
+    "administration.profiles" : "Profiles informations",
+    "administration.general" : "General informations",
+    "administration.mostView" : "Most viewed",
+    "administration.byCateogries" : "Sort by categories",
+    "administration.total" : "Total number",
+    "administration.byHours" : "Sort by hours",
+    "administration.byDays"  : "Sort by days",
+    "administration.averageParticipation" : "Average participation",
+    "administration.totalProfiles" : "Number of profiles",
+    "administration.totalTeams" : "Number of teams",
+    "administration.averageTeam" : "Average team size",
+    "administration.profilesByLevel" : "Profiles by level",
+    "administration.teamByCateogries" : "Teams by level",
+    "administration.byAges" : "Profiles by ages",
     
     "challengetype.building" : "eco-builing",
     "challengetype.design" : "eco-desgin",
@@ -200,5 +217,13 @@
     "notification.badge.title" : "New badge",
     "notification.participate.title" : "New participation",
     "notification.request.title" : "New request",
-    "notification.accept.title" : "Request accepted"
+    "notification.accept.title" : "Request accepted",
+    
+    "Monday" : "Monday",
+    "Tuesday": "Tuesday",
+    "Wednesday": "Wednesday",
+    "Thursday": "Thursday",
+    "Friday": "Friday",
+    "Saturday": "Saturday",
+    "Sunday": "Sunday"
 }

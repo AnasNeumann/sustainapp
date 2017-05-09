@@ -17,7 +17,7 @@ import com.ca.sustainapp.entities.ProfileEntity;
 /**
  * specification for database research
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 25/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 public class ProfileSpecification {

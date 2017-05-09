@@ -21,6 +21,7 @@
     "common.about" : "A propos", 
     "common.title" : "Titre",
     "comon.newspaper" : "Journal",
+    "common.done" : "Terminé",
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
@@ -81,10 +82,26 @@
     
     "report.message" : "Votre demande a bien été prise en compte et sera traitée dans les plus brefs delais",
     
-    "administration.challengeTypes" : "Gestion des types de challenges",
-    "administration.categories" : "Gestion des categories de cours",
-    "administration.transport" : "Gestion des moyens de transport",
-    "administration.challengeTypes.title" : "Types de challenges",
+    "administration.signal" : "Gestion des signalements",
+    "administration.data" : "Accès aux données",
+    "administration.special" : "Traitements spéciaux",
+    "administration.courses" : "Données sur les cours",
+    "administration.research" : "Données sur les recherches",
+    "administration.challenges" : "Données sur les challenges",
+    "administration.profiles" : "Données sur les profils",
+    "administration.general" : "Informations générales",
+    "administration.mostView" : "Les plus vus",
+    "administration.byCateogries" : "Tri par catégories",
+    "administration.total" : "Nombre total",
+    "administration.byHours" : "Tri par heures",
+    "administration.byDays"  : "Tri par jours",
+    "administration.averageParticipation" : "Participation moyenne",
+    "administration.totalProfiles" : "Nombre de profils",
+    "administration.totalTeams" : "Nombre d'équipes",
+    "administration.averageTeam" : "Taille moyenne d'une équipe",
+    "administration.profilesByLevel" : "Profils par niveaux",
+    "administration.teamByCateogries" : "Equipes par niveaux",
+    "administration.byAges" : "Profils par âges",
     
     "challengetype.building" : "eco-construction",
     "challengetype.design" : "eco-desgin",
@@ -200,5 +217,13 @@
     "notification.badge.title" : "Nouveau badge",
     "notification.participate.title" : "Nouvelle participation",
     "notification.request.title" : "Nouvelle demande",
-    "notification.accept.title" : "Demande acceptée"
+    "notification.accept.title" : "Demande acceptée",
+    
+    "Monday" : "Lundi",
+    "Tuesday": "Mardi",
+    "Wednesday": "Mercredi",
+    "Thursday": "Jeudi",
+    "Friday": "Vendredi",
+    "Saturday": "Samedi",
+    "Sunday": "Dimanche"
 }

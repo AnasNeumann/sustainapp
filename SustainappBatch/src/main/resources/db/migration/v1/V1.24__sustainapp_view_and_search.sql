@@ -1,0 +1,12 @@
+-- une table pour retenir les recherches utilisateurs
+CREATE TABLE RESEARCH (
+    ID SERIAL PRIMARY KEY,
+    QUERY VARCHAR(300),
+    PROFILE_ID  INTEGER NOT NULL,
+    TIMESTAMPS TIMESTAMP,
+    CONSTRAINT FK_RESEARCH_PROFILE_ID FOREIGN KEY (PROFILE_ID) REFERENCES PROFILE (ID)
+);
+
+-- une colonne pour retenir le nombre de vue sur chaque cours
+ALTER TABLE  COURSE
+ADD VIEWS INTEGER DEFAULT 0;

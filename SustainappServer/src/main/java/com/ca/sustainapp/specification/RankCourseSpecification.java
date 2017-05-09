@@ -33,7 +33,7 @@ public class RankCourseSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<RankCourseEntity>
 	 */
 	public static Specification<RankCourseEntity> searchByCriteres(final RankCourseCriteria criteres) {
 		return new Specification<RankCourseEntity>() {

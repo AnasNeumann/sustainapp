@@ -32,7 +32,7 @@ public class ParticipationSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ParticipationEntity>
 	 */
 	public static Specification<ParticipationEntity> searchByCriteres(final ParticipationCriteria criteres) {
 		return new Specification<ParticipationEntity>() {

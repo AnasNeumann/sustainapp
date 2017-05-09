@@ -33,7 +33,7 @@ public class CourseSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ResearchEntity>
 	 */
 	public static Specification<CourseEntity> searchByCriteres(final CourseCriteria criteres) {
 		return new Specification<CourseEntity>() {
@@ -48,6 +48,11 @@ public class CourseSpecification {
 
 					if (null != criteres.getCreatorId()) {
 						Predicate p = cb.equal(root.<Long> get("creatorId"), criteres.getCreatorId());
+						listeCond.add(p);
+					}
+					
+					if (null != criteres.getViews()) {
+						Predicate p = cb.equal(root.<Integer> get("views"), criteres.getViews());
 						listeCond.add(p);
 					}
 

@@ -33,7 +33,7 @@ public class AnswerSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<AnswerEntity>
 	 */
 	public static Specification<AnswerEntity> searchByCriteres(final AnswerCriteria criteres) {
 		return new Specification<AnswerEntity>() {

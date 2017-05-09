@@ -3,7 +3,7 @@ package com.ca.sustainapp.boot;
 /**
  * Classe contenant toutes les constantes utilisées dans SustainAppServer
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 22/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 public class SustainappConstantes {

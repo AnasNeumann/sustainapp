@@ -19,6 +19,7 @@ public class CourseCriteria implements Serializable {
 	private String about;
 	private Long creatorId;
 	private String language;
+	private Integer views;
 	private Calendar timestamps;
 
 	/**
@@ -122,4 +123,19 @@ public class CourseCriteria implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return the views
+	 */
+	public Integer getViews() {
+		return views;
+	}
+
+	/**
+	 * @param views the views to set
+	 */
+	@QueryParam("views")
+	public CourseCriteria setViews(Integer views) {
+		this.views = views;
+		return this;
+	}
 }

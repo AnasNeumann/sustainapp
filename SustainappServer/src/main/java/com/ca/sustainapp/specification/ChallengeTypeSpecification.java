@@ -33,7 +33,7 @@ public class ChallengeTypeSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ChallengeTypeEntity>
 	 */
 	public static Specification<ChallengeTypeEntity> searchByCriteres(final ChallengeTypeCriteria criteres) {
 		return new Specification<ChallengeTypeEntity>() {

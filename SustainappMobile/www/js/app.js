@@ -4,7 +4,7 @@
  * @since 01/02/2017
  * @version 1.0
  */
-angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating', 'ngDraggable', 'ngStomp'])
+angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.services', 'sustainapp.constantes', 'ngCordova', 'pascalprecht.translate', 'ngSanitize', 'ionic.rating', 'ngDraggable', 'ngStomp', 'chart.js'])
 
 /**
  * DEMARAGE DE SUSTAINAPP
@@ -49,6 +49,51 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       'tab-news': {
         templateUrl: 'templates/administration/menu.html',
         controller: 'administrationController'
+      }
+    }
+  })
+  .state('tab.administration-reports', {
+    url: '/administration/reports',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/reports.html',
+        controller: 'reportsController'
+      }
+    }
+  })
+  .state('tab.administration-courses', {
+    url: '/administration/courses',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/courses.html',
+        controller: 'coursesDataController'
+      }
+    }
+  })
+  .state('tab.administration-challenges', {
+    url: '/administration/challenges',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/challenges.html',
+        controller: 'challengesDataController'
+      }
+    }
+  })
+  .state('tab.administration-research', {
+    url: '/administration/research',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/research.html',
+        controller: 'researchDataController'
+      }
+    }
+  })
+  .state('tab.administration-profiles', {
+    url: '/administration/profiles',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/profiles.html',
+        controller: 'profilesDataController'
       }
     }
   })
@@ -204,7 +249,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 		  };
 	 document.addEventListener("deviceready", function () {
 		    $cordovaInAppBrowserProvider.setDefaultOptions(options)	
-		  }, false);
+     }, false);
 	 
   /**
    * SYSTEME DE TRADUCTION

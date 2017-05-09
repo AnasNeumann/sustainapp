@@ -1,0 +1,33 @@
+<ion-view view-title="{{'sideMenu.administration' | translate }}">
+    <ion-content>
+       
+        <!-- EMPTY RESULTS -->
+	    <div class="s-search-empty" ng-if="0 == reportModel.reports.length">
+	        <i class="icon ion-checkmark-circled"></i>
+	    </div>
+       
+        <!-- ALL REPORTS -->
+        <div class="s-participation-all">
+            <div ng-repeat="report in reportModel.reports" class="s-participation-one">
+                 <img ng-src="data:image/jpeg;base64,{{report.document}}" ng-if="report.document != null" class="s-participation-img" width="100%" height="auto" />
+                 <div class="padding s-participation-txt">
+                     <p class="s-teams-text s-participation-p">{{report.message}}</p>
+                    <div class="row">
+			            <div class="col col-10"></div>
+			            <div class="col col-80">
+			                 <button class="s-common-lightBtn s-report-doneBtn" ng-click="done(report)">{{'common.done' | translate}}</button>
+			            </div>
+			        </div>
+                 </div>
+                 <ion-item class="item item-avatar" type="item-text-wrap" href="#/tab/{{report.owner.type}}/{{report.owner.id}}">
+                     <img ng-src="data:image/jpeg;base64,{{report.owner.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
+                     <div class="s-teams-level">{{report.owner.level}}</div>
+                     <h2 class="s-teams-title">{{report.owner.denomination}}</h2>
+                     <p class="s-teams-text">{{report.timestamps | date: 'dd/MM/yyyy'}}</p>
+                 </ion-item>
+            </div>
+            <ion-infinite-scroll on-infinite="getMoreReports()" distance="10%" ng-if="reportModel.moreReports">
+            </ion-infinite-scroll>
+        </div>
+    </ion-content>
+</ion-view>

@@ -33,7 +33,7 @@ public class NewsSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ResearchEntity>
 	 */
 	public static Specification<NewsEntity> searchByCriteres(final NewsCriteria criteres) {
 		return new Specification<NewsEntity>() {

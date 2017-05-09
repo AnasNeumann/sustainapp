@@ -1,0 +1,39 @@
+<ion-view view-title="{{'administration.courses' | translate }}">
+    <!-- Data loaded -->
+    <ion-content ng-show="model.loaded">
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.general' | translate}}</h2>
+        </div>
+        <div class="padding">
+           {{'administration.total' | translate}} : <b>{{model.total}}</b>
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.mostView' | translate}}</h2>
+        </div>
+        <ion-list>
+	      <ion-item class="item item-thumbnail-left" ng-repeat="cours in model.mostSeen" type="item-text-wrap" href="#/tab/cours/{{cours.id}}" >
+	         <img ng-src="data:image/jpeg;base64,{{cours.picture}}" onerror="this.src='img/common/defaultCours.png'">
+	         <div class="s-challenges-level">{{cours.levelMin}}</div>
+	         <h2 class="s-teams-title">{{cours.title}}</h2>
+	         <p class="s-teams-text">{{cours.about}}</p>
+	         <p class="s-teams-text"><i class="icon ion-ios-calendar-outline"></i> {{cours.timestamps | date: 'dd/MM/yyyy'}}</p> 
+	      </ion-item>
+	    </ion-list>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.byCateogries' | translate}}</h2>
+        </div>
+        <div class="row">
+            <div class="col col-20"></div>
+            <div class="col col-60">
+                <canvas id="pie" class="chart chart-pie" chart-data="model.categoriesData" chart-labels="model.categoriesLabels" chart-options="options"></canvas> 
+            </div>
+        </div>
+    </ion-content>
+    
+    
+   <!-- Loading Part -->
+   <ion-content class="s-common-loading" ng-hide="model.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+   </ion-content>
+</ion-view>

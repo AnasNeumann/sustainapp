@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * Classe de démarrage de la plateforme serveur
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 20/01/2017
+ * @since 30/01/2017
  * @version 1.0
  */
 @SpringBootApplication

@@ -33,7 +33,7 @@ public class BadgeSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<BadgeEntity>
 	 */
 	public static Specification<BadgeEntity> searchByCriteres(final BadgeCriteria criteres) {
 		return new Specification<BadgeEntity>() {

@@ -20,7 +20,7 @@ import com.ca.sustainapp.specification.TeamRoleSpecification;
 /**
  * data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 25/01/2107
+ * @since 30/01/2107
  * @verion 1.0
  */
 @Service("teamRoleService")
@@ -95,4 +95,11 @@ public class TeamRoleServiceDAO extends GenericServiceDAO {
 		return result;
 	}
 
+	/**
+	 * get the total number of team roles
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
 }
