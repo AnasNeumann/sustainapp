@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('coursesDataController', function($scope, sessionService, administrationService) {
+	.controller('coursesDataController', function($scope, $filter, sessionService, administrationService) {
 	
 		/**
 		 * Entrée dans la page
@@ -30,10 +30,10 @@ angular.module('sustainapp.controllers')
 				$scope.model.loaded = true;
 				$scope.model.total = result.total;
 				$scope.model.mostSeen = result.mostSeen;
-				for(elt in result.coursByCategories){
-					if(0 != result.coursByCategories[elt]){
+				for(elt in result.coursesByCategories){
+					if(0 != result.coursesByCategories[elt]){
 						$scope.model.categoriesLabels.push($filter('translate')(elt));
-						$scope.model.categoriesData.push(result.coursByCategories[elt]);
+						$scope.model.categoriesData.push(result.coursesByCategories[elt]);
 					}
 				}
 			});

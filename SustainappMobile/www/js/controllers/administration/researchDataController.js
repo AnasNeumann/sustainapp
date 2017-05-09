@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('researchDataController', function($scope, sessionService, administrationService) {
+	.controller('researchDataController', function($scope, $filter, sessionService, administrationService) {
 
 		/**
 		 * Entrée dans la page
@@ -25,6 +25,8 @@ angular.module('sustainapp.controllers')
 			$scope.model.hoursData = [];
 			$scope.model.daysLabels = [];
 			$scope.model.daysData = [];
+			$scope.model.seriesHours = [$filter('translate')("administration.byHours")];
+			$scope.model.seriesDays = [$filter('translate')("administration.byDays")];
 			var data = new FormData();
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
@@ -32,14 +34,18 @@ angular.module('sustainapp.controllers')
 				$scope.model.loaded = true;
 				$scope.model.total = result.total;
 				$scope.model.mostSeen = result.mostSeen;
+				var tempHours = [];
 				for(elt in result.useByHours){
 					$scope.model.hoursLabels.push(elt);
-					$scope.model.hoursData.push(result.useByHours[elt]);
+					tempHours.push(result.useByHours[elt]);			
 				}
+				$scope.model.hoursData.push(tempHours);
+				var tempDays = [];
 				for(elt in result.useByDays){
 					$scope.model.daysLabels.push($filter('translate')(elt));
-					$scope.model.daysData.push(result.useByDays[elt]);
+					tempDays.push(result.useByDays[elt]);
 				}
+				$scope.model.daysData.push(tempDays);
 			});
 		};
 		

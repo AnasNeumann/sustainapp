@@ -2,7 +2,34 @@
     
     <!-- Data loaded -->
     <ion-content ng-show="model.loaded">
-        <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options"></canvas> 
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.general' | translate}}</h2>
+        </div>
+        <div class="padding">
+           {{'administration.total' | translate}} : <b>{{model.total}}</b><br />
+           {{'administration.averageParticipation' | translate}} : <b>{{model.average}}</b>
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.byCateogries' | translate}}</h2>
+        </div>
+        <div class="row">
+            <div class="col col-20"></div>
+            <div class="col col-60">
+                <canvas id="pie" class="chart chart-pie" chart-data="model.categoriesData" chart-labels="model.categoriesLabels" chart-options="options"></canvas> 
+            </div>
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.byHours' | translate}}</h2>
+        </div>
+        <div>           
+            <canvas id="bar1" class="chart chart-bar" chart-data="model.hoursData" chart-labels="model.hoursLabels" chart-series="model.seriesHours"></canvas> 
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.byDays' | translate}}</h2>
+        </div>
+        <div>
+           <canvas id="bar2" class="chart chart-bar" chart-data="model.daysData" chart-labels="model.daysLabels" chart-series="model.seriesDays"></canvas>  
+        </div>
     </ion-content>
     
     

@@ -1,7 +1,38 @@
 <ion-view view-title="{{'administration.profiles' | translate }}">
     <!-- Data loaded -->
     <ion-content ng-show="model.loaded">
-        <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options"></canvas> 
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.general' | translate}}</h2>
+        </div>
+        <div class="padding">
+           {{'administration.totalProfiles' | translate}} : <b>{{model.totalProfiles}}</b><br />
+           {{'administration.totalTeams' | translate}} : <b>{{model.totalTeams}}</b><br />
+           {{'administration.averageTeam' | translate}} : <b>{{model.average}}</b> 
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.profilesByLevel' | translate}}</h2>
+        </div>
+        <div class="row">
+            <div class="col col-20"></div>
+            <div class="col col-60">
+                <canvas id="pie" class="chart chart-pie" chart-data="model.profilesLevelData" chart-labels="model.profilesLevelLabels" chart-options="options"></canvas> 
+            </div>
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.teamByCateogries' | translate}}</h2>
+        </div>
+        <div class="row">
+            <div class="col col-20"></div>
+            <div class="col col-60">
+                <canvas id="pie" class="chart chart-pie" chart-data="model.teamsLevelData" chart-labels="model.teamsLevelLabels" chart-options="options"></canvas> 
+            </div>
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.byAges' | translate}}</h2>
+        </div>
+        <div>
+            <canvas id="line" class="chart chart-line" chart-data="model.profilesaAgeData" chart-labels="model.profilesAgeLabels" ></canvas> 
+        </div>
     </ion-content>
     
     
