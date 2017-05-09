@@ -27,6 +27,21 @@ public interface ChallengeRepository  extends JpaSpecificationExecutor<Challenge
 	Integer countById(@Param("id") Long id); 
 	
 	/**
+	 * count entities by type
+	 * @param type
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM ChallengeEntity AS c WHERE c.challengeType.id = :type")
+	Integer countByType(@Param("type") Long type);
+	
+	/**
+	 * get the total of entities
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM ChallengeEntity")
+	Integer total();
+	
+	/**
 	 * delete entities by id
 	 * @param id
 	 */

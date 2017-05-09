@@ -1,5 +1,14 @@
 <ion-view view-title="{{'administration.challenges' | translate }}">
-    <ion-content>
+    
+    <!-- Data loaded -->
+    <ion-content ng-show="model.loaded">
         <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options"></canvas> 
     </ion-content>
+    
+    
+   <!-- Loading Part -->
+   <ion-content class="s-common-loading" ng-hide="model.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+   </ion-content>
 </ion-view>

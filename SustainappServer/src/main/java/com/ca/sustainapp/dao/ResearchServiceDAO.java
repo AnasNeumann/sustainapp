@@ -94,4 +94,20 @@ public class ResearchServiceDAO extends GenericServiceDAO {
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
+	
+	/**
+	 * get the most seen research
+	 * @return
+	 */
+	public List<String> mostSeen(){
+		return repository.mostSeen(new PageRequest(0, 5));
+	}
+	
+	/**
+	 * get the total number of research
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
 }

@@ -1,5 +1,8 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,5 +35,20 @@ public interface ResearchRepository extends JpaSpecificationExecutor<ResearchEnt
 	 */
 	@Modifying
 	@Query("DELETE FROM ResearchEntity r WHERE r.id = :id")
-	void delete(@Param("id") Long id);	
+	void delete(@Param("id") Long id);
+	
+	/**
+	 * get the total of research
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM ResearchEntity")
+	Integer total();
+	
+	/**
+	 * get the most done research
+	 * @param pageable
+	 * @return
+	 */
+	@Query("SELECT r.query FROM ResearchEntity as r GROUP BY r.query ORDER BY COUNT(r) DESC")
+	List<String> mostSeen(Pageable pageable);
 }

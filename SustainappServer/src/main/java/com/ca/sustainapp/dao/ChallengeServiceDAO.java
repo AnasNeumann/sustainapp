@@ -94,4 +94,21 @@ public class ChallengeServiceDAO extends GenericServiceDAO {
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
+
+	/**
+	 * get the total number of entity
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
+	
+	/**
+	 * Count entity by type
+	 * @param type
+	 * @return
+	 */
+	public Integer countByType(Long type){
+		return repository.countByType(type);
+	}
 }

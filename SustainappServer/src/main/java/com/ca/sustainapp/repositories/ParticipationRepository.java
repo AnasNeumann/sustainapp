@@ -33,4 +33,12 @@ public interface ParticipationRepository extends JpaSpecificationExecutor<Partic
 	@Modifying
 	@Query("DELETE FROM ParticipationEntity p WHERE p.id = :id")
 	void delete(@Param("id") Long id);
+	
+	
+	/**
+	 * get the total of entities
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM ParticipationEntity")
+	Integer total();
 }

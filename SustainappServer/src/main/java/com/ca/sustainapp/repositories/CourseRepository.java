@@ -38,6 +38,28 @@ public interface CourseRepository extends JpaSpecificationExecutor<CourseEntity>
 	void delete(@Param("id") Long id);
 	
 	/**
+	 * count courses by type
+	 * @param type
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM CourseEntity AS c WHERE c.type.id = :type")
+	Integer countByType(@Param("type") Long type);
+
+	/**
+	 * get the most seen courses with limit
+	 * @return
+	 */
+	@Query("FROM CourseEntity AS c ORDER BY VIEWS DESC")
+	List<CourseEntity> mostSeen(Pageable pageable);
+
+	/**
+	 * get the total of courses
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM CourseEntity")
+	Integer total();
+	
+	/**
 	 * Select all teams by keywords
 	 * @param Keywords
 	 * @return

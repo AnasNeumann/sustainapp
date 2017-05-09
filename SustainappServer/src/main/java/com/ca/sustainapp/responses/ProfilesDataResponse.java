@@ -13,7 +13,7 @@ public class ProfilesDataResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private Integer totalTeams;
 	private Integer totalProfiles;
-	private Integer average;
+	private Float average;
 	private Map<Integer, Integer> teamByLevel = new HashMap<Integer, Integer>();
 	private Map<Integer, Integer> profileByLevel = new HashMap<Integer, Integer>();
 	private Map<Integer, Integer> profileByAge = new HashMap<Integer, Integer>();
@@ -51,14 +51,14 @@ public class ProfilesDataResponse extends HttpRESTfullResponse {
 	/**
 	 * @return the average
 	 */
-	public Integer getAverage() {
+	public Float getAverage() {
 		return average;
 	}
 
 	/**
 	 * @param average the average to set
 	 */
-	public ProfilesDataResponse setAverage(Integer average) {
+	public ProfilesDataResponse setAverage(Float average) {
 		this.average = average;
 		return this;
 	}

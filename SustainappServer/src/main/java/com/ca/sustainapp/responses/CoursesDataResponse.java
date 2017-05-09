@@ -15,7 +15,6 @@ public class CoursesDataResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private Integer total;
 	private Map<String, Integer> coursesByCategories = new HashMap<String, Integer>();
-	private Map<String, Integer> useByHours = new HashMap<String, Integer>();
 	private List<LightCourseResponse> mostSeen = new ArrayList<LightCourseResponse>();
 
 	/**
@@ -45,21 +44,6 @@ public class CoursesDataResponse extends HttpRESTfullResponse {
 	 */
 	public CoursesDataResponse setCoursesByCategories(Map<String, Integer> coursesByCategories) {
 		this.coursesByCategories = coursesByCategories;
-		return this;
-	}
-
-	/**
-	 * @return the useByHours
-	 */
-	public Map<String, Integer> getUseByHours() {
-		return useByHours;
-	}
-
-	/**
-	 * @param useByHours the useByHours to set
-	 */
-	public CoursesDataResponse setUseByHours(Map<String, Integer> useByHours) {
-		this.useByHours = useByHours;
 		return this;
 	}
 

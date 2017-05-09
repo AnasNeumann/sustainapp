@@ -105,4 +105,29 @@ public class CourseServiceDAO extends GenericServiceDAO {
 	public List<CourseEntity> searchByKeywords(String keywords, Integer maximum){
 		return repository.searchByKeywords(keywords, new PageRequest(0, maximum));
 	}
+	
+	/**
+	 * Count courses by type
+	 * @param type
+	 * @return
+	 */
+	public Integer countByType(Long type){
+		return repository.countByType(type);
+	}
+	
+	/**
+	 * get the most seen courses
+	 * @return
+	 */
+	public List<CourseEntity> mostSeen(){
+		return repository.mostSeen(new PageRequest(0, 5));
+	}
+	
+	/**
+	 * get the total number of courses
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
 }

@@ -94,5 +94,13 @@ public class ParticipationServiceDAO extends GenericServiceDAO {
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
+	
+	/**
+	 * get the total number of participations
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
 
 }

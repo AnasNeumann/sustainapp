@@ -95,4 +95,11 @@ public class TeamRoleServiceDAO extends GenericServiceDAO {
 		return result;
 	}
 
+	/**
+	 * get the total number of team roles
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
 }

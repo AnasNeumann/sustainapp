@@ -204,5 +204,13 @@
     "notification.badge.title" : "New badge",
     "notification.participate.title" : "New participation",
     "notification.request.title" : "New request",
-    "notification.accept.title" : "Request accepted"
+    "notification.accept.title" : "Request accepted",
+    
+    "Monday" : "Monday",
+    "Tuesday": "Tuesday",
+    "Wednesday": "Wednesday",
+    "Thursday": "Thursday",
+    "Friday": "Friday",
+    "Saturday": "Saturday",
+    "Sunday": "Sunday"
 }

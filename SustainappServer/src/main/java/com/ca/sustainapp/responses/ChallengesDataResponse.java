@@ -12,9 +12,10 @@ import java.util.Map;
 public class ChallengesDataResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private Integer total;
-	private Integer average;
-	private Map<String, Integer> coursesByCategories = new HashMap<String, Integer>();
+	private Float average;
+	private Map<String, Integer> challengesByCategories = new HashMap<String, Integer>();
 	private Map<String, Integer> useByHours = new HashMap<String, Integer>();
+	private Map<String, Integer> useByDays =  new HashMap<String, Integer>();
 
 	/**
 	 * @return the total
@@ -34,14 +35,14 @@ public class ChallengesDataResponse extends HttpRESTfullResponse {
 	/**
 	 * @return the average
 	 */
-	public Integer getAverage() {
+	public Float getAverage() {
 		return average;
 	}
 
 	/**
 	 * @param average the average to set
 	 */
-	public ChallengesDataResponse setAverage(Integer average) {
+	public ChallengesDataResponse setAverage(Float average) {
 		this.average = average;
 		return this;
 	}
@@ -49,15 +50,15 @@ public class ChallengesDataResponse extends HttpRESTfullResponse {
 	/**
 	 * @return the coursesByCategories
 	 */
-	public Map<String, Integer> getCoursesByCategories() {
-		return coursesByCategories;
+	public Map<String, Integer> getChallengesByCategories() {
+		return challengesByCategories;
 	}
 
 	/**
 	 * @param coursesByCategories the coursesByCategories to set
 	 */
-	public ChallengesDataResponse setCoursesByCategories(Map<String, Integer> coursesByCategories) {
-		this.coursesByCategories = coursesByCategories;
+	public ChallengesDataResponse setChallengesByCategories(Map<String, Integer> challengesByCategories) {
+		this.challengesByCategories = challengesByCategories;
 		return this;
 	}
 
@@ -73,6 +74,21 @@ public class ChallengesDataResponse extends HttpRESTfullResponse {
 	 */
 	public ChallengesDataResponse setUseByHours(Map<String, Integer> useByHours) {
 		this.useByHours = useByHours;
+		return this;
+	}
+
+	/**
+	 * @return the useByDays
+	 */
+	public Map<String, Integer> getUseByDays() {
+		return useByDays;
+	}
+
+	/**
+	 * @param useByDays the useByDays to set
+	 */
+	public ChallengesDataResponse setUseByDays(Map<String, Integer> useByDays) {
+		this.useByDays = useByDays;
 		return this;
 	}
 }

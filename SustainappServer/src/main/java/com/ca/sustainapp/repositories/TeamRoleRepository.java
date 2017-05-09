@@ -33,5 +33,11 @@ public interface TeamRoleRepository extends JpaSpecificationExecutor<TeamRoleEnt
 	@Modifying
 	@Query("DELETE FROM TeamRoleEntity t WHERE t.id = :id")
 	void delete(@Param("id") Long id);
-
+	
+	/**
+	 * get the total of team roles
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM TeamRoleEntity")
+	Integer total();
 }
