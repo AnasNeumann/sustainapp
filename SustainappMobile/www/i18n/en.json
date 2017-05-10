@@ -188,7 +188,6 @@
     "badges.capitaine.name" : "Captain",
     "badges.missionary.name" : "Missionary",
     "badges.star.name" : "Super Star",
-    "badges.journalist.name" : "Journalist",
     "badges.walker.name" : "Walker",
     
     "badges.teacher.about" : "Receive more than 10 good ratings on your courses",
@@ -197,8 +196,7 @@
     "badges.capitaine.about" : "Manage a team with at least 2 members",
     "badges.missionary.about" : "Receive more than 10 votes on your participation in challenges",
     "badges.star.about" : "Be highlighted in the newspaper",
-    "badges.journalist.about" : "Write more than 10 articles in the newspaper",
-    "badges.walker.about" : "Validate your walking objectives",
+    "badges.walker.about" : "Visit at least 10 public places",
     
     "newspaper.courses" : "Best courses",
     "newspaper.participations" : "Best achievements",
@@ -211,6 +209,8 @@
     "notification.participate" : "took part in the challenge",
     "notification.request" : "asked to join the team",
     "notification.accept" : "You have been added to the team",
+    "notification.city" : "There is a new city to validate",
+    "notification.validation" : "Your city has been validated",
     
     "notification.vote.title" : "New vote",
     "notification.rank.title" : "New note",
@@ -218,6 +218,8 @@
     "notification.participate.title" : "New participation",
     "notification.request.title" : "New request",
     "notification.accept.title" : "Request accepted",
+    "notification.city.title" : "New city",
+    "notification.validation.title" : "City validated",
     
     "Monday" : "Monday",
     "Tuesday": "Tuesday",

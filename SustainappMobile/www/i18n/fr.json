@@ -188,7 +188,6 @@
     "badges.capitaine.name" : "Capitaine",
     "badges.missionary.name" : "Missionnaire",
     "badges.star.name" : "Super Star",
-    "badges.journalist.name" : "Journaliste",
     "badges.walker.name" : "Baladeur",
     
     "badges.teacher.about" : "Recevoir plus de 10 notes au dessus de 3 étoiles sur vos cours",
@@ -197,8 +196,7 @@
     "badges.capitaine.about" : "Avoir géré une équipe comportant au moins 2 membres",
     "badges.missionary.about" : "Avoir reçu plus de 10 votes sur vos participations dans les challenges",
     "badges.star.about" : "Avoir été mis en avant dans le journal d'actualités",
-    "badges.journalist.about" : "Avoir rédigé plus de 10 articles dans le journal d'actualités",
-    "badges.walker.about" : "Avoir validé vos objectifs de marche à pied",
+    "badges.walker.about" : "Visiter au moins 10 lieux publics",
     
     "newspaper.courses" : "Meilleurs cours",
     "newspaper.participations" : "Meilleurs réalisations",
@@ -211,6 +209,8 @@
     "notification.participate" : "a participé au challenge",
     "notification.request" : "a demandé à rejoindre l'équipe",
     "notification.accept" : "Vous avez été ajouté à l'équipe",
+    "notification.city" : "Une nouvelle demande de validation de ville",
+    "notification.validation" : "Votre demande de validation de ville a été acceptée",
     
     "notification.vote.title" : "Nouveau vote",
     "notification.rank.title" : "Nouvelle note",
@@ -218,6 +218,8 @@
     "notification.participate.title" : "Nouvelle participation",
     "notification.request.title" : "Nouvelle demande",
     "notification.accept.title" : "Demande acceptée",
+    "notification.city.title" : "Nouvelle ville",
+    "notification.validation.title" : "Ville validée",
     
     "Monday" : "Lundi",
     "Tuesday": "Mardi",
