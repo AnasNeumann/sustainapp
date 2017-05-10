@@ -1,5 +1,5 @@
 -- created by Anas Neumann <anas.neumann.isamm@gmail.com>
--- since 9/01/2017
+-- since 01/02/2017
 
 GRANT ALL ON SCHEMA public TO sustainapp_admin;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO sustainapp_admin;
