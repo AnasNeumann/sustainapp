@@ -11,10 +11,14 @@ import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.comparators.NumerotableEntityComparator;
 import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
 import com.ca.sustainapp.criteria.AnswerCriteria;
+import com.ca.sustainapp.criteria.CityCriteria;
 import com.ca.sustainapp.criteria.CourseCriteria;
 import com.ca.sustainapp.criteria.NotificationCriteria;
 import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
+import com.ca.sustainapp.criteria.PlaceCriteria;
+import com.ca.sustainapp.criteria.PlaceNoteCriteria;
+import com.ca.sustainapp.criteria.PlacePictureCriteria;
 import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
 import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.criteria.ReportCriteria;
@@ -23,10 +27,14 @@ import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
 import com.ca.sustainapp.dao.AnswerCategoryServiceDAO;
 import com.ca.sustainapp.dao.AnswerServiceDAO;
+import com.ca.sustainapp.dao.CityServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.NotificationServiceDAO;
 import com.ca.sustainapp.dao.PartServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
+import com.ca.sustainapp.dao.PlaceNoteServiceDAO;
+import com.ca.sustainapp.dao.PlacePictureServiceDAO;
+import com.ca.sustainapp.dao.PlaceServiceDAO;
 import com.ca.sustainapp.dao.ProfilBadgeServiceDAO;
 import com.ca.sustainapp.dao.QuestionServiceDAO;
 import com.ca.sustainapp.dao.ReportServiceDAO;
@@ -35,10 +43,14 @@ import com.ca.sustainapp.dao.TopicServiceDAO;
 import com.ca.sustainapp.dao.TopicValidationServiceDAO;
 import com.ca.sustainapp.entities.AnswerCategoryEntity;
 import com.ca.sustainapp.entities.AnswerEntity;
+import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.NotificationEntity;
 import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.PlaceEntity;
+import com.ca.sustainapp.entities.PlaceNoteEntity;
+import com.ca.sustainapp.entities.PlacePictureEntity;
 import com.ca.sustainapp.entities.ProfilBadgeEntity;
 import com.ca.sustainapp.entities.QuestionEntity;
 import com.ca.sustainapp.entities.ReportEntity;
@@ -83,6 +95,14 @@ public class CascadeGetService {
 	private ReportServiceDAO reportService;
 	@Autowired
 	private NotificationServiceDAO notificationService;
+	@Autowired
+	private CityServiceDAO cityService;
+	@Autowired
+	private PlaceServiceDAO placeService;
+	@Autowired
+	private PlacePictureServiceDAO placePictureService;
+	@Autowired
+	private PlaceNoteServiceDAO placeNoteService;
 	
 	/**
 	 * Comparator
@@ -96,6 +116,110 @@ public class CascadeGetService {
 	 * Les constantes
 	 */
 	private Long PAGINATION = 100L;
+	
+	/**
+	 * Cascade get for place notes
+	 * @param criteria
+	 * @return
+	 */
+	public List<PlaceNoteEntity> cascadeGetPlaceNotes(PlaceNoteCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<PlaceNoteEntity> result = null;
+		List<PlaceNoteEntity> finalResult = new ArrayList<PlaceNoteEntity>();
+		do {
+			result = placeNoteService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for place pictures
+	 * @param criteria
+	 * @return
+	 */
+	public List<PlacePictureEntity> cascadeGetPlacePictures(PlacePictureCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<PlacePictureEntity> result = null;
+		List<PlacePictureEntity> finalResult = new ArrayList<PlacePictureEntity>();
+		do {
+			result = placePictureService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for places
+	 * @param criteria
+	 * @return
+	 */
+	public List<PlaceEntity> cascadeGetPlaces(PlaceCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<PlaceEntity> result = null;
+		List<PlaceEntity> finalResult = new ArrayList<PlaceEntity>();
+		do {
+			result = placeService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for cities
+	 * @param criteria
+	 * @return
+	 */
+	public List<CityEntity> cascadeGetCities(CityCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<CityEntity> result = null;
+		List<CityEntity> finalResult = new ArrayList<CityEntity>();
+		do {
+			result = cityService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
 	
 	/**
 	 * Cascade get for notifications
