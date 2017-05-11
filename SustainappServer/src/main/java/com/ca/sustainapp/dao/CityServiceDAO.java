@@ -11,33 +11,33 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.ca.sustainapp.criteria.ReadNewsCriteria;
-import com.ca.sustainapp.entities.ReadNewsEntity;
+import com.ca.sustainapp.criteria.CityCriteria;
+import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.repositories.ReadNewsRepository;
-import com.ca.sustainapp.specification.ReadNewsSpecification;
+import com.ca.sustainapp.repositories.CityRepository;
+import com.ca.sustainapp.specification.CitySpecification;
 
 /**
  * data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2107
+ * @since 11/05/2107
  * @verion 1.0
  */
-@Service("readNewsService")
-public class ReadNewsServiceDAO extends GenericServiceDAO {
+@Service("cityService")
+public class CityServiceDAO extends GenericServiceDAO{
 	
 	/**
 	 * Le repository
 	 */
 	@Autowired
-	ReadNewsRepository repository;
+	CityRepository repository;
 	
 	/**
 	 * Accès un seul entity par son Id
 	 * @param id
 	 * @return
 	 */
-	public ReadNewsEntity getById(Long id){
+	public CityEntity getById(Long id){
 		if(null == id){
 			return null;
 		}
@@ -51,7 +51,7 @@ public class ReadNewsServiceDAO extends GenericServiceDAO {
 	 */
 	@Modifying
 	@Transactional
-	public Long createOrUpdate(ReadNewsEntity entity){
+	public Long createOrUpdate(CityEntity entity){
 		return repository.saveAndFlush(entity).getId();
 	}
 	
@@ -73,8 +73,8 @@ public class ReadNewsServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<ReadNewsEntity> getAll(){
-		return repository.findAll();
+	public List<CityEntity> getAll(){
+		return  repository.findAll();
 	}
 
 	/**
@@ -85,14 +85,21 @@ public class ReadNewsServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public SearchResult<ReadNewsEntity> searchByCriteres(ReadNewsCriteria criteria, Long startIndex, Long maxResults) {		
-		Specification<ReadNewsEntity> spec = ReadNewsSpecification.searchByCriteres(criteria);
+	public SearchResult<CityEntity> searchByCriteres(CityCriteria criteria, Long startIndex, Long maxResults) {		
+		Specification<CityEntity> spec = CitySpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<ReadNewsEntity> page = repository.findAll(spec, paginator);
+		Page<CityEntity> page = repository.findAll(spec, paginator);
 		
-		SearchResult<ReadNewsEntity> result = initSearchResult(startIndex, maxResults);
+		SearchResult<CityEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
-
+	
+	/**
+	 * get the total number of Citis
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
 }

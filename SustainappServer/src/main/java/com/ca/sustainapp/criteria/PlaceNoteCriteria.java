@@ -7,16 +7,16 @@ import javax.ws.rs.QueryParam;
 
 /**
  * Criteria for research
- * 
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 11/05/2017
  * @version 1.0
  */
-public class ReadNewsCriteria implements Serializable {
+public class PlaceNoteCriteria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	private Long placeId;
 	private Long profilId;
-	private Long newsId;
+	private Integer score;
 	private Calendar timestamps;
 
 	/**
@@ -27,12 +27,27 @@ public class ReadNewsCriteria implements Serializable {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	@QueryParam("id")
-	public ReadNewsCriteria setId(Long id) {
+	public PlaceNoteCriteria setId(Long id) {
 		this.id = id;
+		return this;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public Long getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	@QueryParam("placeId")
+	public PlaceNoteCriteria setPlaceId(Long placeId) {
+		this.placeId = placeId;
 		return this;
 	}
 
@@ -44,29 +59,27 @@ public class ReadNewsCriteria implements Serializable {
 	}
 
 	/**
-	 * @param profilId
-	 *            the profilId to set
+	 * @param profilId the profilId to set
 	 */
 	@QueryParam("profilId")
-	public ReadNewsCriteria setProfilId(Long profilId) {
+	public PlaceNoteCriteria setProfilId(Long profilId) {
 		this.profilId = profilId;
 		return this;
 	}
 
 	/**
-	 * @return the newsId
+	 * @return the score
 	 */
-	public Long getNewsId() {
-		return newsId;
+	public Integer getScore() {
+		return score;
 	}
 
 	/**
-	 * @param newsId
-	 *            the newsId to set
+	 * @param score the score to set
 	 */
-	@QueryParam("newsId")
-	public ReadNewsCriteria setNewsId(Long newsId) {
-		this.newsId = newsId;
+	@QueryParam("score")
+	public PlaceNoteCriteria setScore(Integer score) {
+		this.score = score;
 		return this;
 	}
 
@@ -78,11 +91,10 @@ public class ReadNewsCriteria implements Serializable {
 	}
 
 	/**
-	 * @param timestamps
-	 *            the timestamps to set
+	 * @param timestamps the timestamps to set
 	 */
 	@QueryParam("timestamps")
-	public ReadNewsCriteria setTimestamps(Calendar timestamps) {
+	public PlaceNoteCriteria setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
 		return this;
 	}
