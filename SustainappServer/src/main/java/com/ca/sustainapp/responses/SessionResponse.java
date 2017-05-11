@@ -1,5 +1,6 @@
 package com.ca.sustainapp.responses;
 
+import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 
 /**
@@ -11,10 +12,42 @@ import com.ca.sustainapp.entities.ProfileEntity;
 public class SessionResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private ProfileEntity profile;
+	private CityEntity city;
 	private Long id;
 	private String token;
 	private Boolean isAdmin;
+	private Integer userType;
 	
+	/**
+	 * @return the city
+	 */
+	public CityEntity getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public SessionResponse setCity(CityEntity city) {
+		this.city = city;
+		return this;
+	}
+
+	/**
+	 * @return the userType
+	 */
+	public Integer getUserType() {
+		return userType;
+	}
+
+	/**
+	 * @param userType the userType to set
+	 */
+	public SessionResponse setUserType(Integer userType) {
+		this.userType = userType;
+		return this;
+	}
+
 	/**
 	 * @return the profile
 	 */

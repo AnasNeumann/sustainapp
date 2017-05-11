@@ -28,7 +28,7 @@ import org.hibernate.annotations.FetchMode;
  */
 @Entity
 @Table(name = "CITY")
-@SequenceGenerator(name = "city_seq_generator", sequenceName = "city_id_seq")
+@SequenceGenerator(name = "city_id_seq_generator", sequenceName = "city_id_seq")
 public class CityEntity extends GenericEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

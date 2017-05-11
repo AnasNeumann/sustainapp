@@ -1,6 +1,7 @@
 package com.ca.sustainapp.validators;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +15,7 @@ import com.ca.sustainapp.criteria.UserAccountCriteria;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
+import com.ca.sustainapp.utils.StringsUtils;
 
 /**
  * Validator pour le formulaire d'inscription
@@ -60,6 +62,17 @@ public class SigninValidator extends GenericValidator {
 		}
 		if(isEmpty(request.getParameter("lastName"))){
 			result.put("lastName", "form.lastName.mandatory");
+		}
+		Optional<Integer> type = StringsUtils.parseIntegerQuietly(request.getParameter("type"));
+		if(!type.isPresent()){
+			result.put("type", "form.field.mandatory");
+			return result;
+		}
+		if(type.get().equals(1) && isEmpty(request.getParameter("phone"))){
+			result.put("phone", "form.field.mandatory");
+		}
+		if(type.get().equals(1) && isEmpty(request.getParameter("city"))){
+			result.put("city", "form.field.mandatory");
 		}
 		return result;
 	}

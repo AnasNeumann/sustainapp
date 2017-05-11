@@ -54,12 +54,19 @@
     "login.signin": "Sign in !",
     "login.alreadyHave": "You already have an account ? Click here",
     "login.stillNot": "You don't have an account ? Please click here'",
-    
+    "login.policy" : "By signing up, you agree to the Terms of Use",
+    "login.return" : "Back to registration",
+    "login.modePerso" : "Personal Account",
+    "login.modeCity" : "City account",
+    "login.cityInfos" : "City's informations",
+    "login.personalInfos" : "Personal informations",
+   
     "sideMenu.profile" : "Profile",
     "sideMenu.teams" : "Teams",
     "sideMenu.signal" : "Signal",
     "sideMenu.disconnection" : "Disconnection",
     "sideMenu.administration" : "Administration",
+    "sideMenu.city" : "My city",
     
     "viewTitle.news" : "News",
     "viewTitle.challenges" : "Challenges",
@@ -227,5 +234,8 @@
     "Thursday": "Thursday",
     "Friday": "Friday",
     "Saturday": "Saturday",
-    "Sunday": "Sunday"
+    "Sunday": "Sunday",
+    
+    "city.name" : "City's name",
+    "city.phone" : "Phone number"
 }
