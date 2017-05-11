@@ -34,6 +34,44 @@
             </div>
         </div>
   
+        <div class="row">
+            <div class="col col-100" ng-hide="model.edit">
+                  <div class="s-common-floatEdit"  ng-click="model.edit = true" ng-if="model.isOwner">
+                        <i class="icon ion-edit"></i>
+                  </div>
+                  <p ng-if="null != model.city.about">{{model.city.about}}</p>
+                  <p class="s-teams-text">
+                      <span><i class="icon ion-ios-calendar-outline"></i> {{model.city.phone}}<br /></span>
+                      <span ng-if="null != model.city.website"><i class="icon ion-ribbon-b"></i> {{model.city.website}}<br /></span>
+                  </p>
+            </div>
+            <div class="col col-100" ng-show="model.edit">
+                  <div class="s-common-floatEdit"  ng-click="model.edit = false" >
+                        <i class="icon ion-close-round"></i>
+                  </div>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'city.name' | translate}}</span> 
+                    <input ng-model="model.cityTemp.name" type="text" placeholder="{{'city.name' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.name | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+                    <input ng-model="model.cityTemp.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.about | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'city.phone' | translate}}</span> 
+                    <input ng-model="model.cityTemp.phone" type="text" placeholder="{{'city.phone' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.phone | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'city.website' | translate}}</span> 
+                    <input ng-model="model.cityTemp.website" type="text" placeholder="{{'city.website' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.website | translate}}</span>
+                  </label>
+                  <button class="s-common-btn" ng-click="updateTeam()">{{'common.modify' | translate}}</button>
+            </div>
+        </div>
   </ion-content>
   
   <!-- Loading Part -->

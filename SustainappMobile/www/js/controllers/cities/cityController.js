@@ -31,6 +31,7 @@ angular.module('sustainapp.controllers')
 					$scope.model.displayCover = "";
 					$scope.model.editCover = false;
 					$scope.model.loaded = true;
+					$scope.model.edit = false;
 					if(null != result.city.cover && "" != result.city.cover){
 		    			 $scope.model.displayCover = "data:image/jpeg;base64,"+ result.city.cover;
 		    		 }
