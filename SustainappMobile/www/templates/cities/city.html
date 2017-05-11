@@ -1,0 +1,44 @@
+<ion-view >
+  <ion-nav-title ng-bind="title"></ion-nav-title>
+  <ion-content ng-show="model.loaded">
+  
+    <!-- COVER PART -->
+    <div class="s-topic-pictureContainer" style="background-image : url({{model.displayCover}});">           
+            <div class="s-topic-pictureBtn">
+                <!-- Mobile view -->
+                <div ng-if="model.isOwner && _isNotMobile == false" class="s-common-camera">
+                   <div class="s-common-choosePictureToogle" ng-show="model.editCover" ng-click="model.editCover = false">
+                      <i class="icon ion-close-round"></i>
+                   </div>
+                   <div class="s-common-choosePicture" ng-show="model.editCover" ng-click="cover(true)">
+                      {{'common.takePicture' | translate}}
+                   </div>
+                   <div class="s-common-choosePicture" ng-show="model.editCover" ng-click="cover(false)">
+                     {{'common.chooseFormGallery' | translate}}
+                   </div>
+                   <div class="s-common-choosePictureToogle s-common-22" ng-hide="model.editCover" ng-click="model.editCover = true">
+                      <i class="icon ion-camera"></i>
+                   </div>
+               </div>
+               <!-- Desktop view -->
+               <div class="s-common-camera" ng-if="model.isOwner && _isNotMobile == true">
+                    <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                        <i class="icon ion-camera"></i>
+                        <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopCover(this)" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="s-topic-titleContainer">
+                <h3 class="s-common-whiteTitle">{{model.city.name}}</h3>
+            </div>
+        </div>
+  
+  </ion-content>
+  
+  <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="model.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+  </ion-content>
+</ion-view>

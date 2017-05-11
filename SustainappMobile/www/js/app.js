@@ -222,7 +222,16 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	      controller: 'notificationsController'
 	    }
 	  }
-  });
+    })
+    .state('tab.city', {
+  	  url: '/city/:id',
+  	  views: {
+  	    'tab-news': {
+  	      templateUrl: 'templates/cities/city.html',
+  	      controller: 'cityController'
+  	    }
+  	  }
+    });
   $urlRouterProvider.otherwise('/tab/news');
   
 	/**
