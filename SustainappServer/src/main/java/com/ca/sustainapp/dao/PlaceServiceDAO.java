@@ -11,33 +11,33 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.ca.sustainapp.criteria.NewsCriteria;
-import com.ca.sustainapp.entities.NewsEntity;
+import com.ca.sustainapp.criteria.PlaceCriteria;
+import com.ca.sustainapp.entities.PlaceEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.repositories.NewsRepository;
-import com.ca.sustainapp.specification.NewsSpecification;
+import com.ca.sustainapp.repositories.PlaceRepository;
+import com.ca.sustainapp.specification.PlaceSpecification;
 
 /**
  * data access object service
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 25/01/2107
+ * @since 11/05/2107
  * @verion 1.0
  */
-@Service("newsService")
-public class NewsServiceDAO extends GenericServiceDAO {
-	
+@Service("placeService")
+public class PlaceServiceDAO extends GenericServiceDAO{
+
 	/**
 	 * Le repository
 	 */
 	@Autowired
-	NewsRepository repository;
+	PlaceRepository repository;
 	
 	/**
 	 * Accès un seul entity par son Id
 	 * @param id
 	 * @return
 	 */
-	public NewsEntity getById(Long id){
+	public PlaceEntity getById(Long id){
 		if(null == id){
 			return null;
 		}
@@ -51,7 +51,7 @@ public class NewsServiceDAO extends GenericServiceDAO {
 	 */
 	@Modifying
 	@Transactional
-	public Long createOrUpdate(NewsEntity entity){
+	public Long createOrUpdate(PlaceEntity entity){
 		return repository.saveAndFlush(entity).getId();
 	}
 	
@@ -73,8 +73,8 @@ public class NewsServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<NewsEntity> getAll(){
-		return repository.findAll();
+	public List<PlaceEntity> getAll(){
+		return  repository.findAll();
 	}
 
 	/**
@@ -85,14 +85,21 @@ public class NewsServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public SearchResult<NewsEntity> searchByCriteres(NewsCriteria criteria, Long startIndex, Long maxResults) {		
-		Specification<NewsEntity> spec = NewsSpecification.searchByCriteres(criteria);
+	public SearchResult<PlaceEntity> searchByCriteres(PlaceCriteria criteria, Long startIndex, Long maxResults) {		
+		Specification<PlaceEntity> spec = PlaceSpecification.searchByCriteres(criteria);
 		PageRequest paginator = new PageRequest(startIndex.intValue(), maxResults.intValue());
-		Page<NewsEntity> page = repository.findAll(spec, paginator);
+		Page<PlaceEntity> page = repository.findAll(spec, paginator);
 		
-		SearchResult<NewsEntity> result = initSearchResult(startIndex, maxResults);
+		SearchResult<PlaceEntity> result = initSearchResult(startIndex, maxResults);
 		result.setTotalResults(page.getTotalElements()).setResults(page.getContent());
 		return result;
 	}
-
+	
+	/**
+	 * get the total number of places
+	 * @return
+	 */
+	public Integer total(){
+		return repository.total();
+	}
 }

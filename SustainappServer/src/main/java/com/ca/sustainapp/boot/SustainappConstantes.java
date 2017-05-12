@@ -88,4 +88,7 @@ public class SustainappConstantes {
 	public final static String NOTIFICATION_MESSAGE_PARTICIPATE = "notification.participate";
 	public final static String NOTIFICATION_MESSAGE_REQUEST = "notification.request";
 	public final static String NOTIFICATION_MESSAGE_ACCEPT = "notification.accept";
+	public final static String NOTIFICATION_MESSAGE_CITY = "notification.city";
+	public final static String NOTIFICATION_MESSAGE_VALIDATION = "notification.validation";
+	public final static String NOTIFICATION_MESSAGE_REFUSED = "notification.refused";
 }

@@ -12,7 +12,9 @@
 }
 
 .s-login-content{
-	padding : 25px;
+	padding : 0px;
+	max-width : 525px;
+    margin : auto;
 }
 
 .s-login-logo{
@@ -93,4 +95,27 @@
 
 .s-login-error {
 	color  : white;
+}
+
+.s-login-form{
+	padding : 25px;
+}
+
+.s-login-modeContainer{
+	border : 1px solid #23964b;
+	padding : 0px;
+	margin : 0px;
+}
+
+.s-login-modeBtn{
+	padding : 7px;
+	margin : 0px;
+	text-align : center;
+	cursor : pointer;
+}
+
+.s-login-modeBtn-dark{
+	background-color: #23964b;
+	-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }

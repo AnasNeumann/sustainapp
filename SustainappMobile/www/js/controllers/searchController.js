@@ -27,16 +27,18 @@ angular.module('sustainapp.controllers')
 					$scope.searchModel.flag = true;
 				}
 				if(response.data.code == 1) {
-					if(response.data.profiles.length > 0 || response.data.teams.length > 0 || response.data.courses.length > 0){
+					if(response.data.cities.length > 0 || response.data.profiles.length > 0 || response.data.teams.length > 0 || response.data.courses.length > 0){
 						$scope.searchModel.empty = false;
 					}
 					$scope.searchModel.teams = response.data.teams;
 					$scope.searchModel.profiles = response.data.profiles;
 					$scope.searchModel.courses = response.data.courses;
+					$scope.searchModel.cities = response.data.cities;
 				} else {
 					$scope.searchModel.teams = [];
 					$scope.searchModel.profiles = [];
 					$scope.searchModel.courses = [];
+					$scope.searchModel.cities = [];
 				}
 			});
 		};

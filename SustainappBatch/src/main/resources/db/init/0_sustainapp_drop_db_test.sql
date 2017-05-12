@@ -1,6 +1,6 @@
---creation de la base de donnée --
+--creation de la base de donnï¿½e --
 -- created by Anas Neumann <anas.neumann.isamm@gmail.com>
--- since 9/01/2017
+-- since 01/02/2017
 --unix
 SELECT pg_terminate_backend(procpid) FROM pg_stat_activity WHERE datname = 'sustainapp_test';
 --Windows

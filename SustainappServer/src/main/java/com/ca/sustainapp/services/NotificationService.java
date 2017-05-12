@@ -156,6 +156,14 @@ public class NotificationService {
 				notification.setLink("profile/"+entity.getLinkId());
 				notification.setTarget("");
 				break;
+			case SustainappConstantes.NOTIFICATION_MESSAGE_VALIDATION :
+				notification.setLink("city/"+entity.getLinkId());
+				notification.setTarget("");
+				break;
+			case SustainappConstantes.NOTIFICATION_MESSAGE_REFUSED : 
+				notification.setLink("profile/"+entity.getLinkId());
+				notification.setTarget("");
+				break;
 		}
 		if(needCreator){
 			if(entity.getCreatorType().equals(SustainappConstantes.NOTIFICATION_CREATORTYPE_PROFILE)){

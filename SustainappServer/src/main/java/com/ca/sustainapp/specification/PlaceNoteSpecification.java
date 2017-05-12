@@ -11,21 +11,21 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.ca.sustainapp.criteria.NewsCriteria;
-import com.ca.sustainapp.entities.NewsEntity;
+import com.ca.sustainapp.criteria.PlaceNoteCriteria;
+import com.ca.sustainapp.entities.PlaceNoteEntity;
 
 /**
  * specification for database research
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 11/05/2017
  * @version 1.0
  */
-public class NewsSpecification {
-	
+public class PlaceNoteSpecification {
+
 	/**
 	 * private constructor
 	 */
-	private NewsSpecification(){
+	private PlaceNoteSpecification(){
 		
 	}
 	
@@ -33,12 +33,12 @@ public class NewsSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ResearchEntity>
+	 * @return Specification<PlaceNoteEntity>
 	 */
-	public static Specification<NewsEntity> searchByCriteres(final NewsCriteria criteres) {
-		return new Specification<NewsEntity>() {
+	public static Specification<PlaceNoteEntity> searchByCriteres(final PlaceNoteCriteria criteres) {
+		return new Specification<PlaceNoteEntity>() {
 			@Override
-			public Predicate toPredicate(Root<NewsEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+			public Predicate toPredicate(Root<PlaceNoteEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> listeCond = new ArrayList<Predicate>();
 				if (null != criteres) {
 					if (null != criteres.getId()) {
@@ -46,13 +46,18 @@ public class NewsSpecification {
 						listeCond.add(p);
 					}
 
-					if (null != criteres.getTitle()) {
-						Predicate p = cb.like(cb.lower(root.<String> get("title")), criteres.getTitle().toLowerCase() + "%");
+					if (null != criteres.getPlaceId()) {
+						Predicate p = cb.equal(root.<Long> get("placeId"), criteres.getPlaceId());
 						listeCond.add(p);
 					}
 					
-					if (null != criteres.getContent()) {
-						Predicate p = cb.like(cb.lower(root.<String> get("content")), criteres.getContent().toLowerCase() + "%");
+					if (null != criteres.getProfilId()) {
+						Predicate p = cb.equal(root.<Long> get("profilId"), criteres.getProfilId());
+						listeCond.add(p);
+					}
+					
+					if (null != criteres.getScore()) {
+						Predicate p = cb.equal(root.<Integer> get("score"), criteres.getScore());
 						listeCond.add(p);
 					}
 					

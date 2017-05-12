@@ -13,29 +13,31 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * READ_NEWS table mapping
- * 
+ * PLACE_NOTE table mapping
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 11/05/2017
  * @version 1.0
  */
 @Entity
-@Table(name = "READ_NEWS")
-@SequenceGenerator(name = "read_news_id_seq_generator", sequenceName = "read_news_id_seq")
-public class ReadNewsEntity extends GenericEntity implements Serializable {
+@Table(name = "PLACE_NOTE")
+@SequenceGenerator(name = "place_note_id_seq_generator", sequenceName = "place_note_id_seq")
+public class PlaceNoteEntity extends GenericEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "read_news_id_seq_generator")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "place_note_id_seq_generator")
 	@Basic(optional = false)
 	@Column(name = "ID")
 	private Long id;
 	
+	@Column(name = "PLACE_ID")
+	private Long placeId;
+	
 	@Column(name = "PROFILE_ID")
 	private Long profilId;
 	
-	@Column(name = "NEWS_ID")
-	private Long newsId;
+	@Column(name = "SCORE")
+	private Integer score;
 	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
@@ -50,8 +52,23 @@ public class ReadNewsEntity extends GenericEntity implements Serializable {
 	/**
 	 * @param id the id to set
 	 */
-	public ReadNewsEntity setId(Long id) {
+	public PlaceNoteEntity setId(Long id) {
 		this.id = id;
+		return this;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public Long getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public PlaceNoteEntity setPlaceId(Long placeId) {
+		this.placeId = placeId;
 		return this;
 	}
 
@@ -65,23 +82,23 @@ public class ReadNewsEntity extends GenericEntity implements Serializable {
 	/**
 	 * @param profilId the profilId to set
 	 */
-	public ReadNewsEntity setProfilId(Long profilId) {
+	public PlaceNoteEntity setProfilId(Long profilId) {
 		this.profilId = profilId;
 		return this;
 	}
 
 	/**
-	 * @return the newsId
+	 * @return the score
 	 */
-	public Long getNewsId() {
-		return newsId;
+	public Integer getScore() {
+		return score;
 	}
 
 	/**
-	 * @param newsId the newsId to set
+	 * @param score the score to set
 	 */
-	public ReadNewsEntity setNewsId(Long newsId) {
-		this.newsId = newsId;
+	public PlaceNoteEntity setScore(Integer score) {
+		this.score = score;
 		return this;
 	}
 
@@ -95,7 +112,7 @@ public class ReadNewsEntity extends GenericEntity implements Serializable {
 	/**
 	 * @param timestamps the timestamps to set
 	 */
-	public ReadNewsEntity setTimestamps(Calendar timestamps) {
+	public PlaceNoteEntity setTimestamps(Calendar timestamps) {
 		this.timestamps = timestamps;
 		return this;
 	}

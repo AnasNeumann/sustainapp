@@ -54,17 +54,25 @@
     "login.signin": "S'inscrire !",
     "login.alreadyHave": "Vous avez déjà un compte ? Clickez ici",
     "login.stillNot": "Vous n'êtes pas encore inscrit ? Clickez ici",
+    "login.policy" : "En vous inscrivant vous acceptez les conditions générales d'utilisation",
+    "login.return" : "Retour à l'inscription",
+    "login.modePerso" : "Compte personnel",
+    "login.modeCity" : "Compte ville",
+    "login.cityInfos" : "Informations sur la ville",
+    "login.personalInfos" : "Informations personnelles",
     
     "sideMenu.profile" : "Profil",
     "sideMenu.teams" : "Equipes",
     "sideMenu.signal" : "Signaler",
     "sideMenu.disconnection" : "Deconnexion",
     "sideMenu.administration" : "Administration",
+    "sideMenu.city" : "Ma ville",
     
     "viewTitle.news" : "Actualités",
     "viewTitle.challenges" : "Challenges",
     "viewTitle.certificates" : "Certificats",
     "viewTitle.notifications" : "Notifications",
+    "viewTitle.cities" : "Villes",
     
     "form.mail.mandatory" : "Veuillez remplir le champs adresse mail",
     "form.mail.format" : "Le format de votre mail n'est pas valide",
@@ -102,6 +110,7 @@
     "administration.profilesByLevel" : "Profils par niveaux",
     "administration.teamByCateogries" : "Equipes par niveaux",
     "administration.byAges" : "Profils par âges",
+    "administration.citiesManagement" : "Gestion des villes",
     
     "challengetype.building" : "eco-construction",
     "challengetype.design" : "eco-desgin",
@@ -188,7 +197,6 @@
     "badges.capitaine.name" : "Capitaine",
     "badges.missionary.name" : "Missionnaire",
     "badges.star.name" : "Super Star",
-    "badges.journalist.name" : "Journaliste",
     "badges.walker.name" : "Baladeur",
     
     "badges.teacher.about" : "Recevoir plus de 10 notes au dessus de 3 étoiles sur vos cours",
@@ -197,8 +205,7 @@
     "badges.capitaine.about" : "Avoir géré une équipe comportant au moins 2 membres",
     "badges.missionary.about" : "Avoir reçu plus de 10 votes sur vos participations dans les challenges",
     "badges.star.about" : "Avoir été mis en avant dans le journal d'actualités",
-    "badges.journalist.about" : "Avoir rédigé plus de 10 articles dans le journal d'actualités",
-    "badges.walker.about" : "Avoir validé vos objectifs de marche à pied",
+    "badges.walker.about" : "Visiter au moins un lieu public",
     
     "newspaper.courses" : "Meilleurs cours",
     "newspaper.participations" : "Meilleurs réalisations",
@@ -211,6 +218,9 @@
     "notification.participate" : "a participé au challenge",
     "notification.request" : "a demandé à rejoindre l'équipe",
     "notification.accept" : "Vous avez été ajouté à l'équipe",
+    "notification.city" : "Une nouvelle demande de validation de ville",
+    "notification.validation" : "Votre demande de validation de ville a été acceptée",
+    "notification.refused" : "Votre demande de validation de ville a été refusée",
     
     "notification.vote.title" : "Nouveau vote",
     "notification.rank.title" : "Nouvelle note",
@@ -218,6 +228,9 @@
     "notification.participate.title" : "Nouvelle participation",
     "notification.request.title" : "Nouvelle demande",
     "notification.accept.title" : "Demande acceptée",
+    "notification.city.title" : "Nouvelle ville",
+    "notification.validation.title" : "Ville validée",
+    "notification.refused.title" : "Ville supprimée",
     
     "Monday" : "Lundi",
     "Tuesday": "Mardi",
@@ -225,5 +238,10 @@
     "Thursday": "Jeudi",
     "Friday": "Vendredi",
     "Saturday": "Samedi",
-    "Sunday": "Dimanche"
+    "Sunday": "Dimanche",
+    
+    "city.name" : "Nom de la ville",
+    "city.phone" : "Numéro de téléphone",
+    "city.website" : "Site web",
+    "city.desctivated" : "Cette ville n'est pas encore activée ainsi elle ne peut ni créer de lieu ou être recherchée. Un administrateur va vous contacter au plus tôt, à la suite de quoi votre ville pourra être activée et visible. Merci de votre compréhension !"
 }

@@ -7,30 +7,37 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.ca.sustainapp.entities.ReadNewsEntity;
+import com.ca.sustainapp.entities.PlaceEntity;
 
 /**
- * Repository for ReadNewsEntity
+ * Repository for PlaceEntity
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 11/05/2017
  * @version 1.0
  */
 @Repository
-public interface ReadNewsRepository extends JpaSpecificationExecutor<ReadNewsEntity>, JpaRepository<ReadNewsEntity, Long> {
-
+public interface PlaceRepository extends JpaSpecificationExecutor<PlaceEntity>, JpaRepository<PlaceEntity, Long> {
+	
 	/**
 	 * Count Entities by Id
 	 * @param id
 	 * @return total by id
 	 */
-	@Query("SELECT COUNT(*) FROM ReadNewsEntity AS r WHERE r.id = :id")
-	Integer countById(@Param("id") Long id);
-
+	@Query("SELECT COUNT(*) FROM PlaceEntity AS p WHERE p.id = :id")
+	Integer countById(@Param("id") Long id); 
+	
+	/**
+	 * get the total of entities
+	 * @return
+	 */
+	@Query("SELECT COUNT(*) FROM PlaceEntity")
+	Integer total();
+	
 	/**
 	 * delete entities by id
 	 * @param id
 	 */
 	@Modifying
-	@Query("DELETE FROM ReadNewsEntity r WHERE r.id = :id")
+	@Query("DELETE FROM PlaceEntity p WHERE p.id = :id")
 	void delete(@Param("id") Long id);
 }

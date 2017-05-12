@@ -50,6 +50,9 @@ public class UserAccountEntity extends GenericEntity implements Serializable {
 	@Column(name = "TOKEN")
 	private String token;
 	
+	@Column(name = "USER_TYPE")
+	private Integer type;
+	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
 	
@@ -160,6 +163,21 @@ public class UserAccountEntity extends GenericEntity implements Serializable {
 	public UserAccountEntity setProfile(ProfileEntity profile) {
 		this.profile.clear();
 		this.profile.add(profile);
+		return this;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public Integer getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public UserAccountEntity setType(Integer type) {
+		this.type = type;
 		return this;
 	}
 }

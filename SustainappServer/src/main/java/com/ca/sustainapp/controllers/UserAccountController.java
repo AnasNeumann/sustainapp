@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.CityCriteria;
+import com.ca.sustainapp.dao.CityServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
+import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
@@ -41,7 +44,9 @@ public class UserAccountController extends GenericController {
 	private LoginValidator loginValidator;
 	@Autowired
 	private ProfileServiceDAO profilService;
-	
+	@Autowired
+	private CityServiceDAO cityService;
+
 	/**
 	 * create a new account
 	 * @return
@@ -55,10 +60,13 @@ public class UserAccountController extends GenericController {
 			response.setCode(0);
 			return response.buildJson();
 		}
+		Optional<Integer> type = StringsUtils.parseIntegerQuietly(request.getParameter("type"));
+		response.setUserType(type.get());
 		UserAccountEntity user = new  UserAccountEntity()
 				.setMail(request.getParameter("mail"))
 				.setPassword(StringsUtils.md5Hash(request.getParameter("password")))
 				.setIsAdmin(false)
+				.setType(type.get())
 				.setTimestamps(GregorianCalendar.getInstance());
 		Long idUser = super.userService.createOrUpdate(user);
 		ProfileEntity profile = new ProfileEntity()
@@ -67,7 +75,17 @@ public class UserAccountController extends GenericController {
 				.setLastName(request.getParameter("lastName"))
 				.setLevel(0)
 				.setTimestamps(GregorianCalendar.getInstance());
-		profile.setId(profilService.createOrUpdate(profile));
+		profile.setId(profilService.createOrUpdate(profile));		
+		if(type.get().equals(1)){
+			CityEntity city = new CityEntity()
+					.setName(request.getParameter("city"))
+					.setPhone(request.getParameter("phone"))
+					.setActif(0)
+					.setTimestamps(GregorianCalendar.getInstance())
+					.setUserId(idUser);
+			city.setId(cityService.createOrUpdate(city));
+			response.setCity(city);
+		}
 		response.setCode(1);
 		return response
 			.setId(idUser)
@@ -101,12 +119,16 @@ public class UserAccountController extends GenericController {
 		}else{
 			token = super.createSession(user);
 		}
-		response.setCode(1);
+		if(user.getType().equals(1)){
+			response.setCity(getService.cascadeGetCities(new CityCriteria().setUserId(user.getId())).get(0));
+		}
 		return response
+				.setUserType(user.getType())
 				.setId(user.getId())
 				.setToken(token)
 				.setProfile(user.getProfile())
 				.setIsAdmin(user.getIsAdmin())
+				.setCode(1)
 				.buildJson();
     }
 

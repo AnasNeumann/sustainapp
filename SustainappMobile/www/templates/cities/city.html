@@ -1,0 +1,90 @@
+<ion-view >
+  <ion-nav-title ng-bind="title"></ion-nav-title>
+  <ion-content ng-show="model.loaded">
+  
+    <!-- COVER PART -->
+    <div class="s-topic-pictureContainer" style="background-image : url({{model.displayCover}});">           
+            <div class="s-topic-pictureBtn">
+                <!-- Mobile view -->
+                <div ng-if="model.isOwner && _isNotMobile == false" class="s-common-camera">
+                   <div class="s-common-choosePictureToogle" ng-show="model.editCover" ng-click="model.editCover = false">
+                      <i class="icon ion-close-round"></i>
+                   </div>
+                   <div class="s-common-choosePicture" ng-show="model.editCover" ng-click="cover(true)">
+                      {{'common.takePicture' | translate}}
+                   </div>
+                   <div class="s-common-choosePicture" ng-show="model.editCover" ng-click="cover(false)">
+                     {{'common.chooseFormGallery' | translate}}
+                   </div>
+                   <div class="s-common-choosePictureToogle s-common-22" ng-hide="model.editCover" ng-click="model.editCover = true">
+                      <i class="icon ion-camera"></i>
+                   </div>
+               </div>
+               <!-- Desktop view -->
+               <div class="s-common-camera" ng-if="model.isOwner && _isNotMobile == true">
+                    <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+                        <i class="icon ion-camera"></i>
+                        <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopCover(this)" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="s-topic-titleContainer">
+                <h3 class="s-common-whiteTitle">{{model.city.name}}</h3>
+            </div>
+        </div>
+        
+        <!-- INFORMATIONS PART -->
+        <div class="row">
+            <div class="col col-100" ng-hide="model.edit">
+                  <div class="s-common-floatEdit"  ng-click="model.edit = true" ng-if="model.isOwner">
+                        <i class="icon ion-edit"></i>
+                  </div>
+                  <p ng-if="null != model.city.about && '' != model.city.about">{{model.city.about}}</p>
+                  <p >
+                      <span class="s-city-span"><i class="icon ion-android-call"></i> {{model.city.phone}}<br /></span>
+                      <span class="s-city-span" ng-if="null != model.city.website && '' != model.city.website"><i class="icon ion-earth"></i> {{model.city.website}}<br /></span>
+                  </p>
+            </div>
+            <div class="col col-100" ng-show="model.edit">
+                  <div class="s-common-floatEdit"  ng-click="model.edit = false" >
+                        <i class="icon ion-close-round"></i>
+                  </div>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'city.name' | translate}}</span> 
+                    <input ng-model="model.name" type="text" placeholder="{{'city.name' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.name | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+                    <input ng-model="model.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.about | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'city.phone' | translate}}</span> 
+                    <input ng-model="model.phone" type="text" placeholder="{{'city.phone' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.phone | translate}}</span>
+                  </label>
+                  <label class="item item-input item-floating-label" > 
+                    <span class="input-label s-common-label">{{'city.website' | translate}}</span> 
+                    <input ng-model="model.website" type="text" placeholder="{{'city.website' | translate}}" class="s-common-input">
+                    <span class="s-common-errors">{{model.allErrors.website | translate}}</span>
+                  </label>
+                  <button class="s-common-btn" ng-click="updateCity()">{{'common.modify' | translate}}</button>
+            </div>
+        </div>
+        
+        <!-- MESSAGE IF STILL ISN'T ACTIVATED -->
+        <div class="padding" ng-if="0 == model.city.actif">
+            <div class="s-city-message">
+                {{'city.desctivated' | translate }}
+            </div>
+        </div>
+  </ion-content>
+  
+  <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="model.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+  </ion-content>
+</ion-view>

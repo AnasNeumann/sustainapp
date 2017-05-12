@@ -11,6 +11,8 @@ import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
 import com.ca.sustainapp.criteria.AnswerCriteria;
 import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.criteria.ParticipationCriteria;
+import com.ca.sustainapp.criteria.PlaceNoteCriteria;
+import com.ca.sustainapp.criteria.PlacePictureCriteria;
 import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
@@ -18,9 +20,13 @@ import com.ca.sustainapp.entities.AnswerCategoryEntity;
 import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.ChallengeEntity;
 import com.ca.sustainapp.entities.ChallengeVoteEntity;
+import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.PlaceEntity;
+import com.ca.sustainapp.entities.PlaceNoteEntity;
+import com.ca.sustainapp.entities.PlacePictureEntity;
 import com.ca.sustainapp.entities.QuestionEntity;
 import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.TeamEntity;
@@ -31,9 +37,13 @@ import com.ca.sustainapp.repositories.AnswerCategoryRepository;
 import com.ca.sustainapp.repositories.AnswerRepository;
 import com.ca.sustainapp.repositories.ChallengeRepository;
 import com.ca.sustainapp.repositories.ChallengeVoteRepository;
+import com.ca.sustainapp.repositories.CityRepository;
 import com.ca.sustainapp.repositories.CourseRepository;
 import com.ca.sustainapp.repositories.PartRepository;
 import com.ca.sustainapp.repositories.ParticipationRepository;
+import com.ca.sustainapp.repositories.PlaceNoteRepository;
+import com.ca.sustainapp.repositories.PlacePictureRepository;
+import com.ca.sustainapp.repositories.PlaceRepository;
 import com.ca.sustainapp.repositories.QuestionRepository;
 import com.ca.sustainapp.repositories.RankCourseRepository;
 import com.ca.sustainapp.repositories.TeamRepository;
@@ -79,13 +89,34 @@ public class CascadeDeleteService {
 	AnswerRepository answerRepository;
 	@Autowired
 	AnswerCategoryRepository answerCategoryRepository;
-
+	@Autowired
+	CityRepository cityRepository;
+	@Autowired
+	PlaceRepository placeRepository;
+	@Autowired
+	PlacePictureRepository placePictureRepository;
+	@Autowired
+	PlaceNoteRepository placeNoteRepository;
+	
 	/**
 	 * les services
 	 */
 	@Autowired
 	CascadeGetService getService;
-	
+
+	/**
+	 * cascade delete a city
+	 * @param city
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(CityEntity city){
+		for(PlaceEntity place : city.getPlaces()){
+			cascadeDelete(place);
+		}
+		cityRepository.delete(city);
+	}
+
 	/**
 	 * cascade delete a cours
 	 * @param cours
@@ -221,6 +252,22 @@ public class CascadeDeleteService {
 		}
 		answerCategoryRepository.delete(answerCategory.getId());
 	}
+	
+	/**
+	 * cascade delete a place
+	 * @param place
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(PlaceEntity place){
+		for(PlacePictureEntity picture : getService.cascadeGetPlacePictures(new PlacePictureCriteria().setPlaceId(place.getId()))){
+			cascadeDelete(picture);
+		}
+		for(PlaceNoteEntity note : getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(place.getId()))){
+			cascadeDelete(note);
+		}
+		placeRepository.delete(place.getId());
+	}
 
 	/**
 	 * cascade delete a vote
@@ -252,5 +299,24 @@ public class CascadeDeleteService {
 	public void cascadeDelete(AnswerEntity answer){
 		answerRepository.delete(answer.getId());
 	}
-
+	
+	/**
+	 * cascade delete a place picture
+	 * @param picture
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(PlacePictureEntity picture){
+		placePictureRepository.delete(picture.getId());
+	}
+	
+	/**
+	 * cascade delete a place note
+	 * @param note
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(PlaceNoteEntity note){
+		placeNoteRepository.delete(note.getId());
+	}
 }

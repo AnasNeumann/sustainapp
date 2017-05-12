@@ -11,34 +11,34 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.ca.sustainapp.criteria.ReadNewsCriteria;
-import com.ca.sustainapp.entities.ReadNewsEntity;
+import com.ca.sustainapp.criteria.CityCriteria;
+import com.ca.sustainapp.entities.CityEntity;
 
 /**
  * specification for database research
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
- * @since 30/01/2017
+ * @since 11/05/2017
  * @version 1.0
  */
-public class ReadNewsSpecification {
+public class CitySpecification {
 
 	/**
 	 * private constructor
 	 */
-	private ReadNewsSpecification(){
+	private CitySpecification(){
 		
 	}
-	
+
 	/**
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ReadNewsEntity>
+	 * @return Specification<CityEntity>
 	 */
-	public static Specification<ReadNewsEntity> searchByCriteres(final ReadNewsCriteria criteres) {
-		return new Specification<ReadNewsEntity>() {
+	public static Specification<CityEntity> searchByCriteres(final CityCriteria criteres) {
+		return new Specification<CityEntity>() {
 			@Override
-			public Predicate toPredicate(Root<ReadNewsEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+			public Predicate toPredicate(Root<CityEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> listeCond = new ArrayList<Predicate>();
 				if (null != criteres) {
 					if (null != criteres.getId()) {
@@ -46,13 +46,13 @@ public class ReadNewsSpecification {
 						listeCond.add(p);
 					}
 
-					if (null != criteres.getProfilId()) {
-						Predicate p = cb.equal(root.<Long> get("profilId"), criteres.getProfilId());
+					if (null != criteres.getUserId()) {
+						Predicate p = cb.equal(root.<Long> get("userId"), criteres.getUserId());
 						listeCond.add(p);
 					}
-					
-					if (null != criteres.getNewsId()) {
-						Predicate p = cb.equal(root.<Long> get("newsId"), criteres.getNewsId());
+
+					if (null != criteres.getActif()) {
+						Predicate p = cb.equal(root.<Integer> get("actif"), criteres.getActif());
 						listeCond.add(p);
 					}
 					
@@ -67,5 +67,5 @@ public class ReadNewsSpecification {
 				return cb.and(cond);
 			}
 		};
-	}
+	}	
 }

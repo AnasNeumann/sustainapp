@@ -97,6 +97,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
+  .state('tab.administration-cities', {
+    url: '/administration/cities',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/cities.html',
+        controller: 'citiesController'
+      }
+    }
+  })
   .state('tab.teams', {
     url: '/team/all',
     views: {
@@ -222,7 +231,16 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	      controller: 'notificationsController'
 	    }
 	  }
-  });
+    })
+    .state('tab.city', {
+  	  url: '/city/:id',
+  	  views: {
+  	    'tab-news': {
+  	      templateUrl: 'templates/cities/city.html',
+  	      controller: 'cityController'
+  	    }
+  	  }
+    });
   $urlRouterProvider.otherwise('/tab/news');
   
 	/**
