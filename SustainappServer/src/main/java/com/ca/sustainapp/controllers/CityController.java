@@ -3,6 +3,8 @@ package com.ca.sustainapp.controllers;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +21,10 @@ import com.ca.sustainapp.criteria.CityCriteria;
 import com.ca.sustainapp.dao.CityServiceDAO;
 import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.responses.CitiesResponse;
 import com.ca.sustainapp.responses.CityResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.LightCityResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.CityValidator;
@@ -51,15 +55,18 @@ public class CityController extends GenericController {
 	@RequestMapping(value="/city", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String get(HttpServletRequest request) {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("id"));
-		if(!id.isPresent()){
+		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("user"));
+		if(!id.isPresent() || !userId.isPresent()){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
+		UserAccountEntity user = userService.getById(userId.get());
 		CityEntity city = cityService.getById(id.get());
-		if(null == city){
+		if(null == city || null == user){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
 		return new CityResponse()
 				.setCity(city)
+				.setOwner(user.getIsAdmin() || city.getUserId().equals(userId.get()))
 				.setCode(1)
 				.buildJson();
 	}
@@ -71,11 +78,15 @@ public class CityController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/city/cover", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String cover(HttpServletRequest request) {
-		UserAccountEntity user = super.getConnectedUser(request);	
-		if(null == user || isEmpty(request.getParameter("file")) || !user.getType().equals(1)){
+		UserAccountEntity user = super.getConnectedUser(request);
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("city"));
+		if(!id.isPresent() || null == user || isEmpty(request.getParameter("file"))){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		CityEntity city = getService.cascadeGetCities(new CityCriteria().setUserId(user.getId())).get(0);
+		CityEntity city = cityService.getById(id.get());
+		if(null == city || (!user.getIsAdmin() && !city.getUserId().equals(user.getId()))){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
 		city.setCover(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		cityService.createOrUpdate(city);
 		return new HttpRESTfullResponse().setCode(1).buildJson();
@@ -89,10 +100,14 @@ public class CityController extends GenericController {
 	@RequestMapping(value="/city/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
 		UserAccountEntity user = super.getConnectedUser(request);
-		if(null == user || !user.getType().equals(1) || !validator.validate(request).isEmpty()){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("city"));
+		if(!id.isPresent() || null == user || !validator.validate(request).isEmpty()){
 			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
 		}
-		CityEntity city = getService.cascadeGetCities(new CityCriteria().setUserId(user.getId())).get(0);
+		CityEntity city = cityService.getById(id.get());
+		if(null == city || (!user.getIsAdmin() && !city.getUserId().equals(user.getId()))){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
 		city.setName(request.getParameter("name"));
 		city.setAbout(request.getParameter("about"));
 		city.setPhone(request.getParameter("phone"));
@@ -116,7 +131,16 @@ public class CityController extends GenericController {
 		if(null == user || !user.getIsAdmin()){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
-		return null;
+		List<LightCityResponse>cities = new ArrayList<LightCityResponse>();
+		for(CityEntity city : getService.cascadeGetCities(new CityCriteria().setActif(0))){
+			cities.add(new LightCityResponse()
+					.setId(city.getId())
+					.setName(city.getName())
+					.setPhone(city.getPhone())
+					.setMail(userService.getById(city.getUserId()).getMail())
+			);
+		}
+		return new CitiesResponse().setCities(cities).setCode(1).buildJson();
 	}
 	
 	/**

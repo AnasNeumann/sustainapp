@@ -23,7 +23,7 @@ angular.module('sustainapp.controllers')
 			$scope.model.loaded = false;
 			$scope.title = "";
 			$scope.model.allErrors = [];
-			cityService.getById($stateParams.id).then(function(response){
+			cityService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				result = response.data;
 				if(result.code == 1) {				
 					$scope.title = result.city.name;
@@ -40,11 +40,9 @@ angular.module('sustainapp.controllers')
 					if(null != result.city.cover && "" != result.city.cover){
 		    			 $scope.model.displayCover = "data:image/jpeg;base64,"+ result.city.cover;
 		    		 }
+					$scope.model.isOwner = result.owner;
 				}
-				$scope.model.isOwner = false;
-				if(result.city.id == sessionService.getObject('city').id){
-					$scope.model.isOwner = true;
-	    		}
+				
 			});
 			$scope._isNotMobile = displayService.isNotMobile;
 		};
@@ -56,6 +54,7 @@ angular.module('sustainapp.controllers')
 	    	fileService.getFile(newFile, 100, 600, 240, false).then(function(imageData) {
 	    		var data = new FormData();
 				data.append("file", imageData);
+				data.append("city", $stateParams.id);
 				data.append("sessionId", sessionService.get('id'));
 				data.append("sessionToken", sessionService.get('token'));
 				cityService.cover(data).success(function(result) {
@@ -75,6 +74,7 @@ angular.module('sustainapp.controllers')
 	    	var reader = new FileReader();
             reader.onload = function (e) {
             	var data = new FormData();
+            	data.append("city", $stateParams.id);
 				data.append("file", e.target.result.substring(e.target.result.indexOf(",")+1));
 				data.append("sessionId", sessionService.get('id'));
 				data.append("sessionToken", sessionService.get('token'));
@@ -97,6 +97,7 @@ angular.module('sustainapp.controllers')
 			data.append("phone", $scope.model.phone);
 			data.append("website", $scope.model.website);
 			data.append("sessionId", sessionService.get('id'));
+			data.append("city", $stateParams.id);
 			data.append("sessionToken", sessionService.get('token'));
 			cityService.update(data).success(function(result) {
 				if(result.code == 1){

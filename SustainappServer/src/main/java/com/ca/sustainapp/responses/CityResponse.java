@@ -11,6 +11,7 @@ import com.ca.sustainapp.entities.CityEntity;
 public class CityResponse extends HttpRESTfullResponse {
 	private static final long serialVersionUID = 1L;
 	private CityEntity city;
+	private Boolean owner;
 
 	/**
 	 * @return the city
@@ -24,6 +25,21 @@ public class CityResponse extends HttpRESTfullResponse {
 	 */
 	public CityResponse setCity(CityEntity city) {
 		this.city = city;
+		return this;
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public Boolean getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public CityResponse setOwner(Boolean owner) {
+		this.owner = owner;
 		return this;
 	}
 }

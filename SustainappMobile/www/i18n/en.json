@@ -219,6 +219,7 @@
     "notification.accept" : "You have been added to the team",
     "notification.city" : "There is a new city to validate",
     "notification.validation" : "Your city has been validated",
+    "notification.refused" : "Your city has been delete by an admin",
     
     "notification.vote.title" : "New vote",
     "notification.rank.title" : "New note",
@@ -228,6 +229,7 @@
     "notification.accept.title" : "Request accepted",
     "notification.city.title" : "New city",
     "notification.validation.title" : "City validated",
+    "notification.refused.title" : "City deleted",
     
     "Monday" : "Monday",
     "Tuesday": "Tuesday",

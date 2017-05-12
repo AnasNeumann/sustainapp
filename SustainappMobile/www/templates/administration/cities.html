@@ -5,6 +5,22 @@
         <div class="s-search-empty" ng-if="0 == model.cities.length">
             <i class="icon ion-checkmark-circled"></i>
         </div>
+        
+        <ion-list>
+          <ion-item class="item item-remove-animate" ng-repeat="city in model.cities" type="item-text-wrap" href="#/tab/city/{{city.id}}">
+              <h2 class="s-teams-title">{{city.name}}</h2>
+              <p class="s-teams-text">
+                <span class="s-city-span"><i class="icon ion-android-call"></i> {{city.phone}}</span>
+                <span class="s-city-span"><i class="icon ion-email"></i> {{city.mail}}</span>
+              </p>
+              <ion-option-button class="button s-common-btnList" ng-click="accept()">
+                    <i class="icon ion-checkmark-circled"></i>
+              </ion-option-button>
+              <ion-option-button class="button s-common-btnList" ng-click="refuse()">
+                    <i class="icon ion-close-circled"></i>
+              </ion-option-button>
+          </ion-item>
+        </ion-list> 
     
     </ion-content>
 </ion-view>

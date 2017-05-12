@@ -14,8 +14,8 @@ angular.module('sustainapp.services')
 	        transformRequest: angular.identity
 	 };
 	 return {
-	    getById : function(id) {
-			return $http.get(config.remoteServer+"/city?id="+id);
+	    getById : function(id, user) {
+			return $http.get(config.remoteServer+"/city?id="+id+"&user="+user);
 		},
 		getAll : function(id) {
 			return $http.get(config.remoteServer+"/city/all?id="+id);
