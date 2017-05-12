@@ -75,7 +75,7 @@
         </div>
         
         <!-- MESSAGE IF STILL ISN'T ACTIVATED -->
-        <div class="padding">
+        <div class="padding" ng-if="0 == model.city.actif">
             <div class="s-city-message">
                 {{'city.desctivated' | translate }}
             </div>

@@ -13,10 +13,10 @@
                 <span class="s-city-span"><i class="icon ion-android-call"></i> {{city.phone}}</span>
                 <span class="s-city-span"><i class="icon ion-email"></i> {{city.mail}}</span>
               </p>
-              <ion-option-button class="button s-common-btnList" ng-click="accept()">
+              <ion-option-button class="button s-common-btnList" ng-click="accept(city)">
                     <i class="icon ion-checkmark-circled"></i>
               </ion-option-button>
-              <ion-option-button class="button s-common-btnList" ng-click="refuse()">
+              <ion-option-button class="button s-common-btnList" ng-click="refuse(city)">
                     <i class="icon ion-close-circled"></i>
               </ion-option-button>
           </ion-item>

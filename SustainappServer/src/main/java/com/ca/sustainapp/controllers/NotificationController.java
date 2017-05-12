@@ -107,7 +107,6 @@ public class NotificationController extends GenericController{
 	@MessageMapping("/notification")
 	@SendTo("/queue/notification")
 	public String send(String notification){
-		System.out.println("ESSAI------------------------------------------------------------------------------------------");
 		return notification;
 	}
 	

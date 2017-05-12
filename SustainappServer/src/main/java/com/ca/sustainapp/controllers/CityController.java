@@ -150,7 +150,16 @@ public class CityController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/city/validate", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String validate(HttpServletRequest request) {
-		return null;
+		UserAccountEntity user = super.getConnectedUser(request);
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("city"));
+		if(null == user || !user.getIsAdmin() || !id.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		CityEntity city = cityService.getById(id.get());
+		UserAccountEntity owner = userService.getById(city.getUserId());
+		cityService.createOrUpdate(city.setActif(1));
+		notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VALIDATION, owner.getProfile().getId(), user.getProfile().getId(), city.getId());
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -160,6 +169,16 @@ public class CityController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/city/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		UserAccountEntity user = super.getConnectedUser(request);
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("city"));
+		if(null == user || !user.getIsAdmin() || !id.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		CityEntity city = cityService.getById(id.get());
+		UserAccountEntity owner = userService.getById(city.getUserId());
+		userService.createOrUpdate(owner.setType(0));
+		cityService.delete(id.get());
+		notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_REFUSED, owner.getProfile().getId(), user.getProfile().getId(), owner.getProfile().getId());
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 }
