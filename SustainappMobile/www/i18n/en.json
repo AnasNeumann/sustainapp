@@ -109,6 +109,7 @@
     "administration.profilesByLevel" : "Profiles by level",
     "administration.teamByCateogries" : "Teams by level",
     "administration.byAges" : "Profiles by ages",
+    "administration.citiesManagement" : "Manage cities",
     
     "challengetype.building" : "eco-builing",
     "challengetype.design" : "eco-desgin",

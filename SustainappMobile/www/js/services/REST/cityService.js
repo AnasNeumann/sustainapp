@@ -17,6 +17,9 @@ angular.module('sustainapp.services')
 	    getById : function(id) {
 			return $http.get(config.remoteServer+"/city?id="+id);
 		},
+		getAll : function(id) {
+			return $http.get(config.remoteServer+"/city/all?id="+id);
+		},
 		update : function(data) {
 			return $http.post(config.remoteServer+"/city/update", data, params);
 		},

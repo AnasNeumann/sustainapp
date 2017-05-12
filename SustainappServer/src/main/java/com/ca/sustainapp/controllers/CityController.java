@@ -102,6 +102,24 @@ public class CityController extends GenericController {
 	}
 	
 	/**
+	 * get all not activated cities
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/city/all", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+    public String getAll(HttpServletRequest request) {
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("id"));
+		if(!id.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		UserAccountEntity user = userService.getById(id.get());
+		if(null == user || !user.getIsAdmin()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		return null;
+	}
+	
+	/**
 	 * validate a city by id
 	 * @return
 	 */
