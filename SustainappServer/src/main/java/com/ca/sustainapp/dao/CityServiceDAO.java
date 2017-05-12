@@ -102,4 +102,15 @@ public class CityServiceDAO extends GenericServiceDAO{
 	public Integer total(){
 		return repository.total();
 	}
+	
+	/**
+	 * Search by keywords and Max results
+	 * @param Keywords
+	 * @param maximum
+	 * @return
+	 */
+	@Transactional
+	public List<CityEntity> searchByKeywords(String keywords, Integer maximum){
+		return repository.searchByKeywords(keywords, new PageRequest(0, maximum));
+	}
 }

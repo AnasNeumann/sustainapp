@@ -50,5 +50,17 @@
          <p class="s-teams-text"><i class="icon ion-ios-calendar-outline"></i> {{cours.timestamps | date: 'dd/MM/yyyy'}}</p> 
      </ion-item>
    </ion-list>
+   
+   <!-- ALL CITIES -->
+   <div class="s-search-type" ng-if="false == searchModel.empty && searchModel.cities.length >0">
+       <i class="icon ion-location"></i>
+      {{'viewTitle.cities' | translate}}
+   </div>
+   <ion-list>
+     <ion-item class="item" ng-repeat="city in searchModel.cities" type="item-text-wrap" href="#/tab/city/{{city.id}}" menu-toggle="right" ng-click="save()">
+         <h2 class="s-teams-title">{{city.name}}</h2>
+         <p class="s-teams-text"><span class="s-city-span"><i class="icon ion-android-call"></i> {{city.phone}}</span></p>
+     </ion-item>
+   </ion-list>
             
 </ion-content> 

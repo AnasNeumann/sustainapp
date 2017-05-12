@@ -11,6 +11,8 @@ angular.module('sustainapp.controllers')
 		 * Initialisation du model
 		 */
 		var initLoginModel = function(){
+			$scope.notifications = [];
+			$scope.newNotifications = {};
 			$scope.title = "...";
 			$scope.nbrNotification = 0;
 			$scope.loginModel = {};
@@ -37,8 +39,6 @@ angular.module('sustainapp.controllers')
 		 * Initialisation de la réception de websockets
 		 */
 		var initWebSocket = function(){			
-			$scope.notifications = [];
-			$scope.newNotifications = {};
 			$stomp.connect(config.remoteServer+'/sustainapp-websocket/', {}).then(function (frame) {
                 var subscription = $stomp.subscribe('/queue/notification-'+sessionService.getObject("profile").id, function (payload, headers, res){
                 	    $scope.newNotifications = payload;
@@ -46,16 +46,15 @@ angular.module('sustainapp.controllers')
                 });
 			});
 		};
-		
-		
+	
 		/**
 		 * Reception et affichage d'une nouvelle notification
 		 */
-		$scope.$watch('newNotifications', function() {
-			if($scope.newNotifications.message == "notification.refused"){
-				$scope.loginModel.type = 0;        
-			}
+		$scope.$watch('newNotifications', function() {			
 			if(null != $scope.newNotifications.message){
+				if($scope.newNotifications.message == "notification.refused"){
+					$scope.loginModel.type = 0;        
+				}
 				$scope.notifications.push($scope.newNotifications);
 				if(!displayService.isNotMobile){
 			        $cordovaLocalNotification.schedule({

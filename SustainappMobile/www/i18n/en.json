@@ -72,6 +72,7 @@
     "viewTitle.challenges" : "Challenges",
     "viewTitle.certificates" : "Certificates",
     "viewTitle.notifications" : "Notifications",
+    "viewTitle.cities" : "Towns",
     
     "form.mail.mandatory" : "The mail field is mandatory",
     "form.mail.format" : "Please enter a valid mail format",

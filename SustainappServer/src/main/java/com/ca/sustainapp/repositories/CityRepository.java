@@ -1,5 +1,8 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -40,4 +43,12 @@ public interface CityRepository extends JpaSpecificationExecutor<CityEntity>, Jp
 	@Modifying
 	@Query("DELETE FROM CityEntity c WHERE c.id = :id")
 	void delete(@Param("id") Long id);
+	
+	/**
+	 * Select all cities by keywords
+	 * @param Keywords
+	 * @return
+	 */
+	@Query("FROM CityEntity c where (LOWER(c.name) LIKE  CONCAT('%',LOWER(:keywords),'%')) AND (c.actif = 1)")
+	List<CityEntity> searchByKeywords(@Param("keywords") String Keywords, Pageable pageable);
 }

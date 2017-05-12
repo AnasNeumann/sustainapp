@@ -72,6 +72,7 @@
     "viewTitle.challenges" : "Challenges",
     "viewTitle.certificates" : "Certificats",
     "viewTitle.notifications" : "Notifications",
+    "viewTitle.cities" : "Villes",
     
     "form.mail.mandatory" : "Veuillez remplir le champs adresse mail",
     "form.mail.format" : "Le format de votre mail n'est pas valide",

@@ -17,6 +17,7 @@ public class SearchResponse extends HttpRESTfullResponse {
 	private List<ProfileEntity> profiles = new SustainappList<ProfileEntity>();
 	private List<TeamEntity> teams = new SustainappList<TeamEntity>();
 	private List<LightCourseResponse> courses = new SustainappList<LightCourseResponse>();
+	private List<LightCityResponse> cities = new SustainappList<LightCityResponse>();
 
 	/**
 	 * @return the profiles
@@ -62,6 +63,21 @@ public class SearchResponse extends HttpRESTfullResponse {
 	 */
 	public SearchResponse setCourses(List<LightCourseResponse> courses) {
 		this.courses = courses;
+		return this;
+	}
+
+	/**
+	 * @return the cities
+	 */
+	public List<LightCityResponse> getCities() {
+		return cities;
+	}
+
+	/**
+	 * @param cities the cities to set
+	 */
+	public SearchResponse setCities(List<LightCityResponse> cities) {
+		this.cities = cities;
 		return this;
 	}
 }

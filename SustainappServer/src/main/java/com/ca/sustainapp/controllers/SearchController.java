@@ -14,15 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.dao.CityServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.ResearchServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
+import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.ResearchEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.LightCityResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
 import com.ca.sustainapp.responses.SearchResponse;
 
@@ -47,6 +50,8 @@ public class SearchController extends GenericController {
 	private CourseServiceDAO coursService;
 	@Autowired
 	private ResearchServiceDAO searchService;
+	@Autowired
+	private CityServiceDAO cityService;
 	
 	
 	/**
@@ -63,6 +68,7 @@ public class SearchController extends GenericController {
 		return new SearchResponse()
 				.setProfiles(profileService.searchByFulName(query,5))
 				.setTeams(teamService.searchByKeywords(query, 5))
+				.setCities(searchLightCities(query, 5))
 				.setCourses(searchLightCourses(query, 5))
 				.setCode(1)
 				.buildJson();
@@ -87,6 +93,24 @@ public class SearchController extends GenericController {
 					.setTimestamps(GregorianCalendar.getInstance())
 				);
 		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
+	 * Recherche des 5 villes proches en nom de la recherche
+	 * @param query
+	 * @param maxResult
+	 * @return
+	 */
+	private List<LightCityResponse> searchLightCities(String query, Integer maxResult){
+		List<LightCityResponse> result = new SustainappList<LightCityResponse>();
+		for(CityEntity city : cityService.searchByKeywords(query, 5)){
+			result.add(new LightCityResponse()
+					.setId(city.getId())
+					.setName(city.getName())
+					.setPhone(city.getPhone())
+					);	
+		}
+		return result;
 	}
 	
 	/**
