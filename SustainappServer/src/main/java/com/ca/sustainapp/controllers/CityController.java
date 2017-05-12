@@ -23,6 +23,7 @@ import com.ca.sustainapp.responses.CityResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
+import com.ca.sustainapp.validators.CityValidator;
 
 /**
  * Restfull controller for cities management
@@ -38,7 +39,9 @@ public class CityController extends GenericController {
 	 * Injection of dependencies
 	 */
 	@Autowired
-	CityServiceDAO cityService;
+	private CityServiceDAO cityService;
+	@Autowired
+	private CityValidator validator;
 	
 	/**
 	 * get a city by id
@@ -69,7 +72,7 @@ public class CityController extends GenericController {
 	@RequestMapping(value="/city/cover", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String cover(HttpServletRequest request) {
 		UserAccountEntity user = super.getConnectedUser(request);	
-		if(null == user || isEmpty(request.getParameter("file"))){
+		if(null == user || isEmpty(request.getParameter("file")) || !user.getType().equals(1)){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
 		CityEntity city = getService.cascadeGetCities(new CityCriteria().setUserId(user.getId())).get(0);
@@ -85,7 +88,17 @@ public class CityController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/city/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(null == user || !user.getType().equals(1) || !validator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+		}
+		CityEntity city = getService.cascadeGetCities(new CityCriteria().setUserId(user.getId())).get(0);
+		city.setName(request.getParameter("name"));
+		city.setAbout(request.getParameter("about"));
+		city.setPhone(request.getParameter("phone"));
+		city.setWebsite(request.getParameter("website"));
+		cityService.createOrUpdate(city);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**

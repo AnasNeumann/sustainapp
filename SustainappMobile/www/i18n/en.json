@@ -237,5 +237,6 @@
     "Sunday": "Sunday",
     
     "city.name" : "City's name",
-    "city.phone" : "Phone number"
+    "city.phone" : "Phone number",
+    "city.website" : "Website"
 }
