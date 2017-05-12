@@ -238,5 +238,6 @@
     
     "city.name" : "City's name",
     "city.phone" : "Phone number",
-    "city.website" : "Website"
+    "city.website" : "Website",
+    "city.desctivated" : "This city is not yet activated so you can't create places. An administrator will contact you as soon as possible, after which your city can be activated and visible. Thank you for your understanding !"
 }

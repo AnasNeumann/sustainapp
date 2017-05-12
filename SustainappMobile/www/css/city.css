@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+/**
+ * Le style de la page des villes
+ * @author Anas Neumann <anas.neumann.isamm@gmail.com>
+ * @since 12/05/2017
+ * @version 1.0
+ */
+ 
+.s-city-message{
+	background-color: #95ebfd;
+	border : 2px solid #23d5fb;
+	text-align : justify;
+	padding : 12px;
+}
+
+.s-city-span{
+	display: block;
+	margin-top : 5px;
+}
+
+.s-city-span i {
+	display : inline-block;
+	position : relative;
+	top: 1px;
+	margin-right : 5px;
+	color : #2dbe60;
+}

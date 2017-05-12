@@ -41,9 +41,9 @@
                         <i class="icon ion-edit"></i>
                   </div>
                   <p ng-if="null != model.city.about && '' != model.city.about">{{model.city.about}}</p>
-                  <p class="s-teams-text">
-                      <span ><i class="icon ion-android-call"></i> {{model.city.phone}}<br /></span>
-                      <span ng-if="null != model.city.website && '' != model.city.website"><i class="icon ion-earth"></i> {{model.city.website}}<br /></span>
+                  <p >
+                      <span class="s-city-span"><i class="icon ion-android-call"></i> {{model.city.phone}}<br /></span>
+                      <span class="s-city-span" ng-if="null != model.city.website && '' != model.city.website"><i class="icon ion-earth"></i> {{model.city.website}}<br /></span>
                   </p>
             </div>
             <div class="col col-100" ng-show="model.edit">
@@ -75,7 +75,10 @@
         </div>
         
         <!-- MESSAGE IF STILL ISN'T ACTIVATED -->
-        <div>
+        <div class="padding">
+            <div class="s-city-message">
+                {{'city.desctivated' | translate }}
+            </div>
         </div>
   </ion-content>
   
