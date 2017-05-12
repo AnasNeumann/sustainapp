@@ -46,12 +46,15 @@ angular.module('sustainapp.controllers')
                 });
 			});
 		};
-		initWebSocket();
+		
 		
 		/**
 		 * Reception et affichage d'une nouvelle notification
 		 */
-		$scope.$watch('newNotifications', function() {			
+		$scope.$watch('newNotifications', function() {
+			if($scope.newNotifications.message == "notification.refused"){
+				$scope.loginModel.type = 0;        
+			}
 			if(null != $scope.newNotifications.message){
 				$scope.notifications.push($scope.newNotifications);
 				if(!displayService.isNotMobile){
@@ -162,7 +165,8 @@ angular.module('sustainapp.controllers')
 		    	$state.go('tab.news');
 	    	} else {
 	    		$scope.loginModel.allErrors = result.errors;
-	    	}			
+	    	}
+			initWebSocket();
 		}
 		
 		/**
