@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.comparators.NumerotableEntityComparator;
@@ -28,6 +29,7 @@ import com.ca.sustainapp.utils.StringsUtils;
  * @version 1.0
  */
 @Controller
+@CrossOrigin
 public class GenericController {
 	
 	/**

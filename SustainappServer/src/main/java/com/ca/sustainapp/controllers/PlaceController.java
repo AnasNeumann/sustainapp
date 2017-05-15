@@ -1,5 +1,8 @@
 package com.ca.sustainapp.controllers;
 
+import java.util.GregorianCalendar;
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
-import com.ca.sustainapp.dao.PlaceNoteServiceDAO;
-import com.ca.sustainapp.dao.PlacePictureServiceDAO;
-import com.ca.sustainapp.dao.PlaceServiceDAO;
+import com.ca.sustainapp.entities.CityEntity;
+import com.ca.sustainapp.entities.PlaceEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.responses.HttpRESTfullResponse;
+import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.utils.StringsUtils;
+import com.ca.sustainapp.validators.PlaceValidator;
 
 /**
  * Restfull controller for places management
@@ -22,17 +29,38 @@ import com.ca.sustainapp.dao.PlaceServiceDAO;
  */
 @CrossOrigin
 @RestController
-public class PlaceController extends GenericController {
+public class PlaceController extends GenericCityController {
 	
 	/**
-	 * Injection of dependencies
+	 * Validator
 	 */
 	@Autowired
-	private PlaceServiceDAO placeService;
-	@Autowired
-	private PlaceNoteServiceDAO noteService;
-	@Autowired
-	private PlacePictureServiceDAO pictureService;
+	private PlaceValidator validator;
+
+	/**
+	 * create a new place
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/place", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String create(HttpServletRequest request){
+		CityEntity city = cityService.getById(StringsUtils.parseLongQuickly(request.getParameter("city")).get());
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(null == user || !super.isOnwerCity(city, user) || !validator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+		}
+		PlaceEntity place = new PlaceEntity()
+				.setName(request.getParameter("name"))
+				.setAbout(request.getParameter("about"))
+				.setAddress(request.getParameter("address"))
+				.setCityId(city.getId())
+				.setLatitude(StringsUtils.parseFloatQuiclky(request.getParameter("latitude")).get())
+				.setLongitude(StringsUtils.parseFloatQuiclky(request.getParameter("longitude")).get())
+				.setTimestamps(GregorianCalendar.getInstance());
+		place.setId(placeService.createOrUpdate(place));
+		return new IdResponse().setId(place.getId()).setCode(1).buildJson();
+	}
 
 	/**
 	 * get a place by id
@@ -42,17 +70,6 @@ public class PlaceController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/place", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
     public String get(HttpServletRequest request) {
-		return null;
-	}
-
-	/**
-	 * create a new place
-	 * @param request
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/place", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
 		return null;
 	}
 
@@ -75,7 +92,17 @@ public class PlaceController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/place/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delete(HttpServletRequest request) {
-		return null;
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("place"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(null == user || !id.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		PlaceEntity place = placeService.getById(id.get());
+		if(null == place || !super.isOnwerPlace(place, user)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		deleteService.cascadeDelete(place);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
 	/**

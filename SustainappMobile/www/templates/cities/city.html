@@ -81,7 +81,6 @@
             </div>
         </div>
         
-        
         <!-- ALL PLACES -->
         <div class="s-common-bluePart">
             <h2 class="s-common-whiteTitle">{{'city.ecoplace' | translate}}</h2>
@@ -89,6 +88,15 @@
         <div class="s-common-greyPart" ng-if="model.isOwner">
             <h3 class="s-common-greyTitle" ng-click="modalPlace.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'city.ecoplace.add' | translate}}</h3>
         </div>
+        <ion-list>
+	       <ion-item class="item item-remove-animate" ng-repeat="place in model.city.places" type="item-text-wrap" href="#/tab/place/{{place.id}}">
+	           <h2 class="s-teams-title">{{place.name}}</h2>
+	           <p class="s-teams-text"><span class="s-city-span"><i class="icon ion-location"></i> {{place.address}}</span></p>
+	           <ion-option-button ng-if="model.isOwner" class="button s-common-btnList" ng-click="deletePlace(place)">
+                    <i class="icon ion-close-circled"></i>
+               </ion-option-button>
+	       </ion-item>
+		</ion-list>
   </ion-content>
   
   <!-- Loading Part -->

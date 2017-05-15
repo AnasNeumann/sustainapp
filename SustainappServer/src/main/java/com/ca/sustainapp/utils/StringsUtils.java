@@ -312,6 +312,25 @@ public class StringsUtils {
 		return Optional.of(output);
 	}
 	
+	
+	/**
+	 * Methode de parsing d'une chaine de caractère en Float de manière sécurisée
+	 * @param input
+	 * @return
+	 */
+	public static Optional<Float> parseFloatQuiclky(String input){
+		if(null == input || !NumberUtils.isNumber(input)){
+			return Optional.empty();
+		}
+		Float output = null;
+		try {
+			output = Float.parseFloat(input);
+        } catch (NumberFormatException nfe) {
+        	return Optional.empty();
+        }
+		return Optional.of(output);
+	}
+	
 	/**
 	 * Methode de cryptage en md5 des mots de passes
 	 * @param input
