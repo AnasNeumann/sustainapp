@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('cityController', 
-		function($scope, $stateParams, $ionicModal, $cordovaGeolocation, sessionService, displayService, cityService, geolocationService) {
+		function($scope, $stateParams, $ionicModal, $cordovaGeolocation, sessionService, displayService, cityService, geolocationService, placeService) {
 
 		/**
 		 * Entrée dans la page
@@ -164,6 +164,13 @@ angular.module('sustainapp.controllers')
 			   $scope.model.newPlace.longitude = location.lng;
 			   $scope.model.newPlace.latitude = location.lat;
 		   });
+	   };
+	   
+	   /**
+	    * Ajouter une place en base de données
+	    */
+	   $scope.addPlace = function(){
+		   
 	   };
 	
 });
