@@ -243,5 +243,14 @@
     "city.name" : "Nom de la ville",
     "city.phone" : "Numéro de téléphone",
     "city.website" : "Site web",
-    "city.desctivated" : "Cette ville n'est pas encore activée ainsi elle ne peut ni créer de lieu ou être recherchée. Un administrateur va vous contacter au plus tôt, à la suite de quoi votre ville pourra être activée et visible. Merci de votre compréhension !"
+    "city.desctivated" : "Cette ville n'est pas encore activée ainsi elle ne peut ni créer de lieu ou être recherchée. Un administrateur va vous contacter au plus tôt, à la suite de quoi votre ville pourra être activée et visible. Merci de votre compréhension !",
+    "city.ecoplace" : "Eco-Lieux",
+    "city.ecoplace.add" : "Ajouter une éco-lieu",
+    
+    "place.name": "Nom du lieu",
+    "place.address": "Addresse complète",
+    "place.latitude": "Latitude",
+    "place.longitude": "Longitude ",
+    "place.localize" : "Localiser ma position",
+    "place.calcul" : "Calculer de l'adrrese"
 }

@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('cityController', 
-		function($scope, $stateParams, $ionicModal, sessionService, displayService, cityService) {
+		function($scope, $stateParams, $ionicModal, $cordovaGeolocation, sessionService, displayService, cityService, geolocationService) {
 
 		/**
 		 * Entrée dans la page
@@ -37,6 +37,7 @@ angular.module('sustainapp.controllers')
 					$scope.model.editCover = false;
 					$scope.model.loaded = true;
 					$scope.model.edit = false;
+					$scope.model.newPlace = {};
 					if(null != result.city.cover && "" != result.city.cover){
 		    			 $scope.model.displayCover = "data:image/jpeg;base64,"+ result.city.cover;
 		    		 }
@@ -113,5 +114,56 @@ angular.module('sustainapp.controllers')
 				}
 			});
 	    };
+	    
+	   /**
+	    * Modal de confirmation de la suppression d'un lieu
+	    */
+	   $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
+	     scope: $scope
+	   }).then(function(modal) {
+	     $scope.modal = modal;
+	   });
+	   
+	   
+	   /**
+	    * Modal d'ajout d'un nouveau lieu
+	    */
+	   $ionicModal.fromTemplateUrl('templates/cities/modal-place.html', {
+	     scope: $scope
+	   }).then(function(modal) {
+	     $scope.modalPlace = modal;
+	   });
+	   
+	   /**
+	    * Localiser ma position actuelle
+	    */
+	   $scope.getCurrentPlace = function(){
+			  var posOptions = {
+					  timeout: 10000, 
+					  enableHighAccuracy: false
+			  };
+			  $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+				  $scope.model.newPlace.latitude = position.coords.latitude;
+				  $scope.model.newPlace.longitude = position.coords.longitude;
+			  }, function(err) {});
+	   };
+	   
+	   /**
+	    * Ajouter un nouveau lieu
+	    */
+	   $scope.addPlace = function(){
+		   
+	   };
+	   
+	   /**
+	    * Calculer la longitude et latitude à partir de l'addresse donnée
+	    */
+	   $scope.calcul = function(){
+		   geolocationService.getLocationFromAddress($scope.model.newPlace.address).then(function(response){ 
+			   var location = response.data.results[0].geometry.location;
+			   $scope.model.newPlace.longitude = location.lng;
+			   $scope.model.newPlace.latitude = location.lat;
+		   });
+	   };
 	
 });

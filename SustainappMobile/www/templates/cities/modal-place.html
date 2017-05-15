@@ -1,0 +1,48 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+	    <div class="s-modal-confirm">
+		    <div class="s-common-floatEdit" ng-click="modalPlace.hide()">
+		          <i class="icon ion-close-round"></i>
+		    </div>	    
+		    <label class="item item-input item-floating-label" > 
+		      <span class="input-label s-common-label">{{'place.name' | translate}}</span> 
+		      <input ng-model="model.newPlace.name" type="text" placeholder="{{'place.name' | translate}}" class="s-common-input">
+		      <span class="s-common-errors">{{challengeModel.allErrors.name | translate}}</span>
+		    </label>
+		    <label class="item item-input item-floating-label" > 
+	          <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+	          <input ng-model="model.newPlace.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+	          <span class="s-common-errors">{{challengeModel.allErrors.about | translate}}</span>
+	        </label>
+	        <label class="item item-input item-floating-label" > 
+	          <span class="input-label s-common-label">{{'place.address' | translate}}</span> 
+	          <input ng-model="model.newPlace.address" type="text" placeholder="{{'place.address' | translate}}" class="s-common-input">
+	          <span class="s-common-errors">{{challengeModel.allErrors.address | translate}}</span>
+	        </label>
+	        <label class="item item-input item-floating-label" > 
+	          <span class="input-label s-common-label">{{'place.latitude' | translate}}</span> 
+	          <input ng-model="model.newPlace.latitude" type="text" placeholder="{{'place.latitude' | translate}}" class="s-common-input">
+	          <span class="s-common-errors">{{challengeModel.allErrors.longitude | translate}}</span>
+	        </label>
+	        <label class="item item-input item-floating-label" > 
+	          <span class="input-label s-common-label">{{'place.longitude' | translate}}</span> 
+	          <input ng-model="model.newPlace.longitude" type="text" placeholder="{{'place.longitude' | translate}}" class="s-common-input">
+	          <span class="s-common-errors">{{challengeModel.allErrors.latitude | translate}}</span>
+	        </label>
+	        <div class="row">
+                <div class="col col-10"></div>
+                <div class="col col-80">
+                  <button class="s-common-lightBtn" ng-click="calcul()"><i class="icon ion-location ion-map"></i> {{'place.calcul' | translate}}</button>
+                </div>
+            </div>
+	        
+	        <div class="row">
+		        <div class="col col-10"></div>
+		        <div class="col col-80">
+		          <button class="s-common-lightBtn" ng-click="getCurrentPlace()"><i class="icon ion-location s-city-locationIcon"></i> {{'place.localize' | translate}}</button>
+		        </div>
+	        </div>
+	        <button class="s-common-btn" ng-click="addPlace()">{{'common.create' | translate}}</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

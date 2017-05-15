@@ -80,6 +80,15 @@
                 {{'city.desctivated' | translate }}
             </div>
         </div>
+        
+        
+        <!-- ALL PLACES -->
+        <div class="s-common-bluePart">
+            <h2 class="s-common-whiteTitle">{{'city.ecoplace' | translate}}</h2>
+        </div>
+        <div class="s-common-greyPart" ng-if="model.isOwner">
+            <h3 class="s-common-greyTitle" ng-click="modalPlace.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'city.ecoplace.add' | translate}}</h3>
+        </div>
   </ion-content>
   
   <!-- Loading Part -->

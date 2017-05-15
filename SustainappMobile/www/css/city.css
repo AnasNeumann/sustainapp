@@ -25,3 +25,10 @@
 	margin-right : 5px;
 	color : #2dbe60;
 }
+
+.s-city-locationIcon{
+	position : relative;
+	top : 4px;
+	margin-right : 5px;
+	font-size : 25px;
+}

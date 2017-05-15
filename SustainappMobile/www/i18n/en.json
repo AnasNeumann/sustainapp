@@ -243,5 +243,14 @@
     "city.name" : "City's name",
     "city.phone" : "Phone number",
     "city.website" : "Website",
-    "city.desctivated" : "This city is not yet activated so you can't create places. An administrator will contact you as soon as possible, after which your city can be activated and visible. Thank you for your understanding !"
+    "city.desctivated" : "This city is not yet activated so you can't create places. An administrator will contact you as soon as possible, after which your city can be activated and visible. Thank you for your understanding !",
+    "city.ecoplace" : "Eco-Place",
+    "city.ecoplace.add" : "Add an eco-place",
+    
+    "place.name": "Place name",
+    "place.address": "Full place",
+    "place.latitude": "Latitude",
+    "place.longitude": "Longitude ",
+    "place.localize" : "Locate my position",
+    "place.calcul" : "Build from the address"
 }
