@@ -266,7 +266,8 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	 */
 	$sceDelegateProvider.resourceUrlWhitelist([
 		'self',
-		'https://www.youtube.com/embed/**'
+		'https://www.youtube.com/embed/**',
+		'https://maps.google.com/**'
 	]);
 
 	/**
