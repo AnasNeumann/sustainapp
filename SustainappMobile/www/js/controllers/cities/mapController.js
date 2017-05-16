@@ -41,6 +41,7 @@ angular.module('sustainapp.controllers')
 	        }
 	        $scope.map = new google.maps.Map(document.getElementById("map"), options);
 		    $scope.model.loaded = true;
+		    reloadPlaces(position.coords.longitude, position.coords.latitude);
 	    }, function(err) {});
 	};
 	
@@ -51,7 +52,21 @@ angular.module('sustainapp.controllers')
 		$cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
 			var newPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 	        $scope.map.setCenter(newPos);
+	        reloadPlaces(position.coords.longitude, position.coords.latitude);
 		}, function(err) {});
 	};
 	
+	/**
+	 * Récupération des éco-lieux proches
+	 */
+	var reloadPlaces = function(lng ,lat){
+		$scope.model.places = [];
+		placeService.getNear(lng, lat).then(function(response){
+			var result = response.data;
+			if(result.code == 1) {
+				$scope.model.places = result.places;
+				console.log(result.places);
+			}
+		});
+	};
 });

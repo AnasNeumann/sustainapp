@@ -18,6 +18,7 @@ import com.ca.sustainapp.entities.PlaceEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.PlacesResponse;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.PlaceValidator;
 
@@ -60,6 +61,22 @@ public class PlaceController extends GenericCityController {
 				.setTimestamps(GregorianCalendar.getInstance());
 		place.setId(placeService.createOrUpdate(place));
 		return new IdResponse().setId(place.getId()).setCode(1).buildJson();
+	}
+	
+	/**
+	 * Récupération des éco-lieux les plus proches
+     * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/place/near", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
+    public String getNear(HttpServletRequest request){
+		Optional<Float> lng = StringsUtils.parseFloatQuiclky(request.getParameter("lng"));
+		Optional<Float> lat = StringsUtils.parseFloatQuiclky(request.getParameter("lat"));
+		if(!lat.isPresent() || !lng.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		return new PlacesResponse().setPlaces(placeService.getNear(lng.get(), lat.get())).setCode(1).buildJson();
 	}
 
 	/**

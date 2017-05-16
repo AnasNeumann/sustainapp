@@ -34,6 +34,9 @@ angular.module('sustainapp.services')
 		},
 		note : function(data) {
 			return $http.post(config.remoteServer+"/place/note", data, params);
+		},
+		getNear : function(lng, lat) {
+			return $http.get(config.remoteServer+"/place/near?lng="+lng+"&lat="+lat);
 		}
 	};
 });

@@ -102,4 +102,14 @@ public class PlaceServiceDAO extends GenericServiceDAO{
 	public Integer total(){
 		return repository.total();
 	}
+
+	/**
+	 * Get all place near to the user position
+	 * @param lng
+	 * @param lat
+	 * @return
+	 */
+	public List<PlaceEntity> getNear(Float lng, Float lat){
+		return repository.getNear(lng, lat);
+	}
 }
