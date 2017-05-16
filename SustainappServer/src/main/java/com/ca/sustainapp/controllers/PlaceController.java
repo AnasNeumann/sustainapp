@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.PlacePictureCriteria;
 import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.PlaceEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
+import com.ca.sustainapp.responses.PlaceResponse;
 import com.ca.sustainapp.responses.PlacesResponse;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.PlaceValidator;
@@ -86,19 +88,25 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request) {
-		return null;
-	}
-
-	/**
-	 * update a place by Id
-	 * @param request
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/place/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
-		return null;
+    public String get(HttpServletRequest request){
+		Optional<Long> idUser = StringsUtils.parseLongQuickly(request.getParameter("user"));
+		Optional<Long> idPlace = StringsUtils.parseLongQuickly(request.getParameter("place"));
+		if(!idUser.isPresent() || !idPlace.isPresent()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		UserAccountEntity user = userService.getById(idUser.get());
+		PlaceEntity place = placeService.getById(idPlace.get());
+		if(null == user || null == place){
+			return new HttpRESTfullResponse().setCode(0).buildJson(); 
+		}
+		return new PlaceResponse()
+				.setIsOwner(super.isOnwerPlace(place, user))
+				.setPictures(getService.cascadeGetPlacePictures(new PlacePictureCriteria().setPlaceId(idPlace.get())))
+				.setNote(super.getCurrentNote(user.getProfile(), place))
+				.setPlace(place)
+				.setAverage(calculAverageNotes(place))
+				.setCode(1)
+				.buildJson();		
 	}
 
 	/**
@@ -122,6 +130,17 @@ public class PlaceController extends GenericCityController {
 		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
+	/**
+	 * update a place by Id
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/place/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String update(HttpServletRequest request) {
+		return null;
+	}
+	
 	/**
 	 * Add a picture to a place
 	 * @param request

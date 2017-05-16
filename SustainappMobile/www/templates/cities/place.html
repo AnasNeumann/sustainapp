@@ -3,6 +3,12 @@
   
   <!-- Page loaded -->
   <ion-content ng-show="model.loaded">
+    <div class="s-common-greyPart" >
+       <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-android-locate s-challenge-plus"></i> {{'place.locateMe' | translate}}</h3>
+    </div>
+    <div class="s-common-greyPart" ng-show="model.isOwner">
+       <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'place.picture.add' | translate}}</h3>
+    </div>
   </ion-content>
   
   <!-- Loading Part -->

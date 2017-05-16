@@ -253,5 +253,7 @@
     "place.latitude": "Latitude",
     "place.longitude": "Longitude ",
     "place.localize" : "Locate my position",
-    "place.calcul" : "Build from the address"
+    "place.calcul" : "Build from the address",
+    "place.locateMe" : "I am here !",
+    "place.picture.add" : "Add a new picture"
 }
