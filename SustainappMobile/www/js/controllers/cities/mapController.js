@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-.controller('mapController', function($scope, $cordovaGeolocation, placeService, geolocationService) {
+.controller('mapController', function($scope, $cordovaGeolocation, $state, placeService, geolocationService) {
 
 	/**
 	 * parameters for geolocation
@@ -64,6 +64,9 @@ angular.module('sustainapp.controllers')
 		placeService.getNear(lng, lat).then(function(response){
 			var result = response.data;
 			if(result.code == 1) {
+				var infowindow = new google.maps.InfoWindow({
+		          content: $scope.content
+		        });
 				for(var i in result.places){
 					var place = result.places[i];
 					var position = {lat: place.latitude, lng: place.longitude};
@@ -72,9 +75,20 @@ angular.module('sustainapp.controllers')
 					    map: $scope.map,
 					    animation: google.maps.Animation.DROP,
 					    title: place.name,
-					    icon: "img/map/markerMin.png"
+				    	label: {
+				    	    color: 'black',
+				    	    fontWeight: 'bold',
+				    	    text: place.name,
+				    	},
+				        icon: {
+				    	    labelOrigin: new google.maps.Point(45, 100),
+				    	    url: "img/map/markerMin.png",
+				    	},
+				    	id : place.id
 					  });
-					marker.addListener('click', visite);
+					marker.addListener('click', function() {
+						$state.go('tab.place', {"id":marker.id});
+			        });
 					$scope.model.markers.push(marker);
 				}
 			}
@@ -90,11 +104,4 @@ angular.module('sustainapp.controllers')
 		}
 		$scope.model.markers = [];
 	};
-	
-	/**
-	 * Aller à la page du lieu indiqué par le markeur
-	 */
-	var visite = function(){
-		alert("click !");
-	}
 });
