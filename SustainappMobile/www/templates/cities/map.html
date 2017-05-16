@@ -1,8 +1,8 @@
 <ion-view view-title="{{'sideMenu.map' | translate }}">
 
   <!-- Page loaded -->
-  <ion-content ng-show="model.loaded">
-    <div id="map" class="s-city-map"></div>
+  <ion-content ng-show="model.loaded" class="s-city-mapContainer">
+    <div id="map" class="s-city-map" data-tap-disabled="true"></div>
   </ion-content>
   
   <!-- Loading Part -->
