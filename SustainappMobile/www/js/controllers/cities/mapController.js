@@ -59,14 +59,42 @@ angular.module('sustainapp.controllers')
 	/**
 	 * Récupération des éco-lieux proches
 	 */
-	var reloadPlaces = function(lng ,lat){
-		$scope.model.places = [];
+	var reloadPlaces = function(lng ,lat){	
+		emptyMap();
 		placeService.getNear(lng, lat).then(function(response){
 			var result = response.data;
 			if(result.code == 1) {
-				$scope.model.places = result.places;
-				console.log(result.places);
+				for(var i in result.places){
+					var place = result.places[i];
+					var position = {lat: place.latitude, lng: place.longitude};
+					var marker = new google.maps.Marker({
+					    position: position,
+					    map: $scope.map,
+					    animation: google.maps.Animation.DROP,
+					    title: place.name,
+					    icon: "img/map/markerMin.png"
+					  });
+					marker.addListener('click', visite);
+					$scope.model.markers.push(marker);
+				}
 			}
 		});
 	};
+	
+	/**
+	 * Vider la map des précédents markeurs
+	 */
+	var emptyMap = function(){
+		for(var i in $scope.model.markers){
+			$scope.model.markers[i].setMap(null);
+		}
+		$scope.model.markers = [];
+	};
+	
+	/**
+	 * Aller à la page du lieu indiqué par le markeur
+	 */
+	var visite = function(){
+		alert("click !");
+	}
 });
