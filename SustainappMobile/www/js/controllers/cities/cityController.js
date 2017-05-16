@@ -155,13 +155,6 @@ angular.module('sustainapp.controllers')
 	   };
 	   
 	   /**
-	    * Ajouter un nouveau lieu
-	    */
-	   $scope.addPlace = function(){
-		   
-	   };
-	   
-	   /**
 	    * Calculer la longitude et latitude à partir de l'addresse donnée
 	    */
 	   $scope.calcul = function(){

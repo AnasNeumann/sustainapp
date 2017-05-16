@@ -232,6 +232,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    }
 	  }
     })
+    .state('tab.map', {
+  	  url: '/map',
+  	  views: {
+  	    'tab-news': {
+  	      templateUrl: 'templates/cities/map.html',
+  	      controller: 'mapController'
+  	    }
+  	  }
+    })
     .state('tab.place', {
   	  url: '/place/:id',
   	  views: {

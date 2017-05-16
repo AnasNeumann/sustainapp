@@ -9,7 +9,7 @@ angular.module('sustainapp.services').factory('geolocationService', function($ht
 	var API_KEY = "AIzaSyC3sHMIxMrMk5OLByCaGJcsQSP2c6-0q-4";
 	return {
 		getLocationFromAddress : function(Address) {
-				return $http.get(BASE_API+"geocode/json?address="+Address+"&key="+API_KEY);
+			return $http.get(BASE_API+"geocode/json?address="+Address+"&key="+API_KEY);
 		}
 	}
 });

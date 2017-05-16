@@ -10,10 +10,14 @@
     <ion-item ng-if="1 == loginModel.type" menu-close href="#/tab/city/{{loginModel.cityId}}" class="sideMenuItem">
       <i class="icon ion-location sideMenuIcon"></i>
       {{'sideMenu.city' | translate}}
-    </ion-item>
+    </ion-item>    
     <ion-item menu-close href="#/tab/team/all" class="sideMenuItem">
       <i class="icon ion-person-stalker sideMenuIcon"></i>
       {{'sideMenu.teams' | translate}}
+    </ion-item>
+    <ion-item menu-close href="#/tab/map" class="sideMenuItem">
+      <i class="icon ion-map sideMenuIcon"></i>
+      {{'sideMenu.map' | translate}}
     </ion-item>
     <ion-item menu-close href="#/tab/report" class="sideMenuItem">
       <i class="icon ion-nuclear sideMenuIcon"></i>
