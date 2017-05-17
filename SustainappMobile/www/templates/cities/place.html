@@ -3,9 +3,50 @@
   
   <!-- Page loaded -->
   <ion-content ng-show="model.loaded">
+
+    <!-- MODE READ INFORMATIONS -->
+    <div class="padding" ng-hide="model.edit">
+	    <h2 class="s-profile-name">{{model.place.name}}</h2>
+	    <p >
+	       <span class="s-teams-text s-city-span"><i class="icon ion-location"></i> {{model.place.address}}</span>
+           <span class="s-city-place-about">{{model.place.about}}</span>
+        </p>
+        <div class="s-common-edit s-city-edit" ng-click="model.edit = true" ng-show="model.isOwner">
+           <i class="icon ion-edit"></i>
+        </div>
+    </div>
+    
+    <!-- MODE WRITE INFORMATIONS -->
+    <div class="padding" ng-show="model.edit">
+        <label class="item item-input item-floating-label" > 
+          <span class="input-label s-common-label">{{'place.name' | translate}}</span> 
+          <input ng-model="model.name" type="text" placeholder="{{'place.name' | translate}}" class="s-common-input">
+          <span class="s-common-errors">{{model.allErrors.name | translate}}</span>
+        </label>
+        <label class="item item-input item-floating-label" > 
+          <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+          <input ng-model="model.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+          <span class="s-common-errors">{{model.allErrors.about | translate}}</span>
+        </label>
+        <label class="item item-input item-floating-label" > 
+          <span class="input-label s-common-label">{{'place.address' | translate}}</span> 
+          <input ng-model="model.address" type="text" placeholder="{{'place.address' | translate}}" class="s-common-input">
+          <span class="s-common-errors">{{model.allErrors.address | translate}}</span>
+        </label>
+        <button class="s-common-lightBtn" ng-click="updatePlace()">{{'common.modify' | translate}}</button>
+        <div class="s-common-edit s-city-edit" ng-click="model.edit = false">
+           <i class="icon ion-close"></i>
+        </div>
+    </div>
+
+    <!-- DONNER UNE NOTE AU LIEU -->
+    
+    <!-- VERIFIER SA PRESENCE -->
     <div class="s-common-greyPart" >
        <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-android-locate s-challenge-plus"></i> {{'place.locateMe' | translate}}</h3>
     </div>
+    
+    <!-- PARTIE PICTURES -->
     <div class="s-common-greyPart" ng-show="model.isOwner">
        <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'place.picture.add' | translate}}</h3>
     </div>

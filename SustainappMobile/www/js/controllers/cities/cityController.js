@@ -114,8 +114,7 @@ angular.module('sustainapp.controllers')
 					$scope.model.city.about = $scope.model.about;
 					$scope.model.city.phone = $scope.model.phone;
 					$scope.model.city.website = $scope.model.website;
-				}else{
-					console.log(result);
+				}else{					
 					$scope.model.allErrors = result.errors;
 				}
 			});

@@ -22,6 +22,7 @@ import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.PlaceResponse;
 import com.ca.sustainapp.responses.PlacesResponse;
 import com.ca.sustainapp.utils.StringsUtils;
+import com.ca.sustainapp.validators.PlaceUpdateValidator;
 import com.ca.sustainapp.validators.PlaceValidator;
 
 /**
@@ -39,6 +40,8 @@ public class PlaceController extends GenericCityController {
 	 */
 	@Autowired
 	private PlaceValidator validator;
+	@Autowired
+	private PlaceUpdateValidator updateValidator;
 
 	/**
 	 * create a new place
@@ -138,7 +141,18 @@ public class PlaceController extends GenericCityController {
 	@ResponseBody
 	@RequestMapping(value="/place/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String update(HttpServletRequest request) {
-		return null;
+		UserAccountEntity user = super.getConnectedUser(request);
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("place"));
+		if(!id.isPresent() || null == user || !updateValidator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setErrors(updateValidator.validate(request)).setCode(0).buildJson();
+		}
+		PlaceEntity place = placeService.getById(id.get());
+		if(null == place || !super.isOnwerPlace(place, user)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		place.setName(request.getParameter("name")).setAbout(request.getParameter("about")).setAddress(request.getParameter("address"));
+		placeService.createOrUpdate(place);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**
@@ -148,7 +162,7 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/picture/add", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String addPicture(HttpServletRequest request) {
+    public String addPicture(HttpServletRequest request){
 		return null;
 	}
 

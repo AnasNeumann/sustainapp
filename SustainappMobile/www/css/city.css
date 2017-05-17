@@ -42,3 +42,14 @@
 	height : 100%;
 	width : 100%;
 }
+
+.s-city-place-about{
+	display : block;
+	margin-top : 10px;
+	text-align: justify;
+}
+
+.s-city-edit{
+    margin-top : 7px;
+    margin-right : 7px;
+}

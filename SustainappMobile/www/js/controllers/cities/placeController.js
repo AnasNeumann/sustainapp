@@ -40,5 +40,29 @@ angular.module('sustainapp.controllers')
 				}
 			});
 		};
+		
+		/**
+		 * Modification en base des informations d'un lieu
+		 */
+		$scope.updatePlace = function(){
+			var data = new FormData();
+			data.append("name", $scope.model.name);
+			data.append("about", $scope.model.about);
+			data.append("address", $scope.model.address);
+			data.append("place", $stateParams.id);
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			placeService.update(data).success(function(result) {
+				if(result.code == 1){
+					$scope.model.edit = false;
+					$scope.model.allErrors = [];
+					$scope.model.place.name = $scope.model.name;
+					$scope.model.place.about = $scope.model.about;
+					$scope.model.place.address = $scope.model.address;
+				} else {
+					$scope.model.allErrors = result.errors;
+				}
+			});
+		};
 	
 });
