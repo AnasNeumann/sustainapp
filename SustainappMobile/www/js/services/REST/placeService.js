@@ -30,7 +30,7 @@ angular.module('sustainapp.services')
 			return $http.post(config.remoteServer+"/place/picture/add", data, params);
 		},
 		delPicture : function(data) {
-			return $http.post(config.remoteServer+"/place/picture/add", data, params);
+			return $http.post(config.remoteServer+"/place/picture/del", data, params);
 		},
 		note : function(data) {
 			return $http.post(config.remoteServer+"/place/note", data, params);

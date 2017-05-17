@@ -53,8 +53,11 @@
     <div ng-repeat="picture in model.pictures">
         <img ng-src="data:image/jpeg;base64,{{picture.document}}" ng-if="picture.document != null" class="s-participation-img" width="100%" height="auto" />
         <div class="padding" >                
+           <div class="s-common-floatEdit" ng-click="deletePicture(picture)" ng-show="model.isOwner">
+               <i class="icon ion-trash-a"></i>
+           </div>
            <span class="s-news-courses-title">{{picture.name}}</span><br />
-           <picture class="s-news-courses-author" >{{picture.about}}</picture>              
+           <span class="s-news-courses-author" >{{picture.about}}</span>  	                  
         </div>
     </div>
   </ion-content>

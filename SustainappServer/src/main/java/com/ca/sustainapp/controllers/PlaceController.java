@@ -1,5 +1,7 @@
 package com.ca.sustainapp.controllers;
 
+import static org.apache.commons.codec.binary.Base64.decodeBase64;
+
 import java.util.GregorianCalendar;
 import java.util.Optional;
 
@@ -16,11 +18,13 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.PlacePictureCriteria;
 import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.PlaceEntity;
+import com.ca.sustainapp.entities.PlacePictureEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.PlaceResponse;
 import com.ca.sustainapp.responses.PlacesResponse;
+import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.PlaceUpdateValidator;
 import com.ca.sustainapp.validators.PlaceValidator;
@@ -163,7 +167,23 @@ public class PlaceController extends GenericCityController {
 	@ResponseBody
 	@RequestMapping(value="/place/picture/add", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String addPicture(HttpServletRequest request){
-		return null;
+		UserAccountEntity user = super.getConnectedUser(request);
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("place"));
+		if(!id.isPresent() || null == user || !updateValidator.validate(request).isEmpty()){
+			return new HttpRESTfullResponse().setErrors(updateValidator.validate(request)).setCode(0).buildJson();
+		}
+		PlaceEntity place = placeService.getById(id.get());
+		if(null == place || !super.isOnwerPlace(place, user)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		PlacePictureEntity picture = new PlacePictureEntity()
+				.setName(request.getParameter("name"))
+				.setPlaceId(place.getId())
+				.setAbout(request.getParameter("about"))
+				.setTimestamps(GregorianCalendar.getInstance())
+				.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
+		Long idPicture = pictureService.createOrUpdate(picture);
+		return new IdResponse().setId(idPicture).setCode(1).buildJson();
 	}
 
 	/**
@@ -172,9 +192,23 @@ public class PlaceController extends GenericCityController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/place/picture/dell", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	@RequestMapping(value="/place/picture/del", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String delPicture(HttpServletRequest request) {
-		return null;
+		UserAccountEntity user = super.getConnectedUser(request);
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("picture"));
+		if(!id.isPresent() || null == user){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		PlacePictureEntity picture = pictureService.getById(id.get());
+		if(null == picture){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		PlaceEntity place = placeService.getById(picture.getPlaceId());
+		if(null == place || !super.isOnwerPlace(place, user)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		deleteService.cascadeDelete(picture);
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 	
 	/**

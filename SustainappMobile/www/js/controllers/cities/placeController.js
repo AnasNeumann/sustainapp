@@ -148,5 +148,17 @@ angular.module('sustainapp.controllers')
 				}
 			});
 		};
+		
+		/**
+		 * Suppression en base d'une image
+		 */
+		$scope.deletePicture = function(picture){
+			$scope.model.pictures.splice($scope.model.pictures.indexOf(picture), 1);
+			var data = new FormData();
+			data.append("picture", picture.id);
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			placeService.delPicture(data);
+		};
 	
 });
