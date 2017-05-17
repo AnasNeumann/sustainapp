@@ -337,12 +337,5 @@ angular.module('sustainapp.controllers')
 		});
 		return;
 	}
-	
-	/**
-	 * Visualisation de tout les votes d'une participation
-	 */
-	$scope.getVotes = function(participation){
-		
-	}
-	
+
 });

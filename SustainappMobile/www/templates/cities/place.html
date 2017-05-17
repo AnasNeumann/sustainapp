@@ -7,7 +7,7 @@
     <!-- MODE READ INFORMATIONS -->
     <div class="padding" ng-hide="model.edit">
 	    <h2 class="s-profile-name">{{model.place.name}}</h2>
-	    <p >
+	    <p>
 	       <span class="s-teams-text s-city-span"><i class="icon ion-location"></i> {{model.place.address}}</span>
            <span class="s-city-place-about">{{model.place.about}}</span>
         </p>
@@ -43,12 +43,19 @@
     
     <!-- VERIFIER SA PRESENCE -->
     <div class="s-common-greyPart" >
-       <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-android-locate s-challenge-plus"></i> {{'place.locateMe' | translate}}</h3>
+       <h3 class="s-common-greyTitle" ng-click="modalNote.show()"><i class="icon ion-android-locate s-challenge-plus"></i> {{'place.locateMe' | translate}}</h3>
     </div>
     
     <!-- PARTIE PICTURES -->
     <div class="s-common-greyPart" ng-show="model.isOwner">
-       <h3 class="s-common-greyTitle" ng-click="participateModal.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'place.picture.add' | translate}}</h3>
+       <h3 class="s-common-greyTitle" ng-click="modalPicture.show()"><i class="icon ion-ios-plus-outline s-challenge-plus"></i> {{'place.picture.add' | translate}}</h3>
+    </div>
+    <div ng-repeat="picture in model.pictures">
+        <img ng-src="data:image/jpeg;base64,{{picture.document}}" ng-if="picture.document != null" class="s-participation-img" width="100%" height="auto" />
+        <div class="padding" >                
+           <span class="s-news-courses-title">{{picture.name}}</span><br />
+           <picture class="s-news-courses-author" >{{picture.about}}</picture>              
+        </div>
     </div>
   </ion-content>
   

@@ -87,7 +87,7 @@ angular.module('sustainapp.controllers')
 				    	id : place.id
 					  });
 					marker.addListener('click', function() {
-						$state.go('tab.place', {"id":marker.id});
+						$state.go('tab.place', {"id":this.id});
 			        });
 					$scope.model.markers.push(marker);
 				}
