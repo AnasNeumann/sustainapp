@@ -16,6 +16,7 @@ import com.ca.sustainapp.criteria.PlacePictureCriteria;
 import com.ca.sustainapp.criteria.QuestionCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
+import com.ca.sustainapp.criteria.VisitCriteria;
 import com.ca.sustainapp.entities.AnswerCategoryEntity;
 import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.ChallengeEntity;
@@ -33,6 +34,7 @@ import com.ca.sustainapp.entities.TeamEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
+import com.ca.sustainapp.entities.VisitEntity;
 import com.ca.sustainapp.repositories.AnswerCategoryRepository;
 import com.ca.sustainapp.repositories.AnswerRepository;
 import com.ca.sustainapp.repositories.ChallengeRepository;
@@ -50,6 +52,7 @@ import com.ca.sustainapp.repositories.TeamRepository;
 import com.ca.sustainapp.repositories.TeamRoleRepository;
 import com.ca.sustainapp.repositories.TopicRepository;
 import com.ca.sustainapp.repositories.TopicValidationRepository;
+import com.ca.sustainapp.repositories.VisitRepository;
 
 /**
  * Service pour la suppression en cascade
@@ -97,6 +100,8 @@ public class CascadeDeleteService {
 	PlacePictureRepository placePictureRepository;
 	@Autowired
 	PlaceNoteRepository placeNoteRepository;
+	@Autowired
+	VisitRepository visitRespositiry;
 	
 	/**
 	 * les services
@@ -266,6 +271,9 @@ public class CascadeDeleteService {
 		for(PlaceNoteEntity note : getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(place.getId()))){
 			cascadeDelete(note);
 		}
+		for(VisitEntity visit : getService.cascadeGetVisit(new VisitCriteria().setPlaceId(place.getId()))){
+			cascadeDelete(visit);
+		}
 		placeRepository.delete(place.getId());
 	}
 
@@ -318,5 +326,15 @@ public class CascadeDeleteService {
 	@Transactional
 	public void cascadeDelete(PlaceNoteEntity note){
 		placeNoteRepository.delete(note.getId());
+	}
+	
+	/**
+	 * cascade delete a visit
+	 * @param note
+	 */
+	@Modifying
+	@Transactional
+	public void cascadeDelete(VisitEntity visit){
+		visitRespositiry.delete(visit.getId());
 	}
 }
