@@ -25,7 +25,7 @@ public class VisitEntity extends GenericEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "place_note_id_seq_generator")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "visit_id_seq_generator")
 	@Basic(optional = false)
 	@Column(name = "ID")
 	private Long id;

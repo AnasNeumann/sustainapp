@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('placeController', 
-		function($scope, $stateParams, $ionicModal, sessionService, displayService, placeService) {
+		function($scope, $stateParams, $ionicModal, $cordovaGeolocation, sessionService, displayService, placeService) {
 
 		/**
 		 * Entrée dans la page
@@ -27,6 +27,7 @@ angular.module('sustainapp.controllers')
 			$scope.rating = {};
 			$scope.rating.rate = 1;
 			$scope.rating.max = 5;
+			$scope.model.visited = false;
 			$scope._isNotMobile = displayService.isNotMobile;
 			placeService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				result = response.data;
@@ -193,6 +194,29 @@ angular.module('sustainapp.controllers')
 	   			 $scope.model.average = result.average;
 	   		  }
 	   	   });
+   	  };
+
+   	  /**
+   	   * Verifier sa présence à un lieu
+   	   */
+   	  $scope.visit = function(){
+   		 var posOptions = {
+   			 timeout: 10000, 
+   			 enableHighAccuracy: false
+   	     };
+   		 $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+   		    var data = new FormData();
+    	    data.append("lng", position.coords.longitude);
+    	    data.append("lat", position.coords.latitude);
+ 	   	    data.append("place", $stateParams.id);
+ 	   	    data.append("sessionId", sessionService.get('id'));
+ 	   	    data.append("sessionToken", sessionService.get('token'));
+ 	   	    placeService.visit(data).success(function(result){
+	   		  if(result.code == 1){
+	   			$scope.model.visited = true;
+	   		  }
+	   	    });
+   		 });
    	  };
    	
 });

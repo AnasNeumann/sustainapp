@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.PlaceNoteCriteria;
 import com.ca.sustainapp.criteria.PlacePictureCriteria;
+import com.ca.sustainapp.criteria.VisitCriteria;
+import com.ca.sustainapp.dao.VisitServiceDAO;
 import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.PlaceEntity;
 import com.ca.sustainapp.entities.PlaceNoteEntity;
 import com.ca.sustainapp.entities.PlacePictureEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.entities.VisitEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.PlaceResponse;
@@ -42,6 +45,12 @@ import com.ca.sustainapp.validators.PlaceValidator;
 @CrossOrigin
 @RestController
 public class PlaceController extends GenericCityController {
+	
+	/**
+	 * Injection de service DAO
+	 */
+	@Autowired
+	private VisitServiceDAO visitService;
 	
 	/**
 	 * Validator
@@ -231,6 +240,10 @@ public class PlaceController extends GenericCityController {
 		if(!idPlace.isPresent() || !score.isPresent() || null == user){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
+		PlaceEntity place = placeService.getById(idPlace.get());
+		if(null == place){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
 		PlaceNoteEntity currentNote;
 		List<PlaceNoteEntity> myNotes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
 		if(myNotes.size() > 0){
@@ -247,7 +260,7 @@ public class PlaceController extends GenericCityController {
 		Integer total = allNotes.size();
 		return new RankCoursResponse().setTotal(total).setAverage(calculAverageNotes(allNotes)).setCode(1).buildJson();
 	}
-	
+
 	/**
 	 * visite a place
 	 * @param request
@@ -256,7 +269,30 @@ public class PlaceController extends GenericCityController {
 	@ResponseBody
 	@RequestMapping(value="/place/visit", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String visit(HttpServletRequest request) {
-		return null;
+		Optional<Long> idPlace = StringsUtils.parseLongQuickly(request.getParameter("place"));
+		Optional<Float> lng = StringsUtils.parseFloatQuiclky(request.getParameter("lng"));
+		Optional<Float> lat = StringsUtils.parseFloatQuiclky(request.getParameter("lat"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(!idPlace.isPresent() || !lng.isPresent() | !lat.isPresent() || null == user){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		PlaceEntity place = placeService.getById(idPlace.get());
+		if(null == place){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		if(Math.abs(lng.get()-place.getLongitude()) > 0.2 || Math.abs(lat.get()-place.getLatitude()) >0.2){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		List<VisitEntity> currentVisit = getService.cascadeGetVisit(new VisitCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
+		if(null == currentVisit || currentVisit.size() == 0){
+			VisitEntity visit = new VisitEntity()
+					.setPlaceId(idPlace.get())
+					.setProfilId(user.getProfile().getId())
+					.setTimestamps(GregorianCalendar.getInstance());
+			visitService.createOrUpdate(visit);
+			badgeService.walker(user.getProfile());
+		}
+		return new HttpRESTfullResponse().setCode(1).buildJson();
 	}
 
 }
