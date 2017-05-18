@@ -3,6 +3,7 @@ package com.ca.sustainapp.controllers;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,15 +16,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.PlaceNoteCriteria;
 import com.ca.sustainapp.criteria.PlacePictureCriteria;
 import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.PlaceEntity;
+import com.ca.sustainapp.entities.PlaceNoteEntity;
 import com.ca.sustainapp.entities.PlacePictureEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.PlaceResponse;
 import com.ca.sustainapp.responses.PlacesResponse;
+import com.ca.sustainapp.responses.RankCoursResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.PlaceUpdateValidator;
@@ -106,14 +110,16 @@ public class PlaceController extends GenericCityController {
 		if(null == user || null == place){
 			return new HttpRESTfullResponse().setCode(0).buildJson(); 
 		}
+		List<PlaceNoteEntity> notes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(place.getId()));
 		return new PlaceResponse()
 				.setIsOwner(super.isOnwerPlace(place, user))
 				.setPictures(getService.cascadeGetPlacePictures(new PlacePictureCriteria().setPlaceId(idPlace.get())))
 				.setNote(super.getCurrentNote(user.getProfile(), place))
 				.setPlace(place)
-				.setAverage(calculAverageNotes(place))
+				.setAverage(calculAverageNotes(notes))
+				.setNbrNotes(notes.size())
 				.setCode(1)
-				.buildJson();		
+				.buildJson();
 	}
 
 	/**
@@ -219,6 +225,37 @@ public class PlaceController extends GenericCityController {
 	@ResponseBody
 	@RequestMapping(value="/place/note", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String note(HttpServletRequest request) {
+		Optional<Long> idPlace = StringsUtils.parseLongQuickly(request.getParameter("place"));
+		Optional<Integer> score = StringsUtils.parseIntegerQuietly(request.getParameter("score"));
+		UserAccountEntity user = super.getConnectedUser(request);
+		if(!idPlace.isPresent() || !score.isPresent() || null == user){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		PlaceNoteEntity currentNote;
+		List<PlaceNoteEntity> myNotes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
+		if(myNotes.size() > 0){
+			currentNote = myNotes.get(0).setScore(score.get());
+		}else {
+			currentNote = new PlaceNoteEntity()
+					.setPlaceId(idPlace.get())
+					.setProfilId(user.getProfile().getId())
+					.setScore(score.get())
+					.setTimestamps(GregorianCalendar.getInstance());
+		}
+		noteService.createOrUpdate(currentNote);
+		List<PlaceNoteEntity> allNotes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(idPlace.get()));
+		Integer total = allNotes.size();
+		return new RankCoursResponse().setTotal(total).setAverage(calculAverageNotes(allNotes)).setCode(1).buildJson();
+	}
+	
+	/**
+	 * visite a place
+	 * @param request
+	 * @return 
+	 */
+	@ResponseBody
+	@RequestMapping(value="/place/visit", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String visit(HttpServletRequest request) {
 		return null;
 	}
 

@@ -85,9 +85,8 @@ public class GenericCityController extends GenericController{
 	 * @param place
 	 * @return
 	 */
-	protected Float calculAverageNotes(PlaceEntity place){
+	protected Float calculAverageNotes(List<PlaceNoteEntity> notes){
 		Float result = 0F;
-		List<PlaceNoteEntity> notes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(place.getId()));
 		for(PlaceNoteEntity note : notes){
 			result += note.getScore();
 		}

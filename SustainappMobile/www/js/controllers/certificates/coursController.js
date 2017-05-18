@@ -48,10 +48,10 @@ angular.module('sustainapp.controllers')
 		
 		$ionicPopover.fromTemplateUrl('templates/common/popover-level.html', {
 		    scope: $scope
-		  }).then(function(popover) {
+		}).then(function(popover) {
 		    $scope.levels = [0,1,2,3,4,5,6,7,8,9];
 		    $scope.popoverLevel = popover;
-		  });
+		});
 
 		$scope._isNotMobile = displayService.isNotMobile;
 		$scope.coursModel.allErrors = [];
@@ -68,7 +68,7 @@ angular.module('sustainapp.controllers')
 				$scope.coursModel.totalRank = $scope.coursModel.cours.listRank.length;
 				if(null != result.rank){
 					$scope.rating.rate = result.rank.score;
-				}				
+				}
 				$scope.coursModel.topics = result.topics;
 				$scope.coursModel.displayPicture = "img/common/defaultCours.png";
 				$scope.coursModel.title = result.cours.title;
@@ -80,7 +80,7 @@ angular.module('sustainapp.controllers')
 			}
 		});
 	};
-	
+
 	/**
 	 * Méthode de notation d'un cours
 	 */
@@ -98,7 +98,7 @@ angular.module('sustainapp.controllers')
 			}
 		});
 	}
-	
+
 	/**
 	 * fonction d'ouverture du menu de choix du type de challenge
 	 */

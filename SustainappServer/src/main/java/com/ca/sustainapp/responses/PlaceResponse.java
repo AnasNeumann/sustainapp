@@ -20,6 +20,7 @@ public class PlaceResponse extends HttpRESTfullResponse {
 	private Float average;
 	private Boolean isOwner;
 	private List<PlacePictureEntity> pictures = new ArrayList<PlacePictureEntity>();
+	private Integer nbrNotes;
 
 	/**
 	 * @return the place
@@ -93,6 +94,21 @@ public class PlaceResponse extends HttpRESTfullResponse {
 	 */
 	public PlaceResponse setPictures(List<PlacePictureEntity> pictures) {
 		this.pictures = pictures;
+		return this;
+	}
+
+	/**
+	 * @return the nbrNotes
+	 */
+	public Integer getNbrNotes() {
+		return nbrNotes;
+	}
+
+	/**
+	 * @param nbrNotes the nbrNotes to set
+	 */
+	public PlaceResponse setNbrNotes(Integer nbrNotes) {
+		this.nbrNotes = nbrNotes;
 		return this;
 	}
 }
