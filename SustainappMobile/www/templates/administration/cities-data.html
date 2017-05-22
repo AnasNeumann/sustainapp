@@ -1,0 +1,49 @@
+<ion-view view-title="{{'administration.cities' | translate }}">
+
+     <!-- Data loaded -->
+    <ion-content ng-show="model.loaded">
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.general' | translate}}</h2>
+        </div>
+        <div class="padding">
+           {{'administration.totalCities' | translate}} : <b>{{model.totalCities}}</b><br />
+           {{'administration.totalPlaces' | translate}} : <b>{{model.totalPlaces}}</b> ({{'administration.averagePicture' | translate}} : <b>{{model.averagePictures}}</b>)
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.moreVisited' | translate}}</h2>
+        </div>
+        <ion-list>
+           <ion-item class="item" ng-repeat="place in model.moreViews" type="item-text-wrap" href="#/tab/place/{{place.id}}">
+               <h2 class="s-teams-title">{{place.name}}</h2>
+               <p class="s-teams-text"><span class="s-city-span"><i class="icon ion-location"></i> {{place.address}}</span></p>
+           </ion-item>
+        </ion-list>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.placesByNote' | translate}}</h2>
+        </div>
+        <div class="row">
+            <div class="col col-20"></div>
+            <div class="col col-60">
+                <canvas id="pie" class="chart chart-pie" chart-data="model.noteData" chart-labels="model.noteLabels" chart-options="options"></canvas> 
+            </div>
+        </div>
+         <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.visitByHours' | translate}}</h2>
+        </div>
+        <div>           
+            <canvas id="bar1" class="chart chart-bar" chart-data="model.hoursData" chart-labels="model.hoursLabels" chart-series="model.seriesHours"></canvas> 
+        </div>
+        <div class="s-news-greyPart">
+           <h2 class="s-common-greyTitle" >{{'administration.visitByDays' | translate}}</h2>
+        </div>
+        <div>
+           <canvas id="bar2" class="chart chart-bar" chart-data="model.daysData" chart-labels="model.daysLabels" chart-series="model.seriesDays"></canvas>  
+        </div>
+   </ion-content>
+
+    <!-- Loading Part -->
+   <ion-content class="s-common-loading" ng-hide="model.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+   </ion-content>
+</ion-view>

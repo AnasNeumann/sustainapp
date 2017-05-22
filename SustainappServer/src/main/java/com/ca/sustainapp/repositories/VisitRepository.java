@@ -1,5 +1,8 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -40,4 +43,12 @@ public interface VisitRepository extends JpaSpecificationExecutor<VisitEntity>, 
 	@Modifying
 	@Query("DELETE FROM VisitEntity v WHERE v.id = :id")
 	void delete(@Param("id") Long id);
+	
+	/**
+	 * get the x most visited place id
+	 * @param pageable
+	 * @return
+	 */
+	@Query("SELECT v.placeId FROM VisitEntity as v GROUP BY v.placeId ORDER BY COUNT(v) DESC")
+	List<Long> mostSeen(Pageable pageable);
 }

@@ -106,6 +106,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
+  .state('tab.administration-cities-dada', {
+    url: '/administration/citiesdata',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/cities-data.html',
+        controller: 'citiesDataController'
+      }
+    }
+  })
   .state('tab.teams', {
     url: '/team/all',
     views: {

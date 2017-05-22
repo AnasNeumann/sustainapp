@@ -102,5 +102,13 @@ public class VisitServiceDAO extends GenericServiceDAO{
 	public Integer total(){
 		return repository.total();
 	}
+	
+	/**
+	 * Get the maxResult most seen place
+	 * @return
+	 */
+	public List<Long> mostSeen(int maxResult){
+		return repository.mostSeen(new PageRequest(0, maxResult));
+	}
 
 }
