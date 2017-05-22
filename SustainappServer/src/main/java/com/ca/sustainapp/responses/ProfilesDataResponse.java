@@ -14,6 +14,8 @@ public class ProfilesDataResponse extends HttpRESTfullResponse {
 	private Integer totalTeams;
 	private Integer totalProfiles;
 	private Float average;
+	private Float percentageVisible;
+	private Float percentageNotVisible;
 	private Map<Integer, Integer> teamByLevel = new HashMap<Integer, Integer>();
 	private Map<Integer, Integer> profileByLevel = new HashMap<Integer, Integer>();
 	private Map<Integer, Integer> profileByAge = new HashMap<Integer, Integer>();
@@ -105,6 +107,36 @@ public class ProfilesDataResponse extends HttpRESTfullResponse {
 	 */
 	public ProfilesDataResponse setProfileByAge(Map<Integer, Integer> profileByAge) {
 		this.profileByAge = profileByAge;
+		return this;
+	}
+
+	/**
+	 * @return the percentageVisible
+	 */
+	public Float getPercentageVisible() {
+		return percentageVisible;
+	}
+
+	/**
+	 * @param percentageVisible the percentageVisible to set
+	 */
+	public ProfilesDataResponse setPercentageVisible(Float percentageVisible) {
+		this.percentageVisible = percentageVisible;
+		return this;
+	}
+
+	/**
+	 * @return the percentageNotVisible
+	 */
+	public Float getPercentageNotVisible() {
+		return percentageNotVisible;
+	}
+
+	/**
+	 * @param percentageNotVisible the percentageNotVisible to set
+	 */
+	public ProfilesDataResponse setPercentageNotVisible(Float percentageNotVisible) {
+		this.percentageNotVisible = percentageNotVisible;
 		return this;
 	}
 }

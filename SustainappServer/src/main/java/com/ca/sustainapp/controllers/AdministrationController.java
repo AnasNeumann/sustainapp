@@ -165,6 +165,7 @@ public class AdministrationController extends GenericController {
 		}
 		List<ProfileEntity> profiles = profileService.getAll();
 		List<TeamEntity> teams = teamService.getAll();
+		Float visibles = getPercentageVisibility(profiles);
 		return new ProfilesDataResponse()
 				.setTotalProfiles(profiles.size())
 				.setTotalTeams(teams.size())
@@ -172,6 +173,8 @@ public class AdministrationController extends GenericController {
 				.setProfileByAge(profileByAge(profiles))
 				.setProfileByLevel(profileByLevel(profiles))
 				.setTeamByLevel(teamByLevel(teams))
+				.setPercentageVisible(visibles)
+				.setPercentageNotVisible(new Float(100-visibles))
 				.setCode(1)
 				.buildJson();
 	}
@@ -199,6 +202,24 @@ public class AdministrationController extends GenericController {
 				.setVisitByHours(useByHours(visits))
 				.setCode(1)
 				.buildJson();
+	}
+	
+	/**
+	 * Obtenir le pourcentage de profils visibles
+	 * @param profiles
+	 * @return
+	 */
+	Float getPercentageVisibility(List<ProfileEntity> profiles){
+		if(profiles.size() <= 0){
+			return 0F;
+		}
+		Integer total = 0;
+		for(ProfileEntity profile : profiles){
+			if(profile.getVisibility().equals(1)){
+				total++;
+			}
+		}
+		return new Float(total * 100 / profiles.size());
 	}
 	
 	/**
