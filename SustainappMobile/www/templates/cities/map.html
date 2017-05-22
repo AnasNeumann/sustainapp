@@ -1,0 +1,13 @@
+<ion-view view-title="{{'sideMenu.map' | translate }}">
+
+  <!-- Page loaded -->
+  <ion-content ng-show="model.loaded" class="s-city-mapContainer">
+    <div id="map" class="s-city-map" data-tap-disabled="true"></div>
+  </ion-content>
+  
+  <!-- Loading Part -->
+  <ion-content class="s-common-loading" ng-hide="model.loaded">
+        <ion-spinner icon="dots"></ion-spinner>
+        <h2 class="s-common-loadingText">{{'common.loading' | translate}}</h2>
+  </ion-content>
+</ion-view>

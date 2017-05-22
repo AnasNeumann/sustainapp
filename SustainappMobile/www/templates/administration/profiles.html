@@ -5,7 +5,8 @@
            <h2 class="s-common-greyTitle" >{{'administration.general' | translate}}</h2>
         </div>
         <div class="padding">
-           {{'administration.totalProfiles' | translate}} : <b>{{model.totalProfiles}}</b><br />
+           {{'administration.totalProfiles' | translate}} : <b>{{model.totalProfiles}}</b> 
+            ({{model.percentageVisible}}% {{'administration.visibles' | translate}}, {{model.percentageNotVisible}}% {{'administration.notVisibles' | translate}})<br />
            {{'administration.totalTeams' | translate}} : <b>{{model.totalTeams}}</b><br />
            {{'administration.averageTeam' | translate}} : <b>{{model.average}}</b> 
         </div>

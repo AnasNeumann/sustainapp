@@ -25,6 +25,9 @@ angular.module('sustainapp.services')
 		},
 		cover : function(data) {
 			return $http.post(config.remoteServer+"/profile/cover", data, params);
+		},
+		visibility : function(data) {
+			return $http.post(config.remoteServer+"/profile/visibility", data, params);
 		}
 	};
 });

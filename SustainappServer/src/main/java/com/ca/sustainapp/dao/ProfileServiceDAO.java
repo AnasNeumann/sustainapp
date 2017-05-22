@@ -113,7 +113,7 @@ public class ProfileServiceDAO extends GenericServiceDAO {
 	 * @return
 	 */
 	@Transactional
-	public List<ProfileEntity> searchByFulName(String fullName, Integer maximum){
-		return repository.searchByFullName(fullName, new PageRequest(0, maximum));
+	public List<ProfileEntity> searchByFulName(String fullName, Integer visibility, Integer maximum){
+		return repository.searchByFullName(fullName, visibility, new PageRequest(0, maximum));
 	}
 }

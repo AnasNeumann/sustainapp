@@ -25,6 +25,7 @@ import com.ca.sustainapp.criteria.ReportCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
+import com.ca.sustainapp.criteria.VisitCriteria;
 import com.ca.sustainapp.dao.AnswerCategoryServiceDAO;
 import com.ca.sustainapp.dao.AnswerServiceDAO;
 import com.ca.sustainapp.dao.CityServiceDAO;
@@ -41,6 +42,7 @@ import com.ca.sustainapp.dao.ReportServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
 import com.ca.sustainapp.dao.TopicServiceDAO;
 import com.ca.sustainapp.dao.TopicValidationServiceDAO;
+import com.ca.sustainapp.dao.VisitServiceDAO;
 import com.ca.sustainapp.entities.AnswerCategoryEntity;
 import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.CityEntity;
@@ -57,6 +59,7 @@ import com.ca.sustainapp.entities.ReportEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
+import com.ca.sustainapp.entities.VisitEntity;
 import com.ca.sustainapp.pojo.SearchResult;
 
 /**
@@ -103,6 +106,8 @@ public class CascadeGetService {
 	private PlacePictureServiceDAO placePictureService;
 	@Autowired
 	private PlaceNoteServiceDAO placeNoteService;
+	@Autowired
+	private VisitServiceDAO visitService;
 	
 	/**
 	 * Comparator
@@ -116,6 +121,32 @@ public class CascadeGetService {
 	 * Les constantes
 	 */
 	private Long PAGINATION = 100L;
+	
+	/**
+	 * Cascade get for visit
+	 * @param criteria
+	 * @return
+	 */
+	public List<VisitEntity> cascadeGetVisit(VisitCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<VisitEntity> result = null;
+		List<VisitEntity> finalResult = new ArrayList<VisitEntity>();
+		do {
+			result = visitService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
 	
 	/**
 	 * Cascade get for place notes

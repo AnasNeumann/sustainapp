@@ -1,5 +1,7 @@
 package com.ca.sustainapp.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -40,4 +42,14 @@ public interface PlaceRepository extends JpaSpecificationExecutor<PlaceEntity>, 
 	@Modifying
 	@Query("DELETE FROM PlaceEntity p WHERE p.id = :id")
 	void delete(@Param("id") Long id);
+
+	/**
+	 * Get all place near to the user position
+	 * @param lng
+	 * @param lat
+	 * @return List<PlaceEntity>
+	 */
+	@Modifying
+	@Query("FROM PlaceEntity p WHERE (ABS(p.longitude - :lng) < 1 ) AND (ABS(p.latitude - :lat) < 1 )")
+	List<PlaceEntity> getNear(@Param("lng") Float lng, @Param("lat") Float lat);
 }

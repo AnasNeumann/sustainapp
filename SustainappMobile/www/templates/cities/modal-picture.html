@@ -1,0 +1,45 @@
+<ion-modal-view  class="s-modal-views">     
+   <ion-content class="padding">
+     <div class="s-modal-confirm">
+	    <div class="s-common-floatEdit" ng-click="modalPicture.hide()">
+	        <i class="icon ion-close-round"></i>
+	    </div>
+	    <div class="s-participation-imgContainer" style="background-image: url({{model.displayFile}});">
+	        <i ng-show="model.emptyPicture" class="icon ion-image"></i>
+	        <!-- Mobile view -->
+	        <div class="s-common-camera" ng-if="_isNotMobile == false">
+	            <div class="s-common-choosePictureToogle" ng-show="model.editPicture" ng-click="model.editPicture = false">
+	               <i class="icon ion-close-round"></i>
+	            </div>
+	            <div class="s-common-choosePicture" ng-show="model.editPicture" ng-click="chooseFile(true)">
+	               {{'common.takePicture' | translate}}
+	            </div>
+	            <div class="s-common-choosePicture" ng-show="model.editPicture" ng-click="chooseFile(false)">
+	              {{'common.chooseFormGallery' | translate}}
+	            </div>
+	            <div class="s-common-choosePictureToogle s-common-22" ng-hide="model.editPicture" ng-click="model.editPicture = true">
+	               <i class="icon ion-camera"></i>
+	            </div>
+	        </div>
+	        <!-- Desktop view -->
+	         <div class="s-common-camera" ng-if="_isNotMobile">
+	             <div class="s-common-choosePictureToogle s-common-22 s-common-inputFile-container" >
+	                <i class="icon ion-camera"></i>
+	                <input type="file" class="s-common-inputFile" onchange="angular.element(this).scope().desktopFile(this)" />
+	             </div>
+	         </div>
+	    </div>
+	    <label class="item item-input item-floating-label" > 
+	      <span class="input-label s-common-label">{{'common.title' | translate}}</span> 
+	      <input ng-model="model.newPicture.name" type="text" placeholder="{{'common.title' | translate}}" class="s-common-input">
+	      <span class="s-common-errors">{{model.allErrors.name | translate}}</span>
+	    </label>
+	    <label class="item item-input item-floating-label" >
+	      <span class="input-label s-common-label">{{'common.about' | translate}}</span> 
+	      <input ng-model="model.newPicture.about" type="text" placeholder="{{'common.about' | translate}}" class="s-common-input">
+	      <span class="s-common-errors">{{model.allErrors.about | translate}}</span>
+	    </label>
+      <button class="s-common-btn" ng-click="addPicture()">{{'common.create' | translate}}</button>
+     </div>
+   </ion-content>
+</ion-modal-view>

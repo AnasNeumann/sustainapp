@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('cityController', 
-		function($scope, $stateParams, $ionicModal, sessionService, displayService, cityService) {
+		function($scope, $stateParams, $ionicModal, $cordovaGeolocation, sessionService, displayService, cityService, geolocationService, placeService) {
 
 		/**
 		 * Entrée dans la page
@@ -37,6 +37,13 @@ angular.module('sustainapp.controllers')
 					$scope.model.editCover = false;
 					$scope.model.loaded = true;
 					$scope.model.edit = false;
+					$scope.model.newPlace = {};
+					$scope.model.eltToDelete = {};
+					$scope.model.newPlace.name = "";
+					$scope.model.newPlace.about = "";
+					$scope.model.newPlace.address = "";
+					$scope.model.newPlace.longitude = "";
+					$scope.model.newPlace.latitude = "";
 					if(null != result.city.cover && "" != result.city.cover){
 		    			 $scope.model.displayCover = "data:image/jpeg;base64,"+ result.city.cover;
 		    		 }
@@ -107,11 +114,109 @@ angular.module('sustainapp.controllers')
 					$scope.model.city.about = $scope.model.about;
 					$scope.model.city.phone = $scope.model.phone;
 					$scope.model.city.website = $scope.model.website;
-				}else{
-					console.log(result);
+				}else{					
 					$scope.model.allErrors = result.errors;
 				}
 			});
 	    };
+	    
+	   /**
+	    * Modal de confirmation de la suppression d'un lieu
+	    */
+	   $ionicModal.fromTemplateUrl('templates/common/modalDelete.html', {
+	     scope: $scope
+	   }).then(function(modal) {
+	     $scope.modal = modal;
+	   });
+	   
+	   
+	   /**
+	    * Modal d'ajout d'un nouveau lieu
+	    */
+	   $ionicModal.fromTemplateUrl('templates/cities/modal-place.html', {
+	     scope: $scope
+	   }).then(function(modal) {
+	     $scope.modalPlace = modal;
+	   });
+	   
+	   /**
+	    * Localiser ma position actuelle
+	    */
+	   $scope.getCurrentPlace = function(){
+			  var posOptions = {
+					  timeout: 10000, 
+					  enableHighAccuracy: false
+			  };
+			  $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+				  $scope.model.newPlace.latitude = position.coords.latitude;
+				  $scope.model.newPlace.longitude = position.coords.longitude;
+			  }, function(err) {});
+	   };
+	   
+	   /**
+	    * Calculer la longitude et latitude à partir de l'addresse donnée
+	    */
+	   $scope.calcul = function(){
+		   geolocationService.getLocationFromAddress($scope.model.newPlace.address).then(function(response){ 
+			   var location = response.data.results[0].geometry.location;
+			   $scope.model.newPlace.longitude = location.lng;
+			   $scope.model.newPlace.latitude = location.lat;
+		   });
+	   };
+	   
+	   /**
+	    * Ajouter une place en base de données
+	    */
+	   $scope.addPlace = function(){
+		   var data = new FormData();
+			data.append("name", $scope.model.newPlace.name);
+			data.append("about", $scope.model.newPlace.about);
+			data.append("longitude", $scope.model.newPlace.longitude);
+			data.append("latitude", $scope.model.newPlace.latitude);
+			data.append("address", $scope.model.newPlace.address);
+			data.append("sessionId", sessionService.get('id'));
+			data.append("city", $stateParams.id);
+			data.append("sessionToken", sessionService.get('token'));
+			placeService.create(data).success(function(result) {
+				if(result.code == 1){
+					var newPlace = {
+						"id" : result.id,
+						"address" : $scope.model.newPlace.address,
+						"name" : $scope.model.newPlace.name
+					};
+					$scope.model.city.places.push(newPlace);
+					$scope.model.newPlace.name = "";
+					$scope.model.newPlace.about = "";
+					$scope.model.newPlace.longitude = "";
+					$scope.model.newPlace.latitude = "";
+					$scope.model.newPlace.address = "";
+					$scope.modalPlace.hide();
+					$scope.model.newPlace.allErrors = [];
+				} else {
+					$scope.model.newPlace.allErrors = result.errors;
+				}
+			});
+	   };
+	   
+	   /**
+	    * Demande de confirmation pour la suppression d'un lieu 
+	    */
+	   $scope.deletePlace = function(place){
+		   $scope.model.eltToDelete = place;
+		   $scope.modal.show();
+	   };
+	   
+		/**
+		 * Confirmation de la suppression
+		 */
+		$scope.confirmDelete = function(){
+			$scope.model.city.places.splice($scope.model.city.places.indexOf($scope.model.eltToDelete), 1);
+			$scope.modal.hide();
+			var data = new FormData();
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			data.append("place", $scope.model.eltToDelete.id);
+			placeService.deleteById(data);
+		};
 	
 });

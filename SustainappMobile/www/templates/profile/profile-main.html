@@ -88,7 +88,13 @@
 		              <button class="s-common-lightBtn" ng-click="updateProfile()">{{'common.modify' | translate}}</button>
 		            </div>
 		        </div>
+		        
 	        </div>
+	        <div ng-show="profileModel.owner">
+                <label class="checkbox s-common-checkbox-label">
+                    <ion-checkbox class="s-common-checkbox" ng-click="toogleVisibility()" ng-model="profileModel.visibility">{{'profile.visibility' | translate}}</ion-checkbox>
+                </label>
+            </div>
         </div>
         
         <!-- ALL BADGES -->

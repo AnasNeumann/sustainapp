@@ -106,6 +106,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
+  .state('tab.administration-cities-dada', {
+    url: '/administration/citiesdata',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/cities-data.html',
+        controller: 'citiesDataController'
+      }
+    }
+  })
   .state('tab.teams', {
     url: '/team/all',
     views: {
@@ -232,6 +241,24 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	    }
 	  }
     })
+    .state('tab.map', {
+  	  url: '/map',
+  	  views: {
+  	    'tab-news': {
+  	      templateUrl: 'templates/cities/map.html',
+  	      controller: 'mapController'
+  	    }
+  	  }
+    })
+    .state('tab.place', {
+  	  url: '/place/:id',
+  	  views: {
+  	    'tab-news': {
+  	      templateUrl: 'templates/cities/place.html',
+  	      controller: 'placeController'
+  	    }
+  	  }
+    })
     .state('tab.city', {
   	  url: '/city/:id',
   	  views: {
@@ -248,7 +275,8 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	 */
 	$sceDelegateProvider.resourceUrlWhitelist([
 		'self',
-		'https://www.youtube.com/embed/**'
+		'https://www.youtube.com/embed/**',
+		'https://maps.google.com/**'
 	]);
 
 	/**

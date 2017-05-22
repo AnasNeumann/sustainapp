@@ -49,6 +49,7 @@
     "profile.registeredSince" : "inscrit depuis le",
     "profile.badges" : "Badges",
     "profile.courses" : "Cours",
+    "profile.visibility" : "Etre visible à la recherche",
     
     "login.login": "Connexion",
     "login.signin": "S'inscrire !",
@@ -67,6 +68,7 @@
     "sideMenu.disconnection" : "Deconnexion",
     "sideMenu.administration" : "Administration",
     "sideMenu.city" : "Ma ville",
+    "sideMenu.map" : "Eco-lieux",
     
     "viewTitle.news" : "Actualités",
     "viewTitle.challenges" : "Challenges",
@@ -111,6 +113,16 @@
     "administration.teamByCateogries" : "Equipes par niveaux",
     "administration.byAges" : "Profils par âges",
     "administration.citiesManagement" : "Gestion des villes",
+    "administration.cities" : "Données sur les villes",
+    "administration.totalCities" : "Nombre de villes",
+    "administration.totalPlaces" : "Nombre d'éco-lieux",
+    "administration.averagePicture" : "Nombre moyen d'images",
+    "administration.moreVisited" : "Lieux les plus visités",
+    "administration.placesByNote" : "Lieux par notes",
+    "administration.visitByDays" : "Visites par jours",
+    "administration.visitByHours" : "Visites par heures",
+    "administration.notVisibles" : "Cachés",
+    "administration.visibles" : "Visibles",
     
     "challengetype.building" : "eco-construction",
     "challengetype.design" : "eco-desgin",
@@ -205,7 +217,7 @@
     "badges.capitaine.about" : "Avoir géré une équipe comportant au moins 2 membres",
     "badges.missionary.about" : "Avoir reçu plus de 10 votes sur vos participations dans les challenges",
     "badges.star.about" : "Avoir été mis en avant dans le journal d'actualités",
-    "badges.walker.about" : "Visiter au moins un lieu public",
+    "badges.walker.about" : "Visiter au moins 5 lieu public",
     
     "newspaper.courses" : "Meilleurs cours",
     "newspaper.participations" : "Meilleurs réalisations",
@@ -243,5 +255,16 @@
     "city.name" : "Nom de la ville",
     "city.phone" : "Numéro de téléphone",
     "city.website" : "Site web",
-    "city.desctivated" : "Cette ville n'est pas encore activée ainsi elle ne peut ni créer de lieu ou être recherchée. Un administrateur va vous contacter au plus tôt, à la suite de quoi votre ville pourra être activée et visible. Merci de votre compréhension !"
+    "city.desctivated" : "Cette ville n'est pas encore activée ainsi elle ne peut ni créer de lieu ou être recherchée. Un administrateur va vous contacter au plus tôt, à la suite de quoi votre ville pourra être activée et visible. Merci de votre compréhension !",
+    "city.ecoplace" : "Eco-Lieux",
+    "city.ecoplace.add" : "Ajouter une éco-lieu",
+    
+    "place.name": "Nom du lieu",
+    "place.address": "Addresse complète",
+    "place.latitude": "Latitude",
+    "place.longitude": "Longitude ",
+    "place.localize" : "Localiser ma position",
+    "place.calcul" : "Calculer de l'adrrese",
+    "place.locateMe" : "Je suis ici !",
+    "place.picture.add" : "Ajouter une nouvelle photo"
 }

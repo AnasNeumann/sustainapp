@@ -74,6 +74,7 @@ public class UserAccountController extends GenericController {
 				.setFirstName(request.getParameter("firstName"))
 				.setLastName(request.getParameter("lastName"))
 				.setLevel(0)
+				.setVisibility(1)
 				.setTimestamps(GregorianCalendar.getInstance());
 		profile.setId(profilService.createOrUpdate(profile));		
 		if(type.get().equals(1)){

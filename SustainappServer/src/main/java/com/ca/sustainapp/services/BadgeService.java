@@ -13,6 +13,7 @@ import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
 import com.ca.sustainapp.criteria.ReportCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
+import com.ca.sustainapp.criteria.VisitCriteria;
 import com.ca.sustainapp.dao.BadgeServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
 import com.ca.sustainapp.dao.ProfilBadgeServiceDAO;
@@ -61,7 +62,7 @@ public class BadgeService {
 	 */
 	public boolean superhero(ProfileEntity profil){
 		if(getService.cascadeGetReport(new ReportCriteria().setProfilId(profil.getId())).size() >= 10){
-			return addByCode(profil, "superhero");
+			return addByCode(profil, SustainappConstantes.BADGE_SUPERHERO);
 		}
 		return false;
 	}
@@ -81,7 +82,7 @@ public class BadgeService {
 			}
 		}
 		if(votes >= 10){
-			return addByCode(profil, "teacher");
+			return addByCode(profil, SustainappConstantes.BADGE_TEACHER);
 		}
 		return false;
 	}
@@ -93,7 +94,7 @@ public class BadgeService {
 	 */
 	public boolean graduate(ProfileEntity profil){
 		if(getService.cascadeGetValidation(new TopicValidationCriteria().setProfilId(profil.getId())).size() >= 10){
-			return addByCode(profil, "graduate");
+			return addByCode(profil, SustainappConstantes.BADGE_GRADUATE);
 		}
 		return false;
 	}
@@ -106,7 +107,7 @@ public class BadgeService {
 	public boolean capitaine(ProfileEntity profil){
 		for(TeamRoleEntity role : getService.cascadeGetTeamRole(new TeamRoleCriteria().setProfilId(profil.getId()).setRole(SustainappConstantes.TEAMROLE_ADMIN))){
 			if(getService.cascadeGetTeamRole(new TeamRoleCriteria().setTeamId(role.getTeamId()).setRole(SustainappConstantes.TEAMROLE_MEMBER)).size() >= 2){
-				return addByCode(profil, "capitaine");
+				return addByCode(profil, SustainappConstantes.BADGE_LEADER);
 			}
 		}
 		return false;
@@ -118,7 +119,7 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	private boolean missionary(ProfileEntity profil){
-		return addByCode(profil, "missionary");
+		return addByCode(profil, SustainappConstantes.BADGE_MISSIONARY);
 	}
 	
 	/**
@@ -127,16 +128,7 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean star(ProfileEntity profil){
-		return addByCode(profil, "star");
-	}
-	
-	/**
-	 * Verifier si le profil peut obtenir le badge journalist
-	 * => Avoir publié au moins 10 articles dans le journal d'actualités
-	 * @param idProfil
-	 */
-	public boolean journalist(ProfileEntity profil){
-		return false;
+		return addByCode(profil, SustainappConstantes.BADGE_STAR);
 	}
 	
 	/**
@@ -145,6 +137,9 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean walker(ProfileEntity profil){
+		if(getService.cascadeGetVisit(new VisitCriteria().setProfilId(profil.getId())).size() >= 5){
+			return addByCode(profil, SustainappConstantes.BADGE_WALKER);
+		}
 		return false;
 	}
 	

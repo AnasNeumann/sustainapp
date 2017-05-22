@@ -1,0 +1,3 @@
+-- add visibility for profiles
+ALTER TABLE PROFILE
+ADD VISIBILITY INTEGER DEFAULT 1;

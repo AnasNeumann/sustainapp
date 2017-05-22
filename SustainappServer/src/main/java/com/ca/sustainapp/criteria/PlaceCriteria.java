@@ -15,8 +15,8 @@ import javax.ws.rs.QueryParam;
 public class PlaceCriteria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private Integer longitude;
-	private Integer latitude;
+	private Float longitude;
+	private Float latitude;
 	private Long cityId;
 	private Calendar timestamps;
 	
@@ -39,7 +39,7 @@ public class PlaceCriteria implements Serializable {
 	/**
 	 * @return the longitude
 	 */
-	public Integer getLongitude() {
+	public Float getLongitude() {
 		return longitude;
 	}
 	
@@ -47,7 +47,7 @@ public class PlaceCriteria implements Serializable {
 	 * @param longitude the longitude to set
 	 */
 	@QueryParam("longitude")
-	public PlaceCriteria setLongitude(Integer longitude) {
+	public PlaceCriteria setLongitude(Float longitude) {
 		this.longitude = longitude;
 		return this;
 	}
@@ -55,7 +55,7 @@ public class PlaceCriteria implements Serializable {
 	/**
 	 * @return the latitude
 	 */
-	public Integer getLatitude() {
+	public Float getLatitude() {
 		return latitude;
 	}
 	
@@ -63,7 +63,7 @@ public class PlaceCriteria implements Serializable {
 	 * @param latitude the latitude to set
 	 */
 	@QueryParam("latitude")
-	public PlaceCriteria setLatitude(Integer latitude) {
+	public PlaceCriteria setLatitude(Float latitude) {
 		this.latitude = latitude;
 		return this;
 	}

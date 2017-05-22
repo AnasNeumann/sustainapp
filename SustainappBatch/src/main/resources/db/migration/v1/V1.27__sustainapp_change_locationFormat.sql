@@ -1,0 +1,11 @@
+-- Suppression du précédent système de localisation
+ALTER TABLE PLACE
+DROP COLUMN LONGITUDE;
+ALTER TABLE PLACE
+DROP COLUMN LATITUDE;
+
+-- Ajout de données pour le nouveau système de localisation
+ALTER TABLE PLACE
+ADD LONGITUDE REAL DEFAULT 0;
+ALTER TABLE PLACE
+ADD LATITUDE REAL DEFAULT 0;

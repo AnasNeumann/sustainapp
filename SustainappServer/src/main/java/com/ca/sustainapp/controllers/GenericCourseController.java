@@ -69,14 +69,12 @@ public class GenericCourseController extends GenericController{
 	 * @return
 	 */
 	protected Float calculateAverageRank(CourseEntity course){
-		int totalResult = 0;
 		int somme = 0;
 		for(RankCourseEntity rank : course.getListRank()){
 			somme += rank.getScore();
-			totalResult++;
 		}
-		if(totalResult > 0){
-			return new Float(somme/totalResult);
+		if(course.getListRank().size() > 0){
+			return new Float(somme/course.getListRank().size());
 		}
 		return 0F;
 	}

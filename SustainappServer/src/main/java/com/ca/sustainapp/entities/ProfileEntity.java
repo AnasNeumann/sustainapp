@@ -51,6 +51,9 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
 	
+	@Column(name = "VISIBILITY")
+	private Integer visibility;
+	
 	@Column(name = "USER_ACCOUNT_ID")
 	private Long userId;
 	
@@ -189,4 +192,18 @@ public class ProfileEntity extends GenericEntity implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return the visibility
+	 */
+	public Integer getVisibility() {
+		return visibility;
+	}
+
+	/**
+	 * @param visibility the visibility to set
+	 */
+	public ProfileEntity setVisibility(Integer visibility) {
+		this.visibility = visibility;
+		return this;
+	}
 }

@@ -49,7 +49,8 @@
     "profile.registeredSince" : "registered since",
     "profile.badges" : "Badges",
     "profile.courses" : "Courses",
-    
+    "profile.visibility" : "Be visible to research",
+
     "login.login": "Login",
     "login.signin": "Sign in !",
     "login.alreadyHave": "You already have an account ? Click here",
@@ -67,6 +68,7 @@
     "sideMenu.disconnection" : "Disconnection",
     "sideMenu.administration" : "Administration",
     "sideMenu.city" : "My city",
+    "sideMenu.map" : "Eco-places",
     
     "viewTitle.news" : "News",
     "viewTitle.challenges" : "Challenges",
@@ -107,10 +109,20 @@
     "administration.totalProfiles" : "Number of profiles",
     "administration.totalTeams" : "Number of teams",
     "administration.averageTeam" : "Average team size",
-    "administration.profilesByLevel" : "Profiles by level",
-    "administration.teamByCateogries" : "Teams by level",
+    "administration.profilesByLevel" : "Profiles per level",
+    "administration.teamByCateogries" : "Teams per level",
     "administration.byAges" : "Profiles by ages",
     "administration.citiesManagement" : "Manage cities",
+    "administration.cities" : "Cities informations",
+    "administration.totalCities" : "Number of cities",
+    "administration.totalPlaces" : "Number of eco-places",
+    "administration.averagePicture" : "Average number of pictures",
+    "administration.moreVisited" : "Most visited places",
+    "administration.placesByNote" : "Places per notes",
+    "administration.visitByDays" : "Visits per days",
+    "administration.visitByHours" : "Visits per hours",
+    "administration.notVisibles" : "Hidden",
+    "administration.visibles" : "Visible",
     
     "challengetype.building" : "eco-builing",
     "challengetype.design" : "eco-desgin",
@@ -205,7 +217,7 @@
     "badges.capitaine.about" : "Manage a team with at least 2 members",
     "badges.missionary.about" : "Receive more than 10 votes on your participation in challenges",
     "badges.star.about" : "Be highlighted in the newspaper",
-    "badges.walker.about" : "Visit at least one public place",
+    "badges.walker.about" : "Visit at least 5 public place",
     
     "newspaper.courses" : "Best courses",
     "newspaper.participations" : "Best achievements",
@@ -243,5 +255,16 @@
     "city.name" : "City's name",
     "city.phone" : "Phone number",
     "city.website" : "Website",
-    "city.desctivated" : "This city is not yet activated so you can't create places. An administrator will contact you as soon as possible, after which your city can be activated and visible. Thank you for your understanding !"
+    "city.desctivated" : "This city is not yet activated so you can't create places. An administrator will contact you as soon as possible, after which your city can be activated and visible. Thank you for your understanding !",
+    "city.ecoplace" : "Eco-Place",
+    "city.ecoplace.add" : "Add an eco-place",
+    
+    "place.name": "Place name",
+    "place.address": "Full place",
+    "place.latitude": "Latitude",
+    "place.longitude": "Longitude ",
+    "place.localize" : "Locate my position",
+    "place.calcul" : "Build from the address",
+    "place.locateMe" : "I am here !",
+    "place.picture.add" : "Add a new picture"
 }

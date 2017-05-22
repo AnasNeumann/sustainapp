@@ -34,6 +34,8 @@ angular.module('sustainapp.controllers')
 				$scope.model.average = result.average;
 				$scope.model.totalProfiles = result.totalProfiles;
 				$scope.model.totalTeams = result.totalTeams;
+				$scope.model.percentageVisible = result.percentageVisible;
+				$scope.model.percentageNotVisible = result.percentageNotVisible;
 				for(elt in result.profileByAge){
 					$scope.model.profilesAgeLabels.push(elt);
 					$scope.model.profilesaAgeData.push(result.profileByAge[elt]);

@@ -40,10 +40,10 @@ public class PlaceEntity extends GenericEntity implements Serializable {
 	private String address;
 	
 	@Column(name = "LONGITUDE")
-	private Integer longitude;
+	private Float longitude;
 	
 	@Column(name = "LATITUDE")
-	private Integer latitude;
+	private Float latitude;
 	
 	@Column(name = "CITY_ID")
 	private Long cityId;
@@ -114,14 +114,14 @@ public class PlaceEntity extends GenericEntity implements Serializable {
 	/**
 	 * @return the longitude
 	 */
-	public Integer getLongitude() {
+	public Float getLongitude() {
 		return longitude;
 	}
 
 	/**
 	 * @param longitude the longitude to set
 	 */
-	public PlaceEntity setLongitude(Integer longitude) {
+	public PlaceEntity setLongitude(Float longitude) {
 		this.longitude = longitude;
 		return this;
 	}
@@ -129,14 +129,14 @@ public class PlaceEntity extends GenericEntity implements Serializable {
 	/**
 	 * @return the latitude
 	 */
-	public Integer getLatitude() {
+	public Float getLatitude() {
 		return latitude;
 	}
 
 	/**
 	 * @param latitude the latitude to set
 	 */
-	public PlaceEntity setLatitude(Integer latitude) {
+	public PlaceEntity setLatitude(Float latitude) {
 		this.latitude = latitude;
 		return this;
 	}

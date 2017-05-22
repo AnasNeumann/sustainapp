@@ -1,7 +1,6 @@
 package com.ca.sustainapp.specification;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -57,12 +56,12 @@ public class PlaceSpecification {
 					}
 					
 					if (null != criteres.getLatitude()) {
-						Predicate p = cb.equal(root.<Integer> get("latitude"), criteres.getLatitude());
+						Predicate p = cb.equal(root.<Float> get("latitude"), criteres.getLatitude());
 						listeCond.add(p);
 					}
 				
 					if (null != criteres.getTimestamps()) {
-						Predicate p = cb.equal(root.<Calendar> get("timestamps"), criteres.getTimestamps());
+						Predicate p = cb.equal(root.<Float> get("timestamps"), criteres.getTimestamps());
 						listeCond.add(p);
 					}
 

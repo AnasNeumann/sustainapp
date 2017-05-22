@@ -25,3 +25,35 @@
 	margin-right : 5px;
 	color : #2dbe60;
 }
+
+.s-city-locationIcon{
+	position : relative;
+	top : 4px;
+	margin-right : 5px;
+	font-size : 25px;
+}
+
+.s-city-map{
+	height:100%;
+	width : 100%;
+}
+
+.s-city-mapContainer .scroll{
+	height : 100%;
+	width : 100%;
+}
+
+.s-city-place-about{
+	display : block;
+	margin-top : 10px;
+	text-align: justify;
+}
+
+.s-city-edit{
+    margin-top : 7px;
+    margin-right : 7px;
+}
+
+.s-city-p{
+	margin-bottom : 0px;
+}

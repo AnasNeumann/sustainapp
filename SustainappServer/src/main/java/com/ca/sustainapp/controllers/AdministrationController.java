@@ -20,20 +20,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.dao.ChallengeServiceDAO;
 import com.ca.sustainapp.dao.ChallengeTypeServiceDAO;
+import com.ca.sustainapp.dao.CityServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.ParticipationServiceDAO;
+import com.ca.sustainapp.dao.PlaceNoteServiceDAO;
+import com.ca.sustainapp.dao.PlacePictureServiceDAO;
+import com.ca.sustainapp.dao.PlaceServiceDAO;
 import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.ResearchServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
+import com.ca.sustainapp.dao.VisitServiceDAO;
 import com.ca.sustainapp.entities.ChallengeTypeEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.GenericEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
+import com.ca.sustainapp.entities.PlaceEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.ResearchEntity;
 import com.ca.sustainapp.entities.TeamEntity;
+import com.ca.sustainapp.entities.VisitEntity;
 import com.ca.sustainapp.responses.ChallengesDataResponse;
+import com.ca.sustainapp.responses.CityDataResponse;
 import com.ca.sustainapp.responses.CoursesDataResponse;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
@@ -69,6 +77,16 @@ public class AdministrationController extends GenericController {
 	private ParticipationServiceDAO participationService;
 	@Autowired
 	private TeamRoleServiceDAO roleService;
+	@Autowired
+	private CityServiceDAO cityService;
+	@Autowired
+	private PlaceServiceDAO placeService;
+	@Autowired
+	private PlacePictureServiceDAO pictureService;
+	@Autowired
+	private PlaceNoteServiceDAO noteService;
+	@Autowired
+	private VisitServiceDAO visitService;
 
 	/**
 	 * get data for courses
@@ -147,6 +165,7 @@ public class AdministrationController extends GenericController {
 		}
 		List<ProfileEntity> profiles = profileService.getAll();
 		List<TeamEntity> teams = teamService.getAll();
+		Float visibles = getPercentageVisibility(profiles);
 		return new ProfilesDataResponse()
 				.setTotalProfiles(profiles.size())
 				.setTotalTeams(teams.size())
@@ -154,9 +173,83 @@ public class AdministrationController extends GenericController {
 				.setProfileByAge(profileByAge(profiles))
 				.setProfileByLevel(profileByLevel(profiles))
 				.setTeamByLevel(teamByLevel(teams))
+				.setPercentageVisible(visibles)
+				.setPercentageNotVisible(new Float(100-visibles))
 				.setCode(1)
 				.buildJson();
 	}
+	
+	/**
+	 * get data for cities
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/administration/cities", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String cities(HttpServletRequest request) {
+		if(!super.isAdmin(request)){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		Integer totalPlace = placeService.total();
+		List<VisitEntity> visits = visitService.getAll();
+		return new CityDataResponse()
+				.setAveragePictures(average(totalPlace, pictureService.total()))
+				.setMoreViews(mostVisitedPlaces(5))
+				.setPlaceByNotes(placeByNotes())
+				.setTotalCities(cityService.total())
+				.setTotalPlaces(totalPlace)
+				.setVisitByDays(useByDays(visits))
+				.setVisitByHours(useByHours(visits))
+				.setCode(1)
+				.buildJson();
+	}
+	
+	/**
+	 * Obtenir le pourcentage de profils visibles
+	 * @param profiles
+	 * @return
+	 */
+	Float getPercentageVisibility(List<ProfileEntity> profiles){
+		if(profiles.size() <= 0){
+			return 0F;
+		}
+		Integer total = 0;
+		for(ProfileEntity profile : profiles){
+			if(profile.getVisibility().equals(1)){
+				total++;
+			}
+		}
+		return new Float(total * 100 / profiles.size());
+	}
+	
+	/**
+	 * Get places by notes
+	 * @return
+	 */
+	Map<Integer, Integer> placeByNotes(){
+		Map<Integer, Integer> result = new HashMap<Integer, Integer>();
+		for(int i=0; i<=5; i++){
+			result.put(i, noteService.countByScore(i));
+		}
+		return result;
+	}
+	
+	/**
+	 * Get the x most visited places
+	 * @param maxResult
+	 * @return
+	 */
+	 private List<PlaceEntity> mostVisitedPlaces(Integer maxResult){
+		 List<PlaceEntity> result = new ArrayList<PlaceEntity>();
+		 List<Long> ids = visitService.mostSeen(maxResult);
+		 for(Long id : ids){
+			 PlaceEntity place = placeService.getById(id);
+			 if(null != place){
+				 result.add(place);
+			 }
+		 }
+		 return result;
+	 }
 	
 	/**
 	 * get profiles number by level
