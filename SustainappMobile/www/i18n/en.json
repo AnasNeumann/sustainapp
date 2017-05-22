@@ -121,6 +121,8 @@
     "administration.placesByNote" : "Places per notes",
     "administration.visitByDays" : "Visits per days",
     "administration.visitByHours" : "Visits per hours",
+    "administration.notVisibles" : "Hidden",
+    "administration.visibles" : "Visible",
     
     "challengetype.building" : "eco-builing",
     "challengetype.design" : "eco-desgin",
