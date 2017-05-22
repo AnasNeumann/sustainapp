@@ -140,6 +140,23 @@ public class ProfileController extends GenericController {
 	}
 	
 	/**
+	 * Toogle visibility for a profile
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/profile/visibility", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	public String toogleVisibility(HttpServletRequest request){
+		UserAccountEntity user = super.getConnectedUser(request);	
+		if(null == user || null == user.getProfile()){
+			return new HttpRESTfullResponse().setCode(0).buildJson();
+		}
+		user.getProfile().setVisibility(user.getProfile().getVisibility().equals(0)? 1 : 0);
+		profileService.createOrUpdate(user.getProfile());
+		return new HttpRESTfullResponse().setCode(1).buildJson();
+	}
+	
+	/**
 	 * Get all courses made by a profile
 	 * @param profilId
 	 * @return

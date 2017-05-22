@@ -42,6 +42,7 @@ angular.module('sustainapp.controllers')
 	    			 $scope.profileModel.badges = response.data.badges;
 	    			 $scope.profileModel.courses = response.data.courses;
 		    		 $scope.profileModel.allErrors = [];
+		    		 $scope.profileModel.visibility = (response.data.profile.visibility == 1);
 		    		 if(null != response.data.profile.avatar && "" != response.data.profile.avatar){
 		    			 $scope.profileModel.displayAvatar = "data:image/jpeg;base64,"+ response.data.profile.avatar;
 		    		 }
@@ -176,6 +177,16 @@ angular.module('sustainapp.controllers')
 	    $scope.openBadge = function(badge){
 	    	$scope.currentBadge  = badge;
 	    	$scope.modalBadge.show();
+	    }
+	   
+	    /**
+	     * Modification en base de la visibilité du profil
+	     */
+	    $scope.toogleVisibility = function(){
+	    	var data = new FormData();
+			data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			profileService.visibility(data);
 	    }
 
 	});

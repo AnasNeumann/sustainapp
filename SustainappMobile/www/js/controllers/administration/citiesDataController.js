@@ -33,7 +33,6 @@ angular.module('sustainapp.controllers')
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
 			administrationService.cities(data).success(function(result) {
-				console.log(result);
 				$scope.model.loaded = true;
 				$scope.model.totalCities = result.totalCities;
 				$scope.model.totalPlaces = result.totalPlaces;

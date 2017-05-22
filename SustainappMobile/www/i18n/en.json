@@ -49,7 +49,8 @@
     "profile.registeredSince" : "registered since",
     "profile.badges" : "Badges",
     "profile.courses" : "Courses",
-    
+    "profile.visibility" : "Be visible to research",
+
     "login.login": "Login",
     "login.signin": "Sign in !",
     "login.alreadyHave": "You already have an account ? Click here",

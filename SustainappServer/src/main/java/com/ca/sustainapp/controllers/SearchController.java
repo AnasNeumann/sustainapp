@@ -66,7 +66,7 @@ public class SearchController extends GenericController {
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
 		return new SearchResponse()
-				.setProfiles(profileService.searchByFulName(query,5))
+				.setProfiles(profileService.searchByFulName(query, 1, 5))
 				.setTeams(teamService.searchByKeywords(query, 5))
 				.setCities(searchLightCities(query, 5))
 				.setCourses(searchLightCourses(query, 5))

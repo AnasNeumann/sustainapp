@@ -49,6 +49,7 @@
     "profile.registeredSince" : "inscrit depuis le",
     "profile.badges" : "Badges",
     "profile.courses" : "Cours",
+    "profile.visibility" : "Etre visible à la recherche",
     
     "login.login": "Connexion",
     "login.signin": "S'inscrire !",
