@@ -119,3 +119,75 @@
 	-webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
+
+/**
+ * PARTIE TERMS OF USE
+ */
+ 
+.s-login-usesContainer{
+	background-color: white;
+}
+
+.s-login-iconPart{
+	background-color: #E5E5E5;
+	padding : 5px;
+	text-align : center;
+}
+
+.s-login-greentitle{
+	color : #2dbe60;
+	font-family: Sustainapp;
+	font-size : 45px;
+	margin : 0px;
+}
+
+.s-login-icon{
+	width : 100px;
+	height : 100px;
+	margin : 0px;
+	margin-top : 10px;
+}
+
+.s-login-littleTitle{
+	color : #2dbe60;
+    font-family: Sustainapp;
+    font-size : 26px;
+    margin : 0px;
+    margin-top : 10px !important;
+}
+
+.s-login-termTxt{
+	color : black;
+	text-align: justify;
+	margin-top : 3px;
+	margin-bottom : 3px;
+	text-indent: 15px;
+	
+}
+
+.s-login-termTxt a{
+	color : #04c1ea;
+	text-decoration: none;
+	cursor : pointer;
+}
+
+.s-login-logoMin{
+	display : block;
+	width : 90px;
+	height: 90px;
+	margin : auto;
+	margin-bottom : 7px;
+	margin-top : 5px;
+}
+
+.s-login-list{
+	display: inline-block;
+	margin-top : 7px;
+	font-size : 10px;
+	margin-right : 5px;
+	color : #04c1ea;
+}
+
+.s-login-listTitle{
+	color : #03afd3;
+}

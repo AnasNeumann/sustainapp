@@ -54,7 +54,7 @@
     
     <!-- Politique de confidentialité et conditions générales d'utilisations -->
     <ion-content  class="s-login-content" ng-show="loginModel.read">
-        <p  class="s-common-center" ng-click="loginModel.read = false">{{'login.return' | translate}}</p>
+        <div ng-include src="'templates/common/terms-of-use.html'"></div>
     </ion-content>
     
 </ion-view>

@@ -276,7 +276,12 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 	$sceDelegateProvider.resourceUrlWhitelist([
 		'self',
 		'https://www.youtube.com/embed/**',
-		'https://maps.google.com/**'
+		'https://maps.google.com/**',
+		"https://www.cirrelt.ca/**",
+		"https://www.ulaval.ca/**",
+		"http://legisquebec.gouv.qc.ca/**",
+		"https://www.uprodit.com/**",
+		"https://play.google.com/**"
 	]);
 
 	/**
