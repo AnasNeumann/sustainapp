@@ -51,7 +51,6 @@ public class UserAccountControllerTest extends AbstractTest {
 	@Mock
 	private LoginValidator loginValidatorMock;
 
-	
 	/**
 	 * le controller a tester
 	 */
@@ -61,7 +60,7 @@ public class UserAccountControllerTest extends AbstractTest {
 	private LoginValidator loginValidator;
 	@InjectMocks
 	private SigninValidator signinValidator;
-	
+
 	/**
 	 * Initiation du jeu de données
 	 */
@@ -72,7 +71,7 @@ public class UserAccountControllerTest extends AbstractTest {
 		when(requestMock.getParameter("password")).thenReturn("xxxxxxxxxx");
 		when(requestMock.getParameter("token")).thenReturn(super.GENERIC_TOKEN);
 	}
-	
+
 	/**
 	 * Test de la fonction singin
 	 */
@@ -94,7 +93,7 @@ public class UserAccountControllerTest extends AbstractTest {
 		verify(userAccountServiceMock, atLeast(1)).createOrUpdate(any(UserAccountEntity.class));
 		verify(cityServiceMock, times(1)).createOrUpdate(any(CityEntity.class));
 	}
-	
+
 	/**
 	 * Test si le mail existe déjà en base de données
 	 */
@@ -122,7 +121,7 @@ public class UserAccountControllerTest extends AbstractTest {
 		verify(userAccountServiceMock, times(0)).createOrUpdate(any(UserAccountEntity.class));
 		verify(cityServiceMock, times(0)).createOrUpdate(any(CityEntity.class));
 	}
-	
+
 	/**
 	 * Test de la méthode login
 	 */
@@ -134,7 +133,7 @@ public class UserAccountControllerTest extends AbstractTest {
 		verify(userAccountServiceMock, times(1)).connect(any(String.class), any(String.class));
 		verify(super.getServiceMock, times(1)).cascadeGetCities(any(CityCriteria.class));
 	}
-	
+
 	/**
 	 * Test erreur de connexion le use n'existe pas 
 	 */
@@ -146,5 +145,5 @@ public class UserAccountControllerTest extends AbstractTest {
 		verify(userAccountServiceMock, times(1)).connect(any(String.class), any(String.class));
 		verify(super.getServiceMock, times(0)).cascadeGetCities(any(CityCriteria.class));
 	}
-	
+
 }
