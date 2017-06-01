@@ -14,27 +14,35 @@ angular.module('sustainapp.controllers')
 		 timeout: 10000, 
 		 enableHighAccuracy: false
     };
-	
+
 	/**
 	 * Entrée dans la page
 	 */
 	$scope.$on('$ionicView.beforeEnter', function() {
 		if(true != $scope.flag){
-			loadMap();
+			initMap();
 		}else{
 			reloadMap();
-		}
+		}	
     });
-	
+
+	/**
+	 * Initialisation de la map
+	 */
+	var initMap = function(){
+		$scope.model = {};
+		$scope.model.markers = [];
+		$scope.flag = true;
+		loadMap();
+	}
+
 	/**
 	 * Chargement de la carte dans la page
 	 */
 	var loadMap = function(){
-		$scope.flag = true;
-		$scope.model = {};
 		$scope.model.loaded = false;
 	    $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
-			var options = {
+	    	var options = {
 	            center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
 	            zoom: 13,
 	            disableDefaultUI: true    
@@ -42,25 +50,15 @@ angular.module('sustainapp.controllers')
 	        $scope.map = new google.maps.Map(document.getElementById("map"), options);
 		    $scope.model.loaded = true;
 		    reloadPlaces(position.coords.longitude, position.coords.latitude);
-	    }, function(err) {});
+	    }, function(err) {
+	    	alert(err);
+	    });
 	};
-	
-	/**
-	 * Rechargement de la page les autres fois [recentrage sur la nouvelle position]
-	 */
-	var reloadMap = function(){
-		$cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
-			var newPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	        $scope.map.setCenter(newPos);
-	        reloadPlaces(position.coords.longitude, position.coords.latitude);
-		}, function(err) {});
-	};
-	
+
 	/**
 	 * Récupération des éco-lieux proches
 	 */
 	var reloadPlaces = function(lng ,lat){	
-		emptyMap();
 		placeService.getNear(lng, lat).then(function(response){
 			var result = response.data;
 			if(result.code == 1) {
@@ -94,14 +92,22 @@ angular.module('sustainapp.controllers')
 			}
 		});
 	};
-	
+
 	/**
 	 * Vider la map des précédents markeurs
 	 */
-	var emptyMap = function(){
+	var reloadMap = function(){	
+		$scope.model.loaded = false;
 		for(var i in $scope.model.markers){
 			$scope.model.markers[i].setMap(null);
 		}
 		$scope.model.markers = [];
+	    $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+		    $scope.model.loaded = true;
+		    $scope.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+		    reloadPlaces(position.coords.longitude, position.coords.latitude);
+	    }, function(err) {
+	    	alert(err);
+	    });
 	};
 });
