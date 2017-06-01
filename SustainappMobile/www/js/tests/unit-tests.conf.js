@@ -14,9 +14,24 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [
+    files: [  
       '../../lib/angular/angular.js',
+      '../../lib/ionic/js/ionic.bundle.js',
+      '../../lib/angular-ui-router/release/angular-ui-router.js',
       '../../lib/angular-mocks/angular-mocks.js',
+      '../../lib/angular-animate/angular-animate.js',
+      '../../lib/chart.js/dist/Chart.js',
+      '../../lib/angular-chart.js/dist/angular-chart.js',
+      '../../lib/angular-sanitize/angular-sanitize.js',
+      '../../lib/angular-translate/angular-translate.js',
+      '../../lib/ionic-rating/ionic-rating.js',
+      '../../lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+      '../../lib/ngCordova/dist/ng-cordova.js',
+      '../../lib/ngCordova/dist/ng-cordova-mocks.js',
+      '../../lib/ngDraggable/ngDraggable.js',
+      '../../lib/ng-stomp/dist/ng-stomp.min.js',
+      '../../lib/sockjs-client/dist/sockjs.js',
+      '../app.js',
       '*.js',
       '../*.js',
       '../**/*.js',
@@ -60,7 +75,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
