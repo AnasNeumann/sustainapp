@@ -133,7 +133,7 @@ public class QuizController extends GenericCourseController {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * getAll answers of a question
 	 * @param id

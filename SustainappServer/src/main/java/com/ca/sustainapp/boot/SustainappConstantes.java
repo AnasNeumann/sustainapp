@@ -91,4 +91,12 @@ public class SustainappConstantes {
 	public final static String NOTIFICATION_MESSAGE_CITY = "notification.city";
 	public final static String NOTIFICATION_MESSAGE_VALIDATION = "notification.validation";
 	public final static String NOTIFICATION_MESSAGE_REFUSED = "notification.refused";
+	
+	/**
+	 * Types de Questions
+	 */
+	public final static Integer QUESTION_TYPE_QUIZ = 0;
+	public final static Integer QUESTION_TYPE_SELECTION = 1;
+	public final static Integer QUESTION_TYPE_CLASSIFICATION = 2;
+	public final static Integer QUESTION_TYPE_REORDER = 3;
 }

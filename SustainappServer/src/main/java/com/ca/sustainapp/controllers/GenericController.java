@@ -85,7 +85,7 @@ public class GenericController {
 	 * @param request
 	 * @return
 	 */
-	protected UserAccountEntity getConnectedUser(HttpServletRequest request){
+	public UserAccountEntity getConnectedUser(HttpServletRequest request){
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
 		String token = request.getParameter("sessionToken");
 		if(!id.isPresent() || null == token){
@@ -123,7 +123,7 @@ public class GenericController {
 	 * @param request
 	 * @return
 	 */
-	protected boolean isAdmin(HttpServletRequest request){
+	public boolean isAdmin(HttpServletRequest request){
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
 		String token = request.getParameter("sessionToken");
 		if(!id.isPresent() || null == token){

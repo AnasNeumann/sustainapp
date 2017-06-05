@@ -209,7 +209,7 @@ public class AdministrationController extends GenericController {
 	 * @param profiles
 	 * @return
 	 */
-	Float getPercentageVisibility(List<ProfileEntity> profiles){
+	private Float getPercentageVisibility(List<ProfileEntity> profiles){
 		if(profiles.size() <= 0){
 			return 0F;
 		}
@@ -226,7 +226,7 @@ public class AdministrationController extends GenericController {
 	 * Get places by notes
 	 * @return
 	 */
-	Map<Integer, Integer> placeByNotes(){
+	private Map<Integer, Integer> placeByNotes(){
 		Map<Integer, Integer> result = new HashMap<Integer, Integer>();
 		for(int i=0; i<=5; i++){
 			result.put(i, noteService.countByScore(i));
