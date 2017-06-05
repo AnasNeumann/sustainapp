@@ -174,5 +174,21 @@ angular.module('sustainapp.controllers')
 		$scope.displayNews = function(){
 			$state.go('tab.news');
 		}
+		
+		/**
+		 * Refresh du Token utilisé
+		 */
+		window.setInterval(function(){
+			if(true == $scope.loginModel.isConnected){
+				var data = new FormData();
+				data.append("sessionId", sessionService.get('id'));
+				data.append("sessionToken", sessionService.get('token'));
+				userService.refresh(data).success(function(result) {	
+					if(result.code == 1){
+						sessionService.set('token' ,result.token);
+					}
+				});
+			}
+		}, 50000);
 
 	});

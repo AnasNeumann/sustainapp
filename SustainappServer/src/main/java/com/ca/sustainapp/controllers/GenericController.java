@@ -148,7 +148,6 @@ public class GenericController {
 	 */
 	protected boolean deleteSession(Long userId, String token){
 		if(isConnected(userId, token)){
-			userService.createOrUpdate(userService.getById(userId).setToken(null));
 			return true;
 		}
 		return false;

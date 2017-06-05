@@ -25,6 +25,9 @@ angular.module('sustainapp.services')
 		},
 		session : function(data) {
 			return $http.post(config.remoteServer+"/session", data, params);
+		},
+		refresh : function(data) {
+			return $http.post(config.remoteServer+"/refresh", data, params);
 		}
 	};
 });
