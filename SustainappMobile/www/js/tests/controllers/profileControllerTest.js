@@ -11,8 +11,10 @@ describe('profileControllerTest', function() {
 	 */
     var controller,
     	sessionServiceMock,
-    	profileServiceMock,
-    	scopeMock;
+    	scopeMock,
+        result,
+        configMock,
+        httpBackend;
 
     /**
      * @BEFOR
@@ -23,21 +25,34 @@ describe('profileControllerTest', function() {
     beforeEach(module('sustainapp.constantes'));
     beforeEach(module('sustainapp.controllers'));
     beforeEach(module('sustainapp.services'));
-    
+
     /**
      * @BEFOR
      * Injection des Mocks et du controller
-     */  /*
-    beforeEach(inject(function($rootScope, $controller, $q, $stateParams, $scope, $filter, $ionicModal, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService, displayService) {  
-        scopeMock = $rootScope.$new();
-        
-        deferredResult = $q.defer();
-        profileServiceMock = {
-        		update: jasmine.createSpy('update spy')
-                          .and.returnValue(deferredResult.promise)           
+     */
+    beforeEach(inject(function($rootScope, $controller, $httpBackend, config, $q, $stateParams, $filter, $ionicModal, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService, displayService) {  
+    	scopeMock = $rootScope.$new();
+    	scopeMock.profileModel = {
+    		"allErrors" : [],
+    		"profileTemp"	: {
+    			"firstName" : "test",
+    			"lastName" : "test",
+    			"bornDate" : "01/01/2017"
+    		},
+    		"profile" : {
+    			"firstName" : "befor",
+    			"lastName" : "befor",
+    			"bornDate" : "befor"
+    		}
+    	};
+        sessionServiceMock = {
+        		get: jasmine.createSpy('get spy')
+                          .and.returnValue(1)           
         };
-      
-        sessionServiceMock = jasmine.createSpyObj('sessionService spy', ['get']);
+        configMock = config;
+        httpBackend = $httpBackend;
+        httpBackend.whenGET(/\.html$/).respond(function(){ return [200,""]});
+        httpBackend.whenGET(/\.json$/).respond(function(){ return [200,""]});
         controller = $controller('profileController', { 
         	             $scope : scopeMock,
         	        	 $stateParams : $stateParams,
@@ -47,33 +62,52 @@ describe('profileControllerTest', function() {
         	        	 $cordovaFileTransfer : $cordovaFileTransfer,
         	        	 $cordovaDevice : $cordovaDevice,
         	        	 'sessionService' : sessionServiceMock,
-         	        	 'profileService' : profileServiceMock,
+         	        	 'profileService' : profileService,
         	        	 'fileService' : fileService,
         	        	 'displayService' : displayService
         	        	});
-        scope.$digest();
-    }));*/
-    
-    /**
-     * @BEFOR
-     * Injection des Mocks et du controller
-     */
-    beforeEach(inject(function($rootScope){
-    	scopeMock = $rootScope.$new();
     }));
 
     /**
      * @TEST
      * Test de la méthode update profil informations
      */
-    it('UPDATE', function() {
-    	expect(scopeMock).toBeDefined();
-
-    	//scopeMock.updateProfile();
-    	//console.log(scopeMock);
-        //expect(scopeMock.profileModel.allErrors).toBe([]);
+    it('UPDATE PROFILE SUCCESS', function() {
+    	result = { 
+         	   "code" : 1,
+           	  "errors" : []
+         };
+    	httpBackend.whenPOST(configMock.remoteServer+"/profile").respond(200, result);
     	
-    	//expect(scope.settings.enableFriends).toEqual(true);
-        //expect($scope.profileModel.modeRead).toHaveBeenCalledWith(true);
+        scopeMock.updateProfile();
+        httpBackend.flush();
+        
+        expect(scopeMock).toBeDefined();
+        expect(scopeMock.profileModel.allErrors.length).toEqual(0);
+        expect(scopeMock.profileModel.profile.firstName).toEqual(scopeMock.profileModel.profileTemp.firstName);
+        expect(scopeMock.profileModel.profile.lastName).toEqual(scopeMock.profileModel.profileTemp.lastName);
+        expect(scopeMock.profileModel.profile.bornDate).toEqual(scopeMock.profileModel.profileTemp.bornDate);
     });
+    
+    /**
+     * @TEST
+     * Test de la méthode update profil informations avec une erreur detectée côté serveur
+     */
+    it('UPDATE PROFILE ERROR', function() {
+    	result = { 
+         	  "code" : 0,
+           	  "errors" : {
+           		  "name" : "form.field.mandatory"
+           	  }
+         };
+    	httpBackend.whenPOST(configMock.remoteServer+"/profile").respond(200, result);
+    	
+        scopeMock.updateProfile();
+        httpBackend.flush();
+        
+        expect(scopeMock).toBeDefined();
+        expect(scopeMock.profileModel.allErrors.name).toEqual("form.field.mandatory");
+
+    });
+    
 });

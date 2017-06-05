@@ -6,7 +6,7 @@ import java.util.Calendar;
  * Mother class for all entities
  * @author Anas Neumann <anas.neumann.isamm@gmail.com>
  * @version 1.0
- * @since 24/01/2017
+ * @since 30/01/2017
  * 
  */
 public class GenericEntity {
