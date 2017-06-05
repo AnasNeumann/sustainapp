@@ -2,11 +2,13 @@ package com.ca.sustainapp.controllers;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -15,10 +17,12 @@ import com.ca.sustainapp.comparators.NumerotableEntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.responses.NotificationResponse;
 import com.ca.sustainapp.services.BadgeService;
 import com.ca.sustainapp.services.CascadeDeleteService;
 import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.services.NotificationService;
+import com.ca.sustainapp.utils.DateUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 
 
@@ -60,13 +64,19 @@ public class GenericController {
 	protected NotificationService notificationService;
 	
 	/**
+	 * Pour l'envoi en websocket de la notification d'un nouveau token
+	 */
+	@Autowired
+    private SimpMessagingTemplate template;
+	
+	/**
 	 * Creer une nouvelle session pour un utilisateur
 	 * @param request
 	 * @return
 	 */
 	protected String createSession(UserAccountEntity user){	
 		String token = generateSessionToken();
-		userService.createOrUpdate(user.setToken(token));
+		userService.createOrUpdate(user.setToken(token).setTokenDelay(GregorianCalendar.getInstance()));
 		return token;
 	}
 
@@ -77,7 +87,12 @@ public class GenericController {
 	 * @return
 	 */
 	protected UserAccountEntity getConnectedUser(Long userId, String token){
-		return userService.getByToken(userId, token);
+		UserAccountEntity user = userService.getByToken(userId, token);
+		if(null != user && DateUtils.verifyDelay(user.getTokenDelay(), 10)){
+			createSession(user);
+			template.convertAndSend("/queue/notification-"+user.getProfile().getId(), new NotificationResponse("token.refresh"));
+		}
+		return user;
 	}
 	
 	/**

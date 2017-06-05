@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -150,5 +151,20 @@ public class DateUtils {
 	public static final Calendar getCurrentTime() {
 		return (Calendar) Calendar.getInstance().clone();
 	}
-
+	
+	/**
+	 * Verifier si on a dépassé un delais ou pas
+	 * @param date
+	 * @param nbrOfMinutes
+	 * @return
+	 */
+	public static final boolean verifyDelay(Calendar date, Integer nbrOfMinutes){
+		if(null == date || null == nbrOfMinutes){
+			return false;
+		}
+		if(Math.abs(GregorianCalendar.getInstance().get(Calendar.MINUTE) - date.get(Calendar.MINUTE)) >= nbrOfMinutes){
+			return true;
+		}
+		return false;
+	}
 }

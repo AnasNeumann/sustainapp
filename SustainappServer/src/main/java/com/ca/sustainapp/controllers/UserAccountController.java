@@ -181,12 +181,11 @@ public class UserAccountController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/refresh", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
     public String refresh(HttpServletRequest request) {
-		UserAccountEntity user = super.getConnectedUser(request);
+		UserAccountEntity user = userService.connect(request.getParameter("mail"), StringsUtils.md5Hash(request.getParameter("password")));
 		if(null != user){
-			String token = super.createSession(user);
 			return new SessionResponse()
 					.setId(user.getId())
-					.setToken(token)
+					.setToken(user.getToken())
 					.setProfile(null)
 					.setCode(1)
 					.buildJson();

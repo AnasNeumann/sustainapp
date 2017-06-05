@@ -1,8 +1,7 @@
 package com.ca.sustainapp.responses;
 
 import java.util.Calendar;
-
-
+import java.util.GregorianCalendar;
 
 import com.ca.sustainapp.entities.NotificationEntity;
 
@@ -21,6 +20,16 @@ public class NotificationResponse extends HttpRESTfullResponse {
 	private Calendar timestamps;
 	private String target;
 	private String message;
+	
+	/**
+	 * Envoi avec message uniquement
+	 * @param message
+	 */
+	public NotificationResponse(String message){
+		this.message = message;
+		this.timestamps = GregorianCalendar.getInstance();
+		this.state = 0;
+	}
 	
 	/**
 	 * Constructor
