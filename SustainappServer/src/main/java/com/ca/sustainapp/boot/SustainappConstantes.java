@@ -28,6 +28,7 @@ public class SustainappConstantes {
 	public final static String MIME_HTML = "text/html";
 	public final static String MIME_JSON_UTF8 = "application/json;charset=UTF-8";
 	public final static String MIME_JSON = "application/json";
+	public final static String MIME_TEXT = "text/plain";
 
 	/**
 	 * Autres
