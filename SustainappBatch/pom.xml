@@ -4,7 +4,6 @@
 	<groupId>ca.sustainapp</groupId>
 	<artifactId>SustainappBatch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
 	<properties>
 		<jdbc.postgresql.version>9.1-901.jdbc4</jdbc.postgresql.version>
 		<sql-maven-plugin.version>1.5</sql-maven-plugin.version>
