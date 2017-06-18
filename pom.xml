@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+       <properties>
+            <sustainapp.version>0.0.1-SNAPSHOT</sustainapp.version>
+       </properties>
+       <modelVersion>4.0.0</modelVersion>
+
+       <groupId>ca.sustainapp</groupId>
+       <artifactId>Sustainapp</artifactId>
+       <version>${sustainapp.version}</version>
+       <packaging>pom</packaging>
+       <name>${project.artifactId}</name>
+       <description>${project.artifactId}</description>
+       <url>http://maven.localhost/${project.artifactId}/${project.version}</url>
+
+       <modules>
+             <module>SustainappServer</module>
+       </modules>
+</project>
+
