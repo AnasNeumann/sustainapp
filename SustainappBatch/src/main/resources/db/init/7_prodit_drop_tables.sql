@@ -1,6 +1,7 @@
 -- drop all tables before re-install the database
 -- created by Anas Neumann <anas.neumann.isamm@gmail.com>
 -- since 01/02/2017
+DROP TABLE IF EXISTS VISIT CASCADE;
 DROP TABLE IF EXISTS PLACE_NOTE CASCADE;
 DROP TABLE IF EXISTS PLACE_PICTURE CASCADE;
 DROP TABLE IF EXISTS PLACE CASCADE;
