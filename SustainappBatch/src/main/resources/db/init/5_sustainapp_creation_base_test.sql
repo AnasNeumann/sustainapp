@@ -5,5 +5,5 @@
 CREATE DATABASE "sustainapp_test"
   WITH OWNER = sustainapp_admin
        ENCODING = 'UTF8'
-       -- TABLESPACE = sustainapp --
+       TABLESPACE = sustainapp
        CONNECTION LIMIT = -1;

@@ -4,4 +4,4 @@
 
 CREATE TABLESPACE sustainapp
   OWNER sustainapp_admin
-  LOCATION '/home/postgresql/tablespace';
+  LOCATION '/home/postgres/tablespaces/sustainapp/tablespace';
