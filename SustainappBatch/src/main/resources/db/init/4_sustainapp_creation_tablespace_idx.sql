@@ -4,4 +4,4 @@
 
 CREATE TABLESPACE sustainapp_idx
   OWNER sustainapp_admin
-  LOCATION '/sustainapp/tablespace_idx';
+  LOCATION '/home/postgresql/tablespace_idx';
