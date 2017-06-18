@@ -1,6 +1,9 @@
 .metadata
 bin/
 tmp/
+*.war
+*.jar
+*.tgz
 *.tmp
 *.bak
 *.swp
