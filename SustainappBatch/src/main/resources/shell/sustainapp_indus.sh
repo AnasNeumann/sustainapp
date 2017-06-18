@@ -77,7 +77,7 @@ update(){
 	echo "-------------------------------------------------------"
 	echo "----------Mise à jour du script install.sh"
 	git_update "$1"
-	cp -f "${BATCH_DIR}/src/main/resources/shell/prodit_indus.sh" "$path_install"
+	cp -f "${BATCH_DIR}/src/main/resources/shell/sustainapp_indus.sh" "$path_install"
 	dos2unix "$path_install"
 	chmod +x "$path_install"
 }
