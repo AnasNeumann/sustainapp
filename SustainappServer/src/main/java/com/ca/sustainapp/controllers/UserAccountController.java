@@ -173,4 +173,25 @@ public class UserAccountController extends GenericController {
 		}
 		return new HttpRESTfullResponse().setCode(0).buildJson(); 
     }
+	
+	/**
+	 * refresh a session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/refresh", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+    public String refresh(HttpServletRequest request) {
+		UserAccountEntity user = userService.connect(request.getParameter("mail"), StringsUtils.md5Hash(request.getParameter("password")));
+		if(null != user){
+			return new SessionResponse()
+					.setId(user.getId())
+					.setToken(user.getToken())
+					.setProfile(null)
+					.setCode(1)
+					.buildJson();
+		}
+		return new HttpRESTfullResponse().setCode(0).buildJson(); 
+	}
+	
+	
 }

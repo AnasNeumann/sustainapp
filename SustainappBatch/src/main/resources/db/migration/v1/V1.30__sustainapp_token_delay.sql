@@ -1,0 +1,3 @@
+-- add a delay for token
+ALTER TABLE USER_ACCOUNT
+ADD TOKEN_DELAY TIMESTAMP;

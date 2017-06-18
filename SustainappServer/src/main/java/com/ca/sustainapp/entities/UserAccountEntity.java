@@ -53,6 +53,9 @@ public class UserAccountEntity extends GenericEntity implements Serializable {
 	@Column(name = "USER_TYPE")
 	private Integer type;
 	
+	@Column(name = "TOKEN_DELAY")
+	private Calendar tokenDelay;
+	
 	@Column(name = "TIMESTAMPS")
 	private Calendar timestamps;
 	
@@ -180,4 +183,20 @@ public class UserAccountEntity extends GenericEntity implements Serializable {
 		this.type = type;
 		return this;
 	}
+
+	/**
+	 * @return the tokenDelay
+	 */
+	public Calendar getTokenDelay() {
+		return tokenDelay;
+	}
+
+	/**
+	 * @param tokenDelay the tokenDelay to set
+	 */
+	public UserAccountEntity setTokenDelay(Calendar tokenDelay) {
+		this.tokenDelay = tokenDelay;
+		return this;
+	}
+
 }
