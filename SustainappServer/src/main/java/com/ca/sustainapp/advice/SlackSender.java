@@ -2,12 +2,15 @@ package com.ca.sustainapp.advice;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Bean singleton pour les interractions avec Slack.
@@ -17,9 +20,13 @@ import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
  */
 @Component
 public class SlackSender {
-	private static final Logger LOGGER = LogManager.getLogger(SlackSender.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SlackSender.class);
 	private static final String SLACK_ERROR_LOG_MSG = "Erreur à l'envoie du slack...";
+	
+	@Value("${slack.token}")
 	private String slackAuthToken;
+	
+	@Value("${slack.channel}")
 	private String slackChannel;
 
 	/**

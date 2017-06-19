@@ -19,6 +19,7 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 @CrossOrigin
 @RestController
 public class PingController {
+	private static final String ERR_MSG_EXCEPTION_TEST = "This is an exception in order to test the generic error screen";
 
 	/**
 	 * Test de l'existance de l'application
@@ -29,5 +30,16 @@ public class PingController {
 	@RequestMapping(value="/ping", method = RequestMethod.GET, produces = SustainappConstantes.MIME_TEXT)
     public String ping(HttpServletRequest request){
 		return "pong\n";
+	}
+	
+	/**
+	 * Test de l'envoi des erreurs
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/errors", method = RequestMethod.GET)
+	public String error(HttpServletRequest request) {
+		throw new RuntimeException (ERR_MSG_EXCEPTION_TEST);
 	}
 }
