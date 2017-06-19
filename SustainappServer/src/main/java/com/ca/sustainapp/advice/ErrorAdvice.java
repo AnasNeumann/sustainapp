@@ -15,6 +15,7 @@ import com.ca.sustainapp.responses.LightProfileResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
 /**
  * Advice pour catcher toutes les exceptions techniques.
@@ -34,7 +35,7 @@ public class ErrorAdvice extends GenericController  {
 	 * Constantes
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ErrorAdvice.class);
-	private static final String MAIL_CONTENT = "[ERR_TECH] :sob: mail = %s, profile = %s, message = %s, type = %s";
+	private static final String MAIL_CONTENT = "[ERR_TECH] :sob: mail = %s, profile = %s, message = %s, type = %s, stacktrace = %s";
 	private static final List<String> FILTERED_ERRORS_MSG = Arrays.asList(
 			"java.io.IOException: Connection reset by peer", "Request method 'HEAD' not supported",
 			"java.io.IOException: Broken pipe", "Required String parameter 'term' is not present",
@@ -56,6 +57,7 @@ public class ErrorAdvice extends GenericController  {
 		 */
 		String errorMessage = ex.getMessage();
 		String errorType = ex.getClass().getSimpleName();
+		String stackTrace = getStackTrace(ex);
 		LOGGER.error(String.format(ERR_MSG, errorMessage, errorType), ex);
 
 		/**
@@ -71,7 +73,7 @@ public class ErrorAdvice extends GenericController  {
 		UserAccountEntity user = super.getConnectedUser(request);
 		String profileName = (null == user) ? StringUtils.EMPTY : new LightProfileResponse(user.getProfile()).getDenomination();
 		String mail = (null == user) ? StringUtils.EMPTY : user.getMail();
-		String strMsg = String.format(MAIL_CONTENT, mail, profileName, errorMessage, errorType);
+		String strMsg = String.format(MAIL_CONTENT, mail, profileName, errorMessage, errorType, stackTrace);
 
 		/**
 		 * Envoi sur slack
