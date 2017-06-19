@@ -108,19 +108,24 @@ public class NewspaperController extends GenericController {
 		List<LeaderParticipationResponse> result = new ArrayList<LeaderParticipationResponse>();
 		List<ParticipationEntity> participations = participationService.getAll();
 		Collections.sort(participations, participationComparator);
-		for(int i=0; i<3; i++){
-			ParticipationEntity p = participations.get(i);
-			if(p.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
-				badgeService.star(profilService.getById(p.getTargetId()));
+		int i=0;
+		for(ParticipationEntity p : participations){
+			if(i < 3){
+				if(p.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
+					badgeService.star(profilService.getById(p.getTargetId()));
+				}
+				result.add(new LeaderParticipationResponse()
+						.setDocument(p.getDocument())
+						.setTitle(p.getTitle())
+						.setLink("challenges/"+p.getChallengeId())
+						.setOwner(p.getTargetType().equals(SustainappConstantes.TARGET_PROFILE) ? 
+								new LightProfileResponse(profilService.getById(p.getTargetId()))
+								: new LightProfileResponse(teamService.getById(p.getTargetId())))
+						);
+			i++;
+			}else{
+				break;
 			}
-			result.add(new LeaderParticipationResponse()
-					.setDocument(p.getDocument())
-					.setTitle(p.getTitle())
-					.setLink("challenges/"+p.getChallengeId())
-					.setOwner(p.getTargetType().equals(SustainappConstantes.TARGET_PROFILE) ? 
-							new LightProfileResponse(profilService.getById(p.getTargetId()))
-							: new LightProfileResponse(teamService.getById(p.getTargetId())))
-					);
 		}
 		return result;
 	}

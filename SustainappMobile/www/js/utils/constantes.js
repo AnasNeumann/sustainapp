@@ -6,9 +6,7 @@
  */
 angular.module('sustainapp.constantes')
 	.constant('config', { 
-		//remoteServer : 'http://10.244.112.17:8085' // ip valid only for laval open wifi connection
-		//remoteServer : 'http://192.168.43.195:8085'  // ip valid only for samsung note4 4g connection 
-	    remoteServer : 'http://127.0.0.1:8085' //ip valid only with simulator device
+		//remoteServer : 'http://192.168.43.195:8085'  //note4 modem
 	})
 	.constant('teamRole', {
 	    admin : "admin",
