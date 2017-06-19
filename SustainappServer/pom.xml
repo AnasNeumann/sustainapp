@@ -152,20 +152,8 @@
 		<dependency>
 		    <groupId>com.ullink.slack</groupId>
 		    <artifactId>simpleslackapi</artifactId>
-		    <version>1.0.0</version>
+		    <version>0.5.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-client -->
-        <dependency>
-            <groupId>org.glassfish.tyrus</groupId>
-            <artifactId>tyrus-client</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-container-grizzly-client -->
-        <dependency>
-            <groupId>org.glassfish.tyrus</groupId>
-            <artifactId>tyrus-container-grizzly-client</artifactId>
-            <version>1.13.1</version>
-        </dependency>
 
   </dependencies>
 </project>
