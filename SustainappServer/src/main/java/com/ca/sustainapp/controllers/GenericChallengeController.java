@@ -134,7 +134,7 @@ public class GenericChallengeController extends GenericController {
 		if(null !=challenge && super.getConnectedUser(request).getIsAdmin()){
 			return challenge;
 		}
-		if(null == challenge || !challenge.getCreatorId().equals(super.getConnectedUser(request).getProfile().getId())){
+		if(null == challenge || !challenge.getCreatorId().equals(super.getUser(request).getProfile().getId())){
 			return null;
 		}
 		return challenge;
