@@ -266,5 +266,7 @@
     "place.localize" : "Localiser ma position",
     "place.calcul" : "Calculer de l'adrrese",
     "place.locateMe" : "Je suis ici !",
-    "place.picture.add" : "Ajouter une nouvelle photo"
+    "place.picture.add" : "Ajouter une nouvelle photo",
+    
+    "error.position" : "Veuillez allumer la géolocalisation !"
 }

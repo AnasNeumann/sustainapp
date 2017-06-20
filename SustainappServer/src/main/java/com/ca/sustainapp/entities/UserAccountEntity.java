@@ -157,6 +157,9 @@ public class UserAccountEntity extends GenericEntity implements Serializable {
 	 * @return the profile
 	 */
 	public ProfileEntity getProfile() {
+		if(null == profile || profile.isEmpty()){
+			return null;
+		}
 		return profile.get(0);
 	}
 

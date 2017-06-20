@@ -266,5 +266,7 @@
     "place.localize" : "Locate my position",
     "place.calcul" : "Build from the address",
     "place.locateMe" : "I am here !",
-    "place.picture.add" : "Add a new picture"
+    "place.picture.add" : "Add a new picture",
+    
+    "error.position" : "Geolocation should be enabled !"
 }

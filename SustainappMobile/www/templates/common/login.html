@@ -49,7 +49,7 @@
         </form>
         <p ng-hide="loginModel.modeLogin" class="s-common-center s-login-p" ng-click="loginModel.modeLogin = true">{{'login.alreadyHave' | translate}}<br /><br /></p>
         <p ng-hide="loginModel.modeLogin" class="s-common-center s-login-p" ng-click="loginModel.read = true">{{'login.policy' | translate}}</p>
-        <p ng-if="true == loginModel.modeLogin && fasle == _isNotMobile" class="s-common-center s-login-p" ng-click="loginModel.modeLogin = false">{{'login.stillNot' | translate}}</p>
+        <p ng-if="true == loginModel.modeLogin && false == _isNotMobile" class="s-common-center s-login-p" ng-click="loginModel.modeLogin = false">{{'login.stillNot' | translate}}</p>
     </ion-content>
     
     <!-- Politique de confidentialité et conditions générales d'utilisations -->
