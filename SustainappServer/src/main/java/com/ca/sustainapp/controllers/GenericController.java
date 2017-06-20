@@ -96,6 +96,19 @@ public class GenericController {
 	}
 	
 	/**
+	 * Recuperer la session d'un utilisateur sans verification
+	 * @param request
+	 * @return
+	 */
+	public UserAccountEntity getUser(HttpServletRequest request){
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
+		if(!id.isPresent()){
+			return null;
+		}
+		return userService.getById(id.get());
+	}
+	
+	/**
 	 * Recuperer la session d'un utilisateur
 	 * @param request
 	 * @return

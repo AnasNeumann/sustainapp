@@ -81,7 +81,7 @@ public class TeamController extends GenericController {
 		}
 		Long idTeam = teamService.createOrUpdate(team);
 		TeamRoleEntity role = new TeamRoleEntity()
-				.setProfilId(super.getConnectedUser(request).getProfile().getId())
+				.setProfilId(super.getUser(request).getProfile().getId())
 				.setRole(SustainappConstantes.TEAMROLE_ADMIN)
 				.setTeamId(idTeam)
 				.setTimestamps(GregorianCalendar.getInstance());

@@ -89,7 +89,7 @@ public class CourseController extends GenericCourseController {
 		CourseEntity course = new CourseEntity()
 				.setAbout(request.getParameter("about"))
 				.setLevelMin(StringsUtils.parseIntegerQuietly(request.getParameter("levelMin")).get())
-				.setCreatorId(super.getConnectedUser(request).getProfile().getId())
+				.setCreatorId(super.getUser(request).getProfile().getId())
 				.setOpen(0)
 				.setLanguage(!request.getParameter("langue").isEmpty() ? request.getParameter("langue") : "en")
 				.setTitle(request.getParameter("title"))
