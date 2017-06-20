@@ -51,7 +51,7 @@ angular.module('sustainapp.controllers')
 		    $scope.model.loaded = true;
 		    reloadPlaces(position.coords.longitude, position.coords.latitude);
 	    }, function(err) {
-	    	alert(err);
+	    	alert($filter('translate')("error.position"));
 	    });
 	};
 
@@ -107,7 +107,7 @@ angular.module('sustainapp.controllers')
 		    $scope.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 		    reloadPlaces(position.coords.longitude, position.coords.latitude);
 	    }, function(err) {
-	    	alert(err);
+	    	alert($filter('translate')("error.position"));
 	    });
 	};
 });
