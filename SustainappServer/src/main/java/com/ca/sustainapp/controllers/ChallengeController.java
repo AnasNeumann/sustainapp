@@ -100,7 +100,7 @@ public class ChallengeController extends GenericChallengeController {
 				.setTeamEnabled(new Boolean(request.getParameter("teamEnabled")))
 				.setMinLevel(StringsUtils.parseIntegerQuietly(request.getParameter("levelMin")).get())
 				.setTimestamps(GregorianCalendar.getInstance())
-				.setCreatorId(super.getConnectedUser(request).getProfile().getId());
+				.setCreatorId(super.getUser(request).getProfile().getId());
 		if(!isEmpty(request.getParameter("file"))){
 			challenge.setIcon(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}

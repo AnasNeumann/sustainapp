@@ -99,7 +99,7 @@ public class ParticipationController extends GenericChallengeController {
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
 		ParticipationEntity participation = participationService.getById(idParticipation.get());
-		if(null == participation || (!super.isAdmin(request) && !super.isOwnerParticiaption(participation, super.getConnectedUser(request).getProfile()))){
+		if(null == participation || (!super.isAdmin(request) && !super.isOwnerParticiaption(participation, super.getUser(request).getProfile()))){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
 		deleteService.cascadeDelete(participation);
@@ -118,7 +118,7 @@ public class ParticipationController extends GenericChallengeController {
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
 		ParticipationEntity participation = participationService.getById(idParticipation.get());
-		Long idProfile = super.getConnectedUser(request).getProfile().getId();
+		Long idProfile = super.getUser(request).getProfile().getId();
 		if(null == participation){
 			return new HttpRESTfullResponse().setCode(0).buildJson();
 		}
