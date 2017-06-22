@@ -1,0 +1,2 @@
+# Replace with this value
+JENKINS_ARGS="--prefix=/jenkins"
