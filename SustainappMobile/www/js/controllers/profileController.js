@@ -35,7 +35,7 @@ angular.module('sustainapp.controllers')
 			profileService.getById($stateParams.id).then(function(response){
 				if(response.data.code == 1) {
 					console.log(reponse.data);
-:					 response.data.profile.bornDate = new Date(response.data.profile.bornDate);
+					 response.data.profile.bornDate = new Date(response.data.profile.bornDate);
 					 $scope.title = response.data.profile.firstName+" "+response.data.profile.lastName;
 					 $scope.profileModel.profile = response.data.profile;
 	    			 $scope.profileModel.profileTemp = response.data.profile;
