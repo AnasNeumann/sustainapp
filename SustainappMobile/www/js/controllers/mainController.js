@@ -39,6 +39,7 @@ angular.module('sustainapp.controllers')
 		 * Initialisation de la réception de websockets
 		 */
 		var initWebSocket = function(){			
+			console.log(sessionService.getObject("profile").id);
 			$stomp.connect(config.remoteServer+'/sustainapp-websocket/', {}).then(function (frame) {
                 var subscription = $stomp.subscribe('/queue/notification-'+sessionService.getObject("profile").id, function (payload, headers, res){
                 	    $scope.newNotifications = payload;
