@@ -39,11 +39,13 @@ angular.module('sustainapp.controllers')
 		 * Initialisation de la réception de websockets
 		 */
 		var initWebSocket = function(){			
-			console.log(sessionService.getObject("profile").id);
+			console.log("try init websoket");
 			$stomp.connect(config.remoteServer+'/sustainapp-websocket/', {}).then(function (frame) {
-                var subscription = $stomp.subscribe('/queue/notification-'+sessionService.getObject("profile").id, function (payload, headers, res){
+				console.log("i am here");
+				var subscription = $stomp.subscribe('/queue/notification-'+sessionService.getObject("profile").id, function (payload, headers, res){
                 	    $scope.newNotifications = payload;
                         $scope.$apply($scope.newNotifications);
+                        console.log("i am here 2");
                 });
 			});
 		};
@@ -189,7 +191,7 @@ angular.module('sustainapp.controllers')
 			data.append("password", sessionService.get('password'));
 			userService.refresh(data).success(function(result) {	
 				if(result.code == 1){
-					console.log(result.token);
+					console.log("refres  : "+result.token);
 					sessionService.set('token' ,result.token);
 				}
 			});
