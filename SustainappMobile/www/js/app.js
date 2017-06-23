@@ -281,8 +281,13 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 		"https://www.ulaval.ca/**",
 		"http://legisquebec.gouv.qc.ca/**",
 		"https://www.uprodit.com/**",
-		"https://play.google.com/**"
+		"https://play.google.com/**",
+		"http://sustainapp.cirrelt.ca/**",
+		"https://sustainapp.cirrelt.ca/**",
+		"http://localhost:8100/**",
+		"http://127.0.0.1:8100/**"
 	]);
+	
 
 	/**
 	 * Blacklister les urls provenants de ces sites web
