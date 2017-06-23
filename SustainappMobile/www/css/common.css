@@ -19,7 +19,7 @@ body {
 
 ion-content {
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: scroll !important;
 }
 
 .animate.ng-hide-add, .animate.ng-hide-remove {
@@ -32,6 +32,11 @@ ion-content {
 
 .ng-hide {
 	display: none !important;
+}
+
+.scroll-bar-indicator
+{
+    display: none;
 }
 
 /**
