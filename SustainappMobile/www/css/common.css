@@ -22,9 +22,7 @@ ion-content {
 	overflow-y: auto;
 }
 
-.sustainappScroll{
-	overflow-y: scroll !important;
-}
+
 
 .animate.ng-hide-add, .animate.ng-hide-remove {
 	transition: all linear 0.15s !important;
