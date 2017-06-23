@@ -166,10 +166,10 @@ angular.module('sustainapp.controllers')
 		    		$scope.loginModel.cityId = result.city.id;
 		    	}
 		    	$state.go('tab.news');
+		    	initWebSocket();
 	    	} else {
 	    		$scope.loginModel.allErrors = result.errors;
 	    	}
-			initWebSocket();
 		}
 		
 		/**
