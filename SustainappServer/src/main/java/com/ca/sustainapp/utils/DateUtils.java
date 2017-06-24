@@ -162,7 +162,7 @@ public class DateUtils {
 		if(null == date || null == nbrOfMinutes){
 			return false;
 		}
-		if(Math.abs(GregorianCalendar.getInstance().get(Calendar.MINUTE) - date.get(Calendar.MINUTE)) >= nbrOfMinutes){
+		if(Math.abs(GregorianCalendar.getInstance().get(Calendar.HOUR) - date.get(Calendar.HOUR)) >= nbrOfMinutes){
 			return true;
 		}
 		return false;

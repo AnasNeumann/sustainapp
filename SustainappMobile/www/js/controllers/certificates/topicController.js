@@ -74,6 +74,8 @@ angular.module('sustainapp.controllers')
 						$scope.topicModel.displayPicture = "data:image/jpeg;base64,"+ result.topic.picture;
 					}
 				}
+			}, function(response){
+				sessionService.refresh(loadTopic); 
 			});		
 		};
 	
@@ -102,7 +104,9 @@ angular.module('sustainapp.controllers')
 	 					$scope.topicModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
 	 					$scope.topicModel.displayPicture = e.target.result;
 	 				}
-	 			});
+	 			}).error(function(error){
+			    	sessionService.refresh(null);
+			    }); 
 	         }
 	         reader.readAsDataURL(input.files[0]);  
 	     };
@@ -123,7 +127,9 @@ angular.module('sustainapp.controllers')
 	 					$scope.topicModel.displayPicture = "data:image/jpeg;base64,"+imageData;
 	 					$scope.topicModel.pictureEdit = false;
 	 		    	}
-	 		    });
+	 		    }).error(function(error){
+			    	sessionService.refresh(null);
+			    }); 
 	 		 }, function(err) {
 	 		 });
 	     };
@@ -147,7 +153,9 @@ angular.module('sustainapp.controllers')
  		    	} else {
  		    		$scope.topicModel.allErrors = result.errors;
  		    	}
- 		    });
+ 		    }).error(function(error){
+		    	sessionService.refresh($scope.updateTopic);
+		    }); 
 	     };
 	     
 	     
@@ -264,7 +272,9 @@ angular.module('sustainapp.controllers')
 	 				} else {
 	 		    		$scope.partModel.allErrors = result.errors;
 	 		    	}
-	 		    });
+	 		    }).error(function(error){
+			    	sessionService.refresh($scope.createPart);
+			    });
 	      };
 	      
 	      /**
@@ -293,7 +303,9 @@ angular.module('sustainapp.controllers')
 	  		data.append("part", $scope.partModel.eltToDelete.id);
 	  		data.append("sessionId", sessionService.get('id'));
 	  		data.append("sessionToken", sessionService.get('token'));
-	  		partService.deleteById(data);
+	  		partService.deleteById(data).error(function(error){
+		    	sessionService.refresh($scope.confirmDelete);
+		    });
 	      };
 	      
 	      /**
@@ -304,15 +316,18 @@ angular.module('sustainapp.controllers')
 	    	 var toIndex = fromIndex + 1;
 	    	 if(true == sens){
 	    		 var toIndex = fromIndex - 1;
-	    	 }
-	    	 $scope.topicModel.parts.splice(fromIndex, 1);
-	    	 $scope.topicModel.parts.splice(toIndex, 0, elt);
+	    	 }	    	 
 	 		 var data = new FormData();
 	  		 data.append("part", elt.id);
 	  		 data.append("sens", sens);
 	  		 data.append("sessionId", sessionService.get('id'));
 	  		 data.append("sessionToken", sessionService.get('token'));
-	  		 partService.move(data);
+	  		 partService.move(data).success(function(result) {
+	  			$scope.topicModel.parts.splice(fromIndex, 1);
+		    	$scope.topicModel.parts.splice(toIndex, 0, elt);
+	  		 }).error(function(error){
+			    	sessionService.refresh(null);
+			 });
 	      };
 	      
 	      /**
@@ -364,6 +379,8 @@ angular.module('sustainapp.controllers')
 	 					$scope.partModel.eltToEdit.title = $scope.partModel.titleEdit;
 	 					$scope.partModel.eltToEdit = {};
 	 				}
+	 			}).error(function(error){
+			    	sessionService.refresh($scope.modifyPart);
 	 			});
 	      };
 	      

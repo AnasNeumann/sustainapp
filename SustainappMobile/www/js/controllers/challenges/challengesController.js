@@ -90,6 +90,8 @@ angular.module('sustainapp.controllers')
 				} else {
 					$scope.challengesModel.moreChallenges = false;
 				}
+			}, function(response){
+				sessionService.refresh($scope.getMoreChallenges);
 			});
 		}
 		
@@ -170,7 +172,9 @@ angular.module('sustainapp.controllers')
 				} else {
 					$scope.challengesModel.allErrors = result.errors;
 				}
-			});			
+			}).error(function(error){
+		    	sessionService.refresh($scope.addChallenge);
+		    });			
 		}
 
 		/**

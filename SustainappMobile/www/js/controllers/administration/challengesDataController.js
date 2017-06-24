@@ -53,6 +53,8 @@ angular.module('sustainapp.controllers')
 						$scope.model.categoriesData.push(result.challengesByCategories[elt]);
 					}
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh(loadModel);
+		    });
 		};
 	});

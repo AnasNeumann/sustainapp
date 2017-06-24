@@ -113,6 +113,8 @@ angular.module('sustainapp.controllers')
 			} else {
 				$scope.coursModel.moreCours = false;
 			}
+		}, function(response){
+			sessionService.refresh($scope.getMoreCours);
 		});
 	}
 	
@@ -220,7 +222,9 @@ angular.module('sustainapp.controllers')
 			} else {
 				$scope.coursModel.allErrors = result.errors;
 			}
-		});		
+		}).error(function(error){
+	    	sessionService.refresh($scope.addCours);
+	    });		
 	}
 
 	/**

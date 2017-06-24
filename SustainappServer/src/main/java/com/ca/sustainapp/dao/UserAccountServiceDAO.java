@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import com.ca.sustainapp.advice.SustainappSecurityException;
 import com.ca.sustainapp.criteria.UserAccountCriteria;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
@@ -69,7 +70,7 @@ public class UserAccountServiceDAO extends GenericServiceDAO {
 		if(user.getToken().equals(token)){
 			return user;
 		}
-		return null;
+		throw new SustainappSecurityException("access token expired");
 	}
 	
 	/**

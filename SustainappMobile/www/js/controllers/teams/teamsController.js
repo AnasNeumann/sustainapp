@@ -86,7 +86,9 @@ angular.module('sustainapp.controllers')
 			} else {
 				$scope.teamsModel.allErrors = result.errors;
 			}
-		});
+		}).error(function(error){
+	    	sessionService.refresh($scope.createTeam);
+	    });
 	};
 	
 	/**
@@ -105,6 +107,8 @@ angular.module('sustainapp.controllers')
 			} else {
 				$scope.teamsModel.moreTeams = false;
 			}
+		}, function(error){
+			sessionService.refresh($scope.getMoreTeam);
 		});
 	};
 	

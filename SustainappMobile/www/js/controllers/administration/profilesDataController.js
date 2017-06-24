@@ -48,6 +48,8 @@ angular.module('sustainapp.controllers')
 					$scope.model.teamsLevelLabels.push("Level "+elt);
 					$scope.model.teamsLevelData.push(result.teamByLevel[elt]);
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh(loadModel);
+		    });
 		};
 	});

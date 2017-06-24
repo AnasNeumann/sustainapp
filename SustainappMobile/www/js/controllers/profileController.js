@@ -34,7 +34,6 @@ angular.module('sustainapp.controllers')
 			$scope.currentBadge = {};
 			profileService.getById($stateParams.id).then(function(response){
 				if(response.data.code == 1) {
-					console.log(response.data);
 					 response.data.profile.bornDate = new Date(response.data.profile.bornDate);
 					 $scope.title = response.data.profile.firstName+" "+response.data.profile.lastName;
 					 $scope.profileModel.profile = response.data.profile;
@@ -82,6 +81,9 @@ angular.module('sustainapp.controllers')
 		    	} else {
 		    		$scope.profileModel.allErrors = result.errors;
 		    	}
+		    })
+		    .error(function(error){
+		    	sessionService.refresh($scope.updateProfile);
 		    });
 	    };
 	    
@@ -100,7 +102,9 @@ angular.module('sustainapp.controllers')
 						$scope.profileModel.coverEdit = false;
 						$scope.profileModel.avatarEdit = false;
 					}
-				});
+				}).error(function(error){
+			    	sessionService.refresh(null);
+			    });
 			 }, function(err) {
 			 });
 	    };
@@ -120,7 +124,9 @@ angular.module('sustainapp.controllers')
 						$scope.profileModel.coverEdit = false;
 						$scope.profileModel.avatarEdit = false;
 					}
-				});
+				}).error(function(error){
+			    	sessionService.refresh(null);
+			    });
 			 }, function(err) {
 			 });
 	    }
@@ -139,7 +145,9 @@ angular.module('sustainapp.controllers')
 					if(result.code == 1){
 						$scope.profileModel.displayAvatar = e.target.result;
 					}
-				});
+				}).error(function(error){
+			    	sessionService.refresh(null);
+			    });
             }
             reader.readAsDataURL(input.files[0]);  
 	    }
@@ -158,7 +166,9 @@ angular.module('sustainapp.controllers')
 					if(result.code == 1){
 						$scope.profileModel.displayCover = e.target.result;
 					}
-				});       	         	
+				}).error(function(error){
+			    	sessionService.refresh(null);
+			    });       	         	
             }
             reader.readAsDataURL(input.files[0]);  
 	    }
@@ -187,7 +197,9 @@ angular.module('sustainapp.controllers')
 	    	var data = new FormData();
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
-			profileService.visibility(data);
+			profileService.visibility(data).error(function(error){
+		    	sessionService.refresh($scope.toogleVisibility);
+		    });
 	    }
 
 	});

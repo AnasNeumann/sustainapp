@@ -64,6 +64,8 @@ angular.module('sustainapp.controllers')
 				$scope.questionModel.maxCategories = 3;
 				$scope.questionModel.maxAnswer = (result.question.type == 0 || result.question.type == 2)? 5 : 4;
 			}
+		}, function(response){
+			sessionService.refresh(loadQuestion);
 		});
 	}
 
@@ -83,7 +85,9 @@ angular.module('sustainapp.controllers')
 					$scope.questionModel.picture = imageData;		
 					$scope.questionModel.pictureEdit = false;
 		    	}
-		    });
+		    }).error(function(error){
+		    	sessionService.refresh(null);
+		    }); 
 		 }, function(err) {
 		 });
 	};
@@ -105,7 +109,9 @@ angular.module('sustainapp.controllers')
 					$scope.questionModel.picture = e.target.result.substring(e.target.result.indexOf(",")+1);	
 					$scope.questionModel.pictureEdit = false;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh(null);
+		    });
         }
         reader.readAsDataURL(input.files[0]);  
 	};
@@ -124,7 +130,9 @@ angular.module('sustainapp.controllers')
 				$scope.questionModel.question.message = $scope.questionModel.message;
 				$scope.questionModel.edit = false;
 			}
-		});
+		}).error(function(error){
+	    	sessionService.refresh($scope.updateQuestion);
+	    });
 	};
 
 	/**
@@ -206,34 +214,42 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.categorieModel.allErrors = result.errors;
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh($scope.addCategory);
 	    });
 	};
 	
 	/**
 	 * Suppression d'une catégorie
 	 */
-	$scope.deleteCategory = function(){
-		$scope.questionModel.categories.splice($scope.questionModel.categories.indexOf($scope.eltToDelete), 1);
+	$scope.deleteCategory = function(){	
 		var data = new FormData();
 		data.append("categorie", $scope.eltToDelete.id);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		answerCategoryService.deleteById(data);
+		answerCategoryService.deleteById(data).success(function(response){
+			$scope.questionModel.categories.splice($scope.questionModel.categories.indexOf($scope.eltToDelete), 1);
+		}).error(function(error){
+	    	sessionService.refresh($scope.deleteCategory);
+	    });
 		$scope.eltToDelete  = {};
 	};
 	
 	/**
 	 * Déplacement d'une catégorie
 	 */
-	$scope.dropCategory = function(elt, fromIndex, toIndex){
-		$scope.questionModel.categories.splice(fromIndex, 1);
-		$scope.questionModel.categories.splice(toIndex, 0, elt);
+	$scope.dropCategory = function(elt, fromIndex, toIndex){	
 		var data = new FormData();
 		data.append("categorie", elt.id);
 		data.append("position", toIndex);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		answerCategoryService.drop(data);
+		answerCategoryService.drop(data).success(function(response){
+			$scope.questionModel.categories.splice(fromIndex, 1);
+			$scope.questionModel.categories.splice(toIndex, 0, elt);
+		}).error(function(error){
+	    	sessionService.refresh(null);
+	    });
 	};
 	
 	/**
@@ -273,34 +289,42 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.answerModel.allErrors = result.errors;
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh($scope.addAnswer);
 	    });
 	};
 	
 	/**
 	 * Suppression d'une réponse
 	 */
-	$scope.deleteAnswer = function(){
-		$scope.questionModel.answers.splice($scope.questionModel.answers.indexOf($scope.eltToDelete), 1);
+	$scope.deleteAnswer = function(){		
 		var data = new FormData();
 		data.append("answer", $scope.eltToDelete.id);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		answerService.deleteById(data);
+		answerService.deleteById(data).success(function(response){
+			$scope.questionModel.answers.splice($scope.questionModel.answers.indexOf($scope.eltToDelete), 1);
+		}).error(function(error){
+	    	sessionService.refresh($scope.deleteAnswer);
+	    });
 		$scope.eltToDelete  = {};
 	};
 	
 	/**
 	 * Déplacement d'une réponse
 	 */
-	$scope.dropAnswer = function(elt, fromIndex, toIndex){
-		$scope.questionModel.answers.splice(fromIndex, 1);
-		$scope.questionModel.answers.splice(toIndex, 0, elt);
+	$scope.dropAnswer = function(elt, fromIndex, toIndex){	
 		var data = new FormData();
 		data.append("answer", elt.id);
 		data.append("position", toIndex);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		answerService.drop(data);
+		answerService.drop(data).success(function(response){
+			$scope.questionModel.answers.splice(fromIndex, 1);
+			$scope.questionModel.answers.splice(toIndex, 0, elt);
+		}).error(function(error){
+	    	sessionService.refresh(null);
+	    });
 	};
 	
 	/**

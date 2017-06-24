@@ -78,6 +78,8 @@ angular.module('sustainapp.controllers')
 					$scope.coursModel.displayPicture = "data:image/jpeg;base64,"+ result.cours.picture;
 				}
 			}
+		}, function(response){
+			sessionService.refresh($scope.loadCours);	
 		});
 	};
 
@@ -96,7 +98,9 @@ angular.module('sustainapp.controllers')
 				$scope.coursModel.totalRank = result.total;
 				$scope.coursModel.averageRank = result.average;
 			}
-		});
+		}).error(function(error){
+	    	sessionService.refresh($scope.doRank);
+	    });
 	}
 
 	/**
@@ -117,7 +121,9 @@ angular.module('sustainapp.controllers')
 		data.append("level", $scope.coursModel.cours.levelMin);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		coursService.level(data);
+		coursService.level(data).error(function(error){
+	    	sessionService.refresh(null);
+	    });
 	}
 	
 	/**
@@ -163,7 +169,9 @@ angular.module('sustainapp.controllers')
 					$scope.coursModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
 					$scope.coursModel.displayPicture = e.target.result;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh(null);
+		    });
         }
         reader.readAsDataURL(input.files[0]);  
 	}
@@ -187,7 +195,9 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.coursModel.allErrors = result.errors;
 	    	}
-		});
+		}).error(function(error){
+	    	sessionService.refresh($scope.updateCours);
+	    });
 	}
 	
 	/**
@@ -198,7 +208,9 @@ angular.module('sustainapp.controllers')
 		data.append("cours", $scope.coursModel.cours.id);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		coursService.toogleOpen(data);
+		coursService.toogleOpen(data).error(function(error){
+	    	sessionService.refresh($scope.toogleOpen);
+	    });
 	}
 	
 	/**
@@ -217,6 +229,8 @@ angular.module('sustainapp.controllers')
 					$scope.coursModel.displayPicture = "data:image/jpeg;base64,"+imageData;
 					$scope.coursModel.iconEdit = false;
 		    	}
+		    }).error(function(error){
+		    	sessionService.refresh(null);
 		    });
 		 }, function(err) {
 		 });
@@ -263,6 +277,8 @@ angular.module('sustainapp.controllers')
 			if(result.code == 1){
 				$state.go('tab.certificates');
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh(deleteCours);
 	    });
 		return;
 	}
@@ -276,7 +292,9 @@ angular.module('sustainapp.controllers')
 		data.append("topic", $scope.eltToDelete.topic.id);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		topicService.deleteById(data);
+		topicService.deleteById(data).error(function(error){
+	    	sessionService.refresh(deleteTopic);
+	    });
 	}
 	
 	/**
@@ -342,21 +360,26 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.coursModel.allTopicErrors = result.errors;
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh($scope.createTopic);
 	    });
 	}
 	
 	/**
 	 * Reorder topics
 	 */
-	 $scope.moveTopic = function(elt, fromIndex, toIndex) {
-		 $scope.coursModel.topics.splice(fromIndex, 1);
-		 $scope.coursModel.topics.splice(toIndex, 0, elt);
+	 $scope.moveTopic = function(elt, fromIndex, toIndex) {		 
 		 var data = new FormData();
 		 data.append("topic", elt.topic.id);
 		 data.append("position", toIndex);
 		 data.append("sessionId", sessionService.get('id'));
 		 data.append("sessionToken", sessionService.get('token'));
-		 topicService.drop(data);
+		 topicService.drop(data).success(function(result) {
+			 $scope.coursModel.topics.splice(fromIndex, 1);
+			 $scope.coursModel.topics.splice(toIndex, 0, elt);
+		 }).error(function(error){
+		    sessionService.refresh(null);
+		 });
 	  };
 	
 });

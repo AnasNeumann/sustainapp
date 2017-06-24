@@ -46,6 +46,8 @@ angular.module('sustainapp.controllers')
 				$scope.questionsModel.cours = result.courseId;
 				$scope.questionsModel.questions = result.questions;				
 			}
+		}, function(response){
+			sessionService.refresh(loadQuestions);
 		});
 	};
 	
@@ -106,8 +108,7 @@ angular.module('sustainapp.controllers')
  			$scope.questionsModel.emptyPicture = false;
  			$scope.questionsModel.pictureEdit = false;
  			$scope.questionsModel.file  = imageData;
- 			$scope.questionsModel.displayPicture  = "data:image/jpeg;base64,"+imageData;
- 			
+ 			$scope.questionsModel.displayPicture  = "data:image/jpeg;base64,"+imageData;			
  		 }, function(err) {
  		 });
  	};
@@ -159,7 +160,9 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.questionsModel.allErrors = result.errors;
 	    	}
-	    });
+	    }).error(function(error){
+	    	sessionService.refresh($scope.addQuestion);
+	    }); 
  	};
  	
  	/**
@@ -174,27 +177,33 @@ angular.module('sustainapp.controllers')
  	 * Fonction de validation de la suppression
  	 */
 	$scope.confirmDelete = function(){		
-		$scope.modal.hide();
-		$scope.questionsModel.questions.splice($scope.questionsModel.questions.indexOf($scope.eltToDelete), 1);
 		var data = new FormData();
 		data.append("question", $scope.eltToDelete.id);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		questionService.deleteById(data);
+		questionService.deleteById(data).success(function(response){
+			$scope.modal.hide();
+			$scope.questionsModel.questions.splice($scope.questionsModel.questions.indexOf($scope.eltToDelete), 1);
+		}).error(function(error){
+	    	sessionService.refresh($scope.confirmDelete);
+	    });
 		$scope.eltToDelete = {};
 	}
 	
 	/**
 	 * fonction de déplacement drag&drop d'une question
 	 */
-	$scope.moveQuestion = function(question, fromIndex, toIndex){
-		$scope.questionsModel.questions.splice(fromIndex, 1);
-		$scope.questionsModel.questions.splice(toIndex, 0, question);
+	$scope.moveQuestion = function(question, fromIndex, toIndex){		
 		var data = new FormData();
 		data.append("question", question.id);
 		data.append("position", toIndex);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		questionService.drop(data);
+		questionService.drop(data).success(function(response){
+			$scope.questionsModel.questions.splice(fromIndex, 1);
+			$scope.questionsModel.questions.splice(toIndex, 0, question);
+		}).error(function(error){
+	    	sessionService.refresh(null);
+	    });
 	}
 });

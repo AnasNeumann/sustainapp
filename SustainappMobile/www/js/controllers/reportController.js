@@ -72,7 +72,9 @@ angular.module('sustainapp.controllers')
 				} else {
 					$scope.reportModel.allErrors = result.errors;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh($scope.signal);
+		    });
 		}
 
 	});

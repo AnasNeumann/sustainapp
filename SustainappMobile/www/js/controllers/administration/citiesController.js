@@ -26,19 +26,24 @@ angular.module('sustainapp.controllers')
 				if(result.code == 1) {		
 					$scope.model.cities = result.cities;					
 				}
+			}, function(response){
+				sessionService.refresh(loadCities);
 			});
 		};
 
 		/**
 		 * Accepter une ville comme étant réelle
 		 */
-		$scope.accept = function(city){
-			$scope.model.cities.splice($scope.model.cities.indexOf(city), 1);
+		$scope.accept = function(city){		
 			var data = new FormData();
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
 			data.append("city", city.id);
-			cityService.validate(data);
+			cityService.validate(data).success(function(response){
+				$scope.model.cities.splice($scope.model.cities.indexOf(city), 1);
+			}).error(function(error){
+		    	sessionService.refresh(null);
+		    });
 		};
 		
 	   /**
@@ -61,13 +66,16 @@ angular.module('sustainapp.controllers')
 		/**
 		 * Confirmation de la suppression
 		 */
-		$scope.confirmDelete = function(){
-			$scope.model.cities.splice($scope.model.cities.indexOf($scope.model.eltToDelete), 1);
-			$scope.modal.hide();
+		$scope.confirmDelete = function(){			
 			var data = new FormData();
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
 			data.append("city", $scope.model.eltToDelete.id);
-			cityService.deleteById(data);
+			cityService.deleteById(data).success(function(response){
+				$scope.model.cities.splice($scope.model.cities.indexOf($scope.model.eltToDelete), 1);
+				$scope.modal.hide();
+			}).error(function(error){
+		    	sessionService.refresh($scope.confirmDelete);
+		    });
 		};
 });

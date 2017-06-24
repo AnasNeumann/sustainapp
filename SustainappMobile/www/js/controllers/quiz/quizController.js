@@ -107,7 +107,9 @@ angular.module('sustainapp.controllers')
 							i++;
 						});
 					}
-				});
+				}).error(function(error){
+			    	sessionService.refresh(null);
+			    });
 			}
 		};
 		

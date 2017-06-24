@@ -68,6 +68,8 @@ angular.module('sustainapp.controllers')
 				    $scope.popoverProfiles = popover;
 				  });
 			}
+		}, function(response){
+			sessionService.refresh($scope.loadChallenge);
 		});
 	};
 	
@@ -91,6 +93,8 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.challengeModel.allErrors = result.errors;
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh($scope.updateChallenge);
 	    });
 	}
 	
@@ -110,6 +114,8 @@ angular.module('sustainapp.controllers')
 					$scope.challengeModel.displayIcon = "data:image/jpeg;base64,"+imageData;
 					$scope.challengeModel.iconEdit = false;
 		    	}
+		    }).error(function(error){
+		    	sessionService.refresh(null);
 		    });
 		 }, function(err) {
 		 });
@@ -131,7 +137,9 @@ angular.module('sustainapp.controllers')
 					$scope.challengeModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
 					$scope.challengeModel.displayIcon = e.target.result;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh(null);
+		    });
         }
         reader.readAsDataURL(input.files[0]);  
 	}
@@ -159,7 +167,7 @@ angular.module('sustainapp.controllers')
             	$scope.challengeModel.participationFile = e.target.result.substring(e.target.result.indexOf(",")+1);
     			$scope.challengeModel.displayParticipationFile = e.target.result;
     			$scope.challengeModel.emptyParticipationFile = false;
-            });           	         	
+            });
         }
         reader.readAsDataURL(input.files[0]); 
 	}
@@ -223,6 +231,8 @@ angular.module('sustainapp.controllers')
 			if(result.code == 1){
 				$state.go('tab.challenges');
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh(deleteChallenge);
 	    });
 		return;
 	}
@@ -239,6 +249,8 @@ angular.module('sustainapp.controllers')
 			if(result.code == 1){
 				$scope.challengeModel.participations.splice($scope.challengeModel.participations.indexOf($scope.eltToDelete), 1);
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh(deleteParticipation);
 	    });
 		return;
 	}
@@ -307,6 +319,8 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.challengeModel.allErrors = result.errors;
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh($scope.participate);
 	    });
 		return;
 	}
@@ -334,7 +348,9 @@ angular.module('sustainapp.controllers')
 					elt.nbrVotes -=1;
 				}
 			}
-		});
+		}).error(function(error){
+	    	sessionService.refresh(null);
+	    });
 		return;
 	}
 

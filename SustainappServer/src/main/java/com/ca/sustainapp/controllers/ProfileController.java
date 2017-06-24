@@ -89,22 +89,17 @@ public class ProfileController extends GenericController {
 	@ResponseBody
 	@RequestMapping(value="/profile", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
 	public String update(HttpServletRequest request){
-		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
-		String token = request.getParameter("sessionToken");
+		UserAccountEntity user = getConnectedUser(request);
 		Map<String, String> errors = profileValidator.validate(request);
-		if(!id.isPresent() || null == token || (null != errors && errors.size() > 0)){
+		if(null == user || (null != errors && errors.size() > 0) || null == user.getProfile()){
 			return new HttpRESTfullResponse().setCode(0).setErrors(errors).buildJson(); 
 		}
-		UserAccountEntity user = getConnectedUser(id.get(), token);
-		if(null != user && null != user.getProfile()){
-			user.getProfile()
-				.setLastName(request.getParameter("lastName"))
-				.setFirstName(request.getParameter("firstName"))
-				.setBornDate(DateUtils.ionicParse(request.getParameter("bornDate"), user.getProfile().getBornDate()));
-			userService.createOrUpdate(user);
-			return new HttpRESTfullResponse().setCode(1).buildJson(); 
-		}
-		return new HttpRESTfullResponse().setCode(0).buildJson(); 
+		user.getProfile()
+			.setLastName(request.getParameter("lastName"))
+			.setFirstName(request.getParameter("firstName"))
+			.setBornDate(DateUtils.ionicParse(request.getParameter("bornDate"), user.getProfile().getBornDate()));
+		userService.createOrUpdate(user);
+		return new HttpRESTfullResponse().setCode(1).buildJson(); 
 	}
 	
 	/**

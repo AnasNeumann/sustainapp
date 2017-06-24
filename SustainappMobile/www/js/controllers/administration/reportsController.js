@@ -43,19 +43,24 @@ angular.module('sustainapp.controllers')
 				} else {
 					$scope.reportModel.moreReports = false;
 				}
+		    }).error(function(error){
+		    	sessionService.refresh($scope.getMoreReports);
 		    });
 		};
 		
 		/**
 		 * Considérer un signalement comme étant traité
 		 */
-		$scope.done = function(report){
-			$scope.reportModel.reports.splice($scope.reportModel.reports.indexOf(report), 1);
+		$scope.done = function(report){		
 			var data = new FormData();
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
 			data.append("report", report.id);
-			reportService.update(data);
+			reportService.update(data).success(function(response){
+				$scope.reportModel.reports.splice($scope.reportModel.reports.indexOf(report), 1);
+			}).error(function(error){
+		    	sessionService.refresh($scope.done);
+		    });
 		};
 
 	});

@@ -55,6 +55,8 @@ angular.module('sustainapp.controllers')
 						$scope.rating.rate = result.note.score;
 					}
 				}
+			}, function(response){
+				sessionService.refresh(loadPlace);
 			});
 		};
 		
@@ -79,7 +81,9 @@ angular.module('sustainapp.controllers')
 				} else {
 					$scope.model.allErrors = result.errors;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh($scope.updatePlace);
+		    });
 		};
 
 	   /**
@@ -99,8 +103,7 @@ angular.module('sustainapp.controllers')
 				$scope.model.displayFile = "data:image/jpeg;base64,"+imageData;
 				$scope.model.file = imageData;
 				$scope.model.editPicture = false;
-				$scope.model.emptyPicture = false;
-				
+				$scope.model.emptyPicture = false;				
 			 }, function(err) {
 			 });
 		};
@@ -154,7 +157,9 @@ angular.module('sustainapp.controllers')
 				} else {
 					$scope.model.allErrors = result.errors;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh($scope.addPicture);
+		    });
 		};
 		
 		/**
@@ -166,7 +171,9 @@ angular.module('sustainapp.controllers')
 			data.append("picture", picture.id);
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
-			placeService.delPicture(data);
+			placeService.delPicture(data).error(function(error){
+		    	sessionService.refresh(null);
+		    });
 		};
 		
 	  /**
@@ -193,7 +200,9 @@ angular.module('sustainapp.controllers')
 	   			 $scope.model.nbrNotes = result.total;
 	   			 $scope.model.average = result.average;
 	   		  }
-	   	   });
+	   	   }).error(function(error){
+		    	sessionService.refresh($scope.doRank);
+		   });
    	  };
 
    	  /**
@@ -215,7 +224,9 @@ angular.module('sustainapp.controllers')
 	   		  if(result.code == 1){
 	   			$scope.model.visited = true;
 	   		  }
-	   	    });
+	   	    }).error(function(error){
+		    	sessionService.refresh($scope.visit);
+		   });
    		 });
    	  };
    	

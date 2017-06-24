@@ -50,6 +50,8 @@ angular.module('sustainapp.controllers')
 					$scope.model.isOwner = result.owner;
 				}
 				
+			}, function(error){
+				sessionService.refresh(loadCity);
 			});
 			$scope._isNotMobile = displayService.isNotMobile;
 		};
@@ -69,7 +71,9 @@ angular.module('sustainapp.controllers')
 						$scope.model.displayCover = "data:image/jpeg;base64,"+ imageData;
 						$scope.model.editCover = false;
 					}
-				});
+				}).error(function(error){
+			    	sessionService.refresh($scope.cover);
+			    });
 			 }, function(err) {
 			 });
 	    };
@@ -89,7 +93,9 @@ angular.module('sustainapp.controllers')
 					if(result.code == 1){
 						$scope.model.displayCover = e.target.result;
 					}
-				});       	         	
+				}).error(function(error){
+			    	sessionService.refresh($scope.desktopCover);
+			    });       	         	
             }
             reader.readAsDataURL(input.files[0]);  
 	    };
@@ -117,7 +123,9 @@ angular.module('sustainapp.controllers')
 				}else{					
 					$scope.model.allErrors = result.errors;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh($scope.updateCity);
+		    });
 	    };
 	    
 	   /**
@@ -195,7 +203,9 @@ angular.module('sustainapp.controllers')
 				} else {
 					$scope.model.newPlace.allErrors = result.errors;
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh($scope.addPlace);
+		    });
 	   };
 	   
 	   /**
@@ -216,7 +226,9 @@ angular.module('sustainapp.controllers')
 			data.append("sessionId", sessionService.get('id'));
 			data.append("sessionToken", sessionService.get('token'));
 			data.append("place", $scope.model.eltToDelete.id);
-			placeService.deleteById(data);
+			placeService.deleteById(data).error(function(error){
+		    	sessionService.refresh($scope.confirmDelete);
+		    });
 		};
 	
 });

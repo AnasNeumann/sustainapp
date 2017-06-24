@@ -39,13 +39,10 @@ angular.module('sustainapp.controllers')
 		 * Initialisation de la réception de websockets
 		 */
 		var initWebSocket = function(){			
-			console.log("try init websoket");
 			$stomp.connect(config.remoteServer+'/sustainapp-websocket/', {}).then(function (frame) {
-				console.log("i am here");
 				var subscription = $stomp.subscribe('/queue/notification-'+sessionService.getObject("profile").id, function (payload, headers, res){
                 	    $scope.newNotifications = payload;
                         $scope.$apply($scope.newNotifications);
-                        console.log("i am here 2");
                 });
 			});
 		};
@@ -55,26 +52,22 @@ angular.module('sustainapp.controllers')
 		 */
 		$scope.$watch('newNotifications', function() {			
 			if(null != $scope.newNotifications.message){
-				if($scope.newNotifications.message == "token.refresh"){
-					refresh();
-				}else{
-					if($scope.newNotifications.message == "notification.refused"){
-						$scope.loginModel.type = 0;        
-					}
-					$scope.notifications.push($scope.newNotifications);
-					if(!displayService.isNotMobile){
-				        $cordovaLocalNotification.schedule({
-				            id: $scope.newNotifications.id,
-				            message: $scope.newNotifications.creator+" "+$filter('translate')($scope.newNotifications.message)+" "+$scope.newNotifications.target,
-				            title: "Sustainapp !",
-				            autoCancel: true,
-				            sound: null,
-				            icon : "notification/"+$scope.newNotifications.message.replace('.','')+".png"
-				        }).then(function () {
-				        });
-					}
-					$scope.nbrNotification = $scope.notifications.length;
+				if($scope.newNotifications.message == "notification.refused"){
+					$scope.loginModel.type = 0;        
 				}
+				$scope.notifications.push($scope.newNotifications);
+				if(!displayService.isNotMobile){
+			        $cordovaLocalNotification.schedule({
+			            id: $scope.newNotifications.id,
+			            message: $scope.newNotifications.creator+" "+$filter('translate')($scope.newNotifications.message)+" "+$scope.newNotifications.target,
+			            title: "Sustainapp !",
+			            autoCancel: true,
+			            sound: null,
+			            icon : "notification/"+$scope.newNotifications.message.replace('.','')+".png"
+			        }).then(function () {
+			        });
+				}
+				$scope.nbrNotification = $scope.notifications.length;
 			}
 	    });
 		
@@ -180,21 +173,6 @@ angular.module('sustainapp.controllers')
 		 */
 		$scope.displayNews = function(){
 			$state.go('tab.news');
-		}
-		
-		/**
-		 * Recuperer le nouveau tocken quand il a changé
-		 */
-		var refresh = function(){
-			var data = new FormData();
-			data.append("mail", sessionService.get('mail'));
-			data.append("password", sessionService.get('password'));
-			userService.refresh(data).success(function(result) {	
-				if(result.code == 1){
-					console.log("refres  : "+result.token);
-					sessionService.set('token' ,result.token);
-				}
-			});
 		}
 
 	});
