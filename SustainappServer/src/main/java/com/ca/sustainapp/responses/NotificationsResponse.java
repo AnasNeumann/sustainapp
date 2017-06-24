@@ -1,10 +1,8 @@
-package com.ca.sustainapp.entities;
+package com.ca.sustainapp.responses;
 
 import java.util.List;
 
 import com.ca.sustainapp.pojo.SustainappList;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
-import com.ca.sustainapp.responses.NotificationResponse;
 
 /**
  * Json de réponse d'une liste de notifications
