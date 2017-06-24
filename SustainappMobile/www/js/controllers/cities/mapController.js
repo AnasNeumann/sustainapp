@@ -90,6 +90,8 @@ angular.module('sustainapp.controllers')
 					$scope.model.markers.push(marker);
 				}
 			}
+		}, function(response){
+			sessionService.refresh(null);
 		});
 	};
 

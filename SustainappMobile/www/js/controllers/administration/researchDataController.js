@@ -46,7 +46,9 @@ angular.module('sustainapp.controllers')
 					tempDays.push(result.useByDays[elt]);
 				}
 				$scope.model.daysData.push(tempDays);
-			});
+			}).error(function(error){
+		    	sessionService.refresh(loadModel);
+		    });
 		};
 		
 	});

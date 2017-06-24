@@ -8,16 +8,15 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.ca.sustainapp.advice.SustainappSecurityException;
 import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.comparators.NumerotableEntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
-import com.ca.sustainapp.responses.NotificationResponse;
 import com.ca.sustainapp.services.BadgeService;
 import com.ca.sustainapp.services.CascadeDeleteService;
 import com.ca.sustainapp.services.CascadeGetService;
@@ -62,13 +61,7 @@ public class GenericController {
 	protected BadgeService badgeService;
 	@Autowired
 	protected NotificationService notificationService;
-	
-	/**
-	 * Pour l'envoi en websocket de la notification d'un nouveau token
-	 */
-	@Autowired
-    private SimpMessagingTemplate template;
-	
+
 	/**
 	 * Creer une nouvelle session pour un utilisateur
 	 * @param request
@@ -88,9 +81,8 @@ public class GenericController {
 	 */
 	protected UserAccountEntity getConnectedUser(Long userId, String token){
 		UserAccountEntity user = userService.getByToken(userId, token);
-		if(null != user && DateUtils.verifyDelay(user.getTokenDelay(), 10)){
+		if(null != user && DateUtils.verifyDelay(user.getTokenDelay(), 2)){
 			createSession(user);
-			template.convertAndSend("/queue/notification-"+user.getProfile().getId(), new NotificationResponse("token.refresh"));
 		}
 		return user;
 	}
@@ -117,9 +109,9 @@ public class GenericController {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
 		String token = request.getParameter("sessionToken");
 		if(!id.isPresent() || null == token){
-			return null;
+			throw new SustainappSecurityException("connexion not valid");
 		}
-		return userService.getByToken(id.get(), token);
+		return getConnectedUser(id.get(), token);
 	}
 	
 	/**

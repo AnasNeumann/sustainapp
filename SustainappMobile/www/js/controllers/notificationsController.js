@@ -29,6 +29,8 @@ angular.module('sustainapp.controllers')
 				$scope.notificationsModel.loaded = true;
 				$scope.notificationsModel.notifications = result.notifications;
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh(loadNotifications);
 	    });
 	};
 	
@@ -40,6 +42,8 @@ angular.module('sustainapp.controllers')
 		data.append("notification", notification.id);
 		data.append("sessionId", sessionService.get('id'));
 		data.append("sessionToken", sessionService.get('token'));
-		notificationService.read(data);
+		notificationService.read(data).error(function(error){
+	    	sessionService.refresh(null);
+	    });
 	};
 });

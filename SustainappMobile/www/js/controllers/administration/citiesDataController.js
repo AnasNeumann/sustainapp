@@ -54,6 +54,8 @@ angular.module('sustainapp.controllers')
 					$scope.model.noteLabels.push(elt);
 					$scope.model.noteData.push(result.placeByNotes[elt]);					
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh(loadModel);
+		    });
 		};
 	});

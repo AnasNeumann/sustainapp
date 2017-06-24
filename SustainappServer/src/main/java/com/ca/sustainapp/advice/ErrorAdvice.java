@@ -3,6 +3,8 @@ package com.ca.sustainapp.advice;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -43,7 +45,19 @@ public class ErrorAdvice extends GenericController  {
 	private static final String ERR_MSG = "Une exception technique est survenue : message = %s, type = %s";
 
 	/**
-	 * Catcher les erreurs.
+	 * capter l'erreur de connexion
+	 * @param ex
+	 * @param request
+	 * @param response
+	 */
+	@ExceptionHandler(SustainappSecurityException.class)
+	@ResponseBody
+	public void handleSustainappSecurityException(Exception ex, HttpServletRequest request, HttpServletResponse response){
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	}
+	
+	/**
+	 * Catcher les erreurs pour envoyer dans slack
 	 * 
 	 * @param ex
 	 * @param request

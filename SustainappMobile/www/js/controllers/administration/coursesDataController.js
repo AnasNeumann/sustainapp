@@ -36,7 +36,9 @@ angular.module('sustainapp.controllers')
 						$scope.model.categoriesData.push(result.coursesByCategories[elt]);
 					}
 				}
-			});
+			}).error(function(error){
+		    	sessionService.refresh(loadModel);
+		    });
 		};
 		
 	});

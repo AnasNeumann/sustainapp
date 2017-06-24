@@ -45,6 +45,8 @@ angular.module('sustainapp.controllers')
 				getAvailableAction();
 				$scope.teamModel.loaded = true;
 	   		}
+    	}, function(response){
+    		sessionService.refresh(loadTeam);
     	});
 		$scope._isNotMobile = displayService.isNotMobile;
 	};
@@ -91,6 +93,8 @@ angular.module('sustainapp.controllers')
 	    	} else {
 	    		$scope.teamModel.allErrors = result.errors;
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh($scope.updateTeam);
 	    });
 	};
 	
@@ -110,6 +114,8 @@ angular.module('sustainapp.controllers')
 					$scope.teamModel.displayAvatar = "data:image/jpeg;base64,"+imageData;
 					$scope.teamModel.avatarEdit = false;
 		    	}
+		    }).error(function(error){
+		    	sessionService.refresh(null);
 		    });
 		 }, function(err) {
 		 });		
@@ -131,7 +137,9 @@ angular.module('sustainapp.controllers')
 					$scope.teamModel.file = e.target.result.substring(e.target.result.indexOf(",")+1);
 					$scope.teamModel.displayAvatar = e.target.result;
 				}
-			}); 
+			}).error(function(error){
+		    	sessionService.refresh(null);
+		    }); 
         }
         reader.readAsDataURL(input.files[0]);  
     }
@@ -177,7 +185,9 @@ angular.module('sustainapp.controllers')
 					}
 				}
 	    	}
-	    });	
+	    }).error(function(error){
+	    	sessionService.refresh(null);
+	    });
 	};
 	
    /**
@@ -202,6 +212,8 @@ angular.module('sustainapp.controllers')
 			if(result.code == 1){
 				$state.go('tab.teams');
 	    	}
+	    }).error(function(error){
+	    	sessionService.refresh($scope.confirmDelete);
 	    });
 		return;
 	};

@@ -53,7 +53,9 @@ angular.module('sustainapp.controllers')
 				data.append("query", $scope.searchModel.query);
 				data.append("sessionId", sessionService.get('id'));
 				data.append("sessionToken", sessionService.get('token'));
-				searchService.save(data);
+				searchService.save(data).error(function(error){
+			    	sessionService.refresh($scope.save);
+			    }); 
 			}
 		}
 		

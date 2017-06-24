@@ -5,8 +5,9 @@
  * @version 1.0
  */
 angular.module('sustainapp.constantes')
-	.constant('config', { 		
-		remoteServer : 'http://sustainapp.cirrelt.ca/sustainappws'
+	.constant('config', { 	
+		remoteServer : 'http://127.0.0.1:8085'
+		//remoteServer : 'http://sustainapp.cirrelt.ca/sustainappws'
 	})
 	.constant('teamRole', {
 	    admin : "admin",
