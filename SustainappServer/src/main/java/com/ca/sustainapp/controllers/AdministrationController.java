@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +44,6 @@ import com.ca.sustainapp.entities.VisitEntity;
 import com.ca.sustainapp.responses.ChallengesDataResponse;
 import com.ca.sustainapp.responses.CityDataResponse;
 import com.ca.sustainapp.responses.CoursesDataResponse;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
 import com.ca.sustainapp.responses.ProfilesDataResponse;
 import com.ca.sustainapp.responses.ResearchDataResponse;
@@ -95,16 +95,14 @@ public class AdministrationController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/administration/courses", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String courses(HttpServletRequest request) {
+    public ResponseEntity<String> courses(HttpServletRequest request) {
 		if(!super.isAdmin(request)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
-		return new CoursesDataResponse()
+		return super.success(new CoursesDataResponse()
 				.setTotal(coursService.total())
 				.setCoursesByCategories(coursesByCategories())
-				.setMostSeen(getMostSeenCourses())
-				.setCode(1)
-				.buildJson();
+				.setMostSeen(getMostSeenCourses()));
 	}
 
 	/**
@@ -114,21 +112,19 @@ public class AdministrationController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/administration/challenges", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String challenges(HttpServletRequest request) {
+    public ResponseEntity<String> challenges(HttpServletRequest request) {
 		if(!super.isAdmin(request)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<ParticipationEntity> participations = participationService.getAll();
 		Integer totalChallenges = challengeService.total();
 		Integer totalParticipations = participations.size();
-		return new ChallengesDataResponse()
+		return super.success(new ChallengesDataResponse()
 				.setTotal(totalChallenges)
 				.setChallengesByCategories(challengesByCategories())
 				.setAverage(average(totalChallenges, totalParticipations))
 				.setUseByDays(useByDays(participations))
-				.setUseByHours(useByHours(participations))
-				.setCode(1)
-				.buildJson();
+				.setUseByHours(useByHours(participations)));
 	}
 	
 	/**
@@ -138,18 +134,16 @@ public class AdministrationController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/administration/research", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String research(HttpServletRequest request) {
+    public ResponseEntity<String> research(HttpServletRequest request) {
 		if(!super.isAdmin(request)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<ResearchEntity> research = searchService.getAll();
-		return new ResearchDataResponse()
+		return super.success(new ResearchDataResponse()
 				.setTotal(research.size())
 				.setMostSeen(searchService.mostSeen())
 				.setUseByDays(useByDays(research))
-				.setUseByHours(useByHours(research))
-				.setCode(1)
-				.buildJson();
+				.setUseByHours(useByHours(research)));
 	}
 	
 	/**
@@ -159,14 +153,14 @@ public class AdministrationController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/administration/profiles", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String profiles(HttpServletRequest request) {
+    public ResponseEntity<String> profiles(HttpServletRequest request) {
 		if(!super.isAdmin(request)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<ProfileEntity> profiles = profileService.getAll();
 		List<TeamEntity> teams = teamService.getAll();
 		Float visibles = getPercentageVisibility(profiles);
-		return new ProfilesDataResponse()
+		return super.success(new ProfilesDataResponse()
 				.setTotalProfiles(profiles.size())
 				.setTotalTeams(teams.size())
 				.setAverage(average(teams.size(), roleService.total()))
@@ -174,9 +168,7 @@ public class AdministrationController extends GenericController {
 				.setProfileByLevel(profileByLevel(profiles))
 				.setTeamByLevel(teamByLevel(teams))
 				.setPercentageVisible(visibles)
-				.setPercentageNotVisible(new Float(100-visibles))
-				.setCode(1)
-				.buildJson();
+				.setPercentageNotVisible(new Float(100-visibles)));
 	}
 	
 	/**
@@ -186,22 +178,20 @@ public class AdministrationController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/administration/cities", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String cities(HttpServletRequest request) {
+    public ResponseEntity<String> cities(HttpServletRequest request) {
 		if(!super.isAdmin(request)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		Integer totalPlace = placeService.total();
 		List<VisitEntity> visits = visitService.getAll();
-		return new CityDataResponse()
+		return super.success(new CityDataResponse()
 				.setAveragePictures(average(totalPlace, pictureService.total()))
 				.setMoreViews(mostVisitedPlaces(5))
 				.setPlaceByNotes(placeByNotes())
 				.setTotalCities(cityService.total())
 				.setTotalPlaces(totalPlace)
 				.setVisitByDays(useByDays(visits))
-				.setVisitByHours(useByHours(visits))
-				.setCode(1)
-				.buildJson();
+				.setVisitByHours(useByHours(visits)));
 	}
 	
 	/**

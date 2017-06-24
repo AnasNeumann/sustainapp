@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,6 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.AnswerCriteria;
 import com.ca.sustainapp.entities.AnswerEntity;
 import com.ca.sustainapp.entities.QuestionEntity;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -49,10 +49,10 @@ public class AnswerController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/answer", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		QuestionEntity question = super.getQuestionIfOwner(request);
 		if(null == question){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<AnswerEntity> answers = getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(question.getId()));
 		Integer numero = (null != answers)? answers.size() : 0;
@@ -68,7 +68,7 @@ public class AnswerController extends GenericCourseController {
 		if(answer.getData().isEmpty()){
 			answer.setData(answer.getNumero().toString());
 		}
-		return new IdResponse().setId(answerService.createOrUpdate(answer)).setCode(1).buildJson();
+		return super.success(new IdResponse().setId(answerService.createOrUpdate(answer)));
 	}
 	
 	/**
@@ -78,10 +78,10 @@ public class AnswerController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/answer/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		AnswerEntity answer = super.getAnswerIfOwner(request);
 		if(null == answer){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<AnswerEntity> answers = getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(answer.getQuestionId()));
 		for(AnswerEntity a : answers){
@@ -90,7 +90,7 @@ public class AnswerController extends GenericCourseController {
 			}
 		}
 		deleteService.cascadeDelete(answer);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}	
 
 	/**
@@ -100,11 +100,11 @@ public class AnswerController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/answer/drop", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String drop(HttpServletRequest request) {
+    public ResponseEntity<String> drop(HttpServletRequest request) {
 		AnswerEntity answer = super.getAnswerIfOwner(request);
 		Optional<Integer> toIndex = StringsUtils.parseIntegerQuietly(request.getParameter("position"));
 		if(null == answer || !toIndex.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<AnswerEntity> answers = getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(answer.getQuestionId()));
 		if(toIndex.get() > answer.getNumero()){
@@ -112,7 +112,7 @@ public class AnswerController extends GenericCourseController {
 		}else if(toIndex.get() < answer.getNumero()){
 			reculer(answer, answers, toIndex.get());
 		}
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**

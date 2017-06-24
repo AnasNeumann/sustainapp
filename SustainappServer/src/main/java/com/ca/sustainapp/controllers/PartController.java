@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,6 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.PartCriteria;
 import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.TopicEntity;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.PartResponse;
 import com.ca.sustainapp.utils.FilesUtils;
 import com.ca.sustainapp.utils.StringsUtils;
@@ -48,10 +48,10 @@ public class PartController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/part", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		TopicEntity topic = super.getTopicIfOwner(request);
 		if(null == topic || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		List<PartEntity> allParts = getService.cascadeGetPart(new PartCriteria().setTopicId(topic.getId()));
 		Integer numero = (null != allParts)? allParts.size() : 0;
@@ -79,7 +79,7 @@ public class PartController extends GenericCourseController {
 				break;
 		}
 		Long idPart = partService.createOrUpdate(part);
-		return new PartResponse().setContent((part.getType() == 3 || part.getType() == 4)? part.getContent() : null).setId(idPart).setCode(1).buildJson();
+		return super.success(new PartResponse().setContent((part.getType() == 3 || part.getType() == 4)? part.getContent() : null).setId(idPart));
 	}
 	
 	/**
@@ -88,19 +88,19 @@ public class PartController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/part/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
+    public ResponseEntity<String> update(HttpServletRequest request) {
 		PartEntity part = super.getPartIfOwner(request);
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		if(null == part || isEmpty(content)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		part.setContent(content);
 		if(part.getType().equals(1)){
 			part.setTitle(title);
 		}
 		partService.createOrUpdate(part);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -109,11 +109,11 @@ public class PartController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/part/move", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String move(HttpServletRequest request) {
+    public ResponseEntity<String> move(HttpServletRequest request) {
 		PartEntity part = super.getPartIfOwner(request);
 		Boolean sens = new Boolean(request.getParameter("sens"));
 		if(null == part){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		int i = 1;
 		if(!sens){
@@ -124,7 +124,7 @@ public class PartController extends GenericCourseController {
 			partService.createOrUpdate(p.setNumero(p.getNumero()+i));
 		}
 		partService.createOrUpdate(part.setNumero(part.getNumero()-i));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -133,10 +133,10 @@ public class PartController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/part/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		PartEntity part = super.getPartIfOwner(request);
 		if(null == part){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(part.getTopicId()));
 		for(PartEntity p : parts){
@@ -145,7 +145,7 @@ public class PartController extends GenericCourseController {
 			}
 		}
 		deleteService.cascadeDelete(part);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 
 }

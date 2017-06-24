@@ -29,7 +29,6 @@ import com.ca.sustainapp.entities.ProfilBadgeEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.responses.BadgeResponse;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
 import com.ca.sustainapp.responses.ProfileResponse;
 import com.ca.sustainapp.services.CascadeGetService;
@@ -87,18 +86,18 @@ public class ProfileController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/profile", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String update(HttpServletRequest request){
+	public ResponseEntity<String> update(HttpServletRequest request){
 		UserAccountEntity user = getConnectedUser(request);
 		Map<String, String> errors = profileValidator.validate(request);
 		if(null == user || (null != errors && errors.size() > 0) || null == user.getProfile()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(errors).buildJson(); 
+			return super.refuse(errors);
 		}
 		user.getProfile()
 			.setLastName(request.getParameter("lastName"))
 			.setFirstName(request.getParameter("firstName"))
 			.setBornDate(DateUtils.ionicParse(request.getParameter("bornDate"), user.getProfile().getBornDate()));
 		userService.createOrUpdate(user);
-		return new HttpRESTfullResponse().setCode(1).buildJson(); 
+		return super.success(); 
 	}
 	
 	/**
@@ -107,14 +106,14 @@ public class ProfileController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/profile/cover", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String cover(HttpServletRequest request){
+	public ResponseEntity<String> cover(HttpServletRequest request){
 		UserAccountEntity user = super.getConnectedUser(request);	
 		if(null == user || null == user.getProfile() || isEmpty(request.getParameter("file"))){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		user.getProfile().setCover(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		profileService.createOrUpdate(user.getProfile());
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -123,14 +122,14 @@ public class ProfileController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/profile/avatar", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String avatar(HttpServletRequest request){
+	public ResponseEntity<String> avatar(HttpServletRequest request){
 		UserAccountEntity user = super.getConnectedUser(request);	
 		if(null == user || null == user.getProfile() || isEmpty(request.getParameter("file"))){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		user.getProfile().setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		profileService.createOrUpdate(user.getProfile());
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -140,14 +139,14 @@ public class ProfileController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/profile/visibility", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String toogleVisibility(HttpServletRequest request){
+	public ResponseEntity<String> toogleVisibility(HttpServletRequest request){
 		UserAccountEntity user = super.getConnectedUser(request);	
 		if(null == user || null == user.getProfile()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		user.getProfile().setVisibility(user.getProfile().getVisibility().equals(0)? 1 : 0);
 		profileService.createOrUpdate(user.getProfile());
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**

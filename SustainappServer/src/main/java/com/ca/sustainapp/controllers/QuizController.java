@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,6 @@ import com.ca.sustainapp.entities.TopicValidationEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.AnswerResponse;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.QuestionQuizResponse;
 import com.ca.sustainapp.responses.QuizResponse;
 import com.ca.sustainapp.responses.ValidationResponse;
@@ -55,15 +55,13 @@ public class QuizController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/quiz", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getQuiz(HttpServletRequest request) {
+    public ResponseEntity<String> getQuiz(HttpServletRequest request) {
 		Optional<Long> topic = StringsUtils.parseLongQuickly(request.getParameter("topic"));
 		if(!topic.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
-		return new QuizResponse()
-				.setQuestions(getAllTopicQuestions(topic.get()))
-				.setCode(1)
-				.buildJson();
+		return super.success(new QuizResponse()
+				.setQuestions(getAllTopicQuestions(topic.get())));
 	}
 
 	/**
@@ -73,12 +71,12 @@ public class QuizController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/quiz", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String validateQuiz(HttpServletRequest request) {
+    public ResponseEntity<String> validateQuiz(HttpServletRequest request) {
 		Optional<Long> quiz = StringsUtils.parseLongQuickly(request.getParameter("quiz"));
 		String answersString = request.getParameter("answers");
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(null == user || !quiz.isPresent() || answersString.isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		String[] answers =  answersString.split(",");
 		List<Boolean> eachQuestions = new ArrayList<Boolean>();
@@ -94,11 +92,9 @@ public class QuizController extends GenericCourseController {
 			service.createOrUpdate(new TopicValidationEntity().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()).setTimestamps(GregorianCalendar.getInstance()));
 			badgeService.graduate(user.getProfile());
 		}
-		return new ValidationResponse()
+		return super.success(new ValidationResponse()
 				.setAllTrue(!eachQuestions.contains(false))
-				.setEachQuestions(eachQuestions)
-				.setCode(1)
-				.buildJson();
+				.setEachQuestions(eachQuestions));
 	}
 	
 	/**

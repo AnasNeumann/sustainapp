@@ -6,6 +6,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,6 @@ import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.SessionResponse;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.LoginValidator;
@@ -53,12 +53,11 @@ public class UserAccountController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/signin", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String singin(HttpServletRequest request) {
+    public ResponseEntity<String> singin(HttpServletRequest request) {
 		SessionResponse response = new SessionResponse();
 		response.setErrors(signinValidator.validate(request));
 		if(null != response.getErrors() && response.getErrors().size() > 0){
-			response.setCode(0);
-			return response.buildJson();
+			return super.refuse(signinValidator.validate(request));
 		}
 		Optional<Integer> type = StringsUtils.parseIntegerQuietly(request.getParameter("type"));
 		response.setUserType(type.get());
@@ -87,12 +86,10 @@ public class UserAccountController extends GenericController {
 			city.setId(cityService.createOrUpdate(city));
 			response.setCity(city);
 		}
-		response.setCode(1);
-		return response
-			.setId(idUser)
-			.setToken(super.createSession(user.setProfile(profile)))
-			.setProfile(profile)
-			.buildJson();
+		return success(response
+				.setId(idUser)
+				.setToken(super.createSession(user.setProfile(profile)))
+				.setProfile(profile));
     }
 
 	/**
@@ -101,18 +98,16 @@ public class UserAccountController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/login", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String login(HttpServletRequest request) {
+    public ResponseEntity<String> login(HttpServletRequest request) {
 		SessionResponse response = new SessionResponse();
 		response.setErrors(loginValidator.validate(request));
 		if(null != response.getErrors() && response.getErrors().size() > 0){
-			response.setCode(0);
-			return response.buildJson();
+			return super.refuse(loginValidator.validate(request));
 		}
 		UserAccountEntity user = userService.connect(request.getParameter("mail"), StringsUtils.md5Hash(request.getParameter("password")));
 		if(null == user){
-			response.setCode(0);
 			response.getErrors().put("mail", "form.mail.matching");
-			return response.buildJson();
+			return super.refuse(response.getErrors());
 		}
 		String token;
 		if(!isEmpty(user.getToken())){
@@ -123,14 +118,12 @@ public class UserAccountController extends GenericController {
 		if(user.getType().equals(1)){
 			response.setCity(getService.cascadeGetCities(new CityCriteria().setUserId(user.getId())).get(0));
 		}
-		return response
+		return super.success(response
 				.setUserType(user.getType())
 				.setId(user.getId())
 				.setToken(token)
 				.setProfile(user.getProfile())
-				.setIsAdmin(user.getIsAdmin())
-				.setCode(1)
-				.buildJson();
+				.setIsAdmin(user.getIsAdmin()));
     }
 
 	/**
@@ -139,16 +132,16 @@ public class UserAccountController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/logout", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String logout(HttpServletRequest request) {
+    public ResponseEntity<String> logout(HttpServletRequest request) {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
 		String token = request.getParameter("sessionToken");
 		if(!id.isPresent() || null == token){
-			return new HttpRESTfullResponse().setCode(0).buildJson(); 
+			return super.refuse();
 		}
 		if(super.deleteSession(id.get(), token)){
-			 return new HttpRESTfullResponse().setCode(1).buildJson(); 
+			return super.success();
 		}
-		return  new HttpRESTfullResponse().setCode(0).buildJson(); 
+		return super.refuse();
     }
 
 	/**
@@ -157,21 +150,19 @@ public class UserAccountController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/session", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String verifySession(HttpServletRequest request) {
+    public ResponseEntity<String> verifySession(HttpServletRequest request) {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("sessionId"));
 		String token = request.getParameter("sessionToken");
 		if(!id.isPresent() || null == token){
-			return new HttpRESTfullResponse().setCode(0).buildJson(); 
+			return super.refuse();
 		}
-		if(super.isConnected(id.get(), token)){
-			SessionResponse response = new SessionResponse()
+		if(super.isConnected(id.get(), token)){ 
+			return super.success(new SessionResponse()
 					.setId(id.get())
 					.setToken(token)
-					.setProfile(super.getConnectedUser(id.get(), token).getProfile());
-			response.setCode(1);
-			return response.buildJson();
+					.setProfile(super.getConnectedUser(id.get(), token).getProfile()));
 		}
-		return new HttpRESTfullResponse().setCode(0).buildJson(); 
+		return super.refuse();
     }
 	
 	/**
@@ -180,17 +171,15 @@ public class UserAccountController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/refresh", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String refresh(HttpServletRequest request) {
+    public ResponseEntity<String> refresh(HttpServletRequest request) {
 		UserAccountEntity user = userService.connect(request.getParameter("mail"), StringsUtils.md5Hash(request.getParameter("password")));
 		if(null != user){
-			return new SessionResponse()
+			return super.success(new SessionResponse()
 					.setId(user.getId())
 					.setToken(user.getToken())
-					.setProfile(null)
-					.setCode(1)
-					.buildJson();
+					.setProfile(null));
 		}
-		return new HttpRESTfullResponse().setCode(0).buildJson(); 
+		return super.refuse();
 	}
 	
 	

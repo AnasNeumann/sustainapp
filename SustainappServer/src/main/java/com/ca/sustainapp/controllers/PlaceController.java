@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,6 @@ import com.ca.sustainapp.entities.PlaceNoteEntity;
 import com.ca.sustainapp.entities.PlacePictureEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.entities.VisitEntity;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.PlaceResponse;
 import com.ca.sustainapp.responses.PlacesResponse;
@@ -67,11 +67,11 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request){
+    public ResponseEntity<String> create(HttpServletRequest request){
 		CityEntity city = cityService.getById(StringsUtils.parseLongQuickly(request.getParameter("city")).get());
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(null == user || !super.isOnwerCity(city, user) || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		PlaceEntity place = new PlaceEntity()
 				.setName(request.getParameter("name"))
@@ -82,7 +82,7 @@ public class PlaceController extends GenericCityController {
 				.setLongitude(StringsUtils.parseFloatQuiclky(request.getParameter("longitude")).get())
 				.setTimestamps(GregorianCalendar.getInstance());
 		place.setId(placeService.createOrUpdate(place));
-		return new IdResponse().setId(place.getId()).setCode(1).buildJson();
+		return super.success(new IdResponse().setId(place.getId()));
 	}
 	
 	/**
@@ -92,13 +92,13 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/near", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getNear(HttpServletRequest request){
+    public ResponseEntity<String> getNear(HttpServletRequest request){
 		Optional<Float> lng = StringsUtils.parseFloatQuiclky(request.getParameter("lng"));
 		Optional<Float> lat = StringsUtils.parseFloatQuiclky(request.getParameter("lat"));
 		if(!lat.isPresent() || !lng.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
-		return new PlacesResponse().setPlaces(placeService.getNear(lng.get(), lat.get())).setCode(1).buildJson();
+		return super.success(new PlacesResponse().setPlaces(placeService.getNear(lng.get(), lat.get())));
 	}
 
 	/**
@@ -108,27 +108,25 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request){
+    public ResponseEntity<String> get(HttpServletRequest request){
 		Optional<Long> idUser = StringsUtils.parseLongQuickly(request.getParameter("user"));
 		Optional<Long> idPlace = StringsUtils.parseLongQuickly(request.getParameter("place"));
 		if(!idUser.isPresent() || !idPlace.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		UserAccountEntity user = userService.getById(idUser.get());
 		PlaceEntity place = placeService.getById(idPlace.get());
 		if(null == user || null == place){
-			return new HttpRESTfullResponse().setCode(0).buildJson(); 
+			return super.refuse(); 
 		}
 		List<PlaceNoteEntity> notes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(place.getId()));
-		return new PlaceResponse()
+		return super.success(new PlaceResponse()
 				.setIsOwner(super.isOnwerPlace(place, user))
 				.setPictures(getService.cascadeGetPlacePictures(new PlacePictureCriteria().setPlaceId(idPlace.get())))
 				.setNote(super.getCurrentNote(user.getProfile(), place))
 				.setPlace(place)
 				.setAverage(calculAverageNotes(notes))
-				.setNbrNotes(notes.size())
-				.setCode(1)
-				.buildJson();
+				.setNbrNotes(notes.size()));
 	}
 
 	/**
@@ -138,18 +136,18 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("place"));
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(null == user || !id.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		PlaceEntity place = placeService.getById(id.get());
 		if(null == place || !super.isOnwerPlace(place, user)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		deleteService.cascadeDelete(place);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 
 	/**
@@ -159,19 +157,19 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
+    public ResponseEntity<String> update(HttpServletRequest request) {
 		UserAccountEntity user = super.getConnectedUser(request);
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("place"));
 		if(!id.isPresent() || null == user || !updateValidator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setErrors(updateValidator.validate(request)).setCode(0).buildJson();
+			return super.refuse(updateValidator.validate(request));
 		}
 		PlaceEntity place = placeService.getById(id.get());
 		if(null == place || !super.isOnwerPlace(place, user)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		place.setName(request.getParameter("name")).setAbout(request.getParameter("about")).setAddress(request.getParameter("address"));
 		placeService.createOrUpdate(place);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -181,15 +179,15 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/picture/add", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String addPicture(HttpServletRequest request){
+    public ResponseEntity<String> addPicture(HttpServletRequest request){
 		UserAccountEntity user = super.getConnectedUser(request);
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("place"));
 		if(!id.isPresent() || null == user || !updateValidator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setErrors(updateValidator.validate(request)).setCode(0).buildJson();
+			return super.refuse(updateValidator.validate(request));
 		}
 		PlaceEntity place = placeService.getById(id.get());
 		if(null == place || !super.isOnwerPlace(place, user)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		PlacePictureEntity picture = new PlacePictureEntity()
 				.setName(request.getParameter("name"))
@@ -198,7 +196,7 @@ public class PlaceController extends GenericCityController {
 				.setTimestamps(GregorianCalendar.getInstance())
 				.setDocument(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		Long idPicture = pictureService.createOrUpdate(picture);
-		return new IdResponse().setId(idPicture).setCode(1).buildJson();
+		return super.success(new IdResponse().setId(idPicture));
 	}
 
 	/**
@@ -208,22 +206,22 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/picture/del", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delPicture(HttpServletRequest request) {
+    public ResponseEntity<String> delPicture(HttpServletRequest request) {
 		UserAccountEntity user = super.getConnectedUser(request);
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("picture"));
 		if(!id.isPresent() || null == user){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		PlacePictureEntity picture = pictureService.getById(id.get());
 		if(null == picture){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		PlaceEntity place = placeService.getById(picture.getPlaceId());
 		if(null == place || !super.isOnwerPlace(place, user)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		deleteService.cascadeDelete(picture);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -233,16 +231,16 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/note", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String note(HttpServletRequest request) {
+    public ResponseEntity<String> note(HttpServletRequest request) {
 		Optional<Long> idPlace = StringsUtils.parseLongQuickly(request.getParameter("place"));
 		Optional<Integer> score = StringsUtils.parseIntegerQuietly(request.getParameter("score"));
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(!idPlace.isPresent() || !score.isPresent() || null == user){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		PlaceEntity place = placeService.getById(idPlace.get());
 		if(null == place){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		PlaceNoteEntity currentNote;
 		List<PlaceNoteEntity> myNotes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
@@ -258,7 +256,7 @@ public class PlaceController extends GenericCityController {
 		noteService.createOrUpdate(currentNote);
 		List<PlaceNoteEntity> allNotes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(idPlace.get()));
 		Integer total = allNotes.size();
-		return new RankCoursResponse().setTotal(total).setAverage(calculAverageNotes(allNotes)).setCode(1).buildJson();
+		return super.success(new RankCoursResponse().setTotal(total).setAverage(calculAverageNotes(allNotes)));
 	}
 
 	/**
@@ -268,20 +266,20 @@ public class PlaceController extends GenericCityController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/place/visit", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String visit(HttpServletRequest request) {
+    public ResponseEntity<String> visit(HttpServletRequest request) {
 		Optional<Long> idPlace = StringsUtils.parseLongQuickly(request.getParameter("place"));
 		Optional<Float> lng = StringsUtils.parseFloatQuiclky(request.getParameter("lng"));
 		Optional<Float> lat = StringsUtils.parseFloatQuiclky(request.getParameter("lat"));
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(!idPlace.isPresent() || !lng.isPresent() | !lat.isPresent() || null == user){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		PlaceEntity place = placeService.getById(idPlace.get());
 		if(null == place){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		if(Math.abs(lng.get()-place.getLongitude()) > 0.2 || Math.abs(lat.get()-place.getLatitude()) >0.2){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<VisitEntity> currentVisit = getService.cascadeGetVisit(new VisitCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
 		if(null == currentVisit || currentVisit.size() == 0){
@@ -292,7 +290,7 @@ public class PlaceController extends GenericCityController {
 			visitService.createOrUpdate(visit);
 			badgeService.walker(user.getProfile());
 		}
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 
 }

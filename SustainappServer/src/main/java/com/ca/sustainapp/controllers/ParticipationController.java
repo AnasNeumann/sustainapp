@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +28,6 @@ import com.ca.sustainapp.entities.ChallengeVoteEntity;
 import com.ca.sustainapp.entities.ParticipationEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.pojo.SustainappList;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.responses.VoteResponse;
@@ -66,9 +66,9 @@ public class ParticipationController extends GenericChallengeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/participation/create", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		if(!isConnected(request) || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		Long idChallenge = StringsUtils.parseLongQuickly(request.getParameter("challenge")).get();
 		Long creatorId = StringsUtils.parseLongQuickly(request.getParameter("targetId")).get();
@@ -84,7 +84,7 @@ public class ParticipationController extends GenericChallengeController {
 		}
 		Long idParticipation = participationService.createOrUpdate(participation);
 		notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_PARTICIPATE, challengeService.getById(idChallenge).getCreatorId(), creatorId, idChallenge, request.getParameter("targetType").equals(SustainappConstantes.TARGET_PROFILE)? 0 : 1);
-		return new IdResponse().setId(idParticipation).setCode(1).buildJson();
+		return success(new IdResponse().setId(idParticipation));
 	}
 	
 	/**
@@ -93,17 +93,17 @@ public class ParticipationController extends GenericChallengeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/participation/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		Optional<Long> idParticipation = StringsUtils.parseLongQuickly(request.getParameter("participation"));
 		if(!isConnected(request) || !idParticipation.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		ParticipationEntity participation = participationService.getById(idParticipation.get());
 		if(null == participation || (!super.isAdmin(request) && !super.isOwnerParticiaption(participation, super.getUser(request).getProfile()))){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		deleteService.cascadeDelete(participation);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return success();
 	}
 	
 	/**
@@ -112,15 +112,15 @@ public class ParticipationController extends GenericChallengeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/participation/vote", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String vote(HttpServletRequest request) {
+    public ResponseEntity<String> vote(HttpServletRequest request) {
 		Optional<Long> idParticipation = StringsUtils.parseLongQuickly(request.getParameter("participation"));
 		if(!isConnected(request) || !idParticipation.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		ParticipationEntity participation = participationService.getById(idParticipation.get());
 		Long idProfile = super.getUser(request).getProfile().getId();
 		if(null == participation){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		ChallengeEntity challenge = challengeService.getById(participation.getChallengeId());
 		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challenge.getId()));
@@ -142,7 +142,7 @@ public class ParticipationController extends GenericChallengeController {
 				notifyVote(idProfile, participation);
 			}
 		}
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return success();
 	}
 	
 	/**
@@ -151,14 +151,14 @@ public class ParticipationController extends GenericChallengeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/participation/votes", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getVotes(HttpServletRequest request) {
+    public ResponseEntity<String> getVotes(HttpServletRequest request) {
 		Optional<Long> idParticipation = StringsUtils.parseLongQuickly(request.getParameter("participation"));
 		if(!idParticipation.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		ParticipationEntity participation = participationService.getById(idParticipation.get());
 		if(null == participation){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<VoteResponse> votes = new SustainappList<VoteResponse>();
 		Collections.sort(participation.getVotes(), compartor);
@@ -167,7 +167,7 @@ public class ParticipationController extends GenericChallengeController {
 					.setTimestamps(vote.getTimestamps())
 					.setProfile(new LightProfileResponse(profileService.getById(vote.getProfilId()))));
 		}
-		return new VotesResponse().setVotes(votes).setCode(1).buildJson();
+		return success(new VotesResponse().setVotes(votes));
 	}
 	
 	/**
