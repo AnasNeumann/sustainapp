@@ -57,7 +57,7 @@ public class ToCorrectController extends GenericController {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("id"));
 		ProfileEntity profile = profileService.getById(id.get());
 		return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS))
+                .cacheControl(CacheControl.maxAge(0, TimeUnit.SECONDS))
                 .body(JsonUtils.objectTojsonQuietly(profile, ProfileEntity.class));
 	}
 	
