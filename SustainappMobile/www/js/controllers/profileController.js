@@ -33,7 +33,6 @@ angular.module('sustainapp.controllers')
 			$scope.profileModel.displayCover = null;
 			$scope.currentBadge = {};
 			profileService.getById($stateParams.id).then(function(response){
-				console.log(response);
 				if(response.data.code == 1) {
 					 response.data.profile.bornDate = new Date(response.data.profile.bornDate);
 					 $scope.title = response.data.profile.firstName+" "+response.data.profile.lastName;

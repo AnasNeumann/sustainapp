@@ -1,10 +1,14 @@
 package com.ca.sustainapp.controllers;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,10 +53,12 @@ public class ToCorrectController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/correction/profile", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request) {
+    public ResponseEntity<String> get(HttpServletRequest request) {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("id"));
 		ProfileEntity profile = profileService.getById(id.get());
-		return JsonUtils.objectTojsonQuietly(profile, ProfileEntity.class);
+		return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS))
+                .body(JsonUtils.objectTojsonQuietly(profile, ProfileEntity.class));
 	}
 	
 }
