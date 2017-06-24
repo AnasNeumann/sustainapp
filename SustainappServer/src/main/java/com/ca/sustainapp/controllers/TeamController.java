@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,9 +69,9 @@ public class TeamController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/team", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		if(!isConnected(request) || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		TeamEntity team = new TeamEntity()
 				.setName(request.getParameter("name"))
@@ -86,7 +87,7 @@ public class TeamController extends GenericController {
 				.setTeamId(idTeam)
 				.setTimestamps(GregorianCalendar.getInstance());
 		roleService.createOrUpdate(role);
-		return new IdResponse().setId(idTeam).setCode(1).buildJson();
+		return super.success(new IdResponse().setId(idTeam));
 	}
 	
 	/**
@@ -95,17 +96,17 @@ public class TeamController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/team/all", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getAll(HttpServletRequest request) {
+    public ResponseEntity<String> getAll(HttpServletRequest request) {
 		Optional<Long> startIndex = StringsUtils.parseLongQuickly(request.getParameter("startIndex"));
 		if(!startIndex.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		SearchResult<TeamEntity> listResult = teamService.searchByCriteres(null, startIndex.get(), 20L);
 		List<TeamEntity> teams = new SustainappList<TeamEntity>();
 		for(TeamEntity team : listResult.getResults()){
 			teams.add(team);
 		}
-		return new TeamsResponse().setTeams(teams).setCode(1).buildJson();
+		return super.success(new TeamsResponse().setTeams(teams));
 	}	
 	
 	/**
@@ -114,24 +115,22 @@ public class TeamController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/team", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request) {
+    public ResponseEntity<String> get(HttpServletRequest request) {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("team"));
 		if(!id.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		TeamResponse response = new TeamResponse()
 				.setTeam(teamService.getById(id.get()));
 		if(null == response.getTeam()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
-		return response
+		return super.success(response
 			.setRequests(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_REQUEST))
 			.setMembers(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_MEMBER))
 			.setOwner(getProfileByRole(response.getTeam(), SustainappConstantes.TEAMROLE_ADMIN).get(0))
 			.setRole(searchRole(response.getTeam(), request))
-			.setParticipations(null)
-			.setCode(1)
-			.buildJson();
+			.setParticipations(null));
 	}
 
 	/**
@@ -140,14 +139,14 @@ public class TeamController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/team/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
+    public ResponseEntity<String> update(HttpServletRequest request) {
 		String name = request.getParameter("name");
 		TeamEntity team = verifyAllOwnerInformations(request);
 		if(null == team || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		teamService.createOrUpdate(team.setName(name));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 
 	/**
@@ -156,13 +155,13 @@ public class TeamController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/team/avatar", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String avatar(HttpServletRequest request) {
+    public ResponseEntity<String> avatar(HttpServletRequest request) {
 		TeamEntity team = verifyAllOwnerInformations(request);
 		if(null == team){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		teamService.createOrUpdate(team.setAvatar(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 
 	/**
@@ -171,13 +170,13 @@ public class TeamController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/team/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		TeamEntity team = verifyAllOwnerInformations(request);
 		if(null == team){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		deleteService.cascadeDelete(team);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 
 	/**
@@ -186,20 +185,20 @@ public class TeamController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/team/role", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String handleRole(HttpServletRequest request) {
+    public ResponseEntity<String> handleRole(HttpServletRequest request) {
 		Optional<Long> teamId = StringsUtils.parseLongQuickly(request.getParameter("team"));
 		Optional<Long> targetId = StringsUtils.parseLongQuickly(request.getParameter("target"));
 		UserAccountEntity user = super.getConnectedUser(request);
 		String role = request.getParameter("role");
 		if(!teamId.isPresent() || !targetId.isPresent() || null == user || isEmpty(role)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		TeamEntity team = teamService.getById(teamId.get());
 		ProfileEntity profile = profileService.getById(targetId.get());
 		if(null == team || null == profile){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
-		return new HttpRESTfullResponse().setCode(isCorrectAction(team, profile, role, user)? 1 : 0).buildJson();
+		return super.send(new HttpRESTfullResponse(), isCorrectAction(team, profile, role, user)? 1 : 0);
 	}
 
 	/**

@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +18,6 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
 import com.ca.sustainapp.entities.AnswerCategoryEntity;
 import com.ca.sustainapp.entities.QuestionEntity;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.utils.StringsUtils;
 import com.ca.sustainapp.validators.AnswerValidator;
@@ -45,10 +45,10 @@ public class AnswerCategoryController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/category", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		QuestionEntity question = super.getQuestionIfOwner(request);
 		if(null == question){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(question.getId()));
 		Integer numero = (null != categories)? categories.size() : 0;
@@ -57,7 +57,7 @@ public class AnswerCategoryController extends GenericCourseController {
 				.setNumero(numero)
 				.setQuestionId(question.getId())
 				.setTimestamps(GregorianCalendar.getInstance());
-		return new IdResponse().setId(answerCategoryService.createOrUpdate(category)).setCode(1).buildJson();
+		return super.success(new IdResponse().setId(answerCategoryService.createOrUpdate(category)));
 	}
 	
 	/**
@@ -67,10 +67,10 @@ public class AnswerCategoryController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/category/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		AnswerCategoryEntity category = super.getAnswerCategoryIfOwner(request);
 		if(null == category){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
 		for(AnswerCategoryEntity c : categories){
@@ -79,7 +79,7 @@ public class AnswerCategoryController extends GenericCourseController {
 			}
 		}
 		deleteService.cascadeDelete(category);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -89,11 +89,11 @@ public class AnswerCategoryController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/category/drop", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String drop(HttpServletRequest request) {
+    public ResponseEntity<String> drop(HttpServletRequest request) {
 		AnswerCategoryEntity category = super.getAnswerCategoryIfOwner(request);
 		Optional<Integer> toIndex = StringsUtils.parseIntegerQuietly(request.getParameter("position"));
 		if(null == category || !toIndex.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
 		if(toIndex.get() > category.getNumero()){
@@ -101,7 +101,7 @@ public class AnswerCategoryController extends GenericCourseController {
 		}else if(toIndex.get() < category.getNumero()){
 			reculer(category, categories, toIndex.get());
 		}
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**

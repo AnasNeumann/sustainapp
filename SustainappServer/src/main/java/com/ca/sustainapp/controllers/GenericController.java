@@ -3,6 +3,7 @@ package com.ca.sustainapp.controllers;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.GregorianCalendar;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +27,6 @@ import com.ca.sustainapp.services.CascadeDeleteService;
 import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.services.NotificationService;
 import com.ca.sustainapp.utils.DateUtils;
-import com.ca.sustainapp.utils.JsonUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 
 
@@ -72,12 +72,20 @@ public class GenericController {
 	 * @param json
 	 * @return
 	 */
-	private ResponseEntity<String> send(HttpRESTfullResponse reponse, Integer code){
+	protected ResponseEntity<String> send(HttpRESTfullResponse reponse, Integer code){
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(0, TimeUnit.SECONDS))
 				.body(reponse.setCode(code).buildJson());
 	}
 
+	/**
+	 * succes simple
+	 * @return
+	 */
+	protected  ResponseEntity<String> success(){
+		return send(new HttpRESTfullResponse(), 1);
+	}
+	
 	/**
 	 * send a success HTTP reponse
 	 * @param reponse
@@ -94,6 +102,15 @@ public class GenericController {
 	 */
 	protected ResponseEntity<String> refuse(){
 		return send(new HttpRESTfullResponse(), 0);
+	}
+	
+	/**
+	 * refuse with errors
+	 * @param errors
+	 * @return
+	 */
+	protected ResponseEntity<String> refuse(Map<String,String> errors){
+		return send(new HttpRESTfullResponse().setErrors(errors), 0);
 	}
 
 	/**

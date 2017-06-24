@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,6 @@ import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.ReportEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SearchResult;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.responses.ReportResponse;
 import com.ca.sustainapp.responses.ReportsResponse;
@@ -55,9 +55,9 @@ public class ReportController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/report", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		if(!isConnected(request) || !reportValidator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(reportValidator.validate(request)).buildJson();
+			return super.refuse(reportValidator.validate(request));
 		}
 		ProfileEntity profile = super.getConnectedUser(request).getProfile();
 		ReportEntity report = new ReportEntity()
@@ -69,7 +69,7 @@ public class ReportController extends GenericController {
 				.setState(0);
 		reportService.createOrUpdate(report);
 		badgeService.superhero(profile);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -78,18 +78,18 @@ public class ReportController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/report/all", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String getAll(HttpServletRequest request) {
+    public ResponseEntity<String> getAll(HttpServletRequest request) {
 		Optional<Long> startIndex = StringsUtils.parseLongQuickly(request.getParameter("startIndex"));
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(!startIndex.isPresent() || null == user || !user.getIsAdmin()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		SearchResult<ReportEntity> listResult = reportService.searchByCriteres(new ReportCriteria().setState(0), startIndex.get(), 5L);
 		ReportsResponse response = new ReportsResponse();
 		for(ReportEntity entity : listResult.getResults()){
 			response.getReports().add(new ReportResponse(entity).setOwner(new LightProfileResponse(profileService.getById(entity.getProfilId()))));
 		}
-		return response.setCode(1).buildJson();
+		return super.success(response);
 	}
 	
 	/**
@@ -98,14 +98,14 @@ public class ReportController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/report/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
+    public ResponseEntity<String> update(HttpServletRequest request) {
 		Optional<Long> reportId = StringsUtils.parseLongQuickly(request.getParameter("report"));
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(!reportId.isPresent() || null == user || !user.getIsAdmin()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		reportService.createOrUpdate(reportService.getById(reportId.get()).setState(1));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 
 }

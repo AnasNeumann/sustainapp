@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +26,6 @@ import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.CourseResponse;
 import com.ca.sustainapp.responses.CoursesResponse;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.responses.RankCoursResponse;
@@ -61,10 +61,10 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course/all", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getAll(HttpServletRequest request) {
+    public ResponseEntity<String> getAll(HttpServletRequest request) {
 		Optional<Long> startIndex = StringsUtils.parseLongQuickly(request.getParameter("startIndex"));
 		if(!startIndex.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		SearchResult<CourseEntity> listResult = courseService.searchByCriteres(null, startIndex.get(), 20L);
 		List<CourseEntity> courses = new SustainappList<CourseEntity>();
@@ -73,7 +73,7 @@ public class CourseController extends GenericCourseController {
 				courses.add(course);
 			}			
 		}
-		return new CoursesResponse().setCours(courses).setCode(1).buildJson();
+		return super.success(new CoursesResponse().setCours(courses));
 	}
 
 	/**
@@ -82,9 +82,9 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		if(!isConnected(request) || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		CourseEntity course = new CourseEntity()
 				.setAbout(request.getParameter("about"))
@@ -99,7 +99,7 @@ public class CourseController extends GenericCourseController {
 			course.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idCours = courseService.createOrUpdate(course);
-		return new IdResponse().setId(idCours).setCode(1).buildJson();
+		return super.success(new IdResponse().setId(idCours));
 	}
 
 	/**
@@ -108,31 +108,29 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getById(HttpServletRequest request) {
+    public ResponseEntity<String> getById(HttpServletRequest request) {
 		Optional<Long> coursId = StringsUtils.parseLongQuickly(request.getParameter("cours"));
 		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("id"));
 		if(!coursId.isPresent() || !userId.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		CourseEntity cours = courseService.getById(coursId.get());
 		UserAccountEntity user = userService.getById(userId.get());
 		if(null == cours || null == user){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		boolean isOwner = cours.getCreatorId().equals(user.getProfile().getId()) || user.getIsAdmin();
 		if(!isOwner){
 			courseService.createOrUpdate(cours.setViews(cours.getViews()+1));
 		}
-		return new CourseResponse()
+		return super.success(new CourseResponse()
 				.setCours(cours)
 				.setOwner(new LightProfileResponse(profileService.getById(cours.getCreatorId())))
 				.setIsOwner(isOwner)
 				.setAverageRank(calculateAverageRank(cours))
 				.setRank(getOwnRank(user.getProfile().getId(), cours))
 				.setTopics(loadAllTopics(cours, user.getProfile().getId()))
-				.setHasLevel((user.getProfile().getLevel() >= cours.getLevelMin()) || user.getIsAdmin())
-				.setCode(1)
-				.buildJson();
+				.setHasLevel((user.getProfile().getLevel() >= cours.getLevelMin()) || user.getIsAdmin()));
 	}
 	
 	/**
@@ -141,15 +139,15 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
+    public ResponseEntity<String> update(HttpServletRequest request) {
 		String title = request.getParameter("title");
 		String about = request.getParameter("about");
 		CourseEntity cours = getCoursIfOwner(request);
 		if(null == cours || !updateValidator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(updateValidator.validate(request)).buildJson();
+			return super.refuse(updateValidator.validate(request));
 		}
 		courseService.createOrUpdate(cours.setTitle(title).setAbout(about));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -158,14 +156,14 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course/level", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String level(HttpServletRequest request) {
+    public ResponseEntity<String> level(HttpServletRequest request) {
 		CourseEntity cours = getCoursIfOwner(request);
 		Optional<Integer> level = StringsUtils.parseIntegerQuietly(request.getParameter("level"));
 		if(null == cours || !level.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		courseService.createOrUpdate(cours.setLevelMin(level.get()));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	
@@ -175,13 +173,13 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course/picture", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String picture(HttpServletRequest request) {
+    public ResponseEntity<String> picture(HttpServletRequest request) {
 		CourseEntity cours = getCoursIfOwner(request);
 		if(null == cours){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		courseService.createOrUpdate(cours.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -190,13 +188,13 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		CourseEntity cours = getCoursIfOwner(request);
 		if(null == cours){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		deleteService.cascadeDelete(cours);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -205,13 +203,13 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course/open", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String toogleOpen(HttpServletRequest request) {
+    public ResponseEntity<String> toogleOpen(HttpServletRequest request) {
 		CourseEntity cours = getCoursIfOwner(request);
 		if(null == cours){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		courseService.createOrUpdate(cours.setOpen(cours.getOpen().equals(1) ? 0 : 1));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -220,16 +218,16 @@ public class CourseController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/course/note", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String note(HttpServletRequest request) {
+    public ResponseEntity<String> note(HttpServletRequest request) {
 		Optional<Long> idCours = StringsUtils.parseLongQuickly(request.getParameter("cours"));
 		Optional<Integer> score = StringsUtils.parseIntegerQuietly(request.getParameter("score"));
 		UserAccountEntity user = super.getConnectedUser(request);
 		if(!idCours.isPresent() || !score.isPresent() || null == user){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		CourseEntity cours = courseService.getById(idCours.get());
 		if(null == cours){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		Integer total = cours.getListRank().size();
 		RankCourseEntity rank = super.getOwnRank(user.getProfile().getId(), cours);
@@ -245,7 +243,7 @@ public class CourseController extends GenericCourseController {
 		rank.setScore(score.get());
 		rankService.createOrUpdate(rank);
 		badgeService.teacher(profileService.getById(cours.getCreatorId()));
-		return new RankCoursResponse().setTotal(total).setAverage(super.calculateAverageRank(courseService.getById(idCours.get()))).setCode(1).buildJson();
+		return super.success(new RankCoursResponse().setTotal(total).setAverage(super.calculateAverageRank(courseService.getById(idCours.get()))));
 	}
 
 }

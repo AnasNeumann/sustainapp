@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +21,6 @@ import com.ca.sustainapp.dao.NotificationServiceDAO;
 import com.ca.sustainapp.entities.NotificationEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.NotificationResponse;
 import com.ca.sustainapp.responses.NotificationsResponse;
 import com.ca.sustainapp.utils.ListUtils;
@@ -50,9 +50,9 @@ public class NotificationController extends GenericController{
 	 */
 	@ResponseBody
 	@RequestMapping(value="/notification/all", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String getAll(HttpServletRequest request){
+	public ResponseEntity<String> getAll(HttpServletRequest request){
 		if(!isConnected(request)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<NotificationEntity> listResult = ListUtils.reverseList(getService.cascadeGetNotifications(new NotificationCriteria().setProfilId(super.getUser(request).getProfile().getId())));
 		List<NotificationResponse> notifications = new SustainappList<NotificationResponse>();
@@ -71,10 +71,8 @@ public class NotificationController extends GenericController{
 				notificationServiceDAO.delete(entity.getId());
 			}
 		}
-		return new NotificationsResponse()
-				.setNotifications(notifications)
-				.setCode(1)
-				.buildJson();
+		return super.success(new NotificationsResponse()
+				.setNotifications(notifications));
 	}
 
 	/**
@@ -84,18 +82,18 @@ public class NotificationController extends GenericController{
 	 */
 	@ResponseBody
 	@RequestMapping(value="/notification/read", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	public String read(HttpServletRequest request){
+	public ResponseEntity<String> read(HttpServletRequest request){
 		UserAccountEntity user = super.getConnectedUser(request);
 		Optional<Long> idNotification = StringsUtils.parseLongQuickly(request.getParameter("notification"));
 		if(null == user || !idNotification.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		NotificationEntity notification = notificationServiceDAO.getById(idNotification.get());
 		if(null == notification || !notification.getProfilId().equals(user.getProfile().getId())){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		notificationServiceDAO.createOrUpdate(notification.setState(2));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}	
 
 	/**

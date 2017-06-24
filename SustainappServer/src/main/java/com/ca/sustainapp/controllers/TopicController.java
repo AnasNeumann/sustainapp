@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +26,6 @@ import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.PartEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.IdResponse;
 import com.ca.sustainapp.responses.TopicResponse;
 import com.ca.sustainapp.utils.FilesUtils;
@@ -54,12 +54,12 @@ public class TopicController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/topic", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String create(HttpServletRequest request) {
+    public ResponseEntity<String> create(HttpServletRequest request) {
 		String title = request.getParameter("title");
 		String about = request.getParameter("about");
 		CourseEntity cours = getCoursIfOwner(request);
 		if(null == cours || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		List<TopicEntity> allTopics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(cours.getId()));
 		Integer numero = (null != allTopics)? allTopics.size() : 0;
@@ -73,7 +73,7 @@ public class TopicController extends GenericCourseController {
 			topic.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
 		}
 		Long idTopic = topicService.createOrUpdate(topic);
-		return new IdResponse().setId(idTopic).setCode(1).buildJson();
+		return super.success(new IdResponse().setId(idTopic));
 	}
 	
 	/**
@@ -82,26 +82,24 @@ public class TopicController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/topic", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String getById(HttpServletRequest request) {
+    public ResponseEntity<String> getById(HttpServletRequest request) {
 		Optional<Long> topicId = StringsUtils.parseLongQuickly(request.getParameter("topic"));
 		Optional<Long> userId = StringsUtils.parseLongQuickly(request.getParameter("id"));
 		if(!topicId.isPresent() || !userId.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		TopicEntity topic = topicService.getById(topicId.get());
 		UserAccountEntity user = userService.getById(userId.get());
 		if(null == topic || null == user){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(topicId.get()));
 		Collections.sort(parts, super.comparatorByNumber);
-		return new TopicResponse()
+		return super.success(new TopicResponse()
 				.setTopic(topic)
 				.setIsOwner(super.verifyTopicInformations(topic, user))
 				.setParts(parts)
-				.setHasQuiz(getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topic.getId())).size()>0)
-				.setCode(1)
-				.buildJson();
+				.setHasQuiz(getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topic.getId())).size()>0));
 	}
 	
 	/**
@@ -110,10 +108,10 @@ public class TopicController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/topic/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String delete(HttpServletRequest request) {
+    public ResponseEntity<String> delete(HttpServletRequest request) {
 		TopicEntity topic = super.getTopicIfOwner(request);
 		if(null == topic){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(topic.getCurseId()));
 		for(TopicEntity t : topics){
@@ -122,7 +120,7 @@ public class TopicController extends GenericCourseController {
 			}
 		}
 		deleteService.cascadeDelete(topic);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -131,15 +129,15 @@ public class TopicController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/topic/update", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String update(HttpServletRequest request) {
+    public ResponseEntity<String> update(HttpServletRequest request) {
 		String title = request.getParameter("title");
 		String content = request.getParameter("about");
 		TopicEntity topic = super.getTopicIfOwner(request);
 		if(null == topic || !validator.validate(request).isEmpty()){
-			return new HttpRESTfullResponse().setCode(0).setErrors(validator.validate(request)).buildJson();
+			return super.refuse(validator.validate(request));
 		}
 		topicService.createOrUpdate(topic.setTitle(title).setContent(content));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -148,13 +146,13 @@ public class TopicController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/topic/picture", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String picture(HttpServletRequest request) {
+    public ResponseEntity<String> picture(HttpServletRequest request) {
 		TopicEntity topic = getTopicIfOwner(request);
 		if(null == topic){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		topicService.createOrUpdate(topic.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG)));
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
@@ -163,11 +161,11 @@ public class TopicController extends GenericCourseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/topic/drop", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-    public String drop(HttpServletRequest request) {
+    public ResponseEntity<String> drop(HttpServletRequest request) {
 		TopicEntity topic = super.getTopicIfOwner(request);
 		Optional<Integer> toIndex = StringsUtils.parseIntegerQuietly(request.getParameter("position"));
 		if(null == topic || !toIndex.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(topic.getCurseId()));
 		if(toIndex.get() > topic.getNumero()){
@@ -175,7 +173,7 @@ public class TopicController extends GenericCourseController {
 		}else if(toIndex.get() < topic.getNumero()){
 			reculer(topic, topics, toIndex.get());
 		}
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**

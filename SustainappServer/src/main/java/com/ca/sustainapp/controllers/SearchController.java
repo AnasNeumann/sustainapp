@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +25,6 @@ import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.ResearchEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
-import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.LightCityResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
 import com.ca.sustainapp.responses.SearchResponse;
@@ -60,18 +60,16 @@ public class SearchController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/search", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String search(HttpServletRequest request) {
+    public ResponseEntity<String> search(HttpServletRequest request) {
 		String query = request.getParameter("query");
 		if(isEmpty(query)){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
-		return new SearchResponse()
+		return super.success(new SearchResponse()
 				.setProfiles(profileService.searchByFulName(query, 1, 5))
 				.setTeams(teamService.searchByKeywords(query, 5))
 				.setCities(searchLightCities(query, 5))
-				.setCourses(searchLightCourses(query, 5))
-				.setCode(1)
-				.buildJson();
+				.setCourses(searchLightCourses(query, 5)));
 	}
 
 	/**
@@ -80,11 +78,11 @@ public class SearchController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/search/save", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
-	private String save(HttpServletRequest request){
+	private ResponseEntity<String> save(HttpServletRequest request){
 		UserAccountEntity user = super.getConnectedUser(request);
 		String query = request.getParameter("query");
 		if(isEmpty(query) || null == user){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		searchService.createOrUpdate(
 				new ResearchEntity()
@@ -92,7 +90,7 @@ public class SearchController extends GenericController {
 					.setQuery(query)
 					.setTimestamps(GregorianCalendar.getInstance())
 				);
-		return new HttpRESTfullResponse().setCode(1).buildJson();
+		return super.success();
 	}
 	
 	/**
