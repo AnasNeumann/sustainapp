@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,21 +66,19 @@ public class ProfileController extends GenericController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/profile", method = RequestMethod.GET, produces = SustainappConstantes.MIME_JSON)
-    public String get(HttpServletRequest request) {
+    public ResponseEntity<String> get(HttpServletRequest request) {
 		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("id"));
 		if(!id.isPresent()){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
 		ProfileEntity profile = profileService.getById(id.get());
 		if(null == profile){
-			return new HttpRESTfullResponse().setCode(0).buildJson();
+			return super.refuse();
 		}
-		return new ProfileResponse()
+		return super.success(new ProfileResponse()
 				.setProfile(profile)
 				.setCourses(getAllProfileCourses(id.get()))
-				.setBadges(getAllProfileBadge(id.get()))
-				.setCode(1)
-				.buildJson();
+				.setBadges(getAllProfileBadge(id.get())));
 	}
 	
 	/**
