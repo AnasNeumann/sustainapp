@@ -6,9 +6,17 @@
  */
 angular.module('sustainapp.services')
  .factory('newspaperService', function($http, config) {
+	 var params = {
+			withCredentials: true,
+	        headers: {
+	        	'Content-Type': undefined,
+	        	'Access-Control-Allow-Origin' : config.remoteServer
+            },
+	        transformRequest: angular.identity
+	 };
 	 return {
 		getNews : function() {
-			return $http.get(config.remoteServer+"/newspaper");
+			return $http.get(config.remoteServer+"/newspaper", params);
 		}
 	};
 });

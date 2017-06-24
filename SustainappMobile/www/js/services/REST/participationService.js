@@ -9,7 +9,8 @@ angular.module('sustainapp.services')
 	 var params = {
 			withCredentials: true,
 	        headers: {
-	        	'Content-Type': undefined
+	        	'Content-Type': undefined,
+	        	'Access-Control-Allow-Origin' : config.remoteServer
             },
 	        transformRequest: angular.identity
 	 };
@@ -24,7 +25,7 @@ angular.module('sustainapp.services')
 			return $http.post(config.remoteServer+"/participation/vote", data, params);
 		},
 		getVotes : function(participation) {
-			return $http.get(config.remoteServer+"/participation/votes?participation="+participation);
+			return $http.get(config.remoteServer+"/participation/votes?participation="+participation, params);
 		}
 	};
 });
