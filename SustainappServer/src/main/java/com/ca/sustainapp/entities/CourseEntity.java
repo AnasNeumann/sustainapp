@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,6 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "COURSE")
 @SequenceGenerator(name = "course_id_seq_generator", sequenceName = "course_id_seq")
-@Cacheable(false)
 public class CourseEntity extends GenericEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

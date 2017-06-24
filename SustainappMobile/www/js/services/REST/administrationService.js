@@ -8,7 +8,8 @@ angular.module('sustainapp.services').factory('administrationService', function(
 	 var params = {
 		withCredentials: true,
         headers: {
-        	'Content-Type': undefined
+        	'Content-Type': undefined,
+        	'Access-Control-Allow-Origin' : config.remoteServer
         },
         transformRequest: angular.identity
 	 };

@@ -9,16 +9,17 @@ angular.module('sustainapp.services')
 	 var params = {
 			withCredentials: true,
 	        headers: {
-	        	'Content-Type': undefined
+	        	'Content-Type': undefined,
+	        	'Access-Control-Allow-Origin' : config.remoteServer
             },
 	        transformRequest: angular.identity
 	 };
 	 return {
 		getById : function(team, id) {
-			return $http.get(config.remoteServer+"/team?team="+team+"&id="+id);
+			return $http.get(config.remoteServer+"/team?team="+team+"&id="+id, params);
 		},
 		getAll : function(startIndex) {
-			return $http.get(config.remoteServer+"/team/all?startIndex="+startIndex);
+			return $http.get(config.remoteServer+"/team/all?startIndex="+startIndex, params);
 		},
 		create : function(data){
 			return $http.post(config.remoteServer+"/team", data, params);

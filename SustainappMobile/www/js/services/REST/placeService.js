@@ -9,13 +9,14 @@ angular.module('sustainapp.services')
 	 var params = {
 			withCredentials: true,
 	        headers: {
-	        	'Content-Type': undefined
+	        	'Content-Type': undefined,
+	        	'Access-Control-Allow-Origin' : config.remoteServer
             },
 	        transformRequest: angular.identity
 	 };
 	 return {
 		getById : function(place, user) {
-			return $http.get(config.remoteServer+"/place?place="+place+"&user="+user);
+			return $http.get(config.remoteServer+"/place?place="+place+"&user="+user, params);
 		},
 		create : function(data) {
 			return $http.post(config.remoteServer+"/place", data, params);
@@ -36,7 +37,7 @@ angular.module('sustainapp.services')
 			return $http.post(config.remoteServer+"/place/note", data, params);
 		},
 		getNear : function(lng, lat) {
-			return $http.get(config.remoteServer+"/place/near?lng="+lng+"&lat="+lat);
+			return $http.get(config.remoteServer+"/place/near?lng="+lng+"&lat="+lat, params);
 		},
 		visit : function(data) {
 			return $http.post(config.remoteServer+"/place/visit", data, params);

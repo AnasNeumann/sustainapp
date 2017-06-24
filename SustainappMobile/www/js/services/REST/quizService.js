@@ -9,13 +9,14 @@ angular.module('sustainapp.services')
 	 var params = {
 			withCredentials: true,
 	        headers: {
-	        	'Content-Type': undefined
+	        	'Content-Type': undefined,
+	        	'Access-Control-Allow-Origin' : config.remoteServer
             },
 	        transformRequest: angular.identity
 	 };
 	 return {
 		getById : function(topic) {
-				return $http.get(config.remoteServer+"/quiz?topic="+topic);
+				return $http.get(config.remoteServer+"/quiz?topic="+topic, params);
 		},
 		validateQuiz : function(data) {
 			return $http.post(config.remoteServer+"/quiz", data, params);

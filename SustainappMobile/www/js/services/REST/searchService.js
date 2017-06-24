@@ -9,13 +9,14 @@ angular.module('sustainapp.services')
 	 var params = {
 			withCredentials: true,
 	        headers: {
-	        	'Content-Type': undefined
+	        	'Content-Type': undefined,
+	        	'Access-Control-Allow-Origin' : config.remoteServer
             },
 	        transformRequest: angular.identity
 	 };
 	 return {
 		search : function(query) {
-			return $http.get(config.remoteServer+"/search?query="+query);
+			return $http.get(config.remoteServer+"/search?query="+query, params);
 		},
 		save : function(data) {
 			return $http.post(config.remoteServer+"/search/save", data, params);

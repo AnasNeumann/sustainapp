@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Basic;
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +21,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "QUESTION")
 @SequenceGenerator(name = "question_id_seq_generator", sequenceName = "question_id_seq")
-@Cacheable(false)
 public class QuestionEntity extends GenericNumerotableEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

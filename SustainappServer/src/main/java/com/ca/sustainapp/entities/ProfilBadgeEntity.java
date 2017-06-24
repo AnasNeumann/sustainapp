@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Basic;
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PROFILE_BADGE")
 @SequenceGenerator(name = "profile_badge_id_seq_generator", sequenceName = "profile_badge_id_seq")
-@Cacheable(false)
 public class ProfilBadgeEntity extends GenericEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
