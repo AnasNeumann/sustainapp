@@ -4,10 +4,13 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.GregorianCalendar;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -17,11 +20,13 @@ import com.ca.sustainapp.comparators.NumerotableEntityComparator;
 import com.ca.sustainapp.dao.UserAccountServiceDAO;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.UserAccountEntity;
+import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.services.BadgeService;
 import com.ca.sustainapp.services.CascadeDeleteService;
 import com.ca.sustainapp.services.CascadeGetService;
 import com.ca.sustainapp.services.NotificationService;
 import com.ca.sustainapp.utils.DateUtils;
+import com.ca.sustainapp.utils.JsonUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 
 
@@ -61,6 +66,35 @@ public class GenericController {
 	protected BadgeService badgeService;
 	@Autowired
 	protected NotificationService notificationService;
+	
+	/**
+	 * send a HTTP response
+	 * @param json
+	 * @return
+	 */
+	private ResponseEntity<String> send(HttpRESTfullResponse reponse, Integer code){
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.maxAge(0, TimeUnit.SECONDS))
+				.body(reponse.setCode(code).buildJson());
+	}
+
+	/**
+	 * send a success HTTP reponse
+	 * @param reponse
+	 * @return
+	 */
+	protected  ResponseEntity<String> success(HttpRESTfullResponse reponse){
+		return send(reponse, 1);
+	}
+
+	/**
+	 * send a refused HTTP reponse
+	 * @param reponse
+	 * @return
+	 */
+	protected ResponseEntity<String> refuse(){
+		return send(new HttpRESTfullResponse(), 0);
+	}
 
 	/**
 	 * Creer une nouvelle session pour un utilisateur
