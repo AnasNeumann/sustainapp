@@ -18,11 +18,11 @@ import com.ca.sustainapp.boot.SustainappConstantes;
 import com.ca.sustainapp.criteria.NotificationCriteria;
 import com.ca.sustainapp.dao.NotificationServiceDAO;
 import com.ca.sustainapp.entities.NotificationEntity;
-import com.ca.sustainapp.entities.NotificationsResponse;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.pojo.SustainappList;
 import com.ca.sustainapp.responses.HttpRESTfullResponse;
 import com.ca.sustainapp.responses.NotificationResponse;
+import com.ca.sustainapp.responses.NotificationsResponse;
 import com.ca.sustainapp.utils.ListUtils;
 import com.ca.sustainapp.utils.StringsUtils;
 
