@@ -4,7 +4,7 @@
       <div class="s-common-floatEdit" ng-click="participateModal.hide()">
             <i class="icon ion-close-round"></i>
       </div>
-    <div class="s-participation-imgContainer" style="background-image: url({{challengeModel.displayParticipationFile}});">
+    <div class="s-participation-imgContainer"  ng-style="{'background-image': 'url('+challengeModel.displayParticipationFile+')'}" >
         <i ng-show="challengeModel.emptyParticipationFile" class="icon ion-image"></i>
         <!-- Mobile view -->
         <div class="s-common-camera" ng-if="_isNotMobile == false">

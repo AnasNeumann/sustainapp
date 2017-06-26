@@ -1,3 +1,3 @@
 <div ng-repeat="answer in currentQuestion.answers" ng-class="{'s-quiz-selected': answer.data, 's-quiz-selectionContainer' : true}" class="s-quiz-selectionContainer" ng-click="answer.data = !answer.data">
-    <img src="data:image/jpeg;base64,{{answer.picture}}" width="100%" height="auto" />
+    <img ng-src="data:image/jpeg;base64,{{answer.picture}}" width="100%" height="auto" />
 </div>

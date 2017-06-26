@@ -21,7 +21,7 @@
          </div>
          
          <!-- QUESTION'S PICTURE -->
-         <div class="s-cours-topicImageContainer s-questions-pictureContainer" ng-show="questionModel.question.picture != null" style="background-image: url({{questionModel.displayPicture}});">
+         <div class="s-cours-topicImageContainer s-questions-pictureContainer" ng-show="questionModel.question.picture != null" ng-style="{'background-image': 'url('+questionModel.displayPicture+')'}" >
 	        <!-- Mobile view -->
 	        <div class="s-common-camera" ng-if="_isNotMobile == false">
 	            <div class="s-common-choosePictureToogle" ng-show="questionModel.pictureEdit" ng-click="questionModel.pictureEdit = false">

@@ -15,7 +15,7 @@ angular.module('sustainapp.controllers')
 			$scope.reportModel = {};
 			$scope.reportModel.message = "";
 			$scope.reportModel.file = null;
-			$scope.reportModel.displayFile = null;
+			$scope.reportModel.displayFile = "";
 			$scope.reportModel.sended = false;
 			$scope.reportModel.emptyFile = true;
 			$scope.reportModel.editFile = false;
@@ -63,7 +63,7 @@ angular.module('sustainapp.controllers')
 			data.append("sessionToken", sessionService.get('token'));
 			reportService.create(data).success(function(result) {
 				if(result.code == 1){
-					$scope.reportModel.displayFile = null;
+					$scope.reportModel.displayFile = "";
 					$scope.reportModel.file = null;
 					$scope.reportModel.message = "";
 					$scope.reportModel.emptyFile = true;

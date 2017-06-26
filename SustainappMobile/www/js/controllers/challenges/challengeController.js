@@ -33,7 +33,7 @@ angular.module('sustainapp.controllers')
 		$scope.challengeModel.emptyParticipationFile = true;
 		$scope.challengeModel.editParticipationFile = false;
 		$scope.challengeModel.participationFile = null;
-		$scope.challengeModel.displayParticipationFile = null;
+		$scope.challengeModel.displayParticipationFile = "";
 		$scope.challengeModel.selectedProfile = {};
 		$scope.challengeModel.allProfiles = [];
 		$scope.challengeModel.participation = {};
@@ -313,7 +313,7 @@ angular.module('sustainapp.controllers')
 				$scope.challengeModel.emptyParticipationFile = true;
 				$scope.challengeModel.editParticipationFile = false;
 				$scope.challengeModel.participationFile = null;
-				$scope.challengeModel.displayParticipationFile = null;
+				$scope.challengeModel.displayParticipationFile = "";
 				$scope.challengeModel.participation.title = "";
 				$scope.challengeModel.participation.about = "";
 	    	} else {

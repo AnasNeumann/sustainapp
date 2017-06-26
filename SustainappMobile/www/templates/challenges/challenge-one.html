@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col col-50">
                 <div class="s-team-containerAvatar">
-                    <div style="background-image: url({{challengeModel.displayIcon}});" class="s-profile-avatar">
+                    <div ng-style="{'background-image': 'url('+challengeModel.displayIcon+')'}" class="s-profile-avatar">
                         <!-- Mobile view -->
                         <div ng-if="challengeModel.isAdmin && _isNotMobile == false" class="s-common-camera">
                            <div class="s-common-choosePictureToogle" ng-show="challengeModel.iconEdit" ng-click="challengeModel.iconEdit = false">

@@ -36,7 +36,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 /**
  * ROUTING DE SUSTAINAPP
  */
-.config(function($stateProvider, $urlRouterProvider, $translateProvider, $sceDelegateProvider, $cordovaInAppBrowserProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider, $sceDelegateProvider, $cordovaInAppBrowserProvider, $httpProvider) {
   $stateProvider
   .state('tab', {
     url: '/tab',
