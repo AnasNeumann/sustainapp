@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col col-50">
 	            <div class="s-team-containerAvatar">
-		            <div style="background-image: url({{teamModel.displayAvatar}});" class="s-profile-avatar">
+		            <div ng-style="{'background-image': 'url('+teamModel.displayAvatar+')'}" class="s-profile-avatar">
 		                <!-- Mobile view -->
 		                <div ng-if="teamModel.role == 'admin' && _isNotMobile == false" class="s-common-camera">
 		                   <div class="s-common-choosePictureToogle" ng-show="teamModel.avatarEdit" ng-click="teamModel.avatarEdit = false">

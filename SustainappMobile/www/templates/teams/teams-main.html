@@ -12,7 +12,7 @@
                    <span class="s-teams-addText" >{{'teams.newTeam' | translate}}</span>
                    <div class="row s-common-padding-top0">
                     <div class="col col-50 s-common-padding-top0">
-	                    <div class="s-teams-addPicture" style="background-image: url({{teamsModel.displayFile}});">
+	                    <div class="s-teams-addPicture" ng-style="{'background-image': 'url('+teamsModel.displayFile+')'}" >
 	                        <i class="icon ion-person-stalker" ng-show="teamsModel.emptyPicture"></i>
 	                        <!-- Mobile view -->
 	                        <div class="s-common-camera" ng-if="_isNotMobile == false">

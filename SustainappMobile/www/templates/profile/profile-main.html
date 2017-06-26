@@ -1,9 +1,8 @@
 <ion-view >
   <ion-nav-title ng-bind="title"></ion-nav-title>
-  <ion-content ng-show="profileModel.loaded" >
-
+  <ion-content ng-show="profileModel.loaded">
     <!-- Cover Picture -->
-    <div class="s-profile-coverContainer" style="background-image: url({{profileModel.displayCover}});">
+    <div class="s-profile-coverContainer" ng-style="{'background-image': 'url('+profileModel.displayCover+')'}">
 	    <!-- Mobile view -->
 	    <div ng-show="profileModel.owner" class="s-common-camera" ng-if="_isNotMobile == false">
             <div class="s-common-choosePictureToogle" ng-show="profileModel.coverEdit" ng-click="profileModel.coverEdit = false">
@@ -31,7 +30,7 @@
         <div class="padding">
 	        <!-- Avatar Picture-->
 	        <div class="s-profile-avatarContainer">
-	            <div style="background-image: url({{profileModel.displayAvatar}});" class="s-profile-avatar">
+	            <div ng-style="{'background-image': 'url('+profileModel.displayAvatar+')'}" class="s-profile-avatar">
 	                <!-- Mobile view -->
 	                <div ng-show="profileModel.owner" class="s-common-camera" ng-if="_isNotMobile == false">
 			           <div class="s-common-choosePictureToogle" ng-show="profileModel.avatarEdit" ng-click="profileModel.avatarEdit = false">
@@ -107,8 +106,8 @@
         </div>
         <div class="padding" ng-show="profileModel.openBadges">       
            <div class="s-profile-badgeContainer s-common-center" ng-repeat="elt in profileModel.badges" ng-click="openBadge(elt)">
-               <img ng-if="true == elt.on" src="img/badges/{{elt.badge.icon}}.png" class="s-profile-badge" />
-               <img ng-if="false == elt.on" src="img/badges/{{elt.badge.icon}}_off.png" class="s-profile-badge" />               
+               <img ng-if="true == elt.on" ng-src="img/badges/{{elt.badge.icon}}.png" class="s-profile-badge" />
+               <img ng-if="false == elt.on" ng-src="img/badges/{{elt.badge.icon}}_off.png" class="s-profile-badge" />               
            </div>
         </div>
         

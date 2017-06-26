@@ -5,7 +5,7 @@
     <ion-content ng-show="topicModel.loaded" id="topicContent">
         
         <!-- HEADER [title, picture] -->
-	    <div class="s-topic-pictureContainer" style="background-image : url({{topicModel.displayPicture}});">
+	    <div class="s-topic-pictureContainer" ng-style="{'background-image': 'url('+topicModel.displayPicture+')'}" >
 	        
 	        <div class="s-topic-pictureBtn">
 		        <!-- Mobile view -->

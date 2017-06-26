@@ -1,7 +1,7 @@
 <ion-view view-title="{{'sideMenu.signal' | translate }}">
   <!-- NEW REPORT -->
   <ion-content ng-hide="reportModel.sended" class="s-common-padding20">
-    <div class="s-report-imgContainer" style="background-image: url({{reportModel.displayFile}});">
+    <div class="s-report-imgContainer" ng-style="{'background-image': 'url('+reportModel.displayFile+')'}" >
         <i ng-show="reportModel.emptyFile" class="icon ion-image"></i>
         
         <!-- Mobile view -->
@@ -38,7 +38,7 @@
   <!-- THANKS PART -->
   <ion-content ng-show="reportModel.sended">
      <div class="s-common-flagContainer">
-        <img src="img/report/{{'common.thanks' | translate }}.png" class="s-report-thanksImg" />
+        <img ng-src="img/report/{{'common.thanks' | translate }}.png" class="s-report-thanksImg" />
      </div>
      <div class="s-common-padding20">
         <p>

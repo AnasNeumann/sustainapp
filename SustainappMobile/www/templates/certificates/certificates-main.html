@@ -11,7 +11,7 @@
         <span class="s-teams-addText" >{{'course.new' | translate}}</span>
         <div class="row s-common-padding-top0">
           <div class="col col-50 s-common-padding-top0">
-              <div class="s-teams-addPicture" style="background-image: url({{coursModel.displayFile}});">
+              <div class="s-teams-addPicture" ng-style="{'background-image': 'url('+coursModel.displayFile+')'}" >
                   <i class="icon ion-university" ng-show="coursModel.emptyPicture"></i>
                   <!-- Mobile view -->
                   <div class="s-common-camera" ng-if="_isNotMobile == false">

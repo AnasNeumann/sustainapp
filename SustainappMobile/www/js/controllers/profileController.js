@@ -30,7 +30,7 @@ angular.module('sustainapp.controllers')
 			$scope.profileModel.loaded = false;
 			$scope.profileModel.owner = false;
 			$scope.profileModel.displayAvatar = "img/common/defaultAvatarMin.png";
-			$scope.profileModel.displayCover = null;
+			$scope.profileModel.displayCover = "";
 			$scope.currentBadge = {};
 			profileService.getById($stateParams.id).then(function(response){
 				if(response.data.code == 1) {
