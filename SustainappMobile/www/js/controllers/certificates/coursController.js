@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('coursController', 
-			function($scope, $ionicPopover, $stateParams, $state, $ionicModal, sessionService, coursService, topicService, fileService, listService, displayService) {
+			function($scope, $ionicPopover, $stateParams, $rootScope, $state, $ionicModal, sessionService, coursService, topicService, fileService, listService, displayService) {
 
 	/**
 	 * Entrée dans la page
@@ -21,7 +21,6 @@ angular.module('sustainapp.controllers')
 	var loadCours = function(){
 		$scope.coursModel = {};
 		$scope.coursModel.loaded = false;
-		$scope.title = "...";
 
 		$scope.coursModel.emptyFile = true;
 		$scope.coursModel.edit = false;
@@ -60,7 +59,7 @@ angular.module('sustainapp.controllers')
 			if(result.code == 1) {
 				$scope.coursModel.loaded = true;
 				$scope.coursModel.cours = result.cours;
-				$scope.title = result.cours.title;
+				$rootScope.$broadcast('TITLE', result.cours.title);
 				$scope.coursModel.isAdmin = result.isOwner;
 				$scope.coursModel.owner = result.owner;
 				$scope.coursModel.hasLevel = result.hasLevel;

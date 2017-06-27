@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('challengeController', 
-		function($scope, $stateParams, $ionicModal, $state, $ionicPopover, sessionService, fileService, challengeService, participationService, listService, displayService) {
+		function($scope, $stateParams, $ionicModal, $rootScope, $state, $ionicPopover, sessionService, fileService, challengeService, participationService, listService, displayService) {
 
 	/**
 	 * Entrée dans la page
@@ -21,7 +21,6 @@ angular.module('sustainapp.controllers')
 	var loadChallenge = function(){
 		$scope.challengeModel = {};
 		$scope.challengeModel.loaded = false;
-		$scope.title = "...";
 		$scope.deleteType = true;
 		$scope.eltToDelete = null;
 		
@@ -47,7 +46,7 @@ angular.module('sustainapp.controllers')
 			var result = response.data;
 			if(result.code == 1) {
 				$scope.challengeModel.loaded = true;
-				$scope.title = result.challenge.name;
+				$rootScope.$broadcast('TITLE', result.challenge.name);
 				$scope.challengeModel.challenge = result.challenge;
 				$scope.challengeModel.name = result.challenge.name;
 				$scope.challengeModel.about = result.challenge.about;

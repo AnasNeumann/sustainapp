@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('teamController', 
-		function($scope, $stateParams, $ionicModal, $state, teamService, sessionService, teamRole, fileService, displayService) {
+		function($scope, $rootScope, $stateParams, $ionicModal, $state, teamService, sessionService, teamRole, fileService, displayService) {
 	
 	/**
 	 * Entrée dans la page
@@ -19,7 +19,6 @@ angular.module('sustainapp.controllers')
 	 * Chargement des informations sur la team
 	 */
 	var loadTeam = function(){
-		$scope.title = "";
 		$scope.teamModel = {};
 		$scope.teamModel.loaded = false;
 		$scope.teamModel.edit = false;
@@ -29,8 +28,8 @@ angular.module('sustainapp.controllers')
 		$scope.teamModel.allErrors = [];	
 		teamService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 			var result = response.data;
-			if(result.code == 1) {			
-				$scope.title = result.team.name;
+			if(result.code == 1) {
+				$rootScope.$broadcast('TITLE', result.team.name);
 				$scope.teamModel.team  = result.team;
 				$scope.teamModel.owner  = result.owner;
 				$scope.teamModel.members  = result.members;

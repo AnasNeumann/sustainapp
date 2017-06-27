@@ -1,9 +1,8 @@
 <ion-view >
-  <ion-nav-title ng-bind="title"></ion-nav-title>
   <ion-content ng-show="model.loaded">
   
     <!-- COVER PART -->
-    <div class="s-topic-pictureContainer" style="background-image : url({{model.displayCover}});">           
+    <div class="s-topic-pictureContainer" ng-style="{'background-image': 'url('+model.displayCover+')'}" >           
             <div class="s-topic-pictureBtn">
                 <!-- Mobile view -->
                 <div ng-if="model.isOwner && _isNotMobile == false" class="s-common-camera">
