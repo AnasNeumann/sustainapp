@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('mainController', function($scope, $state, $stomp, $filter, $rootScope, $cordovaLocalNotification, $ionicNavBarDelegate, sessionService, userService, config, displayService) {
+	.controller('mainController', function($scope, $timeout, $state, $stomp, $filter, $rootScope, $cordovaLocalNotification, $ionicNavBarDelegate, sessionService, userService, config, displayService) {
 		
 		/**
 		 * Initialisation du model
@@ -38,7 +38,10 @@ angular.module('sustainapp.controllers')
 		 * Affichage du titre de la page
 		 */
 		$scope.$on('TITLE', function(event, args) {
-			$ionicNavBarDelegate.title(args);
+			$scope.title = args;
+			$timeout(function() {	
+				$ionicNavBarDelegate.title(args);
+			});
 		});
 		
 		/**
