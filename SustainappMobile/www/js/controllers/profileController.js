@@ -6,20 +6,19 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('profileController', 
-			function($scope, $stateParams, $filter, $ionicModal, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService, displayService) {
+			function($scope, $stateParams, $rootScope, $filter, $ionicModal, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, sessionService, profileService, fileService, displayService) {
 		
 		/**
 		 * Entrée dans la page
 		 */
 		$scope.$on('$ionicView.beforeEnter', function() {
 				loadProfile();
-	        });
+	     });
 		
 		/**
 		 * Fonction initiale d'affichage de la page
 		 */
 		var loadProfile = function(){
-			$scope.title = "";
 			$scope.profileModel = {};
 			$scope.profileModel.profile = {};
 			$scope.profileModel.courses = [];
@@ -35,7 +34,7 @@ angular.module('sustainapp.controllers')
 			profileService.getById($stateParams.id).then(function(response){
 				if(response.data.code == 1) {
 					 response.data.profile.bornDate = new Date(response.data.profile.bornDate);
-					 $scope.title = response.data.profile.firstName+" "+response.data.profile.lastName;
+					 $rootScope.$broadcast('TITLE', response.data.profile.firstName+" "+response.data.profile.lastName);
 					 $scope.profileModel.profile = response.data.profile;
 	    			 $scope.profileModel.profileTemp = response.data.profile;
 	    			 $scope.profileModel.loaded = true;

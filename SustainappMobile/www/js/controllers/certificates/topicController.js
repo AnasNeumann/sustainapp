@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 	.controller('topicController', 
-			function($scope, $stateParams, $state, $ionicModal, $ionicScrollDelegate, $cordovaInAppBrowser, sessionService, topicService, fileService, listService, partService, displayService) {
+			function($scope, $stateParams, $state, $rootScope, $ionicModal, $ionicScrollDelegate, $cordovaInAppBrowser, sessionService, topicService, fileService, listService, partService, displayService) {
 		
 		/**
 		 * Entrée dans la page
@@ -21,8 +21,7 @@ angular.module('sustainapp.controllers')
 		var loadTopic = function(){
 			$scope.topicModel = {};
 			$scope.topicModel.loaded = false;
-			$scope.title = "...";
-			
+
 			$scope.topicModel.edit = false;
 			$scope.topicModel.pictureEdit = false;
 			$scope.topicModel.file  = null;
@@ -67,7 +66,7 @@ angular.module('sustainapp.controllers')
 					$scope.topicModel.isOwner = false;
 					$scope.topicModel.isReallyOwner = result.isOwner;
 					$scope.topicModel.title = result.topic.title;
-					$scope.title = result.topic.title;
+					$rootScope.$broadcast('TITLE', result.topic.title);
 					$scope.topicModel.hasQuiz = result.hasQuiz;
 					$scope.topicModel.content = result.topic.content;
 					if(null != result.topic.picture){

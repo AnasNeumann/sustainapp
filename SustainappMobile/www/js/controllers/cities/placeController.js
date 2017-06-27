@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('placeController', 
-		function($scope, $stateParams, $ionicModal, $cordovaGeolocation, sessionService, displayService, placeService) {
+		function($scope, $stateParams, $rootScope, $ionicModal, $cordovaGeolocation, sessionService, displayService, placeService) {
 
 		/**
 		 * Entrée dans la page
@@ -21,7 +21,6 @@ angular.module('sustainapp.controllers')
 		var loadPlace = function(){
 			$scope.model = {};
 			$scope.model.loaded = false;
-			$scope.title = "";
 			$scope.model.allErrors = [];
 			$scope.model.pictures = [];
 			$scope.rating = {};
@@ -37,7 +36,7 @@ angular.module('sustainapp.controllers')
 					$scope.model.pictures = result.pictures;
 					$scope.model.place = result.place;
 					$scope.model.name = result.place.name;
-					$scope.title = result.place.name;
+					$rootScope.$broadcast('TITLE', result.place.name);
 					$scope.model.about = result.place.about;
 					$scope.model.address = result.place.address;
 					$scope.model.isOwner = result.isOwner;

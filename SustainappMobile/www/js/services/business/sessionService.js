@@ -6,6 +6,7 @@
  */
 angular.module('sustainapp.services')
  .factory('sessionService', function($window, userService) {
+	 var title = {};
 	 return {
 		set: function(key, value) {
 			 $window.localStorage[key] = value;

@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('cityController', 
-		function($scope, $stateParams, $ionicModal, $cordovaGeolocation, sessionService, displayService, cityService, geolocationService, placeService) {
+		function($scope, $stateParams, $rootScope, $ionicModal, $cordovaGeolocation, sessionService, displayService, cityService, geolocationService, placeService) {
 
 		/**
 		 * Entrée dans la page
@@ -21,12 +21,11 @@ angular.module('sustainapp.controllers')
 		var loadCity = function(){
 			$scope.model = {};
 			$scope.model.loaded = false;
-			$scope.title = "";
 			$scope.model.allErrors = [];
 			cityService.getById($stateParams.id, sessionService.get('id')).then(function(response){
 				result = response.data;
 				if(result.code == 1) {				
-					$scope.title = result.city.name;
+					$rootScope.$broadcast('TITLE', result.city.name);
 					$scope.model.city = result.city;
 					$scope.model.cityTemp = result.city;
 					$scope.model.name = result.city.name;

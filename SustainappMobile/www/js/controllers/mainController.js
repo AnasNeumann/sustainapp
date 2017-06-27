@@ -5,7 +5,7 @@
  * @version 1.0
  */
 angular.module('sustainapp.controllers')
-	.controller('mainController', function($scope, $state, $stomp, $filter, $rootScope, $cordovaLocalNotification, sessionService, userService, config, displayService) {
+	.controller('mainController', function($scope, $state, $stomp, $filter, $rootScope, $cordovaLocalNotification, $ionicNavBarDelegate, sessionService, userService, config, displayService) {
 		
 		/**
 		 * Initialisation du model
@@ -13,7 +13,6 @@ angular.module('sustainapp.controllers')
 		var initLoginModel = function(){
 			$scope.notifications = [];
 			$scope.newNotifications = {};
-			$scope.title = "...";
 			$scope.nbrNotification = 0;
 			$scope.loginModel = {};
 			$scope.loginModel.mail = "";
@@ -34,6 +33,13 @@ angular.module('sustainapp.controllers')
 			$scope._isNotMobile = displayService.isNotMobile;
 		};
 		initLoginModel();
+		
+		/**
+		 * Affichage du titre de la page
+		 */
+		$scope.$on('TITLE', function(event, args) {
+			$ionicNavBarDelegate.title(args);
+		});
 		
 		/**
 		 * Initialisation de la réception de websockets
