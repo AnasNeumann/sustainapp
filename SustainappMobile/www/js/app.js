@@ -13,7 +13,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+      cordova.plugins.Keyboard.disableScroll(false);
     }
     if (window.StatusBar) {
       StatusBar.styleDefault();
@@ -36,7 +36,7 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 /**
  * ROUTING DE SUSTAINAPP
  */
-.config(function($stateProvider, $urlRouterProvider, $translateProvider, $sceDelegateProvider, $cordovaInAppBrowserProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider, $sceDelegateProvider, $cordovaInAppBrowserProvider, $httpProvider) {
   $stateProvider
   .state('tab', {
     url: '/tab',
@@ -270,9 +270,17 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
     });
   $urlRouterProvider.otherwise('/tab/news');
   
-	/**
-	 * Autoriser les urls provenant de ces sites web
-	 */
+  
+  /**
+   * Préférence pour le scroll native
+   *//*
+   if (!ionic.Platform.isIOS()) {
+	   $ionicConfigProvider.scrolling.jsScrolling(false);
+   }*/
+  
+   /**
+	* Autoriser les urls provenant de ces sites web
+	*/
 	$sceDelegateProvider.resourceUrlWhitelist([
 		'self',
 		'https://www.youtube.com/embed/**',
