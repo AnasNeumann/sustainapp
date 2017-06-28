@@ -1,55 +1,57 @@
 <ion-view view-title="Login | Sustainapp" class="s-login-view" >
     
     <!-- Formulaire d'inscription/Connexion -->
-    <ion-content class="s-login-content" ng-hide="loginModel.read">
-        <img src="img/common/greenLaval.png" class="s-login-logo"/>
-        <div class="row s-login-modeContainer" ng-hide="loginModel.modeLogin">
-            <div ng-class="{'s-login-modeBtn-dark': (false == loginModel.modeCity), 'col col-5 s-login-modeBtn' : true}" ng-click="loginModel.modeCity = !loginModel.modeCity">
-                {{'login.modePerso' | translate}}
-            </div>
-            <div ng-class="{'s-login-modeBtn-dark': (true ==loginModel.modeCity), 'col col-50 s-login-modeBtn' : true}" ng-click="loginModel.modeCity = !loginModel.modeCity">
-                {{'login.modeCity' | translate}}
-            </div>
-        </div>
-        <form class="s-login-form">
-              <h3 class="s-common-whiteTitle" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">{{'login.cityInfos' | translate}}</h3>
-              <label class="item item-input item-floating-label" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">
-                <span class="input-label s-login-label">{{'city.name' | translate}}</span>
-                <input ng-model="loginModel.city" type="text" placeholder="{{'city.name' | translate}}" class="s-login-input">
-                <span class="s-login-error">{{loginModel.allErrors.city | translate}}</span>
-              </label>
-              <label class="item item-input item-floating-label" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">
-                <span class="input-label s-login-label">{{'city.phone' | translate}}</span>
-                <input ng-model="loginModel.phone" type="text" placeholder="{{'city.phone' | translate}}" class="s-login-input">
-                <span class="s-login-error">{{loginModel.allErrors.phone | translate}}</span>
-              </label>
-              <h3 class="s-common-whiteTitle" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">{{'login.personalInfos' | translate}}</h3>
-			  <label class="item item-input item-floating-label" >
-			    <span class="input-label s-login-label">{{'profile.mail' | translate}}</span>
-			    <input ng-model="loginModel.mail" type="text" placeholder="{{'profile.mail' | translate}}" class="s-login-input">
-			    <span class="s-login-error">{{loginModel.allErrors.mail | translate}}</span>
-			  </label>
-			  <label class="item item-input item-floating-label">
-			    <span class="input-label s-login-label">{{'profile.password' | translate}}</span>
-			    <input ng-model="loginModel.password" type="password" placeholder="{{'profile.password' | translate}}" class="s-login-input">
-			    <span class="s-login-error">{{loginModel.allErrors.password | translate}}</span>
-			  </label>
-			  <label class="item item-input item-floating-label" ng-hide="loginModel.modeLogin">
-			    <span class="input-label s-login-label">{{'profile.firstName' | translate}}</span>
-			    <input ng-model="loginModel.firstName" type="text" placeholder="{{'profile.firstName' | translate}}" class="s-login-input">
-			    <span class="s-login-error">{{loginModel.allErrors.firstName | translate}}</span>
-			  </label>
-			  <label class="item item-input item-floating-label" ng-hide="loginModel.modeLogin"> 
-                <span class="input-label s-login-label">{{'profile.lastName' | translate}}</span> 
-                <input ng-model="loginModel.lastName" type="text" placeholder="{{'profile.lastName' | translate}}" class="s-login-input">
-                <span class="s-login-error">{{loginModel.allErrors.lastName | translate}}</span>
-              </label>
-              <button class="s-login-btn" ng-show="loginModel.modeLogin" ng-click="login()">{{'login.login' | translate}}</button>
-              <button class="s-login-btn" ng-hide="loginModel.modeLogin" ng-click="signin()">{{'login.signin' | translate}}</button>
-        </form>
-        <p ng-hide="loginModel.modeLogin" class="s-common-center s-login-p" ng-click="loginModel.modeLogin = true">{{'login.alreadyHave' | translate}}<br /><br /></p>
-        <p ng-hide="loginModel.modeLogin" class="s-common-center s-login-p" ng-click="loginModel.read = true">{{'login.policy' | translate}}</p>
-        <p ng-if="true == loginModel.modeLogin && false == _isNotMobile" class="s-common-center s-login-p" ng-click="loginModel.modeLogin = false">{{'login.stillNot' | translate}}</p>
+    <ion-content ng-hide="loginModel.read">
+        <div class="s-login-content">
+	        <img src="img/common/greenLaval.png" class="s-login-logo"/>
+	        <div class="row s-login-modeContainer" ng-hide="loginModel.modeLogin">
+	            <div ng-class="{'s-login-modeBtn-dark': (false == loginModel.modeCity), 'col col-5 s-login-modeBtn' : true}" ng-click="loginModel.modeCity = !loginModel.modeCity">
+	                {{'login.modePerso' | translate}}
+	            </div>
+	            <div ng-class="{'s-login-modeBtn-dark': (true ==loginModel.modeCity), 'col col-50 s-login-modeBtn' : true}" ng-click="loginModel.modeCity = !loginModel.modeCity">
+	                {{'login.modeCity' | translate}}
+	            </div>
+	        </div>
+	        <form class="s-login-form">
+	              <h3 class="s-common-whiteTitle" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">{{'login.cityInfos' | translate}}</h3>
+	              <label class="item item-input item-floating-label" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">
+	                <span class="input-label s-login-label">{{'city.name' | translate}}</span>
+	                <input ng-model="loginModel.city" type="text" placeholder="{{'city.name' | translate}}" class="s-login-input">
+	                <span class="s-login-error">{{loginModel.allErrors.city | translate}}</span>
+	              </label>
+	              <label class="item item-input item-floating-label" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">
+	                <span class="input-label s-login-label">{{'city.phone' | translate}}</span>
+	                <input ng-model="loginModel.phone" type="text" placeholder="{{'city.phone' | translate}}" class="s-login-input">
+	                <span class="s-login-error">{{loginModel.allErrors.phone | translate}}</span>
+	              </label>
+	              <h3 class="s-common-whiteTitle" ng-if="false == loginModel.modeLogin && true == loginModel.modeCity">{{'login.personalInfos' | translate}}</h3>
+				  <label class="item item-input item-floating-label" >
+				    <span class="input-label s-login-label">{{'profile.mail' | translate}}</span>
+				    <input ng-model="loginModel.mail" type="text" placeholder="{{'profile.mail' | translate}}" class="s-login-input">
+				    <span class="s-login-error">{{loginModel.allErrors.mail | translate}}</span>
+				  </label>
+				  <label class="item item-input item-floating-label">
+				    <span class="input-label s-login-label">{{'profile.password' | translate}}</span>
+				    <input ng-model="loginModel.password" type="password" placeholder="{{'profile.password' | translate}}" class="s-login-input">
+				    <span class="s-login-error">{{loginModel.allErrors.password | translate}}</span>
+				  </label>
+				  <label class="item item-input item-floating-label" ng-hide="loginModel.modeLogin">
+				    <span class="input-label s-login-label">{{'profile.firstName' | translate}}</span>
+				    <input ng-model="loginModel.firstName" type="text" placeholder="{{'profile.firstName' | translate}}" class="s-login-input">
+				    <span class="s-login-error">{{loginModel.allErrors.firstName | translate}}</span>
+				  </label>
+				  <label class="item item-input item-floating-label" ng-hide="loginModel.modeLogin"> 
+	                <span class="input-label s-login-label">{{'profile.lastName' | translate}}</span> 
+	                <input ng-model="loginModel.lastName" type="text" placeholder="{{'profile.lastName' | translate}}" class="s-login-input">
+	                <span class="s-login-error">{{loginModel.allErrors.lastName | translate}}</span>
+	              </label>
+	              <button class="s-login-btn" ng-show="loginModel.modeLogin" ng-click="login()">{{'login.login' | translate}}</button>
+	              <button class="s-login-btn" ng-hide="loginModel.modeLogin" ng-click="signin()">{{'login.signin' | translate}}</button>
+	        </form>
+	        <p ng-hide="loginModel.modeLogin" class="s-common-center s-login-p" ng-click="loginModel.modeLogin = true">{{'login.alreadyHave' | translate}}<br /><br /></p>
+	        <p ng-hide="loginModel.modeLogin" class="s-common-center s-login-p" ng-click="loginModel.read = true">{{'login.policy' | translate}}</p>
+	        <p ng-if="true == loginModel.modeLogin && false ==_isNotMobile " class="s-common-center s-login-p" ng-click="loginModel.modeLogin = false">{{'login.stillNot' | translate}}</p>
+	    </div>
     </ion-content>
     
     <!-- Politique de confidentialité et conditions générales d'utilisations -->

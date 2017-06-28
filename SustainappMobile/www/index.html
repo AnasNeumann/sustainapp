@@ -113,7 +113,7 @@
   <body ng-app="sustainapp" ng-controller="mainController" >
 
     <!-- Version desktop only -->
-    <div class="s-desktopview-greenBar"></div>
+    <div class="s-desktopview-greenBar" ng-show="loginModel.isConnected"></div>
 
     <!-- MODE CONNECTE -->
     <ion-side-menus ng-show="loginModel.isConnected">	  	  

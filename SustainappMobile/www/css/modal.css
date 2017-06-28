@@ -17,6 +17,12 @@
   }
 }
  
+ @media (min-width: 680px){
+   ion-modal-view ion-content{
+        overflow: hidden !important;
+   }
+ }
+ 
  .s-modal-confirm{
 	background-color: white;
 	border-radius: 3px;
