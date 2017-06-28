@@ -104,6 +104,7 @@ angular.module('sustainapp.controllers')
 			userService.signin(data).success(function(result) {		    	
 		    	openSession(result, $scope.loginModel.mail, $scope.loginModel.password);
 		    });
+			$state.go('tab.news');
 		}
 
 		/**
@@ -116,6 +117,7 @@ angular.module('sustainapp.controllers')
 			userService.login(data).success(function(result) {		    	
 		    	openSession(result, $scope.loginModel.mail, $scope.loginModel.password);
 		    });
+			$state.go('tab.news');
 		}
 
 		/**
@@ -170,7 +172,6 @@ angular.module('sustainapp.controllers')
 		    		sessionService.setObject('city' ,result.city);
 		    		$scope.loginModel.cityId = result.city.id;
 		    	}
-		    	$state.go('tab.news');
 		    	initWebSocket();
 	    	} else {
 	    		$scope.loginModel.allErrors = result.errors;
