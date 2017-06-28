@@ -273,10 +273,10 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
   
   /**
    * Préférence pour le scroll native
-   *//*
+   */
    if (!ionic.Platform.isIOS()) {
 	   $ionicConfigProvider.scrolling.jsScrolling(false);
-   }*/
+   }
   
    /**
 	* Autoriser les urls provenant de ces sites web
