@@ -94,6 +94,7 @@ public class CourseController extends GenericCourseController {
 				.setLanguage(!request.getParameter("langue").isEmpty() ? request.getParameter("langue") : "en")
 				.setTitle(request.getParameter("title"))
 				.setTimestamps(GregorianCalendar.getInstance())
+				.setViews(0)
 				.setType(challengeTypeService.getById(StringsUtils.parseLongQuickly(request.getParameter("type")).get()));
 		if(!isEmpty(request.getParameter("file"))){
 			course.setPicture(FilesUtils.compressImage(decodeBase64(request.getParameter("file")), FilesUtils.FORMAT_PNG));
