@@ -79,6 +79,7 @@
     "form.mail.mandatory" : "The mail field is mandatory",
     "form.mail.format" : "Please enter a valid mail format",
     "form.mail.exist" : "The email address is already used",
+    "form.mail.notExist" : "The email address is not used by a member",
     "form.password.mandatory" : "The password field is mandatory and must contains at least 4 characters",
     "form.firstName.mandatory" : "The first name field is mandatory",
     "form.lastName.mandatory" : "The last name field is mandatory",
@@ -123,6 +124,9 @@
     "administration.visitByHours" : "Visits per hours",
     "administration.notVisibles" : "Hidden",
     "administration.visibles" : "Visible",
+    "administration.adminManagement" : "Administrator management",
+    "administration.createAdmin" : "Grant as an administrator",
+    "administration.nowAdmin" : "is now an administrator",
     
     "challengetype.building" : "eco-builing",
     "challengetype.design" : "eco-desgin",

@@ -28,6 +28,9 @@ angular.module('sustainapp.services').factory('administrationService', function(
 		},
 		cities : function(data) {
 			return $http.post(config.remoteServer+"/administration/cities", data ,params);
+		},
+		admin : function(data){
+			return $http.post(config.remoteServer+"/administration/admin", data ,params);
 		}
 	};
 });

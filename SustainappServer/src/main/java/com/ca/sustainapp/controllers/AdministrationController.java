@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ca.sustainapp.boot.SustainappConstantes;
+import com.ca.sustainapp.criteria.UserAccountCriteria;
 import com.ca.sustainapp.dao.ChallengeServiceDAO;
 import com.ca.sustainapp.dao.ChallengeTypeServiceDAO;
 import com.ca.sustainapp.dao.CityServiceDAO;
@@ -40,11 +41,14 @@ import com.ca.sustainapp.entities.PlaceEntity;
 import com.ca.sustainapp.entities.ProfileEntity;
 import com.ca.sustainapp.entities.ResearchEntity;
 import com.ca.sustainapp.entities.TeamEntity;
+import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.entities.VisitEntity;
+import com.ca.sustainapp.pojo.SearchResult;
 import com.ca.sustainapp.responses.ChallengesDataResponse;
 import com.ca.sustainapp.responses.CityDataResponse;
 import com.ca.sustainapp.responses.CoursesDataResponse;
 import com.ca.sustainapp.responses.LightCourseResponse;
+import com.ca.sustainapp.responses.LightProfileResponse;
 import com.ca.sustainapp.responses.ProfilesDataResponse;
 import com.ca.sustainapp.responses.ResearchDataResponse;
 
@@ -192,6 +196,26 @@ public class AdministrationController extends GenericController {
 				.setTotalPlaces(totalPlace)
 				.setVisitByDays(useByDays(visits))
 				.setVisitByHours(useByHours(visits)));
+	}
+	
+	/**
+	 * Passer un user administrateur avec son email
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/administration/admin", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	public ResponseEntity<String> admin(HttpServletRequest request){
+		if(!super.isAdmin(request) || request.getParameter("mail").isEmpty()){
+			return super.refuse();
+		}
+		SearchResult<UserAccountEntity> listResult = userService.searchByCriteres(new UserAccountCriteria().setMail(request.getParameter("mail")), 0L, 100L);
+		if(!listResult.getResults().isEmpty()){
+			UserAccountEntity user = listResult.getResults().get(0);
+			userService.createOrUpdate(user.setIsAdmin(true));
+			return super.success(new LightProfileResponse(user.getProfile()));
+		}
+		return super.refuse();
 	}
 	
 	/**
