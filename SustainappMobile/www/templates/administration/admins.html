@@ -1,0 +1,15 @@
+<ion-view view-title="{{'administration.adminManagement' | translate }}">
+    <ion-content class="padding">
+        <div class="row">
+            <div class="col col-10"></div>
+            <div class="col col-80">
+               <label class="item item-input item-floating-label" > 
+                  <span class="input-label s-common-label">{{'profile.mail' | translate}}</span> 
+                  <input ng-model="model.email" type="text" placeholder="{{'profile.mail' | translate}}" class="s-common-input">
+                  <span class="s-common-errors">{{model.error | translate}}</span>
+               </label>
+               <button class="s-common-btn" ng-click="createAdmin()">{{'administration.createAdmin' | translate }}</button>
+          </div>
+        </div>
+    </ion-content>
+</ion-view>

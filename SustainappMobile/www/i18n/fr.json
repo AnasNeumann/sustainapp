@@ -79,6 +79,7 @@
     "form.mail.mandatory" : "Veuillez remplir le champs adresse mail",
     "form.mail.format" : "Le format de votre mail n'est pas valide",
     "form.mail.exist" : "Cette adresse mail est déjà utilisee",
+    "form.mail.notExist" : "Cette adresse mail n'est pas liée à un membre",
     "form.password.mandatory" : "Le mot de passe doit contenir au moins 4 caracteres",
     "form.firstName.mandatory" : "Veuillez remplir le champs prenom",
     "form.lastName.mandatory" : "Veuillez remplir le champs nom de famille",
@@ -123,6 +124,9 @@
     "administration.visitByHours" : "Visites par heures",
     "administration.notVisibles" : "Cachés",
     "administration.visibles" : "Visibles",
+    "administration.adminManagement" : "Gestion des administrateurs",
+    "administration.createAdmin" : "Donner les droits administrateurs",
+    "administration.nowAdmin" : "est maintenant un administrateur",
     
     "challengetype.building" : "eco-construction",
     "challengetype.design" : "eco-desgin",

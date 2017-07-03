@@ -97,6 +97,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
       }
     }
   })
+  .state('tab.administration-admins', {
+    url: '/administration/admins',
+    views: {
+      'tab-news': {
+        templateUrl: 'templates/administration/admins.html',
+        controller: 'adminsController'
+      }
+    }
+  })
   .state('tab.administration-cities', {
     url: '/administration/cities',
     views: {
