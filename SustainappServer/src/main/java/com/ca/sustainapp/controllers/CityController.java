@@ -130,7 +130,7 @@ public class CityController extends GenericController {
 			return super.refuse();
 		}
 		List<LightCityResponse>cities = new ArrayList<LightCityResponse>();
-		for(CityEntity city : getService.cascadeGetCities(new CityCriteria().setActif(0))){
+		for(CityEntity city : getService.cascadeGet(new CityCriteria().setActif(0))){
 			cities.add(new LightCityResponse()
 					.setId(city.getId())
 					.setName(city.getName())

@@ -54,7 +54,7 @@ public class AnswerController extends GenericCourseController {
 		if(null == question){
 			return super.refuse();
 		}
-		List<AnswerEntity> answers = getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(question.getId()));
+		List<AnswerEntity> answers = getService.cascadeGet(new AnswerCriteria().setQuestionId(question.getId()));
 		Integer numero = (null != answers)? answers.size() : 0;
 		AnswerEntity answer = new AnswerEntity()
 				.setData(request.getParameter("data"))
@@ -83,7 +83,7 @@ public class AnswerController extends GenericCourseController {
 		if(null == answer){
 			return super.refuse();
 		}
-		List<AnswerEntity> answers = getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(answer.getQuestionId()));
+		List<AnswerEntity> answers = getService.cascadeGet(new AnswerCriteria().setQuestionId(answer.getQuestionId()));
 		for(AnswerEntity a : answers){
 			if(a.getNumero() > answer.getNumero()){
 				answerService.createOrUpdate(a.setNumero(a.getNumero()-1));
@@ -106,7 +106,7 @@ public class AnswerController extends GenericCourseController {
 		if(null == answer || !toIndex.isPresent()){
 			return super.refuse();
 		}
-		List<AnswerEntity> answers = getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(answer.getQuestionId()));
+		List<AnswerEntity> answers = getService.cascadeGet(new AnswerCriteria().setQuestionId(answer.getQuestionId()));
 		if(toIndex.get() > answer.getNumero()){
 			avancer(answer, answers, toIndex.get());
 		}else if(toIndex.get() < answer.getNumero()){

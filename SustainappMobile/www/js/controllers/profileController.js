@@ -59,6 +59,38 @@ angular.module('sustainapp.controllers')
 	        $scope.profileModel.openBadges = true;
 	    };
 	    
+	    
+	    /**
+	     * Modal de suppresion du profile + compte
+	     */
+	    $ionicModal.fromTemplateUrl('templates/profile/modalDelete.html', {
+	 	     scope: $scope
+	    }).then(function(modal) {
+	 	     $scope.modal = modal;
+	 	});
+	    
+	    /**
+	     * Demande de confirmation de suppression du compte + profile
+	     */
+	    $scope.confirmDelete = function(){
+	    	$scope.modal.show();
+	    };
+	    
+	    /**
+	     * Suppression définitive du profile + compte
+	     */
+	    $scope.deleteProfile = function(){
+	    	$scope.modal.hide();
+	    	profileService.deleteById(data).success(function(result) {
+				if(result.code == 1){
+					$rootScope.$broadcast('DELETED');
+		    	}
+		    })
+		    .error(function(error){
+		    	sessionService.refresh($scope.deleteProfile);
+		    });
+	    };
+	    
 	    /**
 	     * update d'un profile
 	     */

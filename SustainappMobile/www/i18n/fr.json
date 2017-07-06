@@ -25,6 +25,7 @@
     
     "modal.confirm" : "Confirmer",
     "modal.text" : "Etes-vous reellement sur de vouloir supprimer ? Cette action est irreversible !",
+    "modal.profile.text" : "Etes-vous reellement sur de vouloir supprimer votre profil ainsi que toutes vos informations, cours et challenges ? Cette action est irreversible !",
    
     "teams.name"  : "nom",
     "teams.add"   : "Créer une nouvelle equipe",

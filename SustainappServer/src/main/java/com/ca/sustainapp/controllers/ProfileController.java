@@ -150,12 +150,23 @@ public class ProfileController extends GenericController {
 	}
 	
 	/**
+	 * Suppression d'un profil et d'un compte
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/profile/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	public ResponseEntity<String> delete(HttpServletRequest request){
+		return super.success();
+	}
+	
+	/**
 	 * Get all courses made by a profile
 	 * @param profilId
 	 * @return
 	 */
 	private List<LightCourseResponse> getAllProfileCourses(Long profilId){
-		List<CourseEntity> courses = getService.cascadeGetCourses(new CourseCriteria().setCreatorId(profilId));
+		List<CourseEntity> courses = getService.cascadeGet(new CourseCriteria().setCreatorId(profilId));
 		List<LightCourseResponse> result = new ArrayList<LightCourseResponse>();
 		if(null != courses){
 			for(CourseEntity course : courses){
@@ -172,7 +183,7 @@ public class ProfileController extends GenericController {
 	 */
 	private List<BadgeResponse> getAllProfileBadge(Long id){
 		List<BadgeResponse> result = new ArrayList<BadgeResponse>();
-		List<ProfilBadgeEntity> listBadge = getService.cascadeGetProfilBadge(new ProfilBadgeCriteria().setProfilId(id));
+		List<ProfilBadgeEntity> listBadge = getService.cascadeGet(new ProfilBadgeCriteria().setProfilId(id));
 		for(BadgeEntity badge : badgeService.getAll()){
 			boolean on = false;
 			for(ProfilBadgeEntity link : listBadge){

@@ -119,10 +119,10 @@ public class PlaceController extends GenericCityController {
 		if(null == user || null == place){
 			return super.refuse(); 
 		}
-		List<PlaceNoteEntity> notes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(place.getId()));
+		List<PlaceNoteEntity> notes = getService.cascadeGet(new PlaceNoteCriteria().setPlaceId(place.getId()));
 		return super.success(new PlaceResponse()
 				.setIsOwner(super.isOnwerPlace(place, user))
-				.setPictures(getService.cascadeGetPlacePictures(new PlacePictureCriteria().setPlaceId(idPlace.get())))
+				.setPictures(getService.cascadeGet(new PlacePictureCriteria().setPlaceId(idPlace.get())))
 				.setNote(super.getCurrentNote(user.getProfile(), place))
 				.setPlace(place)
 				.setAverage(calculAverageNotes(notes))
@@ -243,7 +243,7 @@ public class PlaceController extends GenericCityController {
 			return super.refuse();
 		}
 		PlaceNoteEntity currentNote;
-		List<PlaceNoteEntity> myNotes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
+		List<PlaceNoteEntity> myNotes = getService.cascadeGet(new PlaceNoteCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
 		if(myNotes.size() > 0){
 			currentNote = myNotes.get(0).setScore(score.get());
 		}else {
@@ -254,7 +254,7 @@ public class PlaceController extends GenericCityController {
 					.setTimestamps(GregorianCalendar.getInstance());
 		}
 		noteService.createOrUpdate(currentNote);
-		List<PlaceNoteEntity> allNotes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(idPlace.get()));
+		List<PlaceNoteEntity> allNotes = getService.cascadeGet(new PlaceNoteCriteria().setPlaceId(idPlace.get()));
 		Integer total = allNotes.size();
 		return super.success(new RankCoursResponse().setTotal(total).setAverage(calculAverageNotes(allNotes)));
 	}
@@ -281,7 +281,7 @@ public class PlaceController extends GenericCityController {
 		if(Math.abs(lng.get()-place.getLongitude()) > 0.2 || Math.abs(lat.get()-place.getLatitude()) >0.2){
 			return super.refuse();
 		}
-		List<VisitEntity> currentVisit = getService.cascadeGetVisit(new VisitCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
+		List<VisitEntity> currentVisit = getService.cascadeGet(new VisitCriteria().setPlaceId(idPlace.get()).setProfilId(user.getProfile().getId()));
 		if(null == currentVisit || currentVisit.size() == 0){
 			VisitEntity visit = new VisitEntity()
 					.setPlaceId(idPlace.get())

@@ -66,7 +66,7 @@ public class QuestionController extends GenericCourseController {
 			return super.refuse();
 		}
 		return super.success(new QuestionsResponse()
-				.setQuestions(getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topicId.get())))
+				.setQuestions(getService.cascadeGet(new QuestionCriteria().setTopicId(topicId.get())))
 				.setCourseId(topic.getCurseId()));
 	}
 	
@@ -82,7 +82,7 @@ public class QuestionController extends GenericCourseController {
 		if(null == topic || !validator.validate(request).isEmpty()){
 			return super.refuse(validator.validate(request));
 		}
-		List<QuestionEntity> allQuestions = getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topic.getId()));
+		List<QuestionEntity> allQuestions = getService.cascadeGet(new QuestionCriteria().setTopicId(topic.getId()));
 		Integer numero = (null != allQuestions)? allQuestions.size() : 0;
 		QuestionEntity question = new QuestionEntity()
 				.setMessage(request.getParameter("message"))
@@ -108,7 +108,7 @@ public class QuestionController extends GenericCourseController {
 		if(null == question){
 			return super.refuse();
 		}
-		List<QuestionEntity> questions = getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(question.getTopicId()));
+		List<QuestionEntity> questions = getService.cascadeGet(new QuestionCriteria().setTopicId(question.getTopicId()));
 		for(QuestionEntity q : questions){
 			if(q.getNumero() > question.getNumero()){
 				questionService.createOrUpdate(q.setNumero(q.getNumero()-1));
@@ -131,7 +131,7 @@ public class QuestionController extends GenericCourseController {
 		if(null == question || !toIndex.isPresent()){
 			return super.refuse();
 		}
-		List<QuestionEntity> questions = getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(question.getTopicId()));
+		List<QuestionEntity> questions = getService.cascadeGet(new QuestionCriteria().setTopicId(question.getTopicId()));
 		if(toIndex.get() > question.getNumero()){
 			avancer(question, questions, toIndex.get());
 		}else if(toIndex.get() < question.getNumero()){
@@ -161,8 +161,8 @@ public class QuestionController extends GenericCourseController {
 		TopicEntity topic = topicService.getById(question.getTopicId());
 		return super.success(new QuestionResponse()
 				.setCourseId(topic.getCurseId())
-				.setAnswers(getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(questionId.get())))
-				.setCategories(getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(questionId.get())))
+				.setAnswers(getService.cascadeGet(new AnswerCriteria().setQuestionId(questionId.get())))
+				.setCategories(getService.cascadeGet(new AnswerCategoryCriteria().setQuestionId(questionId.get())))
 				.setQuestion(question));
 	}
 	

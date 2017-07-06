@@ -61,7 +61,7 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean superhero(ProfileEntity profil){
-		if(getService.cascadeGetReport(new ReportCriteria().setProfilId(profil.getId())).size() >= 10){
+		if(getService.cascadeGet(new ReportCriteria().setProfilId(profil.getId())).size() >= 10){
 			return addByCode(profil, SustainappConstantes.BADGE_SUPERHERO);
 		}
 		return false;
@@ -74,7 +74,7 @@ public class BadgeService {
 	 */
 	public boolean teacher(ProfileEntity profil){
 		int votes = 0;
-		for(CourseEntity cours : getService.cascadeGetCourses(new CourseCriteria().setCreatorId(profil.getId()))){
+		for(CourseEntity cours : getService.cascadeGet(new CourseCriteria().setCreatorId(profil.getId()))){
 			for(RankCourseEntity rank : cours.getListRank()){
 				if(rank.getScore() >= 3){
 					votes++;
@@ -93,7 +93,7 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean graduate(ProfileEntity profil){
-		if(getService.cascadeGetValidation(new TopicValidationCriteria().setProfilId(profil.getId())).size() >= 10){
+		if(getService.cascadeGet(new TopicValidationCriteria().setProfilId(profil.getId())).size() >= 10){
 			return addByCode(profil, SustainappConstantes.BADGE_GRADUATE);
 		}
 		return false;
@@ -105,8 +105,8 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean capitaine(ProfileEntity profil){
-		for(TeamRoleEntity role : getService.cascadeGetTeamRole(new TeamRoleCriteria().setProfilId(profil.getId()).setRole(SustainappConstantes.TEAMROLE_ADMIN))){
-			if(getService.cascadeGetTeamRole(new TeamRoleCriteria().setTeamId(role.getTeamId()).setRole(SustainappConstantes.TEAMROLE_MEMBER)).size() >= 2){
+		for(TeamRoleEntity role : getService.cascadeGet(new TeamRoleCriteria().setProfilId(profil.getId()).setRole(SustainappConstantes.TEAMROLE_ADMIN))){
+			if(getService.cascadeGet(new TeamRoleCriteria().setTeamId(role.getTeamId()).setRole(SustainappConstantes.TEAMROLE_MEMBER)).size() >= 2){
 				return addByCode(profil, SustainappConstantes.BADGE_LEADER);
 			}
 		}
@@ -165,7 +165,7 @@ public class BadgeService {
 	public boolean handleVoteParticipation(Long idParticipation){
 		ParticipationEntity participation = participationService.getById(idParticipation);
 		int total = 0;
-		for(ParticipationEntity p : getService.cascadeGetParticipations(new ParticipationCriteria().setTargetId(participation.getTargetId()).setTargetType(participation.getTargetType()))){
+		for(ParticipationEntity p : getService.cascadeGet(new ParticipationCriteria().setTargetId(participation.getTargetId()).setTargetType(participation.getTargetType()))){
 			total += p.getVotes().size();
 		}
 		if(participation.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
@@ -199,7 +199,7 @@ public class BadgeService {
 	 * @param idBadge
 	 */
 	private boolean addBadgeIfNotExist(ProfileEntity profil, BadgeEntity badge){
-		List<ProfilBadgeEntity> listBadge = getService.cascadeGetProfilBadge(new ProfilBadgeCriteria().setProfilId(profil.getId()));
+		List<ProfilBadgeEntity> listBadge = getService.cascadeGet(new ProfilBadgeCriteria().setProfilId(profil.getId()));
 		for(ProfilBadgeEntity link : listBadge){
 			if(link.getBadge().getId().equals(badge.getId())){
 				return false;

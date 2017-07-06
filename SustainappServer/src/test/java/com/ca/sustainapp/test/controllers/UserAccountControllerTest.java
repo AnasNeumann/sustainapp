@@ -128,10 +128,10 @@ public class UserAccountControllerTest extends AbstractTest {
 	@Test
 	public final void loginSuccessTest(){
 		when(userAccountServiceMock.connect(any(String.class), any(String.class))).thenReturn(super.connectedUser);
-		when(super.getServiceMock.cascadeGetCities(any(CityCriteria.class))).thenReturn(new SustainappList<CityEntity>().put(city));
+		when(super.getServiceMock.cascadeGet(any(CityCriteria.class))).thenReturn(new SustainappList<CityEntity>().put(city));
 		controller.login(super.requestMock);
 		verify(userAccountServiceMock, times(1)).connect(any(String.class), any(String.class));
-		verify(super.getServiceMock, times(1)).cascadeGetCities(any(CityCriteria.class));
+		verify(super.getServiceMock, times(1)).cascadeGet(any(CityCriteria.class));
 	}
 
 	/**
@@ -140,10 +140,10 @@ public class UserAccountControllerTest extends AbstractTest {
 	@Test
 	public final void UserNotExist(){
 		when(userAccountServiceMock.connect(any(String.class), any(String.class))).thenReturn(null);
-		when(super.getServiceMock.cascadeGetCities(any(CityCriteria.class))).thenReturn(new SustainappList<CityEntity>().put(city));
+		when(super.getServiceMock.cascadeGet(any(CityCriteria.class))).thenReturn(new SustainappList<CityEntity>().put(city));
 		controller.login(super.requestMock);
 		verify(userAccountServiceMock, times(1)).connect(any(String.class), any(String.class));
-		verify(super.getServiceMock, times(0)).cascadeGetCities(any(CityCriteria.class));
+		verify(super.getServiceMock, times(0)).cascadeGet(any(CityCriteria.class));
 	}
 
 }

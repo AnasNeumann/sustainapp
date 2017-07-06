@@ -123,7 +123,7 @@ public class ParticipationController extends GenericChallengeController {
 			return super.refuse();
 		}
 		ChallengeEntity challenge = challengeService.getById(participation.getChallengeId());
-		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challenge.getId()));
+		List<ParticipationEntity> participations = getService.cascadeGet(new ParticipationCriteria().setChallengeId(challenge.getId()));
 		ChallengeVoteEntity currentVote = searchVote(participations, idProfile);
 		badgeService.handleVoteParticipation(idParticipation.get());
 		if(null == currentVote){
@@ -179,7 +179,7 @@ public class ParticipationController extends GenericChallengeController {
 		if(participation.getTargetType().equals(SustainappConstantes.TARGET_PROFILE)){
 			notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, participation.getTargetId(), creatorId, participation.getId());
 		}else{
-			List<TeamRoleEntity> roles = getService.cascadeGetTeamRole(new TeamRoleCriteria().setTeamId(participation.getTargetId()));
+			List<TeamRoleEntity> roles = getService.cascadeGet(new TeamRoleCriteria().setTeamId(participation.getTargetId()));
 			for(TeamRoleEntity role : roles){
 				if(role.getRole().equals(SustainappConstantes.TEAMROLE_MEMBER) || role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN)){
 					notificationService.create(SustainappConstantes.NOTIFICATION_MESSAGE_VOTE, role.getProfilId(), creatorId, participation.getId());

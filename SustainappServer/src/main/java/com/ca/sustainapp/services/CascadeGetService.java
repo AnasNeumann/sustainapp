@@ -11,6 +11,8 @@ import com.ca.sustainapp.comparators.EntityComparator;
 import com.ca.sustainapp.comparators.NumerotableEntityComparator;
 import com.ca.sustainapp.criteria.AnswerCategoryCriteria;
 import com.ca.sustainapp.criteria.AnswerCriteria;
+import com.ca.sustainapp.criteria.ChallengeCriteria;
+import com.ca.sustainapp.criteria.ChallengeVoteCriteria;
 import com.ca.sustainapp.criteria.CityCriteria;
 import com.ca.sustainapp.criteria.CourseCriteria;
 import com.ca.sustainapp.criteria.NotificationCriteria;
@@ -21,13 +23,17 @@ import com.ca.sustainapp.criteria.PlaceNoteCriteria;
 import com.ca.sustainapp.criteria.PlacePictureCriteria;
 import com.ca.sustainapp.criteria.ProfilBadgeCriteria;
 import com.ca.sustainapp.criteria.QuestionCriteria;
+import com.ca.sustainapp.criteria.RankCourseCriteria;
 import com.ca.sustainapp.criteria.ReportCriteria;
+import com.ca.sustainapp.criteria.ResearchCriteria;
 import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
 import com.ca.sustainapp.criteria.VisitCriteria;
 import com.ca.sustainapp.dao.AnswerCategoryServiceDAO;
 import com.ca.sustainapp.dao.AnswerServiceDAO;
+import com.ca.sustainapp.dao.ChallengeServiceDAO;
+import com.ca.sustainapp.dao.ChallengeVoteServiceDAO;
 import com.ca.sustainapp.dao.CityServiceDAO;
 import com.ca.sustainapp.dao.CourseServiceDAO;
 import com.ca.sustainapp.dao.NotificationServiceDAO;
@@ -38,13 +44,17 @@ import com.ca.sustainapp.dao.PlacePictureServiceDAO;
 import com.ca.sustainapp.dao.PlaceServiceDAO;
 import com.ca.sustainapp.dao.ProfilBadgeServiceDAO;
 import com.ca.sustainapp.dao.QuestionServiceDAO;
+import com.ca.sustainapp.dao.RankCourseServiceDAO;
 import com.ca.sustainapp.dao.ReportServiceDAO;
+import com.ca.sustainapp.dao.ResearchServiceDAO;
 import com.ca.sustainapp.dao.TeamRoleServiceDAO;
 import com.ca.sustainapp.dao.TopicServiceDAO;
 import com.ca.sustainapp.dao.TopicValidationServiceDAO;
 import com.ca.sustainapp.dao.VisitServiceDAO;
 import com.ca.sustainapp.entities.AnswerCategoryEntity;
 import com.ca.sustainapp.entities.AnswerEntity;
+import com.ca.sustainapp.entities.ChallengeEntity;
+import com.ca.sustainapp.entities.ChallengeVoteEntity;
 import com.ca.sustainapp.entities.CityEntity;
 import com.ca.sustainapp.entities.CourseEntity;
 import com.ca.sustainapp.entities.NotificationEntity;
@@ -55,7 +65,9 @@ import com.ca.sustainapp.entities.PlaceNoteEntity;
 import com.ca.sustainapp.entities.PlacePictureEntity;
 import com.ca.sustainapp.entities.ProfilBadgeEntity;
 import com.ca.sustainapp.entities.QuestionEntity;
+import com.ca.sustainapp.entities.RankCourseEntity;
 import com.ca.sustainapp.entities.ReportEntity;
+import com.ca.sustainapp.entities.ResearchEntity;
 import com.ca.sustainapp.entities.TeamRoleEntity;
 import com.ca.sustainapp.entities.TopicEntity;
 import com.ca.sustainapp.entities.TopicValidationEntity;
@@ -108,6 +120,14 @@ public class CascadeGetService {
 	private PlaceNoteServiceDAO placeNoteService;
 	@Autowired
 	private VisitServiceDAO visitService;
+	@Autowired
+	private ChallengeVoteServiceDAO challengeVoteService;
+	@Autowired
+	private ChallengeServiceDAO challengeService;
+	@Autowired
+	private ResearchServiceDAO researchService;
+	@Autowired
+	private RankCourseServiceDAO rankService;
 	
 	/**
 	 * Comparator
@@ -123,11 +143,115 @@ public class CascadeGetService {
 	private Long PAGINATION = 100L;
 	
 	/**
+	 * Cascade get for rank course
+	 * @param research
+	 * @return
+	 */
+	public List<RankCourseEntity> cascadeGet(RankCourseCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<RankCourseEntity> result = null;
+		List<RankCourseEntity> finalResult = new ArrayList<RankCourseEntity>();
+		do {
+			result = rankService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for research
+	 * @param research
+	 * @return
+	 */
+	public List<ResearchEntity> cascadeGet(ResearchCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<ResearchEntity> result = null;
+		List<ResearchEntity> finalResult = new ArrayList<ResearchEntity>();
+		do {
+			result = researchService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
+	 * Cascade get for challenge
+	 * @param criteria
+	 * @return
+	 */
+	public List<ChallengeEntity> cascadeGet(ChallengeCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<ChallengeEntity> result = null;
+		List<ChallengeEntity> finalResult = new ArrayList<ChallengeEntity>();
+		do {
+			result = challengeService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+
+	/**
+	 * Cascade get for vote
+	 * @param criteria
+	 * @return
+	 */
+	public List<ChallengeVoteEntity> cascadeGet(ChallengeVoteCriteria criteria){
+		Long startIndex = 0L;
+		Long incrementsEntries = 0L;
+		Long totalResults = null;
+		SearchResult<ChallengeVoteEntity> result = null;
+		List<ChallengeVoteEntity> finalResult = new ArrayList<ChallengeVoteEntity>();
+		do {
+			result = challengeVoteService.searchByCriteres(criteria, startIndex, PAGINATION);
+			if (null == totalResults && null != result) {
+				totalResults = result.getTotalResults();
+			}
+			if (null != result && !result.getResults().isEmpty()) {
+				finalResult.addAll(result.getResults());
+			}
+			startIndex++;
+			incrementsEntries += PAGINATION;
+		} while (incrementsEntries < totalResults);
+		Collections.sort(finalResult, compartor);
+		return finalResult;
+	}
+	
+	/**
 	 * Cascade get for visit
 	 * @param criteria
 	 * @return
 	 */
-	public List<VisitEntity> cascadeGetVisit(VisitCriteria criteria){
+	public List<VisitEntity> cascadeGet(VisitCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -153,7 +277,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<PlaceNoteEntity> cascadeGetPlaceNotes(PlaceNoteCriteria criteria){
+	public List<PlaceNoteEntity> cascadeGet(PlaceNoteCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -179,7 +303,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<PlacePictureEntity> cascadeGetPlacePictures(PlacePictureCriteria criteria){
+	public List<PlacePictureEntity> cascadeGet(PlacePictureCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -205,7 +329,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<PlaceEntity> cascadeGetPlaces(PlaceCriteria criteria){
+	public List<PlaceEntity> cascadeGet(PlaceCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -231,7 +355,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<CityEntity> cascadeGetCities(CityCriteria criteria){
+	public List<CityEntity> cascadeGet(CityCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -257,7 +381,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<NotificationEntity> cascadeGetNotifications(NotificationCriteria criteria){
+	public List<NotificationEntity> cascadeGet(NotificationCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -283,7 +407,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<ProfilBadgeEntity> cascadeGetProfilBadge(ProfilBadgeCriteria criteria){
+	public List<ProfilBadgeEntity> cascadeGet(ProfilBadgeCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -309,7 +433,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<ReportEntity> cascadeGetReport(ReportCriteria criteria){
+	public List<ReportEntity> cascadeGet(ReportCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -335,7 +459,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<PartEntity> cascadeGetPart(PartCriteria criteria){
+	public List<PartEntity> cascadeGet(PartCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -361,7 +485,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<ParticipationEntity> cascadeGetParticipations(ParticipationCriteria criteria){
+	public List<ParticipationEntity> cascadeGet(ParticipationCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -387,7 +511,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<TeamRoleEntity> cascadeGetTeamRole(TeamRoleCriteria criteria){
+	public List<TeamRoleEntity> cascadeGet(TeamRoleCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -414,7 +538,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<CourseEntity> cascadeGetCourses(CourseCriteria criteria){
+	public List<CourseEntity> cascadeGet(CourseCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -440,7 +564,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<TopicEntity> cascadeGetTopic(TopicCriteria criteria){
+	public List<TopicEntity> cascadeGet(TopicCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -466,7 +590,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<TopicValidationEntity> cascadeGetValidation(TopicValidationCriteria criteria){
+	public List<TopicValidationEntity> cascadeGet(TopicValidationCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -492,7 +616,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<QuestionEntity> cascadeGetQuestion(QuestionCriteria criteria){
+	public List<QuestionEntity> cascadeGet(QuestionCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -518,7 +642,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<AnswerEntity> cascadeGetAnswer(AnswerCriteria criteria){
+	public List<AnswerEntity> cascadeGet(AnswerCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;
@@ -544,7 +668,7 @@ public class CascadeGetService {
 	 * @param criteria
 	 * @return
 	 */
-	public List<AnswerCategoryEntity> cascadeGetAnswerCateogry(AnswerCategoryCriteria criteria){
+	public List<AnswerCategoryEntity> cascadeGet(AnswerCategoryCriteria criteria){
 		Long startIndex = 0L;
 		Long incrementsEntries = 0L;
 		Long totalResults = null;

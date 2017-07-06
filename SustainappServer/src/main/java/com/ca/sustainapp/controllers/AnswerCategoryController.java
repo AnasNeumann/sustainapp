@@ -50,7 +50,7 @@ public class AnswerCategoryController extends GenericCourseController {
 		if(null == question){
 			return super.refuse();
 		}
-		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(question.getId()));
+		List<AnswerCategoryEntity> categories = getService.cascadeGet(new AnswerCategoryCriteria().setQuestionId(question.getId()));
 		Integer numero = (null != categories)? categories.size() : 0;
 		AnswerCategoryEntity category = new AnswerCategoryEntity()
 				.setName(request.getParameter("message"))
@@ -72,7 +72,7 @@ public class AnswerCategoryController extends GenericCourseController {
 		if(null == category){
 			return super.refuse();
 		}
-		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
+		List<AnswerCategoryEntity> categories = getService.cascadeGet(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
 		for(AnswerCategoryEntity c : categories){
 			if(c.getNumero() > category.getNumero()){
 				answerCategoryService.createOrUpdate(c.setNumero(c.getNumero()-1));
@@ -95,7 +95,7 @@ public class AnswerCategoryController extends GenericCourseController {
 		if(null == category || !toIndex.isPresent()){
 			return super.refuse();
 		}
-		List<AnswerCategoryEntity> categories = getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
+		List<AnswerCategoryEntity> categories = getService.cascadeGet(new AnswerCategoryCriteria().setQuestionId(category.getQuestionId()));
 		if(toIndex.get() > category.getNumero()){
 			avancer(category, categories, toIndex.get());
 		}else if(toIndex.get() < category.getNumero()){

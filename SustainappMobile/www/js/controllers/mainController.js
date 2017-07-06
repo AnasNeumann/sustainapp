@@ -33,7 +33,7 @@ angular.module('sustainapp.controllers')
 			$scope._isNotMobile = displayService.isNotMobile;
 		};
 		initLoginModel();
-		
+
 		/**
 		 * Affichage du titre de la page
 		 */
@@ -43,7 +43,20 @@ angular.module('sustainapp.controllers')
 				$ionicNavBarDelegate.title(args);
 			});
 		});
-		
+	
+		/**
+		 * suppression d'un profile + compte
+		 */
+		$scope.$on('DELETED', function(event, args) {			
+			sessionService.set('id' ,null);
+			sessionService.set('token' ,null);
+			sessionService.set('isConnected' ,null);
+			sessionService.set('mail' , "");
+    		sessionService.set('password' , "");
+			initLoginModel();
+			$state.go('tab.news');
+		});
+
 		/**
 		 * Initialisation de la réception de websockets
 		 */
