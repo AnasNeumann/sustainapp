@@ -81,6 +81,10 @@ angular.module('sustainapp.controllers')
 	     */
 	    $scope.deleteProfile = function(){
 	    	$scope.modal.hide();
+	    	var data = new FormData();
+	    	data.append("sessionId", sessionService.get('id'));
+			data.append("sessionToken", sessionService.get('token'));
+			data.append("profile", $stateParams.id);
 	    	profileService.deleteById(data).success(function(result) {
 				if(result.code == 1){
 					$rootScope.$broadcast('DELETED');

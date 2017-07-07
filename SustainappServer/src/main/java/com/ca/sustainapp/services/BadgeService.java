@@ -137,7 +137,7 @@ public class BadgeService {
 	 * @param idProfil
 	 */
 	public boolean walker(ProfileEntity profil){
-		if(getService.cascadeGetVisit(new VisitCriteria().setProfilId(profil.getId())).size() >= 5){
+		if(getService.cascadeGet(new VisitCriteria().setProfilId(profil.getId())).size() >= 5){
 			return addByCode(profil, SustainappConstantes.BADGE_WALKER);
 		}
 		return false;
