@@ -29,6 +29,7 @@ import com.ca.sustainapp.criteria.TeamRoleCriteria;
 import com.ca.sustainapp.criteria.TopicCriteria;
 import com.ca.sustainapp.criteria.TopicValidationCriteria;
 import com.ca.sustainapp.criteria.VisitCriteria;
+import com.ca.sustainapp.dao.ProfileServiceDAO;
 import com.ca.sustainapp.dao.TeamServiceDAO;
 import com.ca.sustainapp.entities.AnswerCategoryEntity;
 import com.ca.sustainapp.entities.AnswerEntity;
@@ -99,6 +100,8 @@ public class CascadeDeleteService {
 	 */
 	@Autowired
 	private TeamServiceDAO teamService;
+	@Autowired
+	private ProfileServiceDAO profileService;
 
 	/**
 	 * Les repositories
@@ -163,7 +166,7 @@ public class CascadeDeleteService {
 		if(user.getType() == 1 && cities.size() > 0){
 			cascadeDelete(cities.get(0));
 		}
-		cascadeDelete(user.getProfile());
+		cascadeDelete(profileService.getById(user.getProfile().getId()));
 		userRepository.delete(user);
 	}
 
@@ -174,7 +177,6 @@ public class CascadeDeleteService {
 	@Modifying
 	@Transactional
 	public void cascadeDelete(ProfileEntity profile){
-		profileRespository.delete(profile);
 		for(NotificationEntity notification : getService.cascadeGet(new NotificationCriteria().setProfilId(profile.getId()))){
 			cascadeDelete(notification);
 		}
@@ -202,6 +204,15 @@ public class CascadeDeleteService {
 		for(TopicValidationEntity validation : getService.cascadeGet(new TopicValidationCriteria().setProfilId(profile.getId()))){
 			cascadeDelete(validation);
 		}
+		for(CourseEntity course : getService.cascadeGet(new CourseCriteria().setCreatorId(profile.getId()))){
+			cascadeDelete(course);
+		}
+		for(VisitEntity visit : getService.cascadeGet(new VisitCriteria().setProfilId(profile.getId()))){
+			cascadeDelete(visit);
+		}
+		for(PlaceNoteEntity note : getService.cascadeGet(new PlaceNoteCriteria().setProfilId(profile.getId()))){
+			cascadeDelete(note);
+		}
 		for(TeamRoleEntity role : getService.cascadeGet(new TeamRoleCriteria().setProfilId(profile.getId()))){
 			if(role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN)){
 				cascadeDelete(teamService.getById(role.getTeamId()));
@@ -209,9 +220,7 @@ public class CascadeDeleteService {
 				cascadeDelete(role);
 			}
 		}
-		for(CourseEntity course : getService.cascadeGet(new CourseCriteria().setCreatorId(profile.getId()))){
-			cascadeDelete(course);
-		}
+		profileRespository.delete(profile);
 	}
 
 	/**
@@ -234,7 +243,7 @@ public class CascadeDeleteService {
 	@Modifying
 	@Transactional
 	public void cascadeDelete(CourseEntity cours){
-		for(RankCourseEntity rank : cours.getListRank()){
+		for(RankCourseEntity rank : getService.cascadeGet(new RankCourseCriteria().setCourseId(cours.getId()))){
 			cascadeDelete(rank);
 		}
 		for(TopicEntity topic : getService.cascadeGet(new TopicCriteria().setCurseId(cours.getId()))){
