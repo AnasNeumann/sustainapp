@@ -81,13 +81,13 @@ public class QuizController extends GenericCourseController {
 		String[] answers =  answersString.split(",");
 		List<Boolean> eachQuestions = new ArrayList<Boolean>();
 		int i= 0;
-		for(QuestionEntity question : getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(quiz.get()))){
+		for(QuestionEntity question : getService.cascadeGet(new QuestionCriteria().setTopicId(quiz.get()))){
 			if(null != answers[i]){
 				eachQuestions.add(validateQuestion(answers[i].split("/"), question));
 			}
 			i++;
 		}
-		List<TopicValidationEntity> validations = getService.cascadeGetValidation(new TopicValidationCriteria().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()));
+		List<TopicValidationEntity> validations = getService.cascadeGet(new TopicValidationCriteria().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()));
 		if(!eachQuestions.contains(false) && validations.isEmpty()){
 			service.createOrUpdate(new TopicValidationEntity().setProfilId(user.getProfile().getId()).setTopicId(quiz.get()).setTimestamps(GregorianCalendar.getInstance()));
 			badgeService.graduate(user.getProfile());
@@ -105,7 +105,7 @@ public class QuizController extends GenericCourseController {
 	 */
 	private boolean validateQuestion(String[] answers, QuestionEntity question){
 		int i = 0;
-		for(AnswerEntity answer : getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(question.getId()))){
+		for(AnswerEntity answer : getService.cascadeGet(new AnswerCriteria().setQuestionId(question.getId()))){
 			if(!answer.getData().equals(answers[i])){
 				return false;
 			}
@@ -121,9 +121,9 @@ public class QuizController extends GenericCourseController {
 	 */
 	List<QuestionQuizResponse> getAllTopicQuestions(Long id){
 		List<QuestionQuizResponse> result = new SustainappList<QuestionQuizResponse>();
-		for(QuestionEntity question : getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(id))){
+		for(QuestionEntity question : getService.cascadeGet(new QuestionCriteria().setTopicId(id))){
 			QuestionQuizResponse response = new QuestionQuizResponse(question)
-					.setCategories(getService.cascadeGetAnswerCateogry(new AnswerCategoryCriteria().setQuestionId(question.getId())))
+					.setCategories(getService.cascadeGet(new AnswerCategoryCriteria().setQuestionId(question.getId())))
 					.setAnswers(getAllQuestionAnswers(question.getId()));
 				result.add(response);
 		}
@@ -137,7 +137,7 @@ public class QuizController extends GenericCourseController {
 	 */
 	List<AnswerResponse> getAllQuestionAnswers(Long id){
 		List<AnswerResponse> result = new SustainappList<AnswerResponse>();
-		for(AnswerEntity answer : getService.cascadeGetAnswer(new AnswerCriteria().setQuestionId(id))){
+		for(AnswerEntity answer : getService.cascadeGet(new AnswerCriteria().setQuestionId(id))){
 				result.add(new AnswerResponse(answer));
 		}
 		return result;

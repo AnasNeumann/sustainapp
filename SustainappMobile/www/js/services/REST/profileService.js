@@ -29,6 +29,9 @@ angular.module('sustainapp.services')
 		},
 		visibility : function(data) {
 			return $http.post(config.remoteServer+"/profile/visibility", data, params);
+		},
+		deleteById : function(data){
+			return $http.post(config.remoteServer+"/profile/delete", data, params);
 		}
 	};
 });

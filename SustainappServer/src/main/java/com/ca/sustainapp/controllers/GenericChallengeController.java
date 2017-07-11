@@ -55,7 +55,7 @@ public class GenericChallengeController extends GenericController {
 	 * @return
 	 */
 	protected List<LightProfileResponse> searchAllProfiles(ProfileEntity profile){
-		List<TeamRoleEntity> roles = getService.cascadeGetTeamRole(new TeamRoleCriteria().setProfilId(profile.getId()));
+		List<TeamRoleEntity> roles = getService.cascadeGet(new TeamRoleCriteria().setProfilId(profile.getId()));
 		List<LightProfileResponse> allProfiles = new SustainappList<LightProfileResponse>().put(new LightProfileResponse(profile));
 		for(TeamRoleEntity role : roles){
 			if(role.getRole().equals(SustainappConstantes.TEAMROLE_ADMIN) || role.getRole().equals(SustainappConstantes.TEAMROLE_MEMBER)){

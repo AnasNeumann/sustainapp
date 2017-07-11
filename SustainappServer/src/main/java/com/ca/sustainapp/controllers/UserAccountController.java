@@ -116,7 +116,7 @@ public class UserAccountController extends GenericController {
 			token = super.createSession(user);
 		}
 		if(user.getType().equals(1)){
-			response.setCity(getService.cascadeGetCities(new CityCriteria().setUserId(user.getId())).get(0));
+			response.setCity(getService.cascadeGet(new CityCriteria().setUserId(user.getId())).get(0));
 		}
 		return super.success(response
 				.setUserType(user.getType())

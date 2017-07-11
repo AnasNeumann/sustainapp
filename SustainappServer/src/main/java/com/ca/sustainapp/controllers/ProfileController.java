@@ -150,12 +150,28 @@ public class ProfileController extends GenericController {
 	}
 	
 	/**
+	 * Suppression d'un profil et d'un compte
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/profile/delete", method = RequestMethod.POST, produces = SustainappConstantes.MIME_JSON)
+	public ResponseEntity<String> delete(HttpServletRequest request){
+		UserAccountEntity user = getUserIfOwner(request);
+		if(null == user){
+			return refuse();
+		}
+		deleteService.cascadeDelete(user);
+		return success();
+	}
+	
+	/**
 	 * Get all courses made by a profile
 	 * @param profilId
 	 * @return
 	 */
 	private List<LightCourseResponse> getAllProfileCourses(Long profilId){
-		List<CourseEntity> courses = getService.cascadeGetCourses(new CourseCriteria().setCreatorId(profilId));
+		List<CourseEntity> courses = getService.cascadeGet(new CourseCriteria().setCreatorId(profilId));
 		List<LightCourseResponse> result = new ArrayList<LightCourseResponse>();
 		if(null != courses){
 			for(CourseEntity course : courses){
@@ -172,7 +188,7 @@ public class ProfileController extends GenericController {
 	 */
 	private List<BadgeResponse> getAllProfileBadge(Long id){
 		List<BadgeResponse> result = new ArrayList<BadgeResponse>();
-		List<ProfilBadgeEntity> listBadge = getService.cascadeGetProfilBadge(new ProfilBadgeCriteria().setProfilId(id));
+		List<ProfilBadgeEntity> listBadge = getService.cascadeGet(new ProfilBadgeCriteria().setProfilId(id));
 		for(BadgeEntity badge : badgeService.getAll()){
 			boolean on = false;
 			for(ProfilBadgeEntity link : listBadge){
@@ -183,5 +199,23 @@ public class ProfileController extends GenericController {
 			result.add(new BadgeResponse().setBadge(badge).setOn(on));			
 		}
 		return result;
+	}
+	
+	/**
+	 * Get a user to delete if it is me or i am an admin
+	 * @param request
+	 * @return
+	 */
+	private UserAccountEntity getUserIfOwner(HttpServletRequest request){
+		UserAccountEntity user = super.getConnectedUser(request);	
+		Optional<Long> id = StringsUtils.parseLongQuickly(request.getParameter("profile"));
+		if(null == user || !id.isPresent()){
+			return null;
+		}
+		ProfileEntity profile = profileService.getById(id.get());
+		if(null == profile || (!user.getIsAdmin() && !user.getProfile().getId().equals(id.get()))){
+			return null;
+		}
+		return userService.getById(profile.getUserId());
 	}
 }

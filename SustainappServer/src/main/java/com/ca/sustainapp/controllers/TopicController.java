@@ -61,7 +61,7 @@ public class TopicController extends GenericCourseController {
 		if(null == cours || !validator.validate(request).isEmpty()){
 			return super.refuse(validator.validate(request));
 		}
-		List<TopicEntity> allTopics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(cours.getId()));
+		List<TopicEntity> allTopics = getService.cascadeGet(new TopicCriteria().setCurseId(cours.getId()));
 		Integer numero = (null != allTopics)? allTopics.size() : 0;
 		TopicEntity topic = new TopicEntity()
 				.setTitle(title)
@@ -93,13 +93,13 @@ public class TopicController extends GenericCourseController {
 		if(null == topic || null == user){
 			return super.refuse();
 		}
-		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(topicId.get()));
+		List<PartEntity> parts = getService.cascadeGet(new PartCriteria().setTopicId(topicId.get()));
 		Collections.sort(parts, super.comparatorByNumber);
 		return super.success(new TopicResponse()
 				.setTopic(topic)
 				.setIsOwner(super.verifyTopicInformations(topic, user))
 				.setParts(parts)
-				.setHasQuiz(getService.cascadeGetQuestion(new QuestionCriteria().setTopicId(topic.getId())).size()>0));
+				.setHasQuiz(getService.cascadeGet(new QuestionCriteria().setTopicId(topic.getId())).size()>0));
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public class TopicController extends GenericCourseController {
 		if(null == topic){
 			return super.refuse();
 		}
-		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(topic.getCurseId()));
+		List<TopicEntity> topics = getService.cascadeGet(new TopicCriteria().setCurseId(topic.getCurseId()));
 		for(TopicEntity t : topics){
 			if(t.getNumero() > topic.getNumero()){
 				topicService.createOrUpdate(t.setNumero(t.getNumero()-1));
@@ -167,7 +167,7 @@ public class TopicController extends GenericCourseController {
 		if(null == topic || !toIndex.isPresent()){
 			return super.refuse();
 		}
-		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(topic.getCurseId()));
+		List<TopicEntity> topics = getService.cascadeGet(new TopicCriteria().setCurseId(topic.getCurseId()));
 		if(toIndex.get() > topic.getNumero()){
 			avancer(topic, topics, toIndex.get());
 		}else if(toIndex.get() < topic.getNumero()){

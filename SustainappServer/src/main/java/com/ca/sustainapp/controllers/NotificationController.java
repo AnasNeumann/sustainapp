@@ -54,7 +54,7 @@ public class NotificationController extends GenericController{
 		if(!isConnected(request)){
 			return super.refuse();
 		}
-		List<NotificationEntity> listResult = ListUtils.reverseList(getService.cascadeGetNotifications(new NotificationCriteria().setProfilId(super.getUser(request).getProfile().getId())));
+		List<NotificationEntity> listResult = ListUtils.reverseList(getService.cascadeGet(new NotificationCriteria().setProfilId(super.getUser(request).getProfile().getId())));
 		List<NotificationResponse> notifications = new SustainappList<NotificationResponse>();
 		int maxResult = 15;
 		for(NotificationEntity entity : listResult){

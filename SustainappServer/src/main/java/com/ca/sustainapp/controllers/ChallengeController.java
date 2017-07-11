@@ -125,7 +125,7 @@ public class ChallengeController extends GenericChallengeController {
 			return super.refuse();
 		}
 		UserAccountEntity user = userService.getById(userId.get());
-		List<ParticipationEntity> participations = getService.cascadeGetParticipations(new ParticipationCriteria().setChallengeId(challengeId.get()));
+		List<ParticipationEntity> participations = getService.cascadeGet(new ParticipationCriteria().setChallengeId(challengeId.get()));
 		ChallengeVoteEntity currentVote = searchVote(participations, user.getProfile().getId());
 		Long idVote = null;
 		if(currentVote != null){

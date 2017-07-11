@@ -107,7 +107,7 @@ public class BadgeServiceTest extends AbstractTest {
 	 */
 	@Test
 	public void ajoutBadgeTest(){
-		when(getServiceMock.cascadeGetProfilBadge(any(ProfilBadgeCriteria.class))).thenReturn(new SustainappList<ProfilBadgeEntity>());
+		when(getServiceMock.cascadeGet(any(ProfilBadgeCriteria.class))).thenReturn(new SustainappList<ProfilBadgeEntity>());
 		when(badgeServiceMock.getAll()).thenReturn(badges);
 		when(linkServiceMock.createOrUpdate(any(ProfilBadgeEntity.class))).thenReturn(GENERIC_ID);
 		when(profilServiceMock.createOrUpdate(any(ProfileEntity.class))).thenReturn(GENERIC_ID);

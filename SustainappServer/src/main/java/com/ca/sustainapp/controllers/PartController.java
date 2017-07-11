@@ -53,7 +53,7 @@ public class PartController extends GenericCourseController {
 		if(null == topic || !validator.validate(request).isEmpty()){
 			return super.refuse(validator.validate(request));
 		}
-		List<PartEntity> allParts = getService.cascadeGetPart(new PartCriteria().setTopicId(topic.getId()));
+		List<PartEntity> allParts = getService.cascadeGet(new PartCriteria().setTopicId(topic.getId()));
 		Integer numero = (null != allParts)? allParts.size() : 0;
 		PartEntity part = new PartEntity();
 		Optional<Integer> type = StringsUtils.parseIntegerQuietly(request.getParameter("type"));
@@ -119,7 +119,7 @@ public class PartController extends GenericCourseController {
 		if(!sens){
 			i = -1;
 		}
-		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(part.getTopicId()).setNumero(part.getNumero()-i));
+		List<PartEntity> parts = getService.cascadeGet(new PartCriteria().setTopicId(part.getTopicId()).setNumero(part.getNumero()-i));
 		for(PartEntity p : parts){
 			partService.createOrUpdate(p.setNumero(p.getNumero()+i));
 		}
@@ -138,7 +138,7 @@ public class PartController extends GenericCourseController {
 		if(null == part){
 			return super.refuse();
 		}
-		List<PartEntity> parts = getService.cascadeGetPart(new PartCriteria().setTopicId(part.getTopicId()));
+		List<PartEntity> parts = getService.cascadeGet(new PartCriteria().setTopicId(part.getTopicId()));
 		for(PartEntity p : parts){
 			if(p.getNumero() > part.getNumero()){
 				partService.createOrUpdate(p.setNumero(p.getNumero()-1));

@@ -25,6 +25,7 @@
     
     "modal.confirm" : "Confirm",
     "modal.text" : "Are you sure you want to delete ? This action is irreversible !",
+    "modal.profile.text" : "Are you sure you want to delete your profile and all your informations ? This action is irreversible !",
     
     "teams.name"  : "name",
     "teams.add"   : "Create a new team",

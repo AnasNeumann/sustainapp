@@ -58,11 +58,14 @@
 	        <!-- Personal Informations -->
 	        <div class="padding s-profile-infos" >
 	            <div ng-show="profileModel.modeRead" class="animate">
+		            <div class="s-common-floatDelete" ng-click="confirmDelete()" ng-show="profileModel.owner" >
+                        <i class="icon ion-trash-a"></i>
+                    </div>
+		            <div class="s-common-floatEdit" ng-click="profileModel.modeRead = false;" ng-show="profileModel.owner" >
+                       <i class="icon ion-edit"></i>
+                    </div> 
 		            <h2 class="s-profile-name">{{profileModel.profile.firstName}} {{profileModel.profile.lastName}}</h2>
-		            <p>{{profileModel.profile.bornDate | date: 'dd/MM/yyyy' }}</p>
-		            <div class="s-common-edit" ng-click="profileModel.modeRead = false;" ng-show="profileModel.owner">
-		               <i class="icon ion-edit"></i>
-		            </div>
+		            <p>{{profileModel.profile.bornDate | date: 'dd/MM/yyyy' }}</p>		            
 	            </div>
 	            <div ng-show="profileModel.owner">
 		            <div ng-hide="profileModel.modeRead" >

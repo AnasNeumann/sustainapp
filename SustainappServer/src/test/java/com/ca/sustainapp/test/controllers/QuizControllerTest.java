@@ -85,11 +85,11 @@ public class QuizControllerTest extends AbstractTest {
 				.setTimestamps(GregorianCalendar.getInstance());
 		when(requestMock.getParameter("topic")).thenReturn(super.GENERIC_ID.toString());
 		when(requestMock.getParameter("quiz")).thenReturn(super.GENERIC_ID.toString());		
-		when(getServiceMock.cascadeGetQuestion(any(QuestionCriteria.class))).thenReturn(
+		when(getServiceMock.cascadeGet(any(QuestionCriteria.class))).thenReturn(
 				new SustainappList<QuestionEntity>().put(question));
-		when(getServiceMock.cascadeGetAnswerCateogry(any(AnswerCategoryCriteria.class))).thenReturn(
+		when(getServiceMock.cascadeGet(any(AnswerCategoryCriteria.class))).thenReturn(
 				new SustainappList<AnswerCategoryEntity>().put(category));
-		when(getServiceMock.cascadeGetAnswer(any(AnswerCriteria.class))).thenReturn(
+		when(getServiceMock.cascadeGet(any(AnswerCriteria.class))).thenReturn(
 				new SustainappList<AnswerEntity>().put(answer));
 	}
 	
@@ -99,9 +99,9 @@ public class QuizControllerTest extends AbstractTest {
 	@Test
 	public void getQuizTest() {
 		controller.getQuiz(requestMock);
-		verify(getServiceMock, times(1)).cascadeGetQuestion(any(QuestionCriteria.class));
-		verify(getServiceMock, times(1)).cascadeGetAnswerCateogry(any(AnswerCategoryCriteria.class));
-		verify(getServiceMock, times(1)).cascadeGetAnswer(any(AnswerCriteria.class));		
+		verify(getServiceMock, times(1)).cascadeGet(any(QuestionCriteria.class));
+		verify(getServiceMock, times(1)).cascadeGet(any(AnswerCategoryCriteria.class));
+		verify(getServiceMock, times(1)).cascadeGet(any(AnswerCriteria.class));		
 	}
 
 	/**
@@ -110,11 +110,11 @@ public class QuizControllerTest extends AbstractTest {
 	@Test
 	public void validateQuizSuccessTest(){
 		when(requestMock.getParameter("answers")).thenReturn(GENERIC_NAME_OR_TITLE);
-		when(getServiceMock.cascadeGetValidation(any(TopicValidationCriteria.class))).thenReturn(
+		when(getServiceMock.cascadeGet(any(TopicValidationCriteria.class))).thenReturn(
 				new SustainappList<TopicValidationEntity>());
 		when(topicValidationServiceMock.createOrUpdate(any(TopicValidationEntity.class))).thenReturn(GENERIC_ID);
 		controller.validateQuiz(requestMock);
-		verify(getServiceMock, times(1)).cascadeGetValidation(any(TopicValidationCriteria.class));
+		verify(getServiceMock, times(1)).cascadeGet(any(TopicValidationCriteria.class));
 		verify(topicValidationServiceMock, times(1)).createOrUpdate(any(TopicValidationEntity.class));
 	}
 
@@ -124,11 +124,11 @@ public class QuizControllerTest extends AbstractTest {
 	@Test
 	public void validateQuizErrorTest(){
 		when(requestMock.getParameter("answers")).thenReturn("otherName");
-		when(getServiceMock.cascadeGetValidation(any(TopicValidationCriteria.class))).thenReturn(
+		when(getServiceMock.cascadeGet(any(TopicValidationCriteria.class))).thenReturn(
 				new SustainappList<TopicValidationEntity>());
 		when(topicValidationServiceMock.createOrUpdate(any(TopicValidationEntity.class))).thenReturn(GENERIC_ID);
 		controller.validateQuiz(requestMock);
-		verify(getServiceMock, times(1)).cascadeGetValidation(any(TopicValidationCriteria.class));
+		verify(getServiceMock, times(1)).cascadeGet(any(TopicValidationCriteria.class));
 		verify(topicValidationServiceMock, times(0)).createOrUpdate(any(TopicValidationEntity.class));
 	}
 

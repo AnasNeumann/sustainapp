@@ -100,7 +100,7 @@ public class GenericCourseController extends GenericController{
 	 */
 	protected List<LightTopicResponse> loadAllTopics(CourseEntity course, Long profileId){
 		List<LightTopicResponse> result = new SustainappList<LightTopicResponse>();
-		List<TopicEntity> topics = getService.cascadeGetTopic(new TopicCriteria().setCurseId(course.getId()));
+		List<TopicEntity> topics = getService.cascadeGet(new TopicCriteria().setCurseId(course.getId()));
 		Collections.sort(topics, super.comparatorByNumber);
 		for(TopicEntity topic : topics){
 			result.add(new LightTopicResponse().setTopic(topic).setDone(alreadyTopicValided(topic.getId(), profileId)));
@@ -130,7 +130,7 @@ public class GenericCourseController extends GenericController{
 	 * @return
 	 */
 	protected List<TopicValidationEntity> getAllTopicValidation(Long topicId){
-		return getService.cascadeGetValidation(new TopicValidationCriteria().setTopicId(topicId));
+		return getService.cascadeGet(new TopicValidationCriteria().setTopicId(topicId));
 	}
 	
 	/**

@@ -73,7 +73,7 @@ public class GenericCityController extends GenericController{
 	 * @return
 	 */
 	protected PlaceNoteEntity getCurrentNote(ProfileEntity profil, PlaceEntity place){
-		List<PlaceNoteEntity> notes = getService.cascadeGetPlaceNotes(new PlaceNoteCriteria().setPlaceId(place.getId()).setProfilId(profil.getId()));
+		List<PlaceNoteEntity> notes = getService.cascadeGet(new PlaceNoteCriteria().setPlaceId(place.getId()).setProfilId(profil.getId()));
 		if(null != notes && notes.size() >0){
 			return notes.get(0);
 		}
