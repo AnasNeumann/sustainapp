@@ -1,4 +1,6 @@
 #!/bin/bash
+#Author: Anas Neumann <anas.neumann.isamm@gmail.com>
+#Author: Hedi El Mabrouk <hedibox@gmail.com>
 #Author: Idriss NEUMANN <neumann.idriss@gmail.com>
 
 GIT_REPO_URL="http://91.121.80.56:8181/gitlab/isamm/sustainapp.git"

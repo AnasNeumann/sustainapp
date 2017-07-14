@@ -73,7 +73,7 @@
               <img ng-src="data:image/jpeg;base64,{{profile.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
               <div class="s-teams-level">{{profile.level}}</div>
               <h2 class="s-teams-title">{{profile.firstName}} {{profile.lastName}}</h2>
-              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{teamModel.owner.timestamps | date: 'dd/MM/yyyy'}}</p>
+              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{profile.timestamps | date: 'dd/MM/yyyy'}}</p>
               <i class="icon ion-chevron-right icon-accessory" ng-if="teamModel.role == 'admin'"></i>
               <ion-option-button ng-if="teamModel.role == 'admin'" class="button s-common-btnList" ng-click="handleTeam(profile, 'action.fire.refuse', 'member')">
                 <i class="icon ion-close-circled"></i>
@@ -92,7 +92,7 @@
 	              <img ng-src="data:image/jpeg;base64,{{profile.avatar}}" onerror="this.src='img/common/defaultAvatarMin.png'">
 	              <div class="s-teams-level">{{profile.level}}</div>
 	              <h2 class="s-teams-title">{{profile.firstName}} {{profile.lastName}}</h2>
-	              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{teamModel.owner.timestamps | date: 'dd/MM/yyyy'}}</p>
+	              <p class="s-teams-text">{{'common.registeredSince' | translate}} {{profile.timestamps | date: 'dd/MM/yyyy'}}</p>
 	              <i class="icon ion-chevron-right icon-accessory"></i>
 	              <ion-option-button class="button s-common-btnList" ng-click="handleTeam(profile, 'action.apply.accept', 'request')">
 	                    <i class="icon ion-checkmark-circled"></i>
