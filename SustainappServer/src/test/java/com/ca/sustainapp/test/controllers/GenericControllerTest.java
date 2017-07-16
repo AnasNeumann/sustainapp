@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ca.sustainapp.advice.SustainappSecurityException;
 import com.ca.sustainapp.controllers.GenericController;
 import com.ca.sustainapp.entities.UserAccountEntity;
 import com.ca.sustainapp.test.boot.AbstractTest;
@@ -63,7 +64,12 @@ public class GenericControllerTest extends AbstractTest {
 	public void getConnectedUserRequestErrorTest(){
 		when(requestMock.getParameter("sessionId")).thenReturn(null);
 		when(requestMock.getParameter("sessionToken")).thenReturn(null);
-		UserAccountEntity user = controller.getConnectedUser(requestMock);
+		UserAccountEntity user = null;
+		try{
+			user = controller.getConnectedUser(requestMock);
+		}catch(SustainappSecurityException e){
+			
+		}
 		assertEquals(null, user);
 		verify(super.userAccountServiceMock, times(0)).getByToken(any(Long.class), any(String.class));
 	}
