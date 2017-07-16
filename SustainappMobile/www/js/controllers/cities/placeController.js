@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.controllers')
 .controller('placeController', 
-		function($scope, $stateParams, $rootScope, $ionicModal, $cordovaGeolocation, sessionService, displayService, placeService) {
+		function($scope, $stateParams, $rootScope, $ionicModal, $cordovaGeolocation, fileService, sessionService, displayService, placeService) {
 
 		/**
 		 * Entrée dans la page
