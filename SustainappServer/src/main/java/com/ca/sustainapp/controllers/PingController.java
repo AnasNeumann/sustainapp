@@ -42,4 +42,5 @@ public class PingController {
 	public String error(HttpServletRequest request) {
 		throw new RuntimeException (ERR_MSG_EXCEPTION_TEST);
 	}
+	
 }

@@ -33,7 +33,7 @@ public class ProfileSpecification {
 	 * Recherche des Champs par critères.
 	 * 
 	 * @param criteres
-	 * @return Specification<ChampsEntity>
+	 * @return Specification<ProfileEntity>
 	 */
 	public static Specification<ProfileEntity> searchByCriteres(final ProfileCriteria criteres) {
 		return new Specification<ProfileEntity>() {
