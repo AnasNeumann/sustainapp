@@ -84,7 +84,12 @@ public class ErrorAdvice extends GenericController  {
 		/**
 		 * Le user responsable
 		 */
-		UserAccountEntity user = super.getConnectedUser(request);
+		UserAccountEntity user = null;
+		try {
+			user = super.getConnectedUser(request);
+		} catch (SustainappSecurityException se) {
+			// Nothing to do
+		}
 		String profileName = (null == user) ? StringUtils.EMPTY : new LightProfileResponse(user.getProfile()).getDenomination();
 		String mail = (null == user) ? StringUtils.EMPTY : user.getMail();
 		String strMsg = String.format(MAIL_CONTENT, mail, profileName, errorMessage, errorType, stackTrace);
