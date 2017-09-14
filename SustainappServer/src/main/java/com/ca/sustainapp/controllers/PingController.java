@@ -38,7 +38,7 @@ public class PingController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/errors", method = RequestMethod.GET)
+	@RequestMapping(value="/error", method = RequestMethod.GET)
 	public String error(HttpServletRequest request) {
 		throw new RuntimeException (ERR_MSG_EXCEPTION_TEST);
 	}
