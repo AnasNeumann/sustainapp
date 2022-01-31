@@ -6,7 +6,7 @@
  */
 angular.module('sustainapp.services').factory('geolocationService', function($http, config) {
 	var BASE_API = "https://maps.googleapis.com/maps/api/";
-	var API_KEY = "AIzaSyC3sHMIxMrMk5OLByCaGJcsQSP2c6-0q-4";
+	var API_KEY = "*****";
 	return {
 		getLocationFromAddress : function(Address) {
 			return $http.get(BASE_API+"geocode/json?address="+Address+"&key="+API_KEY);

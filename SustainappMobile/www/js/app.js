@@ -278,15 +278,15 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
   	  }
     });
   $urlRouterProvider.otherwise('/tab/news');
-  
-  
+
+
   /**
    * Préférence pour le scroll native
    */
    if (!ionic.Platform.isIOS()) {
 	   $ionicConfigProvider.scrolling.jsScrolling(false);
    }
-  
+
    /**
 	* Autoriser les urls provenant de ces sites web
 	*/
@@ -304,14 +304,14 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 		"http://localhost:8100/**",
 		"http://127.0.0.1:8100/**"
 	]);
-	
+
 
 	/**
 	 * Blacklister les urls provenants de ces sites web
 	 */
 	$sceDelegateProvider.resourceUrlBlacklist([
 	]);
-	
+
 	/**
 	 * Permettre l'ouverture de liens externe
 	 */
@@ -321,9 +321,9 @@ angular.module('sustainapp', ['ionic', 'sustainapp.controllers', 'sustainapp.ser
 		    toolbar: 'no'
 		  };
 	 document.addEventListener("deviceready", function () {
-		    $cordovaInAppBrowserProvider.setDefaultOptions(options)	
+		    $cordovaInAppBrowserProvider.setDefaultOptions(options)
      }, false);
-	 
+
   /**
    * SYSTEME DE TRADUCTION
    */
