@@ -1,5 +1,7 @@
 # SUSTAINAPP
 
+![Sustainapp](/SustainappMobile/www/img/common/icon.png)
+
 My final scholar project for the Msc / Engineer degree (in 2017): An Ionic/Angular/Springboot app to learn sustainable developpment using serious games
 
 ## Git repository
