@@ -1,5 +1,5 @@
 # SUSTAINAPP
-<img src="/SustainappMobile/www/img/common/icon.png" width="300">
+<img src="/SustainappMobile/www/img/common/icon.png" width="120">
 
 My final scholar project for the Msc / Engineer degree (in 2017): An Ionic/Angular/Springboot app to learn sustainable developpment using serious games
 
